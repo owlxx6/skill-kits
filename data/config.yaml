@@ -1,0 +1,23 @@
+filter:
+  allowedLicenses: [MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC]
+  minStars: 50
+  maxDaysSinceLastCommit: 180
+collection:
+  minSkills: 3
+  minKitSkills: 3
+review:
+  model: claude-haiku-5-5
+  triageBatchSize: 50
+  maxReviewsPerRun: 500
+  minCatalogScore: 6
+  maxSkillChars: 24000
+scoring:
+  stars: { min: 50, max: 50000 }
+  forks: { min: 5, max: 5000 }
+  freshness: { fullDays: 30, zeroDays: 180 }
+  repoSignal: { stars: 0.4, forks: 0.4, freshness: 0.2 }
+  skill: { review: 0.7, repoSignal: 0.3 }
+  collection: { repoSignal: 0.4, medianReview: 0.4, coverage: 0.2, coverageCap: 10 }
+proposals:
+  collections: 3
+  skills: 8

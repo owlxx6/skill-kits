@@ -1,0 +1,13 @@
+# The first five repos are the dry-run set.
+repos:
+  - anthropics/skills
+  - obra/superpowers
+  - vercel-labs/agent-skills
+  - mattpocock/skills
+  - ComposioHQ/awesome-claude-skills
+  - jeremylongshore/claude-code-plugins-plus-skills
+topics:
+  - agent-skills
+  - claude-skills
+  - claude-code-skills
+maxSearchPages: 2

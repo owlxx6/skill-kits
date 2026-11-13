@@ -1,0 +1,6 @@
+node_modules/
+.env
+.dry-run/
+catalog.json
+pipeline-summary.md
+pipeline-run.json

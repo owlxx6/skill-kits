@@ -1,0 +1,32 @@
+- id: resume-career
+  title: "Resume & career agent"
+  description: "Tailor a resume to a job offer, check it against ATS filters, write cover letters, and prepare interviews."
+  keywords: [resume, cv, cover letter, job application, ats, interview, linkedin]
+- id: web-app
+  title: "Web app builder"
+  description: "Build, test and ship a web application, from frontend and backend to database and deployment."
+  keywords: [frontend, backend, api, react, database, deployment, testing]
+- id: data-analysis
+  title: "Data analysis agent"
+  description: "Load, clean, analyze and chart data from spreadsheets, CSV files and databases."
+  keywords: [data, csv, spreadsheet, sql, charts, statistics, pandas]
+- id: docs-reports
+  title: "Docs & reports writer"
+  description: "Write and format professional documents such as reports, proposals, slide decks, PDFs and technical documentation."
+  keywords: [report, docx, pdf, slides, documentation, writing, proposal]
+- id: marketing-content
+  title: "Marketing & content agent"
+  description: "Plan and produce marketing content such as copywriting, SEO, social media posts, newsletters and campaigns."
+  keywords: [copywriting, seo, social media, newsletter, campaign, content, brand]
+- id: research-monitoring
+  title: "Research & monitoring agent"
+  description: "Research a topic across sources, track competitors and news, and produce sourced syntheses."
+  keywords: [research, web search, sources, competitive analysis, monitoring, summary, citations]
+- id: ui-design
+  title: "UI design agent"
+  description: "Design interfaces, including layouts, design systems, components, accessibility and visual polish."
+  keywords: [ui, ux, design system, components, accessibility, css, figma]
+- id: workflow-automation
+  title: "Workflow automation agent"
+  description: "Automate recurring work with scheduled tasks, integrations between tools, browser automation and scripts."
+  keywords: [automation, workflow, integration, browser automation, scheduling, scripts, email]

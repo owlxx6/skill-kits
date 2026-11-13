@@ -1,0 +1,8 @@
+resume-career: { approved: [], rejected: [] }
+web-app: { approved: [], rejected: [] }
+data-analysis: { approved: [], rejected: [] }
+docs-reports: { approved: [], rejected: [] }
+marketing-content: { approved: [], rejected: [] }
+research-monitoring: { approved: [], rejected: [] }
+ui-design: { approved: [], rejected: [] }
+workflow-automation: { approved: [], rejected: [] }
