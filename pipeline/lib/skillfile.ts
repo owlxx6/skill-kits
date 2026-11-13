@@ -50,10 +50,10 @@ export function parseSkillFrontmatter(content: string): SkillFrontmatter | null 
   if (!cleanName || cleanName.length > MAX_NAME_CHARS || FORBIDDEN_IN_NAME.test(cleanName)) {
     return null;
   }
-  const cleanDescription = description
-    .replace(FORBIDDEN_IN_DESCRIPTION, "")
-    .trim()
-    .slice(0, MAX_DESCRIPTION_CHARS);
+  const cleanDescription = Array.from(description.replace(FORBIDDEN_IN_DESCRIPTION, "").trim())
+    .slice(0, MAX_DESCRIPTION_CHARS)
+    .join("")
+    .trim();
   if (!cleanDescription) return null;
   return { name: cleanName, description: cleanDescription };
 }

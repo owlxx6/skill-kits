@@ -119,6 +119,15 @@ describe("parseSkillFrontmatter hardening", () => {
     expect(parseSkillFrontmatter(fm("a", `${RLO}${NUL}`))).toBeNull();
   });
 
+  it("cuts the description on whole characters", () => {
+    const emoji = String.fromCodePoint(0x1f600);
+    const result = parseSkillFrontmatter(fm("a", `${"x".repeat(1023)}${emoji}more text`))?.description ?? "";
+    expect(Array.from(result)).toHaveLength(1024);
+    expect(result.endsWith(emoji)).toBe(true);
+    const last = result.charCodeAt(result.length - 1);
+    expect(last >= 0xd800 && last <= 0xdbff).toBe(false);
+  });
+
   it("rejects a non-string name", () => {
     expect(parseSkillFrontmatter("---\nname: 123\ndescription: b\n---\n")).toBeNull();
   });
@@ -129,7 +138,7 @@ describe("parseSkillFrontmatter hardening", () => {
       const refs = Array.from({ length: 9 }, () => `*a${level - 1}`).join(", ");
       lines.push(`a${level}: &a${level} [${refs}]`);
     }
-    const content = `---\n${lines.join("\n")}\nname: *a9\ndescription: b\n---\n`;
+    const content = `---\n${lines.join("\n")}\nbomb: *a9\nname: ok\ndescription: fine\n---\n`;
     const started = Date.now();
     expect(parseSkillFrontmatter(content)).toBeNull();
     expect(Date.now() - started).toBeLessThan(1000);
