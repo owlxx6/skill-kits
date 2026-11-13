@@ -4,3 +4,4 @@ node_modules/
 catalog.json
 pipeline-summary.md
 pipeline-run.json
+*.tmp

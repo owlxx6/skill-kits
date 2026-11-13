@@ -6,6 +6,7 @@ import {
   KitsSchema,
   ReviewSchema,
   SourcesSchema,
+  type Config,
 } from "../pipeline/lib/schemas";
 import { readYamlFile } from "../pipeline/lib/store";
 
@@ -77,5 +78,77 @@ describe("ReviewSchema", () => {
   it("rejects a score outside 0-10", () => {
     const review = { ...validReview, scores: { clarity: 11, completeness: 7, usefulness: 9 } };
     expect(ReviewSchema.safeParse(review).success).toBe(false);
+  });
+});
+
+describe("ConfigSchema constraints", () => {
+  const loadConfig = (): Promise<Config> => readYamlFile(data("config.yaml"), ConfigSchema);
+  const reject = (config: unknown): void => {
+    expect(ConfigSchema.safeParse(config).success).toBe(false);
+  };
+
+  it("rejects a range where min equals max", async () => {
+    const config = await loadConfig();
+    reject({ ...config, scoring: { ...config.scoring, stars: { min: 50, max: 50 } } });
+  });
+
+  it("rejects freshness where fullDays is not below zeroDays", async () => {
+    const config = await loadConfig();
+    reject({
+      ...config,
+      scoring: { ...config.scoring, freshness: { fullDays: 180, zeroDays: 180 } },
+    });
+  });
+
+  it("rejects a negative weight", async () => {
+    const config = await loadConfig();
+    reject({
+      ...config,
+      scoring: { ...config.scoring, skill: { review: 1.2, repoSignal: -0.2 } },
+    });
+  });
+
+  it("rejects skill weights that do not sum to 1", async () => {
+    const config = await loadConfig();
+    reject({
+      ...config,
+      scoring: { ...config.scoring, skill: { review: 0.6, repoSignal: 0.3 } },
+    });
+  });
+});
+
+describe("repo names and curation keys", () => {
+  const sources = (repo: string) => ({ repos: [repo], topics: [], maxSearchPages: 1 });
+
+  it("accepts owner/.github", () => {
+    expect(SourcesSchema.safeParse(sources("owner/.github")).success).toBe(true);
+  });
+
+  it("rejects ../..", () => {
+    expect(SourcesSchema.safeParse(sources("../..")).success).toBe(false);
+  });
+
+  it("rejects a curation key that is not a kit id", () => {
+    const result = CurationSchema.safeParse({ "Resume Career": { approved: [], rejected: [] } });
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("ReviewSchema boundaries", () => {
+  const keywords = (count: number): string[] => Array.from({ length: count }, (_, i) => `k${i}`);
+
+  it.each([
+    ["4 keywords", { keywords: keywords(4) }],
+    ["13 keywords", { keywords: keywords(13) }],
+    ["401-character summary", { summary: "x".repeat(401) }],
+    ["non-integer score", { scores: { clarity: 7.5, completeness: 7, usefulness: 9 } }],
+    ["unknown security level", { security: { level: "high", notes: [] } }],
+    ["4 strengths", { strengths: ["a", "b", "c", "d"] }],
+  ])("rejects %s", (_label, override) => {
+    expect(ReviewSchema.safeParse({ ...validReview, ...override }).success).toBe(false);
+  });
+
+  it("accepts exactly 5 keywords", () => {
+    expect(ReviewSchema.safeParse({ ...validReview, keywords: keywords(5) }).success).toBe(true);
   });
 });

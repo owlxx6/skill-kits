@@ -1,12 +1,19 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { parse as parseYaml } from "yaml";
-import type { z } from "zod";
+import { z } from "zod";
+import { errorMessage } from "./errors";
 
 export async function readYamlFile<T>(file: string, schema: z.ZodType<T>): Promise<T> {
   const raw = await readFile(file, "utf8");
-  const result = schema.safeParse(parseYaml(raw));
-  if (!result.success) throw new Error(`${file} is invalid: ${result.error.message}`);
+  let parsed: unknown;
+  try {
+    parsed = parseYaml(raw);
+  } catch (error) {
+    throw new Error(`${file} is not valid YAML: ${errorMessage(error)}`);
+  }
+  const result = schema.safeParse(parsed);
+  if (!result.success) throw new Error(`${file} is invalid: ${z.prettifyError(result.error)}`);
   return result.data;
 }
 
@@ -18,14 +25,23 @@ export async function readJsonFile<T>(file: string, schema: z.ZodType<T>, fallba
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return fallback;
     throw error;
   }
-  const result = schema.safeParse(JSON.parse(raw));
-  if (!result.success) throw new Error(`${file} is invalid: ${result.error.message}`);
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (error) {
+    throw new Error(`${file} is not valid JSON: ${errorMessage(error)}`);
+  }
+  const result = schema.safeParse(parsed);
+  if (!result.success) throw new Error(`${file} is invalid: ${z.prettifyError(result.error)}`);
   return result.data;
 }
 
 export async function writeJsonFile(file: string, data: unknown): Promise<void> {
   await mkdir(path.dirname(file), { recursive: true });
-  await writeFile(file, `${JSON.stringify(data, null, 2)}\n`, "utf8");
+  // Write then rename so a crash never leaves a half-written file.
+  const temporary = `${file}.${process.pid}.tmp`;
+  await writeFile(temporary, `${JSON.stringify(data, null, 2)}\n`, "utf8");
+  await rename(temporary, file);
 }
 
 export interface Paths {

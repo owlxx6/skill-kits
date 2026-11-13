@@ -1,10 +1,21 @@
 import { z } from "zod";
 
-const repoName = z.string().regex(/^[\w.-]+\/[\w.-]+$/, "expected owner/repo");
+const repoName = z
+  .string()
+  .regex(/^[\w.-]+\/[\w.-]+$/, "expected owner/repo")
+  .refine((value) => value.split("/").every((part) => part !== "." && part !== ".."), {
+    message: "owner and repo cannot be . or ..",
+  });
 const kitId = z.string().regex(/^[a-z0-9-]+$/, "expected a lowercase kit id");
 const gitObjectId = z.string().regex(/^[0-9a-f]{40,64}$/, "expected a git object id");
 const score = z.number().int().min(0).max(10);
-const range = z.object({ min: z.number().positive(), max: z.number().positive() });
+const securityLevel = z.enum(["none", "notice", "severe"]);
+const range = z
+  .object({ min: z.number().positive(), max: z.number().positive() })
+  .refine((value) => value.min < value.max, { message: "min must be below max" });
+const weight = z.number().min(0);
+const sumsToOne = (values: number[]): boolean =>
+  Math.abs(values.reduce((total, value) => total + value, 0) - 1) < 1e-9;
 
 export const SourcesSchema = z.object({
   repos: z.array(repoName),
@@ -42,15 +53,31 @@ export const ConfigSchema = z.object({
   scoring: z.object({
     stars: range,
     forks: range,
-    freshness: z.object({ fullDays: z.number().min(0), zeroDays: z.number().positive() }),
-    repoSignal: z.object({ stars: z.number(), forks: z.number(), freshness: z.number() }),
-    skill: z.object({ review: z.number(), repoSignal: z.number() }),
-    collection: z.object({
-      repoSignal: z.number(),
-      medianReview: z.number(),
-      coverage: z.number(),
-      coverageCap: z.number().positive(),
-    }),
+    freshness: z
+      .object({ fullDays: z.number().min(0), zeroDays: z.number().positive() })
+      .refine((value) => value.fullDays < value.zeroDays, {
+        message: "fullDays must be below zeroDays",
+      }),
+    repoSignal: z
+      .object({ stars: weight, forks: weight, freshness: weight })
+      .refine((value) => sumsToOne([value.stars, value.forks, value.freshness]), {
+        message: "weights must sum to 1",
+      }),
+    skill: z
+      .object({ review: weight, repoSignal: weight })
+      .refine((value) => sumsToOne([value.review, value.repoSignal]), {
+        message: "weights must sum to 1",
+      }),
+    collection: z
+      .object({
+        repoSignal: weight,
+        medianReview: weight,
+        coverage: weight,
+        coverageCap: z.number().positive(),
+      })
+      .refine((value) => sumsToOne([value.repoSignal, value.medianReview, value.coverage]), {
+        message: "weights must sum to 1",
+      }),
   }),
   proposals: z.object({
     collections: z.number().int().min(0),
@@ -60,14 +87,14 @@ export const ConfigSchema = z.object({
 export type Config = z.infer<typeof ConfigSchema>;
 
 export const CurationSchema = z.record(
-  z.string(),
+  kitId,
   z.object({ approved: z.array(z.string()), rejected: z.array(z.string()) }),
 );
 export type Curation = z.infer<typeof CurationSchema>;
 
 export const RepoMetaSchema = z.object({
   fullName: repoName,
-  url: z.string().url(),
+  url: z.url(),
   description: z.string().nullable(),
   stars: z.number().int().min(0),
   forks: z.number().int().min(0),
@@ -98,7 +125,7 @@ export const ReviewSchema = z.object({
   cautions: z.array(z.string().min(1)).max(3),
   keywords: z.array(z.string().min(1)).min(5).max(12),
   security: z.object({
-    level: z.enum(["none", "notice", "severe"]),
+    level: securityLevel,
     notes: z.array(z.string()),
   }),
 });
@@ -116,7 +143,7 @@ export const ReviewWireSchema = z.object({
   cautions: z.array(z.string()),
   keywords: z.array(z.string()),
   security: z.object({
-    level: z.enum(["none", "notice", "severe"]),
+    level: securityLevel,
     notes: z.array(z.string()),
   }),
 });
@@ -179,7 +206,7 @@ export const CatalogSkillSchema = z.object({
   path: z.string(),
   name: z.string(),
   description: z.string(),
-  url: z.string().url(),
+  url: z.url(),
   license: z.string(),
   stars: z.number(),
   forks: z.number(),
@@ -194,7 +221,7 @@ export type CatalogSkill = z.infer<typeof CatalogSkillSchema>;
 
 export const CatalogCollectionSchema = z.object({
   id: repoName,
-  url: z.string().url(),
+  url: z.url(),
   description: z.string().nullable(),
   license: z.string(),
   stars: z.number(),
