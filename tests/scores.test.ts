@@ -38,6 +38,11 @@ describe("freshnessScore", () => {
 describe("daysBetween", () => {
   it("counts days from an ISO date to now", () => {
     expect(daysBetween("2026-11-01T00:00:00Z", NOW)).toBe(10);
+    expect(daysBetween("2026-11-10T12:00:00Z", NOW)).toBe(0.5);
+  });
+
+  it("throws on an unparseable date", () => {
+    expect(() => daysBetween("not-a-date", NOW)).toThrow("invalid date: not-a-date");
   });
 });
 
@@ -49,6 +54,11 @@ describe("repoSignal", () => {
   it("reaches 10 for a very popular repo pushed this week", () => {
     const repo = makeRepo({ stars: 60000, forks: 6000, pushedAt: "2026-11-08T00:00:00Z" });
     expect(repoSignal(repo, NOW, scoring)).toBe(10);
+  });
+
+  it("treats a push dated in the future as fully fresh", () => {
+    const repo = makeRepo({ pushedAt: "2027-01-01T00:00:00Z", stars: 0, forks: 0 });
+    expect(repoSignal(repo, NOW, scoring)).toBe(2);
   });
 });
 
@@ -80,5 +90,10 @@ describe("collectionKitScore", () => {
 
   it("caps coverage at the configured number of skills", () => {
     expect(collectionKitScore(10, Array(12).fill(8), scoring)).toBe(9.2);
+  });
+
+  it("rescales coverage for a cap other than 10", () => {
+    const capFive = { ...scoring, collection: { ...scoring.collection, coverageCap: 5 } };
+    expect(collectionKitScore(0, [0, 0, 0], capFive)).toBe(1.2);
   });
 });

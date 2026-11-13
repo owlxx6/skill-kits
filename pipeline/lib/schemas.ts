@@ -99,7 +99,7 @@ export const RepoMetaSchema = z.object({
   stars: z.number().int().min(0),
   forks: z.number().int().min(0),
   license: z.string().nullable(),
-  pushedAt: z.string().min(1),
+  pushedAt: z.iso.datetime(),
   defaultBranch: z.string().min(1),
   archived: z.boolean(),
 });

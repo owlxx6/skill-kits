@@ -19,7 +19,9 @@ export function freshnessScore(days: number, fullDays: number, zeroDays: number)
 }
 
 export function daysBetween(fromIso: string, now: Date): number {
-  return (now.getTime() - new Date(fromIso).getTime()) / MS_PER_DAY;
+  const from = new Date(fromIso).getTime();
+  if (Number.isNaN(from)) throw new Error(`invalid date: ${fromIso}`);
+  return (now.getTime() - from) / MS_PER_DAY;
 }
 
 export function repoSignal(
@@ -62,6 +64,7 @@ export function collectionKitScore(
   scoring: Scoring,
 ): number {
   const cap = scoring.collection.coverageCap;
+  // Coverage is rescaled to 0-10 so the score stays within 10 whatever the configured cap.
   const coverage = (10 * Math.min(kitReviewScores.length, cap)) / cap;
   return round1(
     scoring.collection.repoSignal * signal +

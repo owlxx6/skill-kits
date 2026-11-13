@@ -4,11 +4,13 @@ import {
   ConfigSchema,
   CurationSchema,
   KitsSchema,
+  RepoMetaSchema,
   ReviewSchema,
   SourcesSchema,
   type Config,
 } from "../pipeline/lib/schemas";
 import { readYamlFile } from "../pipeline/lib/store";
+import { makeRepo, testConfig } from "./fixtures";
 
 const data = (name: string): string => path.join(process.cwd(), "data", name);
 
@@ -150,5 +152,21 @@ describe("ReviewSchema boundaries", () => {
 
   it("accepts exactly 5 keywords", () => {
     expect(ReviewSchema.safeParse({ ...validReview, keywords: keywords(5) }).success).toBe(true);
+  });
+});
+
+describe("RepoMetaSchema pushedAt", () => {
+  it("accepts an ISO datetime", () => {
+    expect(RepoMetaSchema.safeParse(makeRepo({ pushedAt: "2026-11-05T12:34:56Z" })).success).toBe(true);
+  });
+
+  it("rejects a value that is not a date", () => {
+    expect(RepoMetaSchema.safeParse(makeRepo({ pushedAt: "yesterday" })).success).toBe(false);
+  });
+});
+
+describe("shared fixtures", () => {
+  it("testConfig is a valid config", () => {
+    expect(ConfigSchema.parse(testConfig)).toEqual(testConfig);
   });
 });
