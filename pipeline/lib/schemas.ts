@@ -35,7 +35,9 @@ export type Kit = z.infer<typeof KitSchema>;
 
 export const ConfigSchema = z.object({
   filter: z.object({
-    allowedLicenses: z.array(z.string().min(1)).min(1),
+    allowedLicenses: z
+      .array(z.string().regex(/^[A-Za-z0-9.+-]+$/, "expected an SPDX license identifier"))
+      .min(1),
     minStars: z.number().int().min(0),
     maxDaysSinceLastCommit: z.number().int().positive(),
   }),

@@ -25,6 +25,14 @@ function httpStatus(error: unknown): number | undefined {
   return undefined;
 }
 
+function hasBlockField(error: unknown): boolean {
+  if (typeof error !== "object" || error === null || !("response" in error)) return false;
+  const response = (error as { response: unknown }).response;
+  if (typeof response !== "object" || response === null || !("data" in response)) return false;
+  const data = (response as { data: unknown }).data;
+  return typeof data === "object" && data !== null && "block" in data;
+}
+
 const encodePath = (value: string): string => value.split("/").map(encodeURIComponent).join("/");
 
 const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
@@ -108,6 +116,9 @@ export function createGitHubClient(
         // 404: deleted or private. 451: taken down. Both mean "no longer available".
         const status = httpStatus(error);
         if (status === 404 || status === 451) return null;
+        // 403 with a "block" field: blocked for a terms-of-service violation.
+        // Any other 403 (such as a rate limit) must still fail the run.
+        if (status === 403 && hasBlockField(error)) return null;
         throw error;
       }
     },

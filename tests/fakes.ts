@@ -17,10 +17,14 @@ export class FakeGitHub implements GitHubClient {
   failTreeFor = new Set<string>();
   truncateTreeFor = new Set<string>();
   failFileFor = new Set<string>();
+  failRepoFor = new Set<string>();
+  searchCalls: string[] = [];
 
   constructor(
     private readonly repos: FakeRepo[],
     private readonly topics: Record<string, string[]> = {},
+    // Maps an old repository name to its current name, like a GitHub redirect.
+    private readonly redirects: Record<string, string> = {},
   ) {}
 
   private inSet(set: Set<string>, fullName: string): boolean {
@@ -35,11 +39,15 @@ export class FakeGitHub implements GitHubClient {
   }
 
   async searchReposByTopic(topic: string): Promise<string[]> {
+    this.searchCalls.push(topic);
     return this.topics[topic] ?? [];
   }
 
   async getRepo(fullName: string): Promise<RepoMeta | null> {
-    return this.find(fullName)?.meta ?? null;
+    if (this.inSet(this.failRepoFor, fullName)) throw new Error(`network error for ${fullName}`);
+    const wanted = fullName.toLowerCase();
+    const target = Object.entries(this.redirects).find(([old]) => old.toLowerCase() === wanted)?.[1];
+    return this.find(target ?? fullName)?.meta ?? null;
   }
 
   async getTree(fullName: string): Promise<{ entries: TreeEntry[]; truncated: boolean }> {

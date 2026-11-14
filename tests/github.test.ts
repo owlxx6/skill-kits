@@ -64,6 +64,21 @@ describe("getFileText", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
+  it("gives up after three failed body reads and names the URL", async () => {
+    const broken = () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.error(new Error("reset"));
+          },
+        }),
+        { status: 200 },
+      );
+    const fetchMock = stubFetch(broken(), broken(), broken());
+    await expect(read()).rejects.toThrow("https://raw.githubusercontent.com/acme/skills/main/SKILL.md");
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+  });
+
   it("gives up after three thrown errors and names the URL", async () => {
     const fetchMock = stubFetch(new Error("boom"), new Error("boom"), new Error("boom"));
     await expect(read()).rejects.toThrow("https://raw.githubusercontent.com/acme/skills/main/SKILL.md");
@@ -92,6 +107,20 @@ describe("getRepo", () => {
   it("returns null on 404 after a single call", async () => {
     const fetchMock = stubFetch(json(404, { message: "Not Found" }));
     await expect(client().getRepo("ghost/deleted")).resolves.toBeNull();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("returns null on a 403 that carries a block field", async () => {
+    const fetchMock = stubFetch(
+      json(403, { message: "Repository access blocked", block: { reason: "tos" } }),
+    );
+    await expect(client().getRepo("acme/blocked")).resolves.toBeNull();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("throws on any other 403 without retrying", async () => {
+    const fetchMock = stubFetch(json(403, { message: "Forbidden" }));
+    await expect(client().getRepo("acme/skills")).rejects.toThrow();
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 

@@ -1,3 +1,4 @@
+import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
 import { compareText } from "./lib/text";
 import { RepoMetaSchema } from "./lib/schemas";
@@ -21,7 +22,7 @@ export function checkRepo(repo: RepoMeta, filter: Config["filter"], now: Date): 
   }
   const days = daysBetween(repo.pushedAt, now);
   if (days > filter.maxDaysSinceLastCommit) {
-    return { ok: false, reason: `last push ${Math.floor(days)} days ago` };
+    return { ok: false, reason: `last push ${Math.ceil(days)} days ago (limit ${filter.maxDaysSinceLastCommit})` };
   }
   return { ok: true };
 }
@@ -36,7 +37,12 @@ export async function filterRepos(
   const filtered: FilteredRepo[] = [];
   const seen = new Set<string>();
   for (const candidate of candidates) {
-    const repo = await gh.getRepo(candidate);
+    let repo: RepoMeta | null;
+    try {
+      repo = await gh.getRepo(candidate);
+    } catch (error) {
+      throw new Error(`filter: getRepo ${candidate} failed: ${errorMessage(error)}`, { cause: error });
+    }
     if (!repo) {
       filtered.push({ fullName: candidate, reason: "not found" });
       continue;
@@ -46,8 +52,14 @@ export async function filterRepos(
     seen.add(key);
     const verdict = checkRepo(repo, filter, now);
     if (verdict.ok) repos.push(repo);
-    else filtered.push({ fullName: repo.fullName, reason: verdict.reason });
+    else {
+      // A renamed or transferred repository is shown with the name listed in sources.yaml.
+      const renamed = key !== candidate.toLowerCase();
+      const fullName = renamed ? `${repo.fullName} (listed as ${candidate})` : repo.fullName;
+      filtered.push({ fullName, reason: verdict.reason });
+    }
   }
   repos.sort((a, b) => compareText(a.fullName, b.fullName));
+  filtered.sort((a, b) => compareText(a.fullName, b.fullName));
   return { repos, filtered };
 }

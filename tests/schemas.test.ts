@@ -110,6 +110,11 @@ describe("ConfigSchema constraints", () => {
     });
   });
 
+  it("rejects an allowed license that is not an SPDX identifier", async () => {
+    const config = await loadConfig();
+    reject({ ...config, filter: { ...config.filter, allowedLicenses: ["MIT license"] } });
+  });
+
   it("rejects skill weights that do not sum to 1", async () => {
     const config = await loadConfig();
     reject({
