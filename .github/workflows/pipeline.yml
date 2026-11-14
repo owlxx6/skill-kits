@@ -1,7 +1,8 @@
 name: Weekly pipeline
 on:
   schedule:
-    - cron: "0 6 * * 1"
+    # Off the top of the hour: scheduled runs at :00 are often delayed or dropped under load.
+    - cron: "17 6 * * 1"
   workflow_dispatch:
 permissions:
   contents: write
@@ -19,18 +20,32 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      # An unmerged pipeline pull request means this run would pay again for the same
+      # reviews and open a conflicting pull request: stop until it is merged or closed.
+      - name: Check for an open pipeline pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          open=$(gh pr list --state open --search "head:pipeline/run-" --json number --jq length)
+          if [ "$open" -gt 0 ]; then
+            echo "::error::A pipeline pull request is still open. Merge or close it, then run this workflow again."
+            exit 1
+          fi
       - run: npm ci
       - name: Run the pipeline
+        # Shorter than the job limit, so a timeout is a step failure and the paid reviews are still uploaded.
+        timeout-minutes: 170
         run: npm run pipeline -- all
         env:
           GITHUB_TOKEN: ${{ github.token }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Print the summary
-        run: cat pipeline-summary.md
+        # Rendered on the run page; the runner does not interpret its lines as workflow commands.
+        run: cat pipeline-summary.md >> "$GITHUB_STEP_SUMMARY"
       - name: Open the pull request
         env:
           GH_TOKEN: ${{ github.token }}
-          BRANCH: pipeline/run-${{ github.run_id }}
+          BRANCH: pipeline/run-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
           if [ -z "$(git status --porcelain data/cache)" ]; then
             echo "No data change: no pull request."
@@ -40,13 +55,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
           git add data/cache
-          git commit -m "data: pipeline run ${{ github.run_id }}"
+          git commit -m "data: pipeline run $BRANCH"
           git push origin "$BRANCH"
           gh pr create --base main --head "$BRANCH" \
             --title "Pipeline run $(date -u +%Y-%m-%d)" \
             --body-file pipeline-summary.md
       - name: Keep the paid reviews
-        if: failure()
+        if: failure() || cancelled()
         uses: actions/upload-artifact@v4
         with:
           name: reviews-${{ github.run_id }}
