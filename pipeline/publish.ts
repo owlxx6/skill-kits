@@ -2,15 +2,31 @@ import type { Catalog, RunInfo } from "./lib/schemas";
 
 // A pull request body is limited in size, and long lists are not read anyway.
 const MAX_LISTED = 30;
+// GitHub refuses a pull request body above 65,536 characters.
+const MAX_SUMMARY_CHARS = 60_000;
+const MAX_INLINE_CHARS = 300;
 
 // Text written by the model ends up in a pull request: strip what could break
 // the Markdown, and never let it notify a GitHub user with an @mention.
 const inlineText = (text: string): string =>
-  text
-    .replace(/[`\r\n]+/g, " ")
-    .replace(/@/g, "(at)")
-    .replace(/\s+/g, " ")
+  Array.from(
+    text
+      .replace(/[`\r\n]+/g, " ")
+      .replace(/@/g, "(at)")
+      .replace(/\s+/g, " ")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/#(?=\d)/g, "# ")
+      .trim(),
+  )
+    .slice(0, MAX_INLINE_CHARS)
+    .join("")
     .trim();
+
+function skillRef(id: string, skillById: Map<string, Catalog["skills"][number]>): string {
+  const skill = skillById.get(id);
+  return skill ? `[\`${id}\`](${encodeURI(skill.url)})` : `\`${id}\``;
+}
 
 function capped(lines: string[]): string[] {
   if (lines.length <= MAX_LISTED) return lines;
@@ -61,7 +77,7 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
     const changed = kit.skills.filter((id) => reviewedNow.has(id));
     if (changed.length > 0) {
       lines.push("**Approved skills re-reviewed this run (content changed):**", "");
-      lines.push(...capped(changed.map((id) => `- \`${id}\``)), "");
+      lines.push(...capped(changed.map((id) => `- ${skillRef(id, skillById)}`)), "");
     }
     if (kit.removed.length > 0) {
       lines.push("**Approved entries that are no longer eligible (below threshold, severe, or gone):**", "");
@@ -79,8 +95,10 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
       lines.push("**Skill candidates:**", "");
       lines.push(
         ...kit.proposals.skills.map((entry) => {
-          const why = inlineText(skillById.get(entry.id)?.review.why ?? "");
-          return `- \`${entry.id}\` - score ${entry.score} - ${why}`;
+          const review = skillById.get(entry.id)?.review;
+          const why = inlineText(review?.why ?? "");
+          const notice = review?.security.level === "notice" ? " - security notice" : "";
+          return `- ${skillRef(entry.id, skillById)} - score ${entry.score}${why ? ` - ${why}` : ""}${notice}`;
         }),
         "",
       );
@@ -101,8 +119,11 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
   }
   if (filtered && filtered.length > 0) {
     lines.push("## Repos excluded by the filter", "");
-    lines.push(...capped(filtered.map((entry) => `- \`${entry.fullName}\`: ${entry.reason}`)), "");
+    lines.push(...capped(filtered.map((entry) => `- \`${entry.fullName}\`: ${inlineText(entry.reason)}`)), "");
   }
 
-  return `${lines.join("\n").trimEnd()}\n`;
+  const text = `${lines.join("\n").trimEnd()}\n`;
+  if (text.length <= MAX_SUMMARY_CHARS) return text;
+  const cut = text.lastIndexOf("\n", MAX_SUMMARY_CHARS);
+  return `${text.slice(0, cut).trimEnd()}\n\n_Summary truncated at ${MAX_SUMMARY_CHARS} characters. The full text is in the workflow run log._\n`;
 }

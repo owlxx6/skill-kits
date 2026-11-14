@@ -27,6 +27,12 @@ export async function extractRepo(
   let failedDownloads = 0;
   const locations = findSkillLocations(tree.entries);
   for (const location of locations) {
+    // A folder name with a backtick or a line break could break out of a Markdown code span.
+    if (/[\x00-\x1f\x7f`]/.test(location.dir)) {
+      console.warn(`Unsafe skill folder name skipped in ${repo.fullName}`);
+      invalid += 1;
+      continue;
+    }
     const id = skillId(repo.fullName, location.dir);
     const known = previous.get(id);
     if (known && known.fingerprint === location.fingerprint) {

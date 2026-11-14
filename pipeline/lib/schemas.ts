@@ -108,7 +108,8 @@ export const RepoMetaSchema = z.object({
 export type RepoMeta = z.infer<typeof RepoMetaSchema>;
 
 export const SkillRecordSchema = z.object({
-  id: z.string().min(1),
+  // No control character or backtick: the id is printed in code spans of the pull request.
+  id: z.string().min(1).regex(/^[^\x00-\x1f\x7f`]+$/, "unsafe skill id"),
   repo: repoName,
   path: z.string(),
   name: z.string().min(1),

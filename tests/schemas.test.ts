@@ -6,6 +6,7 @@ import {
   KitsSchema,
   RepoMetaSchema,
   ReviewSchema,
+  SkillRecordSchema,
   SourcesSchema,
   type Config,
 } from "../pipeline/lib/schemas";
@@ -173,6 +174,26 @@ describe("RepoMetaSchema pushedAt", () => {
 
   it("rejects a value that is not a date", () => {
     expect(RepoMetaSchema.safeParse(makeRepo({ pushedAt: "yesterday" })).success).toBe(false);
+  });
+});
+
+describe("SkillRecordSchema id", () => {
+  const record = {
+    id: "acme/skills:skills/a",
+    repo: "acme/skills",
+    path: "skills/a",
+    name: "a",
+    description: "Skill a",
+    fingerprint: "a".repeat(40),
+    files: [],
+  };
+
+  it("accepts a plain id", () => {
+    expect(SkillRecordSchema.safeParse(record).success).toBe(true);
+  });
+
+  it("rejects an id containing a backtick", () => {
+    expect(SkillRecordSchema.safeParse({ ...record, id: `acme/skills:skills/a${"`"}b` }).success).toBe(false);
   });
 });
 

@@ -48,6 +48,17 @@ describe("extractRepo", () => {
     expect(result.skills[0].fingerprint).toMatch(/^[0-9a-f]{40}$/);
   });
 
+  it("skips a skill folder whose name could break Markdown and counts it as invalid", async () => {
+    const repo = acme();
+    const unsafeDir = `skills/bad${"`"}name`;
+    repo.files[`${unsafeDir}/SKILL.md`] = skillMd("bad", "Unsafe folder.");
+    const gh = new FakeGitHub([repo]);
+    const result = await extractRepo(gh, repo.meta, new Map());
+    expect(result.skills.map((skill) => skill.id)).toEqual(["acme/skills:skills/resume"]);
+    expect(result.invalid).toBe(2);
+    expect(warn).toHaveBeenCalledWith("Unsafe skill folder name skipped in acme/skills");
+  });
+
   it("does not download a skill whose fingerprint is unchanged", async () => {
     const repo = acme();
     const gh = new FakeGitHub([repo]);

@@ -81,7 +81,9 @@ describe("buildSummary", () => {
     expect(summary).toContain("**Approved entries that are no longer eligible (below threshold, severe, or gone):**");
     expect(summary).toContain("- `gone/repo:skills/x`");
     expect(summary).toContain("- `other/skills` - score 6.2");
-    expect(summary).toContain("- `acme/skills:skills/a` - score 7.8 -");
+    expect(summary).toContain(
+      "- [`acme/skills:skills/a`](https://github.com/acme/skills/tree/main/skills/a) - score 7.8 - Ask",
+    );
   });
 
   it("lists approved entries awaiting re-review", () => {
@@ -108,5 +110,96 @@ describe("buildSummary", () => {
 
   it("works when no run information is available", () => {
     expect(buildSummary(catalog, {})).toContain("# Pipeline run 2026-11-11");
+  });
+
+  it("marks a security notice and omits the dash when the why is empty", () => {
+    const base = catalog.skills[0];
+    const custom: Catalog = {
+      ...catalog,
+      skills: [
+        { ...base, review: makeReview({ why: "", security: { level: "notice", notes: ["n"] } }) },
+      ],
+    };
+    const text = buildSummary(custom, {});
+    expect(text).toContain("- score 7.8 - security notice");
+    expect(text).not.toMatch(/score 7\.8 - \n/);
+    expect(text).not.toMatch(/score 7\.8 - $/m);
+  });
+
+  it("neutralizes HTML and issue references from the model", () => {
+    const custom: Catalog = {
+      ...catalog,
+      skills: [{ ...catalog.skills[0], review: makeReview({ why: "<!-- hidden --> see foo/bar#1" }) }],
+    };
+    const text = buildSummary(custom, {});
+    expect(text).toContain("&lt;!-- hidden --&gt;");
+    expect(text).toContain("foo/bar# 1");
+    expect(text).not.toContain("<!--");
+  });
+
+  it("cuts a long error reason to 300 characters", () => {
+    const long: RunInfo = {
+      extract: {
+        repos: 1,
+        skills: 0,
+        invalid: 0,
+        failedDownloads: 0,
+        truncatedRepos: [],
+        failedRepos: [{ repo: "flaky/repo", error: "x".repeat(1000) }],
+      },
+    };
+    const text = buildSummary(catalog, long);
+    expect(text).toContain(`- \`flaky/repo\`: ${"x".repeat(300)}\n`);
+    expect(text).not.toContain("x".repeat(301));
+  });
+
+  it("neutralizes the reason of a filtered repository", () => {
+    const text = buildSummary(catalog, { filtered: [{ fullName: "a/b", reason: "ping @octocat <b>" }] });
+    expect(text).toContain("- `a/b`: ping (at)octocat &lt;b&gt;");
+  });
+
+  it("stays under the pull request body limit and says it was cut", () => {
+    // Lists are capped at 30 entries, so long kit titles are what make the text overflow.
+    const kits = Array.from({ length: 8 }, (_, index) => ({
+      id: `kit-${index}`,
+      title: `${"t".repeat(9000)}`,
+      description: "d",
+      collections: [],
+      skills: [],
+      removed: Array.from({ length: 40 }, (_, n) => `o/r:${"p".repeat(140)}${index}${String(n).padStart(2, "0")}`),
+      pending: [],
+      proposals: { collections: [], skills: [] },
+    }));
+    const text = buildSummary({ ...catalog, kits, skills: [] }, {});
+    expect(text.length).toBeLessThan(65536);
+    expect(text.endsWith("\n\n_Summary truncated at 60000 characters. The full text is in the workflow run log._\n")).toBe(true);
+  });
+
+  it("gives only the title and the catalog line for an empty catalog", () => {
+    const text = buildSummary({ generatedAt: "2026-11-11T00:00:00.000Z", kits: [], skills: [], collections: [] }, {});
+    expect(text).toContain("# Pipeline run 2026-11-11");
+    expect(text).toContain("Catalog: 0 skills, 0 collections.");
+    expect(text).not.toContain("## ");
+  });
+
+  it("prints no empty sections and no Run block without information", () => {
+    const empty: RunInfo = {
+      filtered: [],
+      extract: { repos: 0, skills: 0, invalid: 0, failedDownloads: 0, truncatedRepos: [], failedRepos: [] },
+      review: { ...(runInfo.review as NonNullable<RunInfo["review"]>), failed: [] },
+    };
+    const text = buildSummary(catalog, empty);
+    expect(text).not.toContain("## Failed reviews");
+    expect(text).not.toContain("## Repos that could not be read");
+    expect(text).not.toContain("## Repos excluded by the filter");
+    expect(buildSummary(catalog, {})).not.toContain("## Run");
+  });
+
+  it("caps long lists at 30 lines", () => {
+    const kit = { ...catalog.kits[0], removed: Array.from({ length: 31 }, (_, n) => `o/r:s${n}`) };
+    const text = buildSummary({ ...catalog, kits: [kit] }, {});
+    const lines = text.split("\n").filter((line) => line.startsWith("- `o/r:s"));
+    expect(lines).toHaveLength(30);
+    expect(text).toContain("- ... and 1 more");
   });
 });

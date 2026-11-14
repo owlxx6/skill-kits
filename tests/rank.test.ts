@@ -290,6 +290,31 @@ describe("buildCatalog", () => {
     expect(catalog.kits[0].proposals.skills).toEqual([]);
   });
 
+  it("does not propose a copy of content the curator already approved", () => {
+    const fork = makeRepo({ fullName: "fork/skills", stars: 100, forks: 10 });
+    const copy = makeSkill({
+      id: "fork/skills:skills/a",
+      repo: "fork/skills",
+      path: "skills/a",
+      name: "a",
+      fingerprint: fp("a"),
+    });
+    const catalog = buildCatalog({
+      repos: [repo, fork],
+      skills: [skill("a"), copy],
+      reviews: new Map([[fp("a"), uniform(9)]]),
+      kits: testKits,
+      curation: {
+        "resume-career": { approved: ["acme/skills:skills/a"], rejected: [] },
+        "web-app": { approved: [], rejected: [] },
+      },
+      config: testConfig,
+      now: NOW,
+    });
+    expect(catalog.kits[0].skills).toEqual(["acme/skills:skills/a"]);
+    expect(catalog.kits[0].proposals.skills).toEqual([]);
+  });
+
   it("removes an approved skill whose repository is no longer listed", () => {
     const stray = makeSkill({
       id: "gone/repo:skills/z",
