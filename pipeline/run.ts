@@ -184,7 +184,7 @@ export async function runPipeline(options: PipelineOptions, deps: PipelineDeps):
   const kits = await readYamlFile(paths.kits, KitsSchema);
   for (const step of STEPS) {
     if (!options.steps.includes(step)) continue;
-    deps.log(`▶ ${step}`);
+    deps.log(`> ${step}`);
     await handlers[step]({ paths, config, kits, options, deps });
   }
 }
