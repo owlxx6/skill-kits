@@ -79,6 +79,59 @@ describe("extractRepo", () => {
     const second = await extractRepo(gh, repo.meta, known);
     expect(second.skills).toEqual(first.skills);
     expect(second.invalid).toBe(1);
+    expect(second.failedDownloads).toBe(1);
+  });
+
+  it("counts a failed download without previous record apart from invalid files", async () => {
+    const repo = acme();
+    const gh = new FakeGitHub([repo]);
+    gh.failFileFor.add("acme/skills/skills/resume/SKILL.md");
+    const result = await extractRepo(gh, repo.meta, new Map());
+    expect(result.failedDownloads).toBe(1);
+    expect(result.invalid).toBe(1);
+    expect(result.skills).toEqual([]);
+  });
+
+  it("drops the previous record of a changed skill that no longer parses", async () => {
+    const repo = acme();
+    const gh = new FakeGitHub([repo]);
+    const first = await extractRepo(gh, repo.meta, new Map());
+    repo.files["skills/resume/SKILL.md"] = "# No front matter anymore";
+    const known = new Map(first.skills.map((skill) => [skill.id, skill]));
+    const second = await extractRepo(gh, repo.meta, known);
+    expect(second.skills).toEqual([]);
+    expect(second.invalid).toBe(2);
+  });
+
+  function twoSkills(): FakeRepo {
+    const repo = acme();
+    repo.files["skills/other/SKILL.md"] = skillMd("other-skill", "Does other things.");
+    return repo;
+  }
+
+  it("keeps previous skills past a truncated listing", async () => {
+    const repo = twoSkills();
+    const gh = new FakeGitHub([repo]);
+    const first = await extractRepo(gh, repo.meta, new Map());
+    expect(first.skills).toHaveLength(2);
+    delete repo.files["skills/other/SKILL.md"];
+    gh.truncateTreeFor.add("acme/skills");
+    const known = new Map(first.skills.map((skill) => [skill.id, skill]));
+    const second = await extractRepo(gh, repo.meta, known);
+    expect(second.truncated).toBe(true);
+    expect(second.skills.map((skill) => skill.id).sort()).toEqual(
+      first.skills.map((skill) => skill.id).sort(),
+    );
+  });
+
+  it("drops a deleted skill when the listing is complete", async () => {
+    const repo = twoSkills();
+    const gh = new FakeGitHub([repo]);
+    const first = await extractRepo(gh, repo.meta, new Map());
+    delete repo.files["skills/other/SKILL.md"];
+    const known = new Map(first.skills.map((skill) => [skill.id, skill]));
+    const second = await extractRepo(gh, repo.meta, known);
+    expect(second.skills.map((skill) => skill.id)).toEqual(["acme/skills:skills/resume"]);
   });
 });
 
@@ -118,6 +171,41 @@ describe("runExtract", () => {
     gh.truncateTreeFor.add("acme/skills");
     const { stats } = await runExtract(gh, [repo.meta], [], noSave);
     expect(stats.truncatedRepos).toEqual(["acme/skills"]);
+  });
+
+  it("sums failed downloads into the stats", async () => {
+    const repo = acme();
+    const gh = new FakeGitHub([repo]);
+    gh.failFileFor.add("acme/skills/skills/resume/SKILL.md");
+    const { stats } = await runExtract(gh, [repo.meta], [], noSave);
+    expect(stats.failedDownloads).toBe(1);
+  });
+
+  it("warns and drops the records of a repo that no longer has any skill", async () => {
+    const repo = acme();
+    const gh = new FakeGitHub([repo]);
+    const first = await runExtract(gh, [repo.meta], [], noSave);
+    repo.files = { "README.md": "Nothing here" };
+    const second = await runExtract(gh, [repo.meta], first.skills, noSave);
+    expect(second.skills).toEqual([]);
+    expect(warn).toHaveBeenCalledWith(
+      "No skill found anymore in acme/skills: its records are dropped",
+    );
+  });
+
+  it("saves the first repo, then the cumulative sorted list, for two repos", async () => {
+    const zed = acme();
+    zed.meta = makeRepo({ fullName: "zed/skills", url: "https://github.com/zed/skills" });
+    const first = acme();
+    const gh = new FakeGitHub([zed, first]);
+    const saved: string[][] = [];
+    await runExtract(gh, [zed.meta, first.meta], [], async (skills) => {
+      saved.push(skills.map((skill) => skill.id));
+    });
+    expect(saved).toEqual([
+      ["zed/skills:skills/resume"],
+      ["acme/skills:skills/resume", "zed/skills:skills/resume"],
+    ]);
   });
 
   it("saves progress after each repo", async () => {

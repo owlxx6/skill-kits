@@ -15,10 +15,16 @@ export async function extractRepo(
   gh: ExtractClient,
   repo: RepoMeta,
   previous: Map<string, SkillRecord>,
-): Promise<{ skills: SkillRecord[]; invalid: number; truncated: boolean }> {
+): Promise<{
+  skills: SkillRecord[];
+  invalid: number;
+  failedDownloads: number;
+  truncated: boolean;
+}> {
   const tree = await gh.getTree(repo.fullName, repo.defaultBranch);
   const skills: SkillRecord[] = [];
   let invalid = 0;
+  let failedDownloads = 0;
   for (const location of findSkillLocations(tree.entries)) {
     const id = skillId(repo.fullName, location.dir);
     const known = previous.get(id);
@@ -36,8 +42,8 @@ export async function extractRepo(
     } catch (error) {
       console.warn(`Skipping ${id}: ${errorMessage(error)}`);
       // A failed download must not drop a skill that already has a record.
+      failedDownloads += 1;
       if (known) skills.push(known);
-      else invalid += 1;
       continue;
     }
     const frontmatter = parseSkillFrontmatter(content);
@@ -56,7 +62,14 @@ export async function extractRepo(
       files: location.files,
     });
   }
-  return { skills, invalid, truncated: tree.truncated };
+  // A truncated listing is partial: skills past the cut are unknown, not deleted.
+  if (tree.truncated) {
+    const seen = new Set(skills.map((skill) => skill.id));
+    for (const record of previous.values()) {
+      if (record.repo === repo.fullName && !seen.has(record.id)) skills.push(record);
+    }
+  }
+  return { skills, invalid, failedDownloads, truncated: tree.truncated };
 }
 
 export async function runExtract(
@@ -70,12 +83,15 @@ export async function runExtract(
   const byRepo = new Map<string, SkillRecord[]>();
   for (const skill of previous) {
     if (!listed.has(skill.repo)) continue;
-    byRepo.set(skill.repo, [...(byRepo.get(skill.repo) ?? []), skill]);
+    const list = byRepo.get(skill.repo) ?? [];
+    list.push(skill);
+    byRepo.set(skill.repo, list);
   }
   const stats: ExtractStats = {
     repos: 0,
     skills: 0,
     invalid: 0,
+    failedDownloads: 0,
     truncatedRepos: [],
     failedRepos: [],
   };
@@ -85,9 +101,13 @@ export async function runExtract(
   for (const repo of repos) {
     try {
       const result = await extractRepo(gh, repo, previousById);
+      if (result.skills.length === 0 && (byRepo.get(repo.fullName)?.length ?? 0) > 0) {
+        console.warn(`No skill found anymore in ${repo.fullName}: its records are dropped`);
+      }
       byRepo.set(repo.fullName, result.skills);
       stats.repos += 1;
       stats.invalid += result.invalid;
+      stats.failedDownloads += result.failedDownloads;
       if (result.truncated) stats.truncatedRepos.push(repo.fullName);
     } catch (error) {
       // Keep this repo's previous records: one network error must not empty the catalog.

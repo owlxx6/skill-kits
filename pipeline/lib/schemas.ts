@@ -175,6 +175,7 @@ export const ExtractStatsSchema = z.object({
   repos: z.number(),
   skills: z.number(),
   invalid: z.number(),
+  failedDownloads: z.number(),
   truncatedRepos: z.array(z.string()),
   failedRepos: z.array(z.object({ repo: z.string(), error: z.string() })),
 });
