@@ -175,6 +175,25 @@ describe("buildSummary", () => {
     expect(text.endsWith("\n\n_Summary truncated at 60000 characters. The full text is in the workflow run log._\n")).toBe(true);
   });
 
+  it("stays under the limit when no line break precedes it", () => {
+    const kit = { ...catalog.kits[0], title: "t".repeat(70_000) };
+    const text = buildSummary({ ...catalog, kits: [kit], skills: [] }, {});
+    expect(text.length).toBeLessThan(65536);
+    expect(text.endsWith("_Summary truncated at 60000 characters. The full text is in the workflow run log._\n")).toBe(true);
+  });
+
+  it("escapes parentheses, hash and question mark in link targets", () => {
+    const skill = { ...catalog.skills[0], url: "https://github.com/acme/skills/tree/main/skills/a(b)#c?d" };
+    const text = buildSummary({ ...catalog, skills: [skill] }, {});
+    const line = text.split("\n").find((entry) => entry.includes("](https://")) ?? "";
+    const target = line.slice(line.indexOf("](") + 2, line.indexOf(") - score"));
+    expect(target).toContain("%28");
+    expect(target).toContain("%29");
+    expect(target).toContain("%23");
+    expect(target).toContain("%3F");
+    expect(target).not.toMatch(/[()]/);
+  });
+
   it("gives only the title and the catalog line for an empty catalog", () => {
     const text = buildSummary({ generatedAt: "2026-11-11T00:00:00.000Z", kits: [], skills: [], collections: [] }, {});
     expect(text).toContain("# Pipeline run 2026-11-11");

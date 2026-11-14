@@ -25,7 +25,18 @@ const inlineText = (text: string): string =>
 
 function skillRef(id: string, skillById: Map<string, Catalog["skills"][number]>): string {
   const skill = skillById.get(id);
-  return skill ? `[\`${id}\`](${encodeURI(skill.url)})` : `\`${id}\``;
+  if (!skill) return `\`${id}\``;
+  try {
+    // encodeURI keeps ( ) # ? as they are, which would break the Markdown link or change the page.
+    const target = encodeURI(skill.url).replace(
+      /[()#?]/g,
+      (char) => `%${char.charCodeAt(0).toString(16).toUpperCase()}`,
+    );
+    return `[\`${id}\`](${target})`;
+  } catch {
+    // encodeURI throws on a lone surrogate: fall back to the plain id.
+    return `\`${id}\``;
+  }
 }
 
 function capped(lines: string[]): string[] {
@@ -125,5 +136,6 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
   const text = `${lines.join("\n").trimEnd()}\n`;
   if (text.length <= MAX_SUMMARY_CHARS) return text;
   const cut = text.lastIndexOf("\n", MAX_SUMMARY_CHARS);
-  return `${text.slice(0, cut).trimEnd()}\n\n_Summary truncated at ${MAX_SUMMARY_CHARS} characters. The full text is in the workflow run log._\n`;
+  const end = cut > 0 ? cut : MAX_SUMMARY_CHARS;
+  return `${text.slice(0, end).trimEnd()}\n\n_Summary truncated at ${MAX_SUMMARY_CHARS} characters. The full text is in the workflow run log._\n`;
 }
