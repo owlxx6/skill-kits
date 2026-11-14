@@ -142,9 +142,21 @@ export function buildCatalog(input: RankInput): Catalog {
       .map((collection) => ({ id: collection.id, score: collection.kitScores[kit.id] }))
       .sort(byScoreThenId)
       .slice(0, config.proposals.collections);
+    // A copy of content the curator already decided on is not proposed again.
+    const takenFingerprints = new Set(
+      [...taken].flatMap((id) => {
+        const fingerprint = fingerprintById.get(id);
+        return fingerprint === undefined ? [] : [fingerprint];
+      }),
+    );
     const proposedFingerprints = new Set<string>();
     const skillProposals = catalogSkills
-      .filter((skill) => skill.review.kits.includes(kit.id) && !taken.has(skill.id))
+      .filter(
+        (skill) =>
+          skill.review.kits.includes(kit.id) &&
+          !taken.has(skill.id) &&
+          !takenFingerprints.has(fingerprintById.get(skill.id) ?? skill.id),
+      )
       .map((skill) => ({ id: skill.id, score: skill.score }))
       .sort(byScoreThenId)
       .filter((proposal) => {
