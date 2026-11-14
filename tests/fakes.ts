@@ -69,7 +69,7 @@ export class FakeGitHub implements GitHubClient {
 
   async getFileText(fullName: string, _ref: string, filePath: string): Promise<string> {
     this.fileReads.push(`${fullName}/${filePath}`);
-    if (this.failFileFor.has(`${fullName}/${filePath}`)) {
+    if (this.inSet(this.failFileFor, `${fullName}/${filePath}`)) {
       throw new Error(`network error for ${fullName}/${filePath}`);
     }
     const content = this.find(fullName)?.files[filePath];

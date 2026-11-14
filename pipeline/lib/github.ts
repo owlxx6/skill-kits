@@ -152,13 +152,19 @@ export function createGitHubClient(
             await response.body?.cancel();
             throw new Error(`${url} is larger than ${MAX_FILE_BYTES} bytes`);
           }
-          const text = await response.text();
-          if (text.length > MAX_FILE_BYTES) {
-            throw new Error(`${url} is larger than ${MAX_FILE_BYTES} bytes`);
+          let text: string | undefined;
+          try {
+            text = await response.text();
+          } catch (error) {
+            lastError = error instanceof Error ? error.message : String(error);
           }
-          return text;
-        }
-        if (response) {
+          if (text !== undefined) {
+            if (text.length > MAX_FILE_BYTES) {
+              throw new Error(`${url} is larger than ${MAX_FILE_BYTES} bytes`);
+            }
+            return text;
+          }
+        } else if (response) {
           lastStatus = response.status;
           lastError = "";
           await response.body?.cancel();
