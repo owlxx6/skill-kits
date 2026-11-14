@@ -70,8 +70,9 @@ export async function loadReviews(dir: string): Promise<Map<string, Review>> {
   const reviews = new Map<string, Review>();
   for (const name of await listReviewFiles(dir)) {
     const file = path.join(dir, name);
-    const record = await readJsonFile(file, ReviewRecordSchema.nullable(), null);
-    if (record === null) continue;
+    const record = await readJsonFile(file, ReviewRecordSchema.optional(), undefined);
+    // undefined: the file was deleted between listing and reading. A null file fails the schema.
+    if (record === undefined) continue;
     if (record.fingerprint !== name.slice(0, -".json".length)) {
       throw new Error(`${file} does not match its fingerprint`);
     }

@@ -246,6 +246,13 @@ describe("runPipeline", () => {
     await expect(loadReviews(dir)).rejects.toThrow("does not match its fingerprint");
   });
 
+  it("rejects a review file containing null", async () => {
+    await run();
+    const dir = path.join(root, "data", "cache", "reviews");
+    await writeFile(path.join(dir, `${"c".repeat(40)}.json`), "null");
+    await expect(loadReviews(dir)).rejects.toThrow(/c{40}\.json/);
+  });
+
   it("keeps the last run info on a partial run and resets it on a fresh run", async () => {
     await run();
     await run(["rank", "summary"]);
