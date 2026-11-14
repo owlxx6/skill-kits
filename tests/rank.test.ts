@@ -145,6 +145,144 @@ describe("buildCatalog", () => {
       "acme/skills:skills/a",
     ]);
   });
+
+  const curated = (approved: string[]): Curation => ({
+    "resume-career": { approved, rejected: [] },
+    "web-app": { approved: [], rejected: [] },
+  });
+
+  it("keeps an approved skill pending while its new version has no review", () => {
+    const [resume] = build(curated(["acme/skills:skills/f"])).kits;
+    expect(resume.pending).toEqual(["acme/skills:skills/f"]);
+    expect(resume.removed).toEqual([]);
+    expect(resume.skills).toEqual([]);
+  });
+
+  it("removes an approved skill whose review fell below the threshold", () => {
+    const catalog = build(curated(["acme/skills:skills/d"]));
+    expect(catalog.kits[0].removed).toEqual(["acme/skills:skills/d"]);
+    expect(catalog.kits[0].pending).toEqual([]);
+    expect(catalog.kits[0].skills).toEqual([]);
+  });
+
+  it("removes an approved skill whose review is severe", () => {
+    const catalog = build(curated(["acme/skills:skills/e"]));
+    expect(catalog.kits[0].removed).toEqual(["acme/skills:skills/e"]);
+    expect(catalog.kits[0].pending).toEqual([]);
+  });
+
+  it("does not mark a pending skill as human reviewed", () => {
+    const catalog = build(curated(["acme/skills:skills/f"]));
+    expect(catalog.skills.some((entry) => entry.humanReviewed)).toBe(false);
+  });
+
+  it("keeps the curator's order for approved skills", () => {
+    const catalog = build(curated(["acme/skills:skills/c", "acme/skills:skills/a"]));
+    expect(catalog.kits[0].skills).toEqual(["acme/skills:skills/c", "acme/skills:skills/a"]);
+  });
+
+  it("lists a notice skill with its security notes", () => {
+    const notice = uniform(9, { security: { level: "notice", notes: ["Runs a shell command"] } });
+    const catalog = buildCatalog({
+      repos: [repo],
+      skills: [skill("n")],
+      reviews: new Map([[fp("n"), notice]]),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    expect(catalog.skills).toHaveLength(1);
+    expect(catalog.skills[0].review.security).toEqual({
+      level: "notice",
+      notes: ["Runs a shell command"],
+    });
+  });
+
+  it("excludes a skill whose repository is not listed and does not count it", () => {
+    const stray = makeSkill({
+      id: "gone/repo:skills/z",
+      repo: "gone/repo",
+      path: "skills/z",
+      name: "z",
+      fingerprint: fp("z"),
+    });
+    const catalog = buildCatalog({
+      repos: [repo],
+      skills: [...skills.slice(0, 3), stray],
+      reviews: new Map([...reviews, [fp("z"), uniform(9)]]),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    expect(catalog.skills.map((entry) => entry.id)).not.toContain("gone/repo:skills/z");
+    expect(catalog.collections[0].skillCount).toBe(3);
+  });
+
+  it("lists a collection without kit scores when too few skills are tagged for a kit", () => {
+    const tagged = uniform(9);
+    const untagged = uniform(9, { kits: [] });
+    const catalog = buildCatalog({
+      repos: [repo],
+      skills: skills.slice(0, 3),
+      reviews: new Map([
+        [fp("a"), tagged],
+        [fp("b"), tagged],
+        [fp("c"), untagged],
+      ]),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    expect(catalog.collections).toHaveLength(1);
+    expect(catalog.collections[0].kitScores).toEqual({});
+    expect(catalog.kits[0].proposals.collections).toEqual([]);
+  });
+
+  it("proposes one copy of a fingerprint present in several repositories", () => {
+    const fork = makeRepo({ fullName: "fork/skills", stars: 100, forks: 10 });
+    const copy = makeSkill({
+      id: "fork/skills:skills/a",
+      repo: "fork/skills",
+      path: "skills/a",
+      name: "a",
+      fingerprint: fp("a"),
+    });
+    const catalog = buildCatalog({
+      repos: [repo, fork],
+      skills: [skill("a"), copy],
+      reviews: new Map([[fp("a"), uniform(9)]]),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    expect(catalog.skills).toHaveLength(2);
+    expect(catalog.kits[0].proposals.skills.map((entry) => entry.id)).toEqual([
+      "acme/skills:skills/a",
+    ]);
+  });
+
+  it("caps the skill proposals", () => {
+    const many = "abcdefghij".split("").map(skill);
+    const catalog = buildCatalog({
+      repos: [repo],
+      skills: many,
+      reviews: new Map(many.map((entry) => [entry.fingerprint, uniform(9)])),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    expect(catalog.skills).toHaveLength(10);
+    expect(catalog.kits[0].proposals.skills).toHaveLength(testConfig.proposals.skills);
+  });
+
+  it("gives the same output for the same input", () => {
+    expect(JSON.stringify(build(emptyCuration))).toBe(JSON.stringify(build(emptyCuration)));
+  });
 });
 
 describe("validateCuration", () => {
@@ -155,5 +293,21 @@ describe("validateCuration", () => {
   it("rejects a kit id that is not in kits.yaml", () => {
     const curation = { ...emptyCuration, "typo-kit": { approved: [], rejected: [] } };
     expect(() => validateCuration(curation, testKits)).toThrow(/typo-kit/);
+  });
+
+  it("rejects an id listed twice in the same list of a kit", () => {
+    const curation = {
+      ...emptyCuration,
+      "web-app": { approved: ["x/y:a", "x/y:a"], rejected: [] },
+    };
+    expect(() => validateCuration(curation, testKits)).toThrow(/web-app.*x\/y:a/);
+  });
+
+  it("rejects an id both approved and rejected in the same kit", () => {
+    const curation = {
+      ...emptyCuration,
+      "web-app": { approved: ["x/y:a"], rejected: ["x/y:a"] },
+    };
+    expect(() => validateCuration(curation, testKits)).toThrow(/web-app.*x\/y:a/);
   });
 });

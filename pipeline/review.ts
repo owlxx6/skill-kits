@@ -122,18 +122,22 @@ export function selectForReview(
   reviewed: Set<string>,
   repos: RepoMeta[],
   max: number,
+  priorityIds: Set<string> = new Set(),
 ): { selected: SkillRecord[]; deferred: number } {
   const stars = new Map(repos.map((repo) => [repo.fullName, repo.stars]));
+  // Approved skills (priority) are re-reviewed first and do not wait for triage.
   const sorted = skills
     .filter(
       (skill) =>
         stars.has(skill.repo) &&
-        (triage[skill.fingerprint]?.length ?? 0) > 0 &&
-        !reviewed.has(skill.fingerprint),
+        !reviewed.has(skill.fingerprint) &&
+        (priorityIds.has(skill.id) || (triage[skill.fingerprint]?.length ?? 0) > 0),
     )
     .sort(
       (a, b) =>
-        (stars.get(b.repo) ?? 0) - (stars.get(a.repo) ?? 0) || compareText(a.id, b.id),
+        Number(priorityIds.has(b.id)) - Number(priorityIds.has(a.id)) ||
+        (stars.get(b.repo) ?? 0) - (stars.get(a.repo) ?? 0) ||
+        compareText(a.id, b.id),
     );
   // After sorting, so the copy kept is the one in the most starred repository.
   const candidates = uniqueByFingerprint(sorted);
@@ -270,7 +274,7 @@ export async function runReviews(
         .filter((other) => other.fingerprint === skill.fingerprint && repoByName.has(other.repo))
         .map((other) => other.id)
         .sort(compareText);
-      stats.reviewedIds.push(...(copies.length > 0 ? copies : [skill.id]));
+      stats.reviewedIds.push(...copies);
     } catch (error) {
       if (error instanceof FatalLlmError) throw error;
       stats.failed.push({ skillId: skill.id, reason: errorMessage(error) });

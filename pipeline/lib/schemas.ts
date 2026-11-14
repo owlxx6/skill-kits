@@ -248,6 +248,7 @@ export const CatalogKitSchema = z.object({
   description: z.string(),
   collections: z.array(z.string()),
   skills: z.array(z.string()),
+  pending: z.array(z.string()),
   removed: z.array(z.string()),
   proposals: z.object({ collections: z.array(proposal), skills: z.array(proposal) }),
 });

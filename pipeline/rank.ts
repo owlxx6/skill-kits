@@ -31,11 +31,26 @@ interface Scored {
 const byScoreThenId = (a: Scored, b: Scored): number =>
   b.score - a.score || compareText(a.id, b.id);
 
+const duplicates = (ids: string[]): string[] =>
+  ids.filter((id, index) => ids.indexOf(id) !== index);
+
 export function validateCuration(curation: Curation, kits: Kit[]): void {
   const kitIds = new Set(kits.map((kit) => kit.id));
   const unknown = Object.keys(curation).filter((id) => !kitIds.has(id));
   if (unknown.length > 0) {
     throw new Error(`curation.yaml names kits that are not in kits.yaml: ${unknown.join(", ")}`);
+  }
+  for (const [kitId, entry] of Object.entries(curation)) {
+    const duplicated = [
+      ...duplicates(entry.approved),
+      ...duplicates(entry.rejected),
+      ...entry.approved.filter((id) => entry.rejected.includes(id)),
+    ];
+    if (duplicated.length > 0) {
+      throw new Error(
+        `curation.yaml, kit ${kitId}: ids listed twice or both approved and rejected: ${[...new Set(duplicated)].join(", ")}`,
+      );
+    }
   }
 }
 
@@ -48,6 +63,8 @@ export function buildCatalog(input: RankInput): Catalog {
   const signalByRepo = new Map(
     repos.map((repo) => [repo.fullName, repoSignal(repo, now, config.scoring)]),
   );
+  const skillById = new Map(skills.map((skill) => [skill.id, skill]));
+  const fingerprintById = new Map(skills.map((skill) => [skill.id, skill.fingerprint]));
   const approvedIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
 
   const catalogSkills: CatalogSkill[] = [];
@@ -125,17 +142,33 @@ export function buildCatalog(input: RankInput): Catalog {
       .map((collection) => ({ id: collection.id, score: collection.kitScores[kit.id] }))
       .sort(byScoreThenId)
       .slice(0, config.proposals.collections);
+    const proposedFingerprints = new Set<string>();
     const skillProposals = catalogSkills
       .filter((skill) => skill.review.kits.includes(kit.id) && !taken.has(skill.id))
       .map((skill) => ({ id: skill.id, score: skill.score }))
+      .sort(byScoreThenId)
+      .filter((proposal) => {
+        // Copies of one folder are one idea: propose the best-scored copy only.
+        const fingerprint = fingerprintById.get(proposal.id) ?? proposal.id;
+        if (proposedFingerprints.has(fingerprint)) return false;
+        proposedFingerprints.add(fingerprint);
+        return true;
+      })
       .slice(0, config.proposals.skills);
+    const notShown = decided.approved.filter((id) => !collectionIds.has(id) && !skillIds.has(id));
+    // An approved skill whose new version waits for a review is pending, not removed.
+    const pending = notShown.filter((id) => {
+      const record = skillById.get(id);
+      return record !== undefined && repoByName.has(record.repo) && !reviews.has(record.fingerprint);
+    });
     return {
       id: kit.id,
       title: kit.title,
       description: kit.description,
       collections: decided.approved.filter((id) => collectionIds.has(id)),
       skills: decided.approved.filter((id) => skillIds.has(id)),
-      removed: decided.approved.filter((id) => !collectionIds.has(id) && !skillIds.has(id)),
+      pending,
+      removed: notShown.filter((id) => !pending.includes(id)),
       proposals: { collections: collectionProposals, skills: skillProposals },
     };
   });

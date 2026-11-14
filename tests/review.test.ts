@@ -183,6 +183,30 @@ describe("selectForReview", () => {
   });
 });
 
+describe("selectForReview, priority ids", () => {
+  const repos = [
+    makeRepo({ fullName: "tiny/repo", stars: 10 }),
+    makeRepo({ fullName: "big/repo", stars: 9000 }),
+  ];
+  const skills = [
+    makeSkill({ id: "tiny/repo:p", repo: "tiny/repo", fingerprint: fp("p") }),
+    makeSkill({ id: "big/repo:q", repo: "big/repo", fingerprint: fp("q") }),
+  ];
+
+  it("selects a priority id before a more starred skill", () => {
+    const triage = { [fp("p")]: ["web-app"], [fp("q")]: ["web-app"] };
+    const result = selectForReview(skills, triage, new Set(), repos, 1, new Set(["tiny/repo:p"]));
+    expect(result.selected.map((skill) => skill.id)).toEqual(["tiny/repo:p"]);
+    expect(result.deferred).toBe(1);
+  });
+
+  it("selects a priority id even when triage gave it no kit", () => {
+    const triage = { [fp("p")]: [] };
+    const result = selectForReview(skills, triage, new Set(), repos, 5, new Set(["tiny/repo:p"]));
+    expect(result.selected.map((skill) => skill.id)).toEqual(["tiny/repo:p"]);
+  });
+});
+
 describe("selectForReview, copies and unlisted repositories", () => {
   it("keeps the copy of the most starred repository", () => {
     const repos = [
