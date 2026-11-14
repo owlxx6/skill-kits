@@ -25,7 +25,8 @@ export async function extractRepo(
   const skills: SkillRecord[] = [];
   let invalid = 0;
   let failedDownloads = 0;
-  for (const location of findSkillLocations(tree.entries)) {
+  const locations = findSkillLocations(tree.entries);
+  for (const location of locations) {
     const id = skillId(repo.fullName, location.dir);
     const known = previous.get(id);
     if (known && known.fingerprint === location.fingerprint) {
@@ -64,9 +65,9 @@ export async function extractRepo(
   }
   // A truncated listing is partial: skills past the cut are unknown, not deleted.
   if (tree.truncated) {
-    const seen = new Set(skills.map((skill) => skill.id));
+    const listedIds = new Set(locations.map((location) => skillId(repo.fullName, location.dir)));
     for (const record of previous.values()) {
-      if (record.repo === repo.fullName && !seen.has(record.id)) skills.push(record);
+      if (record.repo === repo.fullName && !listedIds.has(record.id)) skills.push(record);
     }
   }
   return { skills, invalid, failedDownloads, truncated: tree.truncated };

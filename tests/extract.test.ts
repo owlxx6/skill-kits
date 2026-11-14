@@ -124,6 +124,20 @@ describe("extractRepo", () => {
     );
   });
 
+  it("does not restore a listed skill that no longer parses, even when truncated", async () => {
+    const repo = twoSkills();
+    const gh = new FakeGitHub([repo]);
+    const first = await extractRepo(gh, repo.meta, new Map());
+    expect(first.skills).toHaveLength(2);
+    repo.files["skills/other/SKILL.md"] = "# No front matter anymore";
+    gh.truncateTreeFor.add("acme/skills");
+    const known = new Map(first.skills.map((skill) => [skill.id, skill]));
+    const second = await extractRepo(gh, repo.meta, known);
+    expect(second.skills.map((skill) => skill.id)).toEqual(["acme/skills:skills/resume"]);
+    // skills/broken was already invalid in the first pass, skills/other is now invalid too.
+    expect(second.invalid).toBe(2);
+  });
+
   it("drops a deleted skill when the listing is complete", async () => {
     const repo = twoSkills();
     const gh = new FakeGitHub([repo]);
