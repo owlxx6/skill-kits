@@ -1,0 +1,57 @@
+name: Weekly pipeline
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: weekly-pipeline
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Run the pipeline
+        run: npm run pipeline -- all
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Print the summary
+        run: cat pipeline-summary.md
+      - name: Open the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: pipeline/run-${{ github.run_id }}
+        run: |
+          if [ -z "$(git status --porcelain data/cache)" ]; then
+            echo "No data change: no pull request."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add data/cache
+          git commit -m "data: pipeline run ${{ github.run_id }}"
+          git push origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" \
+            --title "Pipeline run $(date -u +%Y-%m-%d)" \
+            --body-file pipeline-summary.md
+      - name: Keep the paid reviews
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reviews-${{ github.run_id }}
+          path: |
+            data/cache/reviews/
+            pipeline-run.json
+          if-no-files-found: ignore
+          retention-days: 14
