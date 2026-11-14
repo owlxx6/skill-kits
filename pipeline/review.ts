@@ -62,35 +62,42 @@ export async function runTriage(
   kits: Kit[],
   batchSize: number,
   stats: ReviewStats,
+  save: (cache: TriageCache) => Promise<void>,
 ): Promise<TriageCache> {
   const kitIds = new Set(kits.map((kit) => kit.id));
   const pending = uniqueByFingerprint(skills.filter((skill) => !(skill.fingerprint in triage)));
   const next: TriageCache = { ...triage };
 
-  for (let start = 0; start < pending.length; start += batchSize) {
-    const batch = pending.slice(start, start + batchSize);
+  // Triages one batch. With no usable answer, a batch of several items is split in two so
+  // that one bad item cannot block its neighbours every run; a single item is counted missing.
+  async function triageBatch(batch: SkillRecord[]): Promise<void> {
     const items = batch.map((skill, index) => ({
       index,
       name: skill.name,
       description: skill.description.slice(0, TRIAGE_DESCRIPTION_CHARS),
     }));
-    let result: LlmResult;
+    let usable: { index: number; kits: string[] }[] | null = null;
     try {
-      result = await llm.triage(items, kits);
+      const result = await llm.triage(items, kits);
+      addUsage(stats.triageUsage, result.usage);
+      const parsed = TriageWireSchema.safeParse(result.data);
+      if (!result.refusal && parsed.success) usable = parsed.data.results;
     } catch (error) {
       if (error instanceof FatalLlmError) throw error;
-      console.warn(`Triage batch failed, will retry next run: ${errorMessage(error)}`);
-      stats.triageMissing += batch.length;
-      continue;
+      console.warn(`Triage batch of ${batch.length} failed: ${errorMessage(error)}`);
     }
-    addUsage(stats.triageUsage, result.usage);
-    const parsed = TriageWireSchema.safeParse(result.data);
-    if (!parsed.success) {
-      stats.triageMissing += batch.length;
-      continue;
+    if (usable === null) {
+      if (batch.length === 1) {
+        stats.triageMissing += 1;
+        return;
+      }
+      const middle = Math.ceil(batch.length / 2);
+      await triageBatch(batch.slice(0, middle));
+      await triageBatch(batch.slice(middle));
+      return;
     }
     const answered = new Set<number>();
-    for (const item of parsed.data.results) {
+    for (const item of usable) {
       const skill = batch[item.index];
       if (!skill || answered.has(item.index)) continue;
       answered.add(item.index);
@@ -100,6 +107,11 @@ export async function runTriage(
       stats.triaged += 1;
     }
     stats.triageMissing += batch.length - answered.size;
+  }
+
+  for (let start = 0; start < pending.length; start += batchSize) {
+    await triageBatch(pending.slice(start, start + batchSize));
+    await save(next);
   }
   return next;
 }
@@ -112,15 +124,19 @@ export function selectForReview(
   max: number,
 ): { selected: SkillRecord[]; deferred: number } {
   const stars = new Map(repos.map((repo) => [repo.fullName, repo.stars]));
-  const candidates = uniqueByFingerprint(
-    skills.filter(
+  const sorted = skills
+    .filter(
       (skill) =>
-        (triage[skill.fingerprint]?.length ?? 0) > 0 && !reviewed.has(skill.fingerprint),
-    ),
-  ).sort(
-    (a, b) =>
-      (stars.get(b.repo) ?? 0) - (stars.get(a.repo) ?? 0) || compareText(a.id, b.id),
-  );
+        stars.has(skill.repo) &&
+        (triage[skill.fingerprint]?.length ?? 0) > 0 &&
+        !reviewed.has(skill.fingerprint),
+    )
+    .sort(
+      (a, b) =>
+        (stars.get(b.repo) ?? 0) - (stars.get(a.repo) ?? 0) || compareText(a.id, b.id),
+    );
+  // After sorting, so the copy kept is the one in the most starred repository.
+  const candidates = uniqueByFingerprint(sorted);
   return {
     selected: candidates.slice(0, max),
     deferred: Math.max(0, candidates.length - max),
@@ -141,6 +157,18 @@ export function normalizeReview(data: unknown, kitIds: Set<string>): unknown {
   if (Array.isArray(copy.cautions)) copy.cautions = copy.cautions.slice(0, MAX_LIST_ITEMS);
   if (Array.isArray(copy.keywords)) copy.keywords = copy.keywords.slice(0, MAX_KEYWORDS);
   return copy;
+}
+
+function warnDroppedKits(skillId: string, data: unknown, kitIds: Set<string>): void {
+  if (typeof data !== "object" || data === null || !("kits" in data) || !Array.isArray(data.kits)) {
+    return;
+  }
+  const dropped = data.kits.filter(
+    (id): id is string => typeof id === "string" && !kitIds.has(id),
+  );
+  if (dropped.length > 0) {
+    console.warn(`Unknown kit ids dropped for ${skillId}: ${dropped.join(", ")}`);
+  }
 }
 
 export interface ReviewOutcome {
@@ -171,12 +199,19 @@ export async function reviewSkill(
   let reason = "no answer";
 
   for (let attempt = 1; attempt <= REVIEW_ATTEMPTS; attempt += 1) {
-    const result = await llm.review(input, kits, settings.maxSkillChars);
+    let result: LlmResult;
+    try {
+      result = await llm.review(input, kits, settings.maxSkillChars);
+    } catch (error) {
+      if (error instanceof FatalLlmError) throw error;
+      return { review: null, reason: errorMessage(error), usage, truncated };
+    }
     addUsage(usage, result.usage);
     if (result.refusal) {
       reason = "model refused"; // asking again would get the same refusal
       break;
     }
+    warnDroppedKits(skill.id, result.data, kitIds);
     const parsed = ReviewSchema.safeParse(normalizeReview(result.data, kitIds));
     if (parsed.success) return { review: parsed.data, usage, truncated };
     const issue = parsed.error.issues[0];
@@ -190,6 +225,7 @@ export interface ReviewDeps {
   gh: Pick<GitHubClient, "getFileText">;
   kits: Kit[];
   repos: RepoMeta[];
+  skills: SkillRecord[];
   settings: ReviewSettings;
   now: Date;
   saveReview: (record: ReviewRecord) => Promise<void>;
@@ -205,7 +241,10 @@ export async function runReviews(
   const repoByName = new Map(deps.repos.map((repo) => [repo.fullName, repo]));
   for (const skill of selected) {
     const repo = repoByName.get(skill.repo);
-    if (!repo) continue;
+    if (!repo) {
+      stats.failed.push({ skillId: skill.id, reason: "repository no longer listed" });
+      continue;
+    }
     try {
       const content = await deps.gh.getFileText(
         repo.fullName,
@@ -226,7 +265,12 @@ export async function runReviews(
         review: outcome.review,
       });
       stats.reviewed += 1;
-      stats.reviewedIds.push(skill.id);
+      // One review serves every copy of the same folder.
+      const copies = deps.skills
+        .filter((other) => other.fingerprint === skill.fingerprint)
+        .map((other) => other.id)
+        .sort(compareText);
+      stats.reviewedIds.push(...(copies.length > 0 ? copies : [skill.id]));
     } catch (error) {
       if (error instanceof FatalLlmError) throw error;
       stats.failed.push({ skillId: skill.id, reason: errorMessage(error) });

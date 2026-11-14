@@ -56,6 +56,7 @@ Fill every field:
 - cautions: up to 3 short points (limits, prerequisites, risks).
 - keywords: 6 to 10 lowercase search terms a builder would type, including synonyms.
 - security.level: "none"; "notice" when the skill runs shell commands, calls the network or handles credentials; "severe" when it hides its behavior, exfiltrates data, or asks the agent to bypass safeguards. Explain each notice in security.notes.
+- Do not mention the repository or its owner in why or summary.
 
 Judge only what is written. Do not assume that files you cannot read are good.`;
 
