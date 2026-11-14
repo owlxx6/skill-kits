@@ -1,0 +1,149 @@
+import type {
+  Catalog,
+  CatalogCollection,
+  CatalogKit,
+  CatalogSkill,
+  Config,
+  Curation,
+  Kit,
+  RepoMeta,
+  Review,
+  SkillRecord,
+} from "./lib/schemas";
+import { compareText } from "./lib/text";
+import { collectionKitScore, repoSignal, reviewScore, skillScore } from "./lib/scores";
+
+export interface RankInput {
+  repos: RepoMeta[];
+  skills: SkillRecord[];
+  reviews: Map<string, Review>;
+  kits: Kit[];
+  curation: Curation;
+  config: Config;
+  now: Date;
+}
+
+interface Scored {
+  id: string;
+  score: number;
+}
+
+const byScoreThenId = (a: Scored, b: Scored): number =>
+  b.score - a.score || compareText(a.id, b.id);
+
+export function validateCuration(curation: Curation, kits: Kit[]): void {
+  const kitIds = new Set(kits.map((kit) => kit.id));
+  const unknown = Object.keys(curation).filter((id) => !kitIds.has(id));
+  if (unknown.length > 0) {
+    throw new Error(`curation.yaml names kits that are not in kits.yaml: ${unknown.join(", ")}`);
+  }
+}
+
+// Deterministic: no network, no model. The same cache, curation and date give the same catalog.
+export function buildCatalog(input: RankInput): Catalog {
+  const { repos, skills, reviews, kits, curation, config, now } = input;
+  validateCuration(curation, kits);
+
+  const repoByName = new Map(repos.map((repo) => [repo.fullName, repo]));
+  const signalByRepo = new Map(
+    repos.map((repo) => [repo.fullName, repoSignal(repo, now, config.scoring)]),
+  );
+  const approvedIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
+
+  const catalogSkills: CatalogSkill[] = [];
+  const skillCountByRepo = new Map<string, number>();
+  for (const skill of skills) {
+    const repo = repoByName.get(skill.repo);
+    if (!repo) continue;
+    skillCountByRepo.set(skill.repo, (skillCountByRepo.get(skill.repo) ?? 0) + 1);
+    const review = reviews.get(skill.fingerprint);
+    if (!review) continue;
+    const reviewValue = reviewScore(review.scores);
+    if (reviewValue < config.review.minCatalogScore) continue;
+    if (review.security.level === "severe") continue;
+    const signal = signalByRepo.get(skill.repo) ?? 0;
+    catalogSkills.push({
+      id: skill.id,
+      repo: skill.repo,
+      path: skill.path,
+      name: skill.name,
+      description: skill.description,
+      url: skill.path ? `${repo.url}/tree/${repo.defaultBranch}/${skill.path}` : repo.url,
+      license: repo.license ?? "",
+      stars: repo.stars,
+      forks: repo.forks,
+      pushedAt: repo.pushedAt,
+      review,
+      reviewScore: reviewValue,
+      repoSignal: signal,
+      score: skillScore(reviewValue, signal, config.scoring),
+      humanReviewed: approvedIds.has(skill.id),
+    });
+  }
+  catalogSkills.sort(byScoreThenId);
+
+  const collections: CatalogCollection[] = [];
+  for (const repo of repos) {
+    const total = skillCountByRepo.get(repo.fullName) ?? 0;
+    const listed = catalogSkills.filter((skill) => skill.repo === repo.fullName);
+    if (total < config.collection.minSkills || listed.length === 0) continue;
+    const signal = signalByRepo.get(repo.fullName) ?? 0;
+    const kitScores: Record<string, number> = {};
+    for (const kit of kits) {
+      const scores = listed
+        .filter((skill) => skill.review.kits.includes(kit.id))
+        .map((skill) => skill.reviewScore);
+      if (scores.length >= config.collection.minKitSkills) {
+        kitScores[kit.id] = collectionKitScore(signal, scores, config.scoring);
+      }
+    }
+    collections.push({
+      id: repo.fullName,
+      url: repo.url,
+      description: repo.description,
+      license: repo.license ?? "",
+      stars: repo.stars,
+      forks: repo.forks,
+      pushedAt: repo.pushedAt,
+      repoSignal: signal,
+      skillCount: total,
+      catalogSkillIds: listed.map((skill) => skill.id),
+      kitScores,
+      humanReviewed: approvedIds.has(repo.fullName),
+    });
+  }
+  collections.sort((a, b) => b.repoSignal - a.repoSignal || compareText(a.id, b.id));
+
+  const skillIds = new Set(catalogSkills.map((skill) => skill.id));
+  const collectionIds = new Set(collections.map((collection) => collection.id));
+
+  const catalogKits: CatalogKit[] = kits.map((kit) => {
+    const decided = curation[kit.id] ?? { approved: [], rejected: [] };
+    const taken = new Set([...decided.approved, ...decided.rejected]);
+    const collectionProposals = collections
+      .filter((collection) => kit.id in collection.kitScores && !taken.has(collection.id))
+      .map((collection) => ({ id: collection.id, score: collection.kitScores[kit.id] }))
+      .sort(byScoreThenId)
+      .slice(0, config.proposals.collections);
+    const skillProposals = catalogSkills
+      .filter((skill) => skill.review.kits.includes(kit.id) && !taken.has(skill.id))
+      .map((skill) => ({ id: skill.id, score: skill.score }))
+      .slice(0, config.proposals.skills);
+    return {
+      id: kit.id,
+      title: kit.title,
+      description: kit.description,
+      collections: decided.approved.filter((id) => collectionIds.has(id)),
+      skills: decided.approved.filter((id) => skillIds.has(id)),
+      removed: decided.approved.filter((id) => !collectionIds.has(id) && !skillIds.has(id)),
+      proposals: { collections: collectionProposals, skills: skillProposals },
+    };
+  });
+
+  return {
+    generatedAt: now.toISOString(),
+    kits: catalogKits,
+    skills: catalogSkills,
+    collections,
+  };
+}
