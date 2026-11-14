@@ -111,7 +111,7 @@ export class FakeLlm implements LlmClient {
 
   async review(input: ReviewInput): Promise<LlmResult> {
     this.reviewCalls.push(input);
-    const attempt = this.reviewCalls.filter((call) => call.name === input.name).length;
+    const attempt = this.reviewCalls.filter((call) => `${call.repo}:${call.name}` === `${input.repo}:${input.name}`).length;
     const data = this.onReview(input, attempt);
     const usage = { inputTokens: 1000, outputTokens: 100 };
     if (data === REFUSAL) return { data: null, usage, refusal: true };

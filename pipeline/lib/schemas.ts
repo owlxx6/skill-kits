@@ -138,7 +138,7 @@ export type Review = z.infer<typeof ReviewSchema>;
 // ReviewSchema enforces the limits after the response comes back.
 export const ReviewWireSchema = z.object({
   kits: z.array(z.string()),
-  scores: z.object({ clarity: z.number(), completeness: z.number(), usefulness: z.number() }),
+  scores: z.object({ clarity: z.int(), completeness: z.int(), usefulness: z.int() }),
   why: z.string(),
   summary: z.string(),
   strengths: z.array(z.string()),
@@ -151,7 +151,7 @@ export const ReviewWireSchema = z.object({
 });
 
 export const TriageWireSchema = z.object({
-  results: z.array(z.object({ index: z.number(), kits: z.array(z.string()) })),
+  results: z.array(z.object({ index: z.int(), kits: z.array(z.string()) })),
 });
 
 export const TriageCacheSchema = z.record(z.string(), z.array(z.string()));
