@@ -267,7 +267,7 @@ export async function runReviews(
       stats.reviewed += 1;
       // One review serves every copy of the same folder.
       const copies = deps.skills
-        .filter((other) => other.fingerprint === skill.fingerprint)
+        .filter((other) => other.fingerprint === skill.fingerprint && repoByName.has(other.repo))
         .map((other) => other.id)
         .sort(compareText);
       stats.reviewedIds.push(...(copies.length > 0 ? copies : [skill.id]));

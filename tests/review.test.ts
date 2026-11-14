@@ -413,6 +413,15 @@ describe("runReviews", () => {
     expect(stats.reviewedIds).toEqual(["acme/skills:skills/a", "fork/skills:skills/a"]);
   });
 
+  it("does not report a copy whose repository is no longer listed", async () => {
+    const stale = makeSkill({ id: "gone/skills:skills/a", repo: "gone/skills", path: "skills/a", name: "a", fingerprint: fp("a") });
+    const gh = new FakeGitHub([{ meta: repo, files }]);
+    const llm = new FakeLlm(noTriage, () => makeReview());
+    const stats = emptyReviewStats();
+    await runReviews(deps(llm, gh, { skills: [selected[0], stale] }), [selected[0]], stats);
+    expect(stats.reviewedIds).toEqual(["acme/skills:skills/a"]);
+  });
+
   it("records a skill whose repository is no longer listed", async () => {
     const gh = new FakeGitHub([{ meta: repo, files }]);
     const llm = new FakeLlm(noTriage, () => makeReview());
