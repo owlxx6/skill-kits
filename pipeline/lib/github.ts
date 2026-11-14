@@ -12,6 +12,9 @@ export interface GitHubClient {
 
 const ThrottledOctokit = Octokit.plugin(throttling);
 const RAW_ATTEMPTS = 3;
+const API_ATTEMPTS = 3;
+const RAW_TIMEOUT_MS = 30_000;
+const DEFAULT_RETRY_DELAY_MS = 2000;
 const MAX_FILE_BYTES = 1_000_000;
 
 function httpStatus(error: unknown): number | undefined {
@@ -26,7 +29,26 @@ const encodePath = (value: string): string => value.split("/").map(encodeURIComp
 
 const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
-export function createGitHubClient(token: string | undefined): GitHubClient {
+export function createGitHubClient(
+  token: string | undefined,
+  options: { retryDelayMs?: number } = {},
+): GitHubClient {
+  const retryDelayMs = options.retryDelayMs ?? DEFAULT_RETRY_DELAY_MS;
+
+  // Retries network errors and 5xx responses. Rate limits are handled by the throttling plugin.
+  async function withRetry<T>(call: () => Promise<T>): Promise<T> {
+    for (let attempt = 1; ; attempt += 1) {
+      try {
+        return await call();
+      } catch (error) {
+        const status = httpStatus(error);
+        const retryable = status === undefined || status >= 500;
+        if (!retryable || attempt >= API_ATTEMPTS) throw error;
+        await sleep(attempt * retryDelayMs);
+      }
+    }
+  }
+
   const octokit = new ThrottledOctokit({
     auth: token,
     throttle: {
@@ -51,13 +73,16 @@ export function createGitHubClient(token: string | undefined): GitHubClient {
     async searchReposByTopic(topic, minStars, maxPages) {
       const names: string[] = [];
       for (let page = 1; page <= maxPages; page += 1) {
-        const { data } = await octokit.rest.search.repos({
+        const { data } = await withRetry(() => octokit.rest.search.repos({
           q: `topic:${topic} stars:>=${minStars} archived:false`,
           sort: "stars",
           order: "desc",
           per_page: 100,
           page,
-        });
+        }));
+        if (data.incomplete_results) {
+          throw new Error(`GitHub search for topic ${topic} returned incomplete results (page ${page})`);
+        }
         names.push(...data.items.map((item) => item.full_name));
         if (data.items.length < 100) break;
       }
@@ -67,7 +92,7 @@ export function createGitHubClient(token: string | undefined): GitHubClient {
     async getRepo(fullName) {
       const [owner, repo] = fullName.split("/");
       try {
-        const { data } = await octokit.rest.repos.get({ owner, repo });
+        const { data } = await withRetry(() => octokit.rest.repos.get({ owner, repo }));
         return {
           fullName: data.full_name,
           url: data.html_url,
@@ -90,12 +115,9 @@ export function createGitHubClient(token: string | undefined): GitHubClient {
     async getTree(fullName, ref) {
       const [owner, repo] = fullName.split("/");
       try {
-        const { data } = await octokit.rest.git.getTree({
-          owner,
-          repo,
-          tree_sha: ref,
-          recursive: "1",
-        });
+        const { data } = await withRetry(() =>
+          octokit.rest.git.getTree({ owner, repo, tree_sha: ref, recursive: "1" }),
+        );
         const entries: TreeEntry[] = [];
         for (const item of data.tree) {
           if (!item.path || !item.sha) continue;
@@ -116,11 +138,18 @@ export function createGitHubClient(token: string | undefined): GitHubClient {
     async getFileText(fullName, ref, filePath) {
       const url = `https://raw.githubusercontent.com/${fullName}/${encodePath(ref)}/${encodePath(filePath)}`;
       let lastStatus = 0;
+      let lastError = "";
       for (let attempt = 1; attempt <= RAW_ATTEMPTS; attempt += 1) {
-        const response = await fetch(url);
-        if (response.ok) {
+        let response: Response | undefined;
+        try {
+          response = await fetch(url, { signal: AbortSignal.timeout(RAW_TIMEOUT_MS) });
+        } catch (error) {
+          lastError = error instanceof Error ? error.message : String(error);
+        }
+        if (response?.ok) {
           const declared = Number(response.headers.get("content-length"));
           if (response.headers.has("content-length") && declared > MAX_FILE_BYTES) {
+            await response.body?.cancel();
             throw new Error(`${url} is larger than ${MAX_FILE_BYTES} bytes`);
           }
           const text = await response.text();
@@ -129,11 +158,16 @@ export function createGitHubClient(token: string | undefined): GitHubClient {
           }
           return text;
         }
-        lastStatus = response.status;
-        const retryable = response.status === 429 || response.status >= 500;
-        if (!retryable) break;
-        await sleep(attempt * 2000);
+        if (response) {
+          lastStatus = response.status;
+          lastError = "";
+          await response.body?.cancel();
+          const retryable = response.status === 429 || response.status >= 500;
+          if (!retryable) break;
+        }
+        if (attempt < RAW_ATTEMPTS) await sleep(attempt * retryDelayMs);
       }
+      if (lastError) throw new Error(`GET ${url} failed: ${lastError}`);
       throw new Error(`GET ${url} failed with status ${lastStatus}`);
     },
   };

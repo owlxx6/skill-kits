@@ -15,11 +15,18 @@ const sha1 = (text: string): string => createHash("sha1").update(text).digest("h
 export class FakeGitHub implements GitHubClient {
   fileReads: string[] = [];
   failTreeFor = new Set<string>();
+  truncateTreeFor = new Set<string>();
+  failFileFor = new Set<string>();
 
   constructor(
     private readonly repos: FakeRepo[],
     private readonly topics: Record<string, string[]> = {},
   ) {}
+
+  private inSet(set: Set<string>, fullName: string): boolean {
+    const wanted = fullName.toLowerCase();
+    return [...set].some((name) => name.toLowerCase() === wanted);
+  }
 
   private find(fullName: string): FakeRepo | undefined {
     return this.repos.find(
@@ -36,7 +43,7 @@ export class FakeGitHub implements GitHubClient {
   }
 
   async getTree(fullName: string): Promise<{ entries: TreeEntry[]; truncated: boolean }> {
-    if (this.failTreeFor.has(fullName)) throw new Error(`network error for ${fullName}`);
+    if (this.inSet(this.failTreeFor, fullName)) throw new Error(`network error for ${fullName}`);
     const repo = this.find(fullName);
     if (!repo) return { entries: [], truncated: false };
     const files = Object.entries(repo.files);
@@ -57,11 +64,14 @@ export class FakeGitHub implements GitHubClient {
         .join("\n");
       entries.push({ path: dir, type: "tree", sha: sha1(inside) });
     }
-    return { entries, truncated: false };
+    return { entries, truncated: this.inSet(this.truncateTreeFor, fullName) };
   }
 
   async getFileText(fullName: string, _ref: string, filePath: string): Promise<string> {
     this.fileReads.push(`${fullName}/${filePath}`);
+    if (this.failFileFor.has(`${fullName}/${filePath}`)) {
+      throw new Error(`network error for ${fullName}/${filePath}`);
+    }
     const content = this.find(fullName)?.files[filePath];
     if (content === undefined) throw new Error(`missing file ${fullName}/${filePath}`);
     return content;

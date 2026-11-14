@@ -126,6 +126,12 @@ describe("repo names and curation keys", () => {
     expect(SourcesSchema.safeParse(sources("owner/.github")).success).toBe(true);
   });
 
+  it("accepts a plain topic and rejects search qualifiers in it", () => {
+    const withTopic = (topic: string) => ({ repos: [], topics: [topic], maxSearchPages: 1 });
+    expect(SourcesSchema.safeParse(withTopic("agent-skills")).success).toBe(true);
+    expect(SourcesSchema.safeParse(withTopic("x stars:>0")).success).toBe(false);
+  });
+
   it("rejects ../..", () => {
     expect(SourcesSchema.safeParse(sources("../..")).success).toBe(false);
   });
