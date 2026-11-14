@@ -408,7 +408,11 @@ describe("runReviews", () => {
     const gh = new FakeGitHub([{ meta: repo, files }]);
     const llm = new FakeLlm(noTriage, () => makeReview());
     const stats = emptyReviewStats();
-    await runReviews(deps(llm, gh, { skills: [selected[0], copy] }), [selected[0]], stats);
+    await runReviews(
+      deps(llm, gh, { repos: [repo, makeRepo({ fullName: "fork/skills" })], skills: [selected[0], copy] }),
+      [selected[0]],
+      stats,
+    );
     expect(stats.reviewed).toBe(1);
     expect(stats.reviewedIds).toEqual(["acme/skills:skills/a", "fork/skills:skills/a"]);
   });
