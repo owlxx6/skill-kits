@@ -5,6 +5,7 @@ import {
   buildReviewUserMessage,
   buildTriageUserMessage,
   classifyApiError,
+  fatalErrorMessage,
   toLlmResult,
 } from "../pipeline/lib/llm";
 import { ReviewWireSchema, TriageWireSchema } from "../pipeline/lib/schemas";
@@ -49,6 +50,12 @@ describe("buildReviewUserMessage", () => {
     expect(count(message, /skill_content/gi)).toBe(2);
     expect(count(message, /skill_metadata/gi)).toBe(2);
     expect(message).toContain("[tag removed]");
+  });
+
+  it("does not eat text between an unterminated tag and a later closing bracket", () => {
+    const content = "a <skill_content b <b>bold</b> c";
+    const message = buildReviewUserMessage({ ...input, content }, testKits, 24000);
+    expect(message).toContain("<b>bold</b>");
   });
 
   it("neutralizes delimiter tags in the description and in a file name", () => {
@@ -133,6 +140,30 @@ describe("classifyApiError", () => {
 
   it("never escalates an unrelated error", () => {
     expect(classifyApiError(new Error("x"), 10)).toBe("skill");
+  });
+});
+
+describe("fatalErrorMessage", () => {
+  const hint = " Check ANTHROPIC_API_KEY, review.model in data/config.yaml, and the account's credit balance.";
+  const apiError = (status: number, type: string, message: string): Error =>
+    Anthropic.APIError.generate(status, { type: "error", error: { type, message } }, message, new Headers());
+
+  it("names the cause when the error is fatal on its own, even after three failures", () => {
+    const error = apiError(401, "authentication_error", "invalid key");
+    for (const failures of [1, 3]) {
+      const message = fatalErrorMessage(error, failures);
+      expect(message.startsWith("Claude API error that affects every skill: 401")).toBe(true);
+      expect(message).toContain("invalid key");
+      expect(message.endsWith(hint)).toBe(true);
+    }
+  });
+
+  it("counts failures when the error is only fatal by repetition", () => {
+    const error = apiError(529, "overloaded_error", "busy");
+    const message = fatalErrorMessage(error, 3);
+    expect(message.startsWith("3 consecutive Claude API failures, last: 529")).toBe(true);
+    expect(message).toContain("busy");
+    expect(message.endsWith(hint)).toBe(true);
   });
 });
 

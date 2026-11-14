@@ -67,7 +67,7 @@ export function buildTriageUserMessage(items: TriageItem[], kits: Kit[]): string
 }
 
 // Any spelling of a delimiter tag inside third-party text could open or close a data block.
-const DELIMITER_TAG = /<\s*\/?\s*skill_(content|metadata)\b[^>]*>/gi;
+const DELIMITER_TAG = /<\s*\/?\s*skill_(content|metadata)\b[^<>]*>/gi;
 const neutralize = (text: string): string => text.replace(DELIMITER_TAG, "[tag removed]");
 
 export function buildReviewUserMessage(
@@ -134,6 +134,19 @@ export function classifyApiError(error: unknown, consecutiveFailures: number): "
   return apiFailure && consecutiveFailures >= MAX_CONSECUTIVE_FAILURES ? "fatal" : "skill";
 }
 
+const FATAL_HINT =
+  " Check ANTHROPIC_API_KEY, review.model in data/config.yaml, and the account's credit balance.";
+
+// The cause comes first: an error fatal on its own is named as such, even on the third failure.
+export function fatalErrorMessage(error: unknown, consecutiveFailures: number): string {
+  const fatalOnItsOwn = classifyApiError(error, 0) === "fatal";
+  const head =
+    !fatalOnItsOwn && consecutiveFailures >= MAX_CONSECUTIVE_FAILURES
+      ? `${MAX_CONSECUTIVE_FAILURES} consecutive Claude API failures, last: ${errorMessage(error)}`
+      : `Claude API error that affects every skill: ${errorMessage(error)}`;
+  return head + FATAL_HINT;
+}
+
 const MAX_RETRIES = 3;
 const REQUEST_TIMEOUT_MS = 120_000;
 
@@ -157,10 +170,7 @@ export function createLlmClient(model: string): LlmClient {
     } catch (error) {
       consecutiveFailures += 1;
       if (classifyApiError(error, consecutiveFailures) === "fatal") {
-        const reason =
-          consecutiveFailures >= MAX_CONSECUTIVE_FAILURES
-            ? `${MAX_CONSECUTIVE_FAILURES} consecutive Claude API failures, last: ${errorMessage(error)}`
-            : `Claude API error that affects every skill: ${errorMessage(error)}`;
+        const reason = fatalErrorMessage(error, consecutiveFailures);
         throw new FatalLlmError(reason);
       }
       throw error;
