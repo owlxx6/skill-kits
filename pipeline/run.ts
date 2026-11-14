@@ -4,6 +4,7 @@ import { z } from "zod";
 import { discover } from "./discover";
 import { runExtract } from "./extract";
 import { filterRepos } from "./filter";
+import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
 import type { LlmClient } from "./lib/llm";
 import {
@@ -55,21 +56,26 @@ interface StepContext {
 // A dry run measures cost and quality on a small sample: it never reviews more than this.
 const DRY_RUN_MAX_REVIEWS = 40;
 
-export async function loadReviews(dir: string): Promise<Map<string, Review>> {
-  let names: string[];
+async function listReviewFiles(dir: string): Promise<string[]> {
   try {
-    names = await readdir(dir);
+    // Temporary files left by an interrupted write end in .tmp and are ignored.
+    return (await readdir(dir)).filter((name) => name.endsWith(".json"));
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") return new Map();
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
     throw error;
   }
+}
+
+export async function loadReviews(dir: string): Promise<Map<string, Review>> {
   const reviews = new Map<string, Review>();
-  for (const name of names) {
-    if (!name.endsWith(".json")) continue;
+  for (const name of await listReviewFiles(dir)) {
     const file = path.join(dir, name);
-    const parsed = ReviewRecordSchema.safeParse(JSON.parse(await readFile(file, "utf8")));
-    if (!parsed.success) throw new Error(`${file} is invalid: ${parsed.error.message}`);
-    reviews.set(parsed.data.fingerprint, parsed.data.review);
+    const record = await readJsonFile(file, ReviewRecordSchema.nullable(), null);
+    if (record === null) continue;
+    if (record.fingerprint !== name.slice(0, -".json".length)) {
+      throw new Error(`${file} does not match its fingerprint`);
+    }
+    reviews.set(record.fingerprint, record.review);
   }
   return reviews;
 }
@@ -116,6 +122,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const llm = deps.getLlm(config.review.model);
     const stats = emptyReviewStats();
 
+    let completed = false;
     try {
       const nextTriage = await runTriage(
         llm,
@@ -128,7 +135,9 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
       );
       await writeJsonFile(paths.triage, nextTriage);
 
-      const reviewed = new Set((await loadReviews(paths.reviewsDir)).keys());
+      const reviewed = new Set(
+        (await listReviewFiles(paths.reviewsDir)).map((name) => name.slice(0, -".json".length)),
+      );
       const max = options.dryRun
         ? Math.min(config.review.maxReviewsPerRun, DRY_RUN_MAX_REVIEWS)
         : config.review.maxReviewsPerRun;
@@ -150,9 +159,19 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         selected,
         stats,
       );
+      completed = true;
     } finally {
       // Written even when a fatal error stops the run: the reviews already paid for stay counted.
-      await updateRunInfo(paths.runInfo, { review: stats });
+      if (completed) {
+        await updateRunInfo(paths.runInfo, { review: stats });
+      } else {
+        try {
+          await updateRunInfo(paths.runInfo, { review: stats });
+        } catch (error) {
+          // Never let this hide the error that stopped the review.
+          console.error(`Could not save the review statistics: ${errorMessage(error)}`);
+        }
+      }
     }
     deps.log(`${stats.reviewed} reviewed, ${stats.failed.length} failed, ${stats.deferred} deferred`);
   },
@@ -182,6 +201,8 @@ export async function runPipeline(options: PipelineOptions, deps: PipelineDeps):
   const paths = resolvePaths(options.root, options.dryRun);
   const config = await readYamlFile(paths.config, ConfigSchema);
   const kits = await readYamlFile(paths.kits, KitsSchema);
+  // A fresh run starts from empty run information; partial runs keep the last one.
+  if (options.steps.includes("discover")) await writeJsonFile(paths.runInfo, {});
   for (const step of STEPS) {
     if (!options.steps.includes(step)) continue;
     deps.log(`> ${step}`);

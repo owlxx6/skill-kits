@@ -1,10 +1,10 @@
-import { cp, mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CatalogSchema, RunInfoSchema, type Catalog, type RunInfo } from "../pipeline/lib/schemas";
 import { FatalLlmError } from "../pipeline/lib/errors";
-import { STEPS, runPipeline } from "../pipeline/run";
+import { STEPS, loadReviews, runPipeline } from "../pipeline/run";
 import { FakeGitHub, FakeLlm } from "./fakes";
 import { NOW, makeRepo, makeReview, skillMd } from "./fixtures";
 
@@ -228,5 +228,48 @@ describe("runPipeline", () => {
     const resume = catalog.kits.find((kit) => kit.id === "resume-career");
     expect(resume?.skills).toContain(atsId);
     expect(resume?.pending).not.toContain(atsId);
+  });
+
+  it("names a corrupted review file", async () => {
+    await run();
+    const dir = path.join(root, "data", "cache", "reviews");
+    await writeFile(path.join(dir, "broken.json"), "{ not json");
+    await expect(loadReviews(dir)).rejects.toThrow(/broken\.json/);
+  });
+
+  it("rejects a review saved under another fingerprint", async () => {
+    await run();
+    const dir = path.join(root, "data", "cache", "reviews");
+    const [first] = (await readdir(dir)).filter((name) => name.endsWith(".json"));
+    const content = await readFile(path.join(dir, first), "utf8");
+    await writeFile(path.join(dir, `${"b".repeat(40)}.json`), content);
+    await expect(loadReviews(dir)).rejects.toThrow("does not match its fingerprint");
+  });
+
+  it("keeps the last run info on a partial run and resets it on a fresh run", async () => {
+    await run();
+    await run(["rank", "summary"]);
+    const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
+    expect(summary).toContain("`ghost/deleted`: not found");
+
+    await writeFile(
+      path.join(root, "data", "sources.yaml"),
+      ["repos:", "  - acme/career-skills", "topics: []", "maxSearchPages: 0", ""].join("\n"),
+    );
+    await run(["discover", "filter"]);
+    const runInfo = await readRunInfo(root);
+    expect(runInfo.filtered).toEqual([]);
+    expect(runInfo.review).toBeUndefined();
+    expect(runInfo.extract).toBeUndefined();
+  });
+
+  it("reviews nothing new when review runs alone after a full run", async () => {
+    await run();
+    const reviewCalls = llm.reviewCalls.length;
+    const catalogBefore = await readFile(path.join(root, "catalog.json"), "utf8");
+    await run(["review"]);
+    expect(llm.reviewCalls.length).toBe(reviewCalls + 2); // only the failed skill, tried again
+    expect(await readFile(path.join(root, "catalog.json"), "utf8")).toBe(catalogBefore);
+    expect((await readRunInfo(root)).review?.reviewed).toBe(0);
   });
 });

@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import { parseArgs } from "node:util";
-import { errorMessage } from "./lib/errors";
+import { FatalLlmError, errorMessage } from "./lib/errors";
 import { createGitHubClient } from "./lib/github";
 import { createLlmClient } from "./lib/llm";
 import { resolvePaths } from "./lib/store";
@@ -41,5 +41,7 @@ try {
   if (requested.includes("summary")) console.log(`Summary file: ${resolvePaths(root, dryRun).summary}`);
 } catch (error) {
   console.error(`Pipeline failed: ${errorMessage(error)}`);
+  // Keep the stack and cause of an unexpected error in the log.
+  if (!(error instanceof FatalLlmError)) console.error(error);
   process.exit(1);
 }
