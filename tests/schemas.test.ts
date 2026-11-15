@@ -32,6 +32,7 @@ describe("data files", () => {
     expect(config.filter.minStars).toBe(50);
     expect(config.filter.allowedLicenses).toContain("MIT");
     expect(config.review.model).toBe("claude-haiku-5-5");
+    expect(config.review.maxMinutes).toBe(120);
     expect(config.scoring.skill).toEqual({ review: 0.7, repoSignal: 0.3 });
   });
 
@@ -114,6 +115,11 @@ describe("ConfigSchema constraints", () => {
   it("rejects an allowed license that is not an SPDX identifier", async () => {
     const config = await loadConfig();
     reject({ ...config, filter: { ...config.filter, allowedLicenses: ["MIT license"] } });
+  });
+
+  it("rejects a review time budget that is not positive", async () => {
+    const config = await loadConfig();
+    reject({ ...config, review: { ...config.review, maxMinutes: 0 } });
   });
 
   it("rejects skill weights that do not sum to 1", async () => {

@@ -145,6 +145,31 @@ describe("runTriage, isolation and progress", () => {
     expect(saved).toEqual([2, 4, 5]);
   });
 
+  it("starts no new batch once the time budget is spent", async () => {
+    const skills = ["a", "b", "c", "d", "e"].map(mk);
+    const llm = new FakeLlm(answerAll, noReview);
+    const stats = emptyReviewStats();
+    const saved: number[] = [];
+    const triage = await runTriage(
+      llm,
+      skills,
+      {},
+      testKits,
+      2,
+      stats,
+      async (cache) => {
+        saved.push(Object.keys(cache).length);
+      },
+      () => llm.triageCalls.length >= 1,
+    );
+    expect(llm.triageCalls.map((call) => call.length)).toEqual([2]);
+    expect(Object.keys(triage)).toEqual([fp("a"), fp("b")]);
+    expect(saved).toEqual([2]);
+    expect(stats.triaged).toBe(2);
+    expect(stats.triageMissing).toBe(3);
+    expect(stats.stoppedByTimeBudget).toBe(true);
+  });
+
   it("counts a single item whose call throws a plain error as missing", async () => {
     const llm = new FakeLlm(() => {
       throw new Error("network down");
@@ -478,6 +503,34 @@ describe("runReviews", () => {
     await runReviews(deps(llm, gh), [selected[0]], stats);
     expect(stats.failed).toEqual([{ skillId: "acme/skills:skills/a", reason: "model refused" }]);
     expect(stats.reviewUsage).toEqual({ inputTokens: 1000, outputTokens: 100 });
+  });
+
+  it("starts no new review once the time budget is spent and defers the rest", async () => {
+    const third = makeSkill({ id: "acme/skills:skills/c", path: "skills/c", name: "c", fingerprint: fp("c") });
+    const gh = new FakeGitHub([{ meta: repo, files: { ...files, "skills/c/SKILL.md": skillMd("c", "Skill c") } }]);
+    const llm = new FakeLlm(noTriage, () => makeReview());
+    const stats = emptyReviewStats();
+    stats.deferred = 4;
+    await runReviews(
+      deps(llm, gh, { skills: [...selected, third] }),
+      [...selected, third],
+      stats,
+      () => llm.reviewCalls.length >= 1,
+    );
+    expect(llm.reviewCalls).toHaveLength(1);
+    expect(stats.reviewed).toBe(1);
+    expect(stats.deferred).toBe(6);
+    expect(stats.stoppedByTimeBudget).toBe(true);
+    expect(stats.failed).toEqual([]);
+  });
+
+  it("does not flag the time budget when every review ran", async () => {
+    const gh = new FakeGitHub([{ meta: repo, files }]);
+    const llm = new FakeLlm(noTriage, () => makeReview());
+    const stats = emptyReviewStats();
+    await runReviews(deps(llm, gh), selected, stats, () => false);
+    expect(stats.reviewed).toBe(2);
+    expect(stats.stoppedByTimeBudget).toBe(false);
   });
 
   it("counts an oversized file as truncated", async () => {

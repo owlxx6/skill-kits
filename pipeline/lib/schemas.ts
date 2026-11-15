@@ -51,6 +51,8 @@ export const ConfigSchema = z.object({
     maxReviewsPerRun: z.number().int().min(0),
     minCatalogScore: z.number().min(0).max(10),
     maxSkillChars: z.number().int().positive(),
+    // Wall-clock budget of the review step, below the workflow step limit (170 minutes).
+    maxMinutes: z.number().positive(),
   }),
   scoring: z.object({
     stars: range,
@@ -196,6 +198,8 @@ export const ReviewStatsSchema = z.object({
   failed: z.array(z.object({ skillId: z.string(), reason: z.string() })),
   triageUsage: TokenUsageSchema,
   reviewUsage: TokenUsageSchema,
+  // Defaults to false so run information written before this field still loads.
+  stoppedByTimeBudget: z.boolean().default(false),
 });
 export type ReviewStats = z.infer<typeof ReviewStatsSchema>;
 

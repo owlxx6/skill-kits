@@ -15,6 +15,7 @@ export const testConfig: Config = {
     maxReviewsPerRun: 500,
     minCatalogScore: 6,
     maxSkillChars: 24000,
+    maxMinutes: 120,
   },
   scoring: {
     stars: { min: 50, max: 50000 },

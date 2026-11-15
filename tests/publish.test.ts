@@ -62,6 +62,7 @@ const runInfo: RunInfo = {
     failed: [{ skillId: "solo/broken:skills/flaky", reason: "invalid review: why too long" }],
     triageUsage: { inputTokens: 5000, outputTokens: 500 },
     reviewUsage: { inputTokens: 20000, outputTokens: 4000 },
+    stoppedByTimeBudget: false,
   },
 };
 
@@ -106,6 +107,15 @@ describe("buildSummary", () => {
     expect(summary).toContain("- `solo/broken:skills/flaky`: invalid review: why too long");
     expect(summary).toContain("- `nolicense/skills`: license none not allowed");
     expect(summary).toContain("- `flaky/repo`: network error");
+  });
+
+  it("says when the time budget stopped the review step", () => {
+    const line = "- Stopped by the time budget (review.maxMinutes): the rest is deferred to the next run";
+    expect(summary).not.toContain(line);
+    const stopped = buildSummary(catalog, {
+      review: { ...(runInfo.review as NonNullable<RunInfo["review"]>), stoppedByTimeBudget: true },
+    });
+    expect(stopped).toContain(line);
   });
 
   it("works when no run information is available", () => {

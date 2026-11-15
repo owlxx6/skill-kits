@@ -37,6 +37,7 @@ export function emptyReviewStats(): ReviewStats {
     failed: [],
     triageUsage: { inputTokens: 0, outputTokens: 0 },
     reviewUsage: { inputTokens: 0, outputTokens: 0 },
+    stoppedByTimeBudget: false,
   };
 }
 
@@ -63,6 +64,7 @@ export async function runTriage(
   batchSize: number,
   stats: ReviewStats,
   save: (cache: TriageCache) => Promise<void>,
+  deadline?: () => boolean,
 ): Promise<TriageCache> {
   const kitIds = new Set(kits.map((kit) => kit.id));
   const pending = uniqueByFingerprint(skills.filter((skill) => !(skill.fingerprint in triage)));
@@ -110,6 +112,12 @@ export async function runTriage(
   }
 
   for (let start = 0; start < pending.length; start += batchSize) {
+    // Out of time: the rest stays untriaged and is retried next run.
+    if (deadline?.()) {
+      stats.triageMissing += pending.length - start;
+      stats.stoppedByTimeBudget = true;
+      break;
+    }
     await triageBatch(pending.slice(start, start + batchSize));
     await save(next);
   }
@@ -241,9 +249,16 @@ export async function runReviews(
   deps: ReviewDeps,
   selected: SkillRecord[],
   stats: ReviewStats,
+  deadline?: () => boolean,
 ): Promise<void> {
   const repoByName = new Map(deps.repos.map((repo) => [repo.fullName, repo]));
-  for (const skill of selected) {
+  for (const [position, skill] of selected.entries()) {
+    // Out of time: the skills not reviewed yet wait for the next run.
+    if (deadline?.()) {
+      stats.deferred += selected.length - position;
+      stats.stoppedByTimeBudget = true;
+      break;
+    }
     const repo = repoByName.get(skill.repo);
     if (!repo) {
       stats.failed.push({ skillId: skill.id, reason: "repository no longer listed" });

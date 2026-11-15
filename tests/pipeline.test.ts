@@ -106,10 +106,11 @@ describe("runPipeline", () => {
   let root: string;
   let gh: FakeGitHub;
   let llm: FakeLlm;
+  let clock: (() => number) | undefined;
   const run = (steps = [...STEPS]) =>
     runPipeline(
       { root, dryRun: false, steps },
-      { gh, getLlm: () => llm, now: NOW, log: () => {} },
+      { gh, getLlm: () => llm, now: NOW, clock, log: () => {} },
     );
 
   beforeEach(async () => {
@@ -117,6 +118,7 @@ describe("runPipeline", () => {
     root = await makeRoot();
     gh = makeGitHub();
     llm = makeLlm();
+    clock = undefined;
   });
 
   afterEach(() => {
@@ -278,5 +280,20 @@ describe("runPipeline", () => {
     expect(llm.reviewCalls.length).toBe(reviewCalls + 2); // only the failed skill, tried again
     expect(await readFile(path.join(root, "catalog.json"), "utf8")).toBe(catalogBefore);
     expect((await readRunInfo(root)).review?.reviewed).toBe(0);
+  });
+
+  it("stops reviewing at the time budget and still writes the catalog and the summary", async () => {
+    // The clock reads 0 when the review step starts, then jumps past review.maxMinutes after one review.
+    clock = () => (llm.reviewCalls.length >= 1 ? 121 * 60_000 : 0);
+    await run();
+    const runInfo = await readRunInfo(root);
+    expect(runInfo.review).toMatchObject({ triaged: 6, reviewed: 1, deferred: 4, stoppedByTimeBudget: true });
+    expect(llm.reviewCalls).toHaveLength(1);
+    const catalog = await readCatalog(root);
+    expect(catalog.skills.map((skill) => skill.name)).toEqual(["ats-check"]);
+    const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
+    expect(summary).toContain(
+      "- Stopped by the time budget (review.maxMinutes): the rest is deferred to the next run",
+    );
   });
 });

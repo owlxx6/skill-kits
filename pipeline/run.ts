@@ -41,7 +41,10 @@ export interface PipelineDeps {
   gh: GitHubClient;
   // Created on demand so that rank and summary run without an API key.
   getLlm: (model: string) => LlmClient;
+  // Dates written in records.
   now: Date;
+  // Measures the review time budget; Date.now by default, replaced in tests.
+  clock?: () => number;
   log: (message: string) => void;
 }
 
@@ -122,6 +125,9 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const priorityIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
     const llm = deps.getLlm(config.review.model);
     const stats = emptyReviewStats();
+    const clock = deps.clock ?? Date.now;
+    const end = clock() + config.review.maxMinutes * 60_000;
+    const deadline = (): boolean => clock() >= end;
 
     let completed = false;
     try {
@@ -133,6 +139,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         config.review.triageBatchSize,
         stats,
         (cache) => writeJsonFile(paths.triage, cache),
+        deadline,
       );
       await writeJsonFile(paths.triage, nextTriage);
 
@@ -159,6 +166,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         },
         selected,
         stats,
+        deadline,
       );
       completed = true;
     } finally {

@@ -74,6 +74,9 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
         `- Triage tokens: ${review.triageUsage.inputTokens} in, ${review.triageUsage.outputTokens} out`,
         `- Review tokens: ${review.reviewUsage.inputTokens} in, ${review.reviewUsage.outputTokens} out (${perSkillIn} in, ${perSkillOut} out per reviewed skill)`,
       );
+      if (review.stoppedByTimeBudget) {
+        lines.push("- Stopped by the time budget (review.maxMinutes): the rest is deferred to the next run");
+      }
     }
     lines.push("");
   }
