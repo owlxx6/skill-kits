@@ -23,8 +23,14 @@ const nav = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#ffffff" />
+    <script is:inline>
+      // Motion is opt-in: entrance animations only hide content once this class is set,
+      // so the page stays complete without JavaScript or with reduced motion.
+      if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("motion");
+      }
+    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{pageTitle}</title>
   </head>
@@ -70,6 +76,48 @@ const nav = [
     input.focus();
     input.select();
   });
+
+  // One observer for every entrance on the page: [data-reveal] and [data-fill] get "is-visible" (staggered
+  // within each batch) and [data-count-to] counts up from zero. Each runs once.
+  const root = document.documentElement;
+  if (root.classList.contains("motion")) {
+    const COUNT_MS = 1000;
+    const easeOut = (t: number) => 1 - (1 - t) ** 3;
+    const countUp = (element: HTMLElement, target: number) => {
+      const start = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min(1, (now - start) / COUNT_MS);
+        element.textContent = String(Math.round(target * easeOut(progress)));
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let order = 0;
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const element = entry.target as HTMLElement;
+          observer.unobserve(element);
+          const target = Number(element.dataset.countTo);
+          if (element.dataset.countTo !== undefined && Number.isFinite(target)) {
+            countUp(element, target);
+            continue;
+          }
+          element.style.setProperty("--reveal-delay", `${Math.min(order, 6) * 70}ms`);
+          element.classList.add("is-visible");
+          order += 1;
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+    );
+
+    for (const element of document.querySelectorAll<HTMLElement>("[data-reveal], [data-fill], [data-count-to]")) {
+      if (element.dataset.countTo !== undefined) element.textContent = "0";
+      observer.observe(element);
+    }
+  }
 </script>
 
 <style>

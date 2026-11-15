@@ -53,6 +53,8 @@ export const ICONS = {
   ],
   "list-checks": [path("m3 17 2 2 4-4"), path("m3 7 2 2 4-4"), path("M13 6h8"), path("M13 12h8"), path("M13 18h8")],
   megaphone: [path("m3 11 18-5v12L3 14v-3z"), path("M11.6 16.8a3 3 0 1 1-5.8-1.6")],
+  pause: [rect(14, 4, 4, 16, 1), rect(6, 4, 4, 16, 1)],
+  play: [path("M6 3l14 9-14 9z")],
   palette: [
     circle(13.5, 6.5, 0.5),
     circle(17.5, 10.5, 0.5),

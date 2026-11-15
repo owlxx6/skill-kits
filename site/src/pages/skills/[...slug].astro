@@ -64,14 +64,14 @@ const percent = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
       <div class="overall">
         <h2 id="scores-title">Review score</h2>
         <p class="overall-value"><strong>{skill.reviewScore.toFixed(1)}</strong> <span class="muted">/ 10</span></p>
-        <div class="bar large" aria-hidden="true"><span style={`width: ${percent(skill.reviewScore)}`}></span></div>
+        <div class="bar large" aria-hidden="true" data-fill><span style={`width: ${percent(skill.reviewScore)}`}></span></div>
       </div>
       <dl class="score-list">
         {scores.map((score) => (
           <div class="score-row">
             <dt>{score.label}</dt>
             <dd>
-              <div class="bar" aria-hidden="true"><span style={`width: ${percent(score.value)}`}></span></div>
+              <div class="bar" aria-hidden="true" data-fill><span style={`width: ${percent(score.value)}`}></span></div>
               <span class="score-value">{score.value}<span class="muted"> / 10</span></span>
             </dd>
           </div>
@@ -137,23 +137,28 @@ const percent = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
   .block-title { margin-bottom: var(--space-3); }
   .install { display: grid; gap: var(--space-3); }
   .install h2, .pros-cons h2 { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-base); }
-  .install h2 { color: var(--text); }
+  .install h2 { color: var(--heading); }
 
   .scores { display: grid; gap: var(--space-5); }
   @media (min-width: 768px) { .scores { grid-template-columns: 14rem 1fr; align-items: center; } }
   .overall { display: grid; gap: var(--space-2); }
   .overall h2 { font-size: var(--text-sm); font-weight: 500; color: var(--text-muted); }
   .overall-value { font-variant-numeric: tabular-nums; }
-  .overall-value strong { font-size: 2.5rem; line-height: 1; color: var(--accent-text); letter-spacing: -0.02em; }
+  .overall-value strong { font-size: 2.5rem; line-height: 1; color: var(--accent); letter-spacing: -0.02em; }
   .score-list { display: grid; gap: var(--space-3); margin: 0; }
   .score-row { display: grid; gap: 6px; }
   .score-row dt { font-size: var(--text-sm); color: var(--text-muted); }
   .score-row dd { display: flex; align-items: center; gap: var(--space-3); margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
   .score-row .bar { flex: 1; }
   .score-value { flex: none; white-space: nowrap; }
-  .bar { height: 8px; border-radius: 999px; background: var(--surface-muted); overflow: hidden; }
+  .bar { height: 8px; border-radius: 999px; background: var(--border); overflow: hidden; }
   .bar.large { height: 10px; }
-  .bar span { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+  .bar span {
+    display: block; height: 100%; border-radius: inherit; background: var(--accent);
+    transform-origin: left center; transition: transform 900ms var(--ease-out) var(--reveal-delay, 0ms);
+  }
+  /* The bars fill from zero the first time they are on screen. */
+  :global(.motion) .bar:not(.is-visible) span { transform: scaleX(0); }
 
   .pros-cons { display: grid; gap: var(--space-4); }
   @media (min-width: 768px) { .pros-cons { grid-template-columns: 1fr 1fr; } }
@@ -161,7 +166,7 @@ const percent = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
   .icon-list { list-style: none; display: grid; gap: var(--space-3); }
   .icon-list li { display: flex; gap: var(--space-3); align-items: flex-start; }
   .icon-list :global(.icon) { margin-top: 3px; }
-  .icon-list :global(.good) { color: var(--accent-text); }
+  .icon-list :global(.good) { color: var(--accent); }
   .icon-list :global(.warn) { color: var(--notice-text); }
 
   .kit-links { list-style: none; display: grid; gap: var(--space-3); }

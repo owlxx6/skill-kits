@@ -13,15 +13,35 @@ const readyCount = views.filter((view) => !view.isEmpty).length;
 const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
 const suggestions = ["resume", "pdf", "interview", "scraping", "slides", "testing"];
 const stats = [
-  { value: String(catalog.skills.length), label: "skills reviewed" },
-  { value: String(catalog.collections.length), label: catalog.collections.length === 1 ? "collection" : "collections" },
-  { value: `${readyCount} of ${views.length}`, label: "kits ready" },
+  { value: catalog.skills.length, suffix: "", label: "skills reviewed" },
+  { value: catalog.collections.length, suffix: "", label: catalog.collections.length === 1 ? "collection" : "collections" },
+  { value: readyCount, suffix: ` of ${views.length}`, label: "kits ready" },
 ];
+
+// "Resume & career agent" becomes "a resume & career agent"; acronyms such as "UI" keep their case.
+const phrase = (title: string) => {
+  const lowered = /^[A-Z]{2}/.test(title) ? title : title.charAt(0).toLowerCase() + title.slice(1);
+  return `${/^[aeio]/i.test(lowered) ? "an" : "a"} ${lowered}`;
+};
+const phrases = kits.map((view) => phrase(view.kit.title));
 ---
 <Base title="Skill Kits" description="Hand-checked skill kits for the agent you want to build. Permissive licenses only.">
   <section class="hero" aria-labelledby="hero-title">
     <p class="hero-eyebrow"><Icon name="badge-check" size={16} />Agent skills, reviewed by hand</p>
     <h1 id="hero-title">What are you building?</h1>
+    <div class="hero-typed-row">
+      <p class="hero-typed" data-typed>
+        <span class="typed-box" aria-hidden="true">
+          {phrases.map((item) => <span class="typed-sizer">{item}</span>)}
+          <span class="typed-live"><span class="typed-text" data-phrases={JSON.stringify(phrases)}>{phrases[0]}</span><span class="caret"></span></span>
+        </span>
+        <span class="visually-hidden">Kits for {phrases.join(", ")}.</span>
+      </p>
+      <button type="button" class="typed-toggle" data-typed-toggle aria-label="Pause the rotating examples" hidden>
+        <Icon name="pause" size={16} class="icon-pause" />
+        <Icon name="play" size={16} class="icon-play" />
+      </button>
+    </div>
     <p class="hero-sub">Pick the agent you want to build and get the skills worth installing. Permissive licenses only.</p>
     <div class="hero-search">
       <SearchBox inputId="home-search" large />
@@ -36,7 +56,10 @@ const stats = [
     {stats.map((stat) => (
       <div class="stat">
         <dt>{stat.label}</dt>
-        <dd>{stat.value}</dd>
+        <dd>
+          <span class="visually-hidden">{stat.value}{stat.suffix}</span>
+          <span aria-hidden="true"><span data-count-to={stat.value}>{stat.value}</span>{stat.suffix}</span>
+        </dd>
       </div>
     ))}
   </dl>
@@ -48,7 +71,7 @@ const stats = [
     </div>
     <ul class="kit-grid">
       {kits.map((view) => (
-        <li class:list={["card", "is-clickable", "kit-card", { soon: view.isEmpty }]}>
+        <li class:list={["card", "is-clickable", "kit-card", { soon: view.isEmpty }]} data-reveal>
           <span class:list={["icon-tile", { quiet: view.isEmpty }]}><Icon name={kitIcon(view.kit.id)} size={24} /></span>
           <h3><a class="card-link" href={`/kits/${view.kit.id}/`}>{view.kit.title}</a></h3>
           <p class="kit-desc">{view.kit.description}</p>
@@ -68,14 +91,112 @@ const stats = [
   </section>
 </Base>
 
+<script>
+  // Types the kit phrases one after another under the headline. The first phrase is already in
+  // the HTML, so nothing moves without JavaScript or with reduced motion. The rotation pauses on
+  // hover, on focus, when the hero leaves the screen, while the tab is hidden, and with the
+  // pause button (WCAG 2.2.2).
+  const line = document.querySelector<HTMLElement>("[data-typed]");
+  const text = line?.querySelector<HTMLElement>("[data-phrases]");
+  const toggle = document.querySelector<HTMLButtonElement>("[data-typed-toggle]");
+  const motion = document.documentElement.classList.contains("motion");
+
+  if (line && text && toggle && motion) {
+    const parsed: unknown = JSON.parse(text.dataset.phrases ?? "[]");
+    const phrases = Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string") : [];
+    const hero = line.closest<HTMLElement>(".hero") ?? line;
+
+    let index = 0;
+    let length = phrases[0]?.length ?? 0;
+    let deleting = true;
+    let timer = 0;
+    let stoppedByUser = false;
+    let hovered = false;
+    let focused = false;
+    let offscreen = false;
+
+    const TYPE_MS = 55;
+    const DELETE_MS = 28;
+    const HOLD_MS = 1900;
+    const GAP_MS = 350;
+
+    const paused = () => stoppedByUser || hovered || focused || offscreen || document.hidden;
+
+    const tick = () => {
+      timer = 0;
+      if (paused()) return;
+      const current = phrases[index] ?? "";
+      let delay = deleting ? DELETE_MS : TYPE_MS;
+      if (deleting) {
+        length -= 1;
+        if (length <= 0) {
+          length = 0;
+          deleting = false;
+          index = (index + 1) % phrases.length;
+          delay = GAP_MS;
+        }
+      } else {
+        length += 1;
+        if (length >= current.length) {
+          length = current.length;
+          deleting = true;
+          delay = HOLD_MS;
+        }
+      }
+      text.textContent = (phrases[index] ?? "").slice(0, length);
+      timer = window.setTimeout(tick, delay);
+    };
+
+    const sync = () => {
+      line.classList.toggle("is-paused", paused());
+      if (!paused() && timer === 0) timer = window.setTimeout(tick, HOLD_MS);
+      if (paused() && timer !== 0) {
+        window.clearTimeout(timer);
+        timer = 0;
+      }
+    };
+
+    toggle.hidden = false;
+    toggle.addEventListener("click", () => {
+      stoppedByUser = !stoppedByUser;
+      toggle.classList.toggle("is-stopped", stoppedByUser);
+      toggle.setAttribute("aria-label", stoppedByUser ? "Play the rotating examples" : "Pause the rotating examples");
+      sync();
+    });
+    line.addEventListener("pointerenter", () => { hovered = true; sync(); });
+    line.addEventListener("pointerleave", () => { hovered = false; sync(); });
+    hero.addEventListener("focusin", () => { focused = true; sync(); });
+    hero.addEventListener("focusout", (event) => {
+      focused = event.relatedTarget instanceof Node && hero.contains(event.relatedTarget);
+      sync();
+    });
+    document.addEventListener("visibilitychange", sync);
+    new IntersectionObserver(([entry]) => {
+      offscreen = !entry?.isIntersecting;
+      sync();
+    }).observe(line);
+    if (phrases.length > 1) sync();
+  }
+</script>
+
 <style>
   .hero {
     position: relative; display: grid; justify-items: center; gap: var(--space-4);
     padding: var(--space-7) 0 var(--space-6); text-align: center; isolation: isolate;
   }
+  /* A static dot grid fading out from the centre: texture without motion behind the text. */
   .hero::before {
-    content: ""; position: absolute; z-index: -1; inset: -2rem -16px auto; height: 22rem;
-    background: radial-gradient(ellipse 60% 70% at 50% 0%, var(--glow), transparent 70%);
+    content: ""; position: absolute; z-index: -1; inset: -1.5rem -16px 0;
+    background-image: radial-gradient(circle at 1px 1px, rgb(0 0 0 / 0.09) 1px, transparent 0);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse 70% 65% at 50% 35%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 35%, #000 30%, transparent 75%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ""; position: absolute; z-index: -1; left: 50%; top: 2rem; width: min(36rem, 90%); height: 14rem;
+    transform: translateX(-50%); border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(220 38 38 / 0.1), transparent);
     pointer-events: none;
   }
   .hero-eyebrow {
@@ -84,21 +205,54 @@ const stats = [
     color: var(--accent-text); font-size: var(--text-sm); font-weight: 500;
   }
   .hero h1 { font-size: clamp(2.25rem, 6vw + 0.5rem, 3.75rem); max-width: 18ch; }
+
+  .hero-typed-row {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-2);
+    min-height: var(--target); margin-top: calc(var(--space-3) * -1);
+  }
+  .hero-typed {
+    font-size: clamp(1.125rem, 2.4vw + 0.6rem, 2rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em;
+    color: var(--accent); white-space: nowrap;
+  }
+  /* Every phrase sits invisibly in the same cell, so the line keeps the width of the longest one
+     and the pause button does not move while a phrase is typed. */
+  .typed-box { display: inline-grid; text-align: left; }
+  .typed-box > * { grid-area: 1 / 1; }
+  .typed-sizer { visibility: hidden; padding-right: 6px; }
+  .caret {
+    display: none; width: 3px; height: 1.05em; margin-left: 3px; vertical-align: -0.12em;
+    background: var(--accent); border-radius: 1px;
+  }
+  :global(.motion) .caret { display: inline-block; animation: caret-blink 1s steps(1) infinite; }
+  .hero-typed.is-paused .caret { animation: none; }
+  @keyframes caret-blink { 50% { opacity: 0; } }
+
+  .typed-toggle {
+    position: relative; display: grid; place-items: center; flex: none; width: var(--target); height: var(--target);
+    border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text-muted); cursor: pointer;
+    transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease), background-color var(--fast) var(--ease);
+  }
+  .typed-toggle:hover { color: var(--on-ink); background: var(--ink); border-color: var(--ink); }
+  .typed-toggle :global(.icon) { grid-area: 1 / 1; }
+  .typed-toggle :global(.icon-play), .typed-toggle.is-stopped :global(.icon-pause) { display: none; }
+  .typed-toggle.is-stopped :global(.icon-play) { display: block; }
+
   .hero-sub { color: var(--text-muted); font-size: var(--text-lg); max-width: 52ch; }
   .hero-search { width: 100%; max-width: 40rem; margin-top: var(--space-3); text-align: left; }
   .hero-chips { justify-content: center; max-width: 40rem; }
 
   .stats {
     display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: var(--space-4) auto 0; max-width: 40rem;
-    border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface);
+    border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-subtle);
   }
   .stat { display: flex; flex-direction: column-reverse; gap: 2px; padding: var(--space-4); text-align: center; }
   .stat + .stat { border-left: 1px solid var(--border); }
   .stat dt { color: var(--text-muted); font-size: var(--text-xs); }
-  .stat dd { margin: 0; font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .stat dd { margin: 0; color: var(--heading); font-size: 1.75rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .stat dd [data-count-to] { color: var(--accent); }
   @media (max-width: 479px) {
     .stat { padding: var(--space-3) var(--space-2); }
-    .stat dd { font-size: 1.25rem; }
+    .stat dd { font-size: 1.375rem; }
   }
 
   .kit-grid { list-style: none; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr)); }
@@ -107,9 +261,13 @@ const stats = [
   .kit-desc { color: var(--text-muted); font-size: var(--text-sm); flex: 1; }
   .kit-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: 26px; }
   .kit-count { color: var(--accent-text); font-size: var(--text-sm); font-weight: 600; }
-  .kit-card :global(.kit-arrow) { color: var(--accent-text); transition: transform var(--base) var(--ease); }
-  .kit-card:hover :global(.kit-arrow) { transform: translateX(3px); }
-  .kit-card:not(.soon) { border-color: var(--accent-border); }
+  .kit-card :global(.kit-arrow) { color: var(--accent); transition: transform var(--base) var(--ease-out); }
+  .kit-card:not(.soon):hover :global(.kit-arrow) { transform: translateX(4px); }
+  .kit-card:not(.soon):hover .icon-tile { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+  /* Kits that are not ready stay quiet: no lift, no red. */
+  .kit-card.soon { background: var(--surface-subtle); box-shadow: none; }
   .kit-card.soon h3 a { color: var(--text-muted); }
-  .kit-card.soon:hover h3 a { color: var(--text); }
+  .kit-card.soon:hover { transform: none; border-color: var(--border-strong); box-shadow: none; }
+  .kit-card.soon:hover h3 a { color: var(--heading); }
 </style>
