@@ -1,0 +1,36 @@
+---
+import { ICONS, type IconName } from "../lib/icons";
+
+interface Props {
+  name: IconName;
+  size?: number;
+  // Only for an icon that carries meaning on its own; icons beside visible text stay decorative.
+  label?: string;
+  class?: string;
+}
+const { name, size = 20, label, class: className } = Astro.props;
+const nodes = ICONS[name];
+---
+<svg
+  class:list={["icon", className]}
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden={label ? undefined : "true"}
+  role={label ? "img" : undefined}
+  aria-label={label}
+  focusable="false"
+>
+  {nodes.map((node) => {
+    if (node.tag === "path") return <path d={node.d} />;
+    if (node.tag === "circle") return <circle cx={node.cx} cy={node.cy} r={node.r} />;
+    if (node.tag === "rect") return <rect x={node.x} y={node.y} width={node.width} height={node.height} rx={node.rx} />;
+    return <polyline points={node.points} />;
+  })}
+</svg>

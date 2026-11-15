@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import Icon from "../components/Icon.astro";
+import { loadCatalog } from "../lib/catalog";
 
 interface Props {
   title: string;
@@ -7,6 +9,13 @@ interface Props {
 }
 const { title, description } = Astro.props;
 const pageTitle = title === "Skill Kits" ? title : `${title} - Skill Kits`;
+const updated = loadCatalog().generatedAt.slice(0, 10);
+const path = Astro.url.pathname;
+const nav = [
+  { href: "/#kits", label: "Kits", current: path.startsWith("/kits/") ? "true" : undefined },
+  { href: "/search/", label: "Search", current: path.startsWith("/search/") ? "page" : undefined },
+  { href: "/methodology/", label: "How we pick", current: path.startsWith("/methodology/") ? "page" : undefined },
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -14,19 +23,55 @@ const pageTitle = title === "Skill Kits" ? title : `${title} - Skill Kits`;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{pageTitle}</title>
   </head>
   <body>
-    <div class="page">
-      <header class="site-header">
-        <a class="brand" href="/">Skill Kits</a>
-        <nav aria-label="Main">
-          <a href="/search/">Search</a>
-          <a href="/methodology/">How we pick</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="/">
+          <span class="brand-mark"><Icon name="layers" size={18} /></span>
+          Skill Kits
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          {nav.map((item) => <a href={item.href} aria-current={item.current}>{item.label}</a>)}
         </nav>
-      </header>
-      <main><slot /></main>
-    </div>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <div class="container page-body"><slot /></div>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <p>Catalog updated <time datetime={updated}>{updated}</time></p>
+        <nav class="footer-links" aria-label="Footer">
+          <a href="/methodology/">How we pick</a>
+          <a href="https://github.com/owlxx6/skill-kits">
+            Source on GitHub <Icon name="external-link" size={14} />
+          </a>
+        </nav>
+      </div>
+    </footer>
   </body>
 </html>
+
+<script>
+  // "/" focuses the page's search box, as on most developer sites; ignored while typing.
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
+    const target = event.target;
+    if (target instanceof HTMLElement && (target.isContentEditable || target.closest("input, textarea, select"))) return;
+    const input = document.querySelector<HTMLInputElement>("input[data-search-shortcut]");
+    if (!input) return;
+    event.preventDefault();
+    input.focus();
+    input.select();
+  });
+</script>
+
+<style>
+  main:focus { outline: none; }
+</style>

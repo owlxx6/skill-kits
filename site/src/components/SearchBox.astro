@@ -1,0 +1,38 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  inputId: string;
+  formId?: string;
+  large?: boolean;
+  // The search page filters as you type, so it needs no submit button.
+  submitButton?: boolean;
+  placeholder?: string;
+}
+const {
+  inputId,
+  formId,
+  large = false,
+  submitButton = true,
+  placeholder = "Search skills",
+} = Astro.props;
+---
+<form class="search-form" id={formId} action="/search/" method="get" role="search">
+  <label for={inputId} class="visually-hidden">Search skills and collections</label>
+  <div class:list={["search-field", { large }]}>
+    <Icon name="search" size={large ? 22 : 20} />
+    <input
+      id={inputId}
+      type="search"
+      name="q"
+      placeholder={placeholder}
+      autocomplete="off"
+      spellcheck="false"
+      enterkeyhint="search"
+      aria-keyshortcuts="/"
+      data-search-shortcut
+    />
+    <kbd aria-hidden="true">/</kbd>
+  </div>
+  {submitButton && <button class="button primary" type="submit">Search</button>}
+</form>
