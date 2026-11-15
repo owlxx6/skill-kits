@@ -1,0 +1,41 @@
+{
+  "fingerprint": "c2469bce919d4d1290c1253e305d58ec5d17bc2c",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Gives ATS-safe layout rules for page length, margins, fonts, section order and headers.",
+    "summary": "Formatting guide for resumes: page length by seniority, margins, safe fonts and sizes, spacing, standard section order and headers, and what to avoid such as tables, columns and graphics.",
+    "strengths": [
+      "Clear do and don't lists",
+      "Seniority-based length guidance",
+      "Standard section order"
+    ],
+    "cautions": [
+      "Advice only, produces no file",
+      "Overlaps with the ATS optimizer",
+      "US conventions, not adapted to French CVs"
+    ],
+    "keywords": [
+      "resume format",
+      "cv layout",
+      "template",
+      "ats friendly",
+      "fonts",
+      "margins",
+      "section order",
+      "design"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

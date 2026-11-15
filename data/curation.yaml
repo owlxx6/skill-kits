@@ -1,4 +1,13 @@
-resume-career: { approved: [], rejected: [] }
+resume-career:
+  approved:
+    - "davila7/claude-code-templates"
+    - "alirezarezvani/claude-skills:marketing/linkedin/skills/linkedin-profile"
+    - "github/awesome-copilot:skills/brag-sheet"
+    - "davila7/claude-code-templates:cli-tool/components/skills/career/resume-tailor"
+    - "davila7/claude-code-templates:cli-tool/components/skills/career/resume-ats-optimizer"
+    - "davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer"
+    - "davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator"
+  rejected: []
 web-app: { approved: [], rejected: [] }
 data-analysis: { approved: [], rejected: [] }
 docs-reports: { approved: [], rejected: [] }

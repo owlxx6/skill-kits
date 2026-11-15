@@ -1,0 +1,40 @@
+{
+  "fingerprint": "d45876a97aa672705d69b231c4789837e85927a6",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Gives an agent concrete structure and wording rules for software, PM and data resumes.",
+    "summary": "Guides optimization of resumes for technical roles: section order, skills section layout, project and GitHub links, impact-oriented bullets and ATS-friendly formatting for tech recruiters.",
+    "strengths": [
+      "Tech-specific structure and contact section",
+      "Concrete bullet and skills examples",
+      "Clear trigger conditions"
+    ],
+    "cautions": [
+      "Guidance only, no scripts or templates",
+      "Generic in places; no stop condition"
+    ],
+    "keywords": [
+      "tech resume",
+      "software engineer resume",
+      "developer cv",
+      "ats",
+      "pm resume",
+      "data scientist",
+      "resume optimization",
+      "github portfolio"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

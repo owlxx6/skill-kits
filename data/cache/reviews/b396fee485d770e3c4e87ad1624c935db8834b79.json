@@ -1,0 +1,42 @@
+{
+  "fingerprint": "b396fee485d770e3c4e87ad1624c935db8834b79",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Runs mock interviews with scored answers, STAR practice and salary negotiation coaching.",
+    "summary": "Interview coach with mock interviews, role-specific questions, answer scoring, STAR method training, salary negotiation and follow-up emails, tracking practice history and weak areas in local files.",
+    "strengths": [
+      "Mock interview and scoring loop",
+      "Tracks weak areas over time",
+      "Covers negotiation and follow-up"
+    ],
+    "cautions": [
+      "Long, many features, little prioritization",
+      "Question banks are generic"
+    ],
+    "keywords": [
+      "interview",
+      "mock interview",
+      "star method",
+      "behavioral questions",
+      "salary negotiation",
+      "interview prep",
+      "practice",
+      "coach"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": [
+        "Writes profile and history files under a local ~/.openclaw folder; stores personal data beyond the resume."
+      ]
+    }
+  }
+}

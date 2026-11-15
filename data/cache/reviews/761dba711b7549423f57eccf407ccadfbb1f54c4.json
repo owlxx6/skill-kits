@@ -1,0 +1,42 @@
+{
+  "fingerprint": "761dba711b7549423f57eccf407ccadfbb1f54c4",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Short, concrete guidance for analyzing a job description, tailoring a CV, writing a cover letter and weighing an offer.",
+    "summary": "Covers discrete job search tasks for software engineers: splitting must-have from nice-to-have requirements in a job description, tailoring a CV, writing a short cover letter, evaluating an offer and drafting a follow-up email.",
+    "strengths": [
+      "Concise and easy to follow",
+      "Cover letter and follow-up rules are specific",
+      "Warns against keyword stuffing"
+    ],
+    "cautions": [
+      "Aimed at software engineers only",
+      "No templates, examples or scripts",
+      "Salary advice is generic and not sourced"
+    ],
+    "keywords": [
+      "job description",
+      "jd analysis",
+      "cv",
+      "resume",
+      "tailoring",
+      "cover letter",
+      "offer evaluation",
+      "follow-up email",
+      "software engineer"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

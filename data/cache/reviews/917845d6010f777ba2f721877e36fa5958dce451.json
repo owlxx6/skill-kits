@@ -1,0 +1,41 @@
+{
+  "fingerprint": "917845d6010f777ba2f721877e36fa5958dce451",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Checks a resume against ATS formatting rules and job keyword match, with a checklist and a keyword process.",
+    "summary": "Explains why resumes fail applicant tracking systems and gives a compatibility checklist (format, fonts, headers, contact info) plus a keyword extraction and match analysis process with placement advice.",
+    "strengths": [
+      "Practical checklist",
+      "Keyword match method by type",
+      "Clear triggers"
+    ],
+    "cautions": [
+      "Statistics like 75% rejection are unsourced",
+      "Match score is heuristic, no real ATS parser",
+      "No scripts"
+    ],
+    "keywords": [
+      "ats",
+      "applicant tracking system",
+      "resume",
+      "cv",
+      "keywords",
+      "parsing",
+      "keyword match",
+      "resume screening"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

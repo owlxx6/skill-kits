@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ddc837d829917fc99f382d25c29f1cfda9f41488",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 5
+    },
+    "why": "Helps find real metrics in past work through discovery questions by role, with a risk of estimated numbers.",
+    "summary": "Helps add numbers to resume bullets: metric categories, discovery questions, role-specific prompts and estimation techniques when exact data is missing, with notes documenting each estimate.",
+    "strengths": [
+      "Good discovery questions per role",
+      "Conservative estimation guidance",
+      "Estimates are documented"
+    ],
+    "cautions": [
+      "Encourages estimating numbers, which can slide into inventing facts",
+      "Must be checked with the user",
+      "Generic"
+    ],
+    "keywords": [
+      "quantify",
+      "metrics",
+      "resume",
+      "cv",
+      "achievements",
+      "impact",
+      "numbers",
+      "bullets"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

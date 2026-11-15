@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ff53a900c6a7d3570e8d7cf28b8c6ef58ee18600",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Optimizes a LinkedIn profile headline, About section and experience to match a resume and attract recruiters.",
+    "summary": "Advice for LinkedIn profile sections: photo, banner, headline formulas, About structure, experience, keywords and aligning the profile with the resume, with weak and strong examples.",
+    "strengths": [
+      "Headline and About formulas",
+      "Notes differences with a resume",
+      "Concrete character limits"
+    ],
+    "cautions": [
+      "Statistics are unsourced",
+      "Cannot read the live profile, only pasted text",
+      "Outside core resume work"
+    ],
+    "keywords": [
+      "linkedin",
+      "profile",
+      "headline",
+      "about section",
+      "recruiter",
+      "keywords",
+      "personal branding",
+      "resume"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

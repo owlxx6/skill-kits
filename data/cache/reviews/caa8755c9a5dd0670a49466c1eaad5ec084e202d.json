@@ -1,0 +1,40 @@
+{
+  "fingerprint": "caa8755c9a5dd0670a49466c1eaad5ec084e202d",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 5,
+      "usefulness": 8
+    },
+    "why": "Tailors a resume to a pasted job description, extracting keywords and priorities.",
+    "summary": "Analyzes a job posting for requirements and keywords, then reorders and rewrites the user's resume content to match, with usage prompts for existing resumes and career transitions, ATS tips and gap recommendations.",
+    "strengths": [
+      "Covers the core tailor-to-job workflow",
+      "States never to fabricate experience",
+      "Handles career transitions"
+    ],
+    "cautions": [
+      "No scripts or templates",
+      "Fairly generic output guidance"
+    ],
+    "keywords": [
+      "tailor resume",
+      "job description",
+      "ats",
+      "keywords",
+      "cv",
+      "resume generator",
+      "job application",
+      "customize resume"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

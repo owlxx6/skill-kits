@@ -1,0 +1,43 @@
+{
+  "fingerprint": "dcdbdbd06b13c129959b1b112e213e552e6ac026",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Covers career strategy, job search, resume tips, interviews and negotiation in one playbook.",
+    "summary": "Multi-phase career playbook: self-assessment, job search operations, resume optimization, interview prep, negotiation, transitions and growth planning, using YAML templates and tables.",
+    "strengths": [
+      "Structured phases with templates",
+      "Wide coverage end to end",
+      "Includes a README"
+    ],
+    "cautions": [
+      "Broad, partly generic advice",
+      "Reads USER.md for context, which may hold personal data",
+      "Branded for a vendor"
+    ],
+    "keywords": [
+      "career",
+      "job search",
+      "resume",
+      "cv",
+      "interview",
+      "negotiation",
+      "career transition",
+      "self-assessment"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": [
+        "Reads a USER.md file for personal context."
+      ]
+    }
+  }
+}

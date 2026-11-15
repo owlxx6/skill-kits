@@ -1,0 +1,43 @@
+{
+  "fingerprint": "e148409b56a8e389f4befd6a132ac5881f57a1f6",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career",
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Tracks job applications, follow-ups, interviews and offers in local JSON files.",
+    "summary": "Job search tracker that logs applications, interviews, rejections and offers, schedules follow-up reminders, compares offers and produces stats and weekly reports from local JSON files.",
+    "strengths": [
+      "Clear logging commands",
+      "Offer comparison and follow-up tracking",
+      "Useful pipeline stats"
+    ],
+    "cautions": [
+      "Reminders are only textual, no real scheduling",
+      "Gamification adds filler"
+    ],
+    "keywords": [
+      "job tracker",
+      "applications",
+      "job search",
+      "follow up",
+      "offers",
+      "pipeline",
+      "interview log",
+      "career"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": [
+        "Writes profile and history files under a local ~/.openclaw folder; stores personal data beyond the resume."
+      ]
+    }
+  }
+}

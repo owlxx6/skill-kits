@@ -1,0 +1,47 @@
+{
+  "fingerprint": "66c06a9e22c64c4a062c439158667d115a1a3061",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 6,
+      "completeness": 5,
+      "usefulness": 7
+    },
+    "why": "A full job-search pipeline with offer scoring, CV generation and tracking, if you accept installing its separate repository.",
+    "summary": "Router for an open-source job search agent: evaluates job offers, scans portals, generates CVs and cover letters, tracks applications, prepares interviews. It only dispatches to mode files in a separate repository, so it does nothing alone.",
+    "strengths": [
+      "Very broad coverage of the job search workflow",
+      "Clear mode routing and data-root rules",
+      "Keeps user data separate from shipped files"
+    ],
+    "cautions": [
+      "Needs the external repository, Node.js and its modes to work",
+      "Large and complex, with about 40 modes",
+      "Portal scanning and application automation may need Playwright"
+    ],
+    "keywords": [
+      "job search",
+      "career agent",
+      "cv",
+      "resume",
+      "job offer evaluation",
+      "application tracker",
+      "portal scan",
+      "cover letter",
+      "interview prep",
+      "pipeline"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": [
+        "Offers to download and install software via npx after asking the user",
+        "Scans job portals and can automate applications with a browser",
+        "Handles the user's CV, profile and application data"
+      ]
+    }
+  }
+}

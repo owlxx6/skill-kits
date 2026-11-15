@@ -1,0 +1,42 @@
+{
+  "fingerprint": "00c29cde172ed0716aee2bdf9904b63aeb8b4fee",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Builds, tailors and exports resumes and cover letters from chat with a stored local profile.",
+    "summary": "Chat-driven resume builder with a 20-feature menu: master profile storage, templates, tailoring, ATS check, cover letters and interview prep. Says never to fabricate and that data stays local.",
+    "strengths": [
+      "Persistent master profile",
+      "Wide feature coverage incl. cover letters",
+      "Forbids fabricating facts"
+    ],
+    "cautions": [
+      "Tied to an openclaw-style folder layout",
+      "Broad and shallow; overlaps other skills"
+    ],
+    "keywords": [
+      "resume builder",
+      "cv",
+      "cover letter",
+      "ats check",
+      "tailor resume",
+      "export",
+      "templates",
+      "profile"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": [
+        "Writes profile and history files under a local ~/.openclaw folder; stores personal data beyond the resume. Runs mkdir commands."
+      ]
+    }
+  }
+}

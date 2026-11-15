@@ -1,0 +1,40 @@
+{
+  "fingerprint": "fe824f62b9ce3b048b9fa18a5d09201230269473",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Helps reframe experience for a new industry when someone is changing careers.",
+    "summary": "Identifies transferable skills and translates experience into the vocabulary of a target industry, with before/after examples, gap-bridging ideas and a career-change narrative.",
+    "strengths": [
+      "Before/after translation examples",
+      "Transferable skills framework",
+      "Addresses the change narrative"
+    ],
+    "cautions": [
+      "Advice only; no scripts or templates",
+      "Examples may nudge toward over-stretching claims"
+    ],
+    "keywords": [
+      "career change",
+      "career pivot",
+      "transferable skills",
+      "resume",
+      "cv",
+      "reframe experience",
+      "industry switch",
+      "narrative"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

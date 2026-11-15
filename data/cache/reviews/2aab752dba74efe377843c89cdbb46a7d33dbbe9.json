@@ -1,0 +1,41 @@
+{
+  "fingerprint": "2aab752dba74efe377843c89cdbb46a7d33dbbe9",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Tailors a resume to one job posting by reordering and rewording true experience, with before and after examples.",
+    "summary": "Guides tailoring a resume to a specific job: analyze the posting, audit each section, rewrite the summary, reorder skills and experience, and add keywords naturally. States a truthfulness principle and gives section-by-section examples.",
+    "strengths": [
+      "Explicit truthfulness principle",
+      "Before and after examples per section",
+      "Step order is clear"
+    ],
+    "cautions": [
+      "Assumes a job-description-analyzer skill is run first",
+      "Generic examples, mostly English-market",
+      "No scripts or templates"
+    ],
+    "keywords": [
+      "resume",
+      "cv",
+      "tailor",
+      "job posting",
+      "keywords",
+      "professional summary",
+      "targeted resume",
+      "customize"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

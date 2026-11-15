@@ -1,0 +1,45 @@
+{
+  "fingerprint": "1b49f3d6ca050ba2bbb99962b350057de981b8fa",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Turns real work history from git and PRs into evidence-backed impact statements for reviews and resume bullets.",
+    "summary": "Writes impact statements in an action, result, evidence format for self-reviews, promotion packets and weekly updates. It can reconstruct past work from git commits, GitHub PRs and Copilot CLI session logs, and asks before saving.",
+    "strengths": [
+      "Strict rule against inventing metrics",
+      "Confirms scope and shows drafts before saving",
+      "Evidence ladder and anti-pattern table"
+    ],
+    "cautions": [
+      "Aimed at performance reviews more than job applications",
+      "Best value needs git, gh or Copilot logs",
+      "Engineering-centric"
+    ],
+    "keywords": [
+      "brag sheet",
+      "impact statements",
+      "achievements",
+      "self review",
+      "promotion",
+      "resume bullets",
+      "accomplishments",
+      "work journal",
+      "star"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": [
+        "Reads local session logs, git history and GitHub PRs, which are personal work data",
+        "May run git and gh commands"
+      ]
+    }
+  }
+}

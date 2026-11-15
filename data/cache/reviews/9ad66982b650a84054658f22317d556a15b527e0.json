@@ -1,0 +1,41 @@
+{
+  "fingerprint": "9ad66982b650a84054658f22317d556a15b527e0",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career",
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Scores a pasted LinkedIn profile against a 12-item rubric and rewrites the weakest parts.",
+    "summary": "Scores a LinkedIn profile out of 100 using a bundled rubric file, then rewrites headline, About and other sections in descending order of points lost. Works from pasted text and does not log in.",
+    "strengths": [
+      "Explicit scoring rubric and rewrite order",
+      "Does not log into LinkedIn",
+      "Concise and actionable"
+    ],
+    "cautions": [
+      "LinkedIn only",
+      "Short, no scripts or examples beyond the rubric"
+    ],
+    "keywords": [
+      "linkedin",
+      "profile score",
+      "headline",
+      "about section",
+      "rubric",
+      "profile rewrite",
+      "career",
+      "personal branding"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

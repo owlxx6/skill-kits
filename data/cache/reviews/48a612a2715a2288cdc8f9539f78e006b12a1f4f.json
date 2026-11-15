@@ -1,0 +1,44 @@
+{
+  "fingerprint": "48a612a2715a2288cdc8f9539f78e006b12a1f4f",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career",
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Scores and rewrites a LinkedIn profile with bundled audit scripts, worksheet and references.",
+    "summary": "Audits a LinkedIn profile section by section, scores the headline, ranks fixes by points per hour and builds the About section using three Python scripts, a worksheet, an example input and reference notes.",
+    "strengths": [
+      "Ordered workflow with exit-code stop conditions",
+      "Three scripts plus worksheet and example input",
+      "Prioritizes fixes by effort"
+    ],
+    "cautions": [
+      "LinkedIn only, not a resume",
+      "Needs Python 3",
+      "Scripts must be read before trusting"
+    ],
+    "keywords": [
+      "linkedin",
+      "profile audit",
+      "headline",
+      "about section",
+      "personal branding",
+      "career",
+      "profile optimization",
+      "cv"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": [
+        "Instructs running local Python scripts on user-provided profile data; review scripts before running."
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "92188a5a60c110c997940c71bf1b23a3115a6c8c",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Rewrites weak resume bullets into achievement statements using X-Y-Z, STAR and CAR formulas with examples.",
+    "summary": "Transforms duty-style resume bullets into achievement-focused ones using the X-Y-Z, STAR and CAR frameworks, action verbs and metrics, with many before and after examples.",
+    "strengths": [
+      "Several proven frameworks",
+      "Many concrete rewrites",
+      "Easy to apply bullet by bullet"
+    ],
+    "cautions": [
+      "Examples show invented-looking metrics; user must supply real numbers",
+      "Long and generic across industries",
+      "No scripts"
+    ],
+    "keywords": [
+      "resume bullets",
+      "achievements",
+      "action verbs",
+      "xyz formula",
+      "star method",
+      "car method",
+      "cv",
+      "impact"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

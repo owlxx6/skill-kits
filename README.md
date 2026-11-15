@@ -124,6 +124,10 @@ Dans `data/config.yaml` :
 
 Choisir `maxReviewsPerRun` et `maxMinutes` à partir de la mesure du mode d'essai : coût par skill relu et durée totale (`time`). Diviser le budget de dépense par le coût par skill pour obtenir le plafond de revues. Vérifier que la durée des étapes avant les revues, plus le temps par revue multiplié par ce plafond, reste sous `maxMinutes` ; sinon, baisser le plafond ou accepter le report. L'étape du pipeline s'arrête à 170 minutes (le job, à 180 minutes).
 
+## Données versionnées
+
+Seuls les fichiers coûteux à refaire sont dans git : `data/curation.yaml`, `data/cache/reviews/`, `data/cache/triage.json` et `data/cache/kits.sha256`. `candidates.json`, `repos.json` et `skills.json` sont reconstruits depuis GitHub à chaque passage (plusieurs dizaines de Mo) et restent hors de git. Un passage complet relit donc tous les `SKILL.md`, ce qui allonge sa durée.
+
 ## Après un échec
 
 Un échec ne produit aucune pull request. Le résumé et les statistiques du passage sont dans le journal du run. Le cache (`data/cache/`) et `pipeline-run.json` sont conservés 14 jours comme artefact nommé `reviews-<run id>`.

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "29df6bd126cac9370752b3eec3fbac78901b9996",
+  "model": "claude-code-session",
+  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Builds STAR stories and likely interview questions from a resume and a job description.",
+    "summary": "Generates role-specific interview questions, converts resume bullets into STAR stories, prepares talking points and answers for concerns, and suggests questions to ask, in three phases from role analysis to mock practice.",
+    "strengths": [
+      "Three-phase structure",
+      "STAR template with worked example",
+      "Uses the user's own resume"
+    ],
+    "cautions": [
+      "Company research is advised but no tool is given",
+      "Generic across roles",
+      "No scripts"
+    ],
+    "keywords": [
+      "interview prep",
+      "star stories",
+      "behavioral questions",
+      "mock interview",
+      "interview questions",
+      "talking points",
+      "resume",
+      "preparation"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

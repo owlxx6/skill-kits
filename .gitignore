@@ -5,3 +5,8 @@ catalog.json
 pipeline-summary.md
 pipeline-run.json
 *.tmp
+.DS_Store
+# Rebuilt from GitHub on every run; too large to version.
+data/cache/candidates.json
+data/cache/repos.json
+data/cache/skills.json
