@@ -296,4 +296,42 @@ describe("runPipeline", () => {
       "- Stopped by the time budget (review.maxMinutes): the rest is deferred to the next run",
     );
   });
+
+  const kitsChanged =
+    "kits.yaml changed since the last review: delete data/cache/triage.json, data/cache/reviews/ and data/cache/kits.sha256, then run again";
+
+  async function editFirstKitDescription(): Promise<void> {
+    const file = path.join(root, "data", "kits.yaml");
+    const text = await readFile(file, "utf8");
+    const edited = text.replace(/description: "[^"]*"/, 'description: "Something else entirely."');
+    expect(edited).not.toBe(text);
+    await writeFile(file, edited);
+  }
+
+  it("records the hash of the kits on the first review", async () => {
+    await run();
+    const hash = await readFile(path.join(root, "data", "cache", "kits.sha256"), "utf8");
+    expect(hash).toMatch(/^[0-9a-f]{64}\n$/);
+    await run(["review"]);
+  });
+
+  it("refuses to review after a kit changed, but still ranks", async () => {
+    await run();
+    await editFirstKitDescription();
+    const reviewCalls = llm.reviewCalls.length;
+    await expect(run(["review"])).rejects.toThrow(kitsChanged);
+    expect(llm.reviewCalls.length).toBe(reviewCalls);
+    await run(["rank", "summary"]);
+    expect((await readCatalog(root)).skills.length).toBeGreaterThan(0);
+  });
+
+  it("refuses to review when a triage cache exists without a kits hash", async () => {
+    await mkdir(path.join(root, "data", "cache"), { recursive: true });
+    await writeFile(
+      path.join(root, "data", "cache", "triage.json"),
+      JSON.stringify({ ["a".repeat(40)]: [] }),
+    );
+    await expect(run()).rejects.toThrow(kitsChanged);
+    expect(llm.triageCalls).toHaveLength(0);
+  });
 });

@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
@@ -21,9 +22,18 @@ import {
   RunInfoSchema,
   SkillRecordSchema,
   SourcesSchema,
+  type TriageCache,
   TriageCacheSchema,
 } from "./lib/schemas";
-import { type Paths, readJsonFile, readYamlFile, resolvePaths, writeJsonFile } from "./lib/store";
+import {
+  type Paths,
+  readJsonFile,
+  readYamlFile,
+  resolvePaths,
+  writeJsonFile,
+  writeTextFile,
+} from "./lib/store";
+import { compareText } from "./lib/text";
 import { buildSummary } from "./publish";
 import { buildCatalog } from "./rank";
 import { emptyReviewStats, runReviews, runTriage, selectForReview } from "./review";
@@ -84,6 +94,39 @@ export async function loadReviews(dir: string): Promise<Map<string, Review>> {
   return reviews;
 }
 
+// Only what the model reads: keywords do not reach the prompts.
+export function hashKits(kits: Kit[]): string {
+  const content = kits
+    .map(({ id, title, description }) => ({ id, title, description }))
+    .sort((a, b) => compareText(a.id, b.id));
+  return createHash("sha256").update(JSON.stringify(content)).digest("hex");
+}
+
+async function readOptionalText(file: string): Promise<string | undefined> {
+  try {
+    return await readFile(file, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return undefined;
+    throw error;
+  }
+}
+
+// Triage answers and reviews depend on the kit list: a changed list makes them stale.
+async function checkKitsHash(paths: Paths, kits: Kit[], triage: TriageCache): Promise<void> {
+  const current = hashKits(kits);
+  const stored = (await readOptionalText(paths.kitsHash))?.trim();
+  if (stored === current) return;
+  const hasCache =
+    Object.keys(triage).length > 0 || (await listReviewFiles(paths.reviewsDir)).length > 0;
+  if (stored === undefined && !hasCache) {
+    await writeTextFile(paths.kitsHash, `${current}\n`);
+    return;
+  }
+  throw new Error(
+    "kits.yaml changed since the last review: delete data/cache/triage.json, data/cache/reviews/ and data/cache/kits.sha256, then run again",
+  );
+}
+
 async function updateRunInfo(file: string, patch: RunInfo): Promise<void> {
   const current = await readJsonFile(file, RunInfoSchema, {});
   await writeJsonFile(file, { ...current, ...patch });
@@ -120,6 +163,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const repos = await readJsonFile(paths.repos, z.array(RepoMetaSchema), []);
     const skills = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
     const triage = await readJsonFile(paths.triage, TriageCacheSchema, {});
+    await checkKitsHash(paths, kits, triage);
     const curation = await readYamlFile(paths.curation, CurationSchema);
     // Approved skills are re-reviewed first, even when triage no longer proposes a kit for them.
     const priorityIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));

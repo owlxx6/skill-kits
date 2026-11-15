@@ -36,12 +36,16 @@ export async function readJsonFile<T>(file: string, schema: z.ZodType<T>, fallba
   return result.data;
 }
 
-export async function writeJsonFile(file: string, data: unknown): Promise<void> {
+export async function writeTextFile(file: string, text: string): Promise<void> {
   await mkdir(path.dirname(file), { recursive: true });
   // Write then rename so a crash never leaves a half-written file.
   const temporary = `${file}.${process.pid}.tmp`;
-  await writeFile(temporary, `${JSON.stringify(data, null, 2)}\n`, "utf8");
+  await writeFile(temporary, text, "utf8");
   await rename(temporary, file);
+}
+
+export async function writeJsonFile(file: string, data: unknown): Promise<void> {
+  await writeTextFile(file, `${JSON.stringify(data, null, 2)}\n`);
 }
 
 export interface Paths {
@@ -54,6 +58,7 @@ export interface Paths {
   skills: string;
   triage: string;
   reviewsDir: string;
+  kitsHash: string;
   runInfo: string;
   catalog: string;
   summary: string;
@@ -74,6 +79,7 @@ export function resolvePaths(root: string, dryRun: boolean): Paths {
     skills: path.join(cache, "skills.json"),
     triage: path.join(cache, "triage.json"),
     reviewsDir: path.join(cache, "reviews"),
+    kitsHash: path.join(cache, "kits.sha256"),
     runInfo: path.join(out, "pipeline-run.json"),
     catalog: path.join(out, "catalog.json"),
     summary: path.join(out, "pipeline-summary.md"),

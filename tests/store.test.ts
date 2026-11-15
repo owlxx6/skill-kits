@@ -30,7 +30,7 @@ describe("resolvePaths", () => {
   it("uses data/cache for the cache and root for outputs in real mode", () => {
     const real = resolvePaths(root, false);
     const cache = path.join(root, "data", "cache");
-    for (const key of ["candidates", "repos", "skills", "triage", "reviewsDir"] as const) {
+    for (const key of ["candidates", "repos", "skills", "triage", "reviewsDir", "kitsHash"] as const) {
       expect(real[key].startsWith(cache)).toBe(true);
     }
     for (const key of ["catalog", "summary", "runInfo"] as const) {
