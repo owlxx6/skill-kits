@@ -7,7 +7,6 @@
     "pipeline": "tsx pipeline/cli.ts",
     "site:dev": "astro dev --root site",
     "site:build": "astro build --root site",
-    "site:check": "astro check --root site",
     "site:verify": "tsx scripts/verify-site.ts"
   },
   "keywords": [],
@@ -29,7 +28,6 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.12",
     "@types/node": "^26.6.6",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
