@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
       # An unmerged pipeline pull request means this run would pay again for the same
       # reviews and open a conflicting pull request: stop until it is merged or closed.
