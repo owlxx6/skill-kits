@@ -1,0 +1,109 @@
+---
+import Base from "../../layouts/Base.astro";
+import CollectionRow from "../../components/CollectionRow.astro";
+import SkillRow from "../../components/SkillRow.astro";
+import { kitView, licenseOptions, loadCatalog } from "../../lib/catalog";
+
+export function getStaticPaths() {
+  return loadCatalog().kits.map((kit) => ({ params: { kit: kit.id } }));
+}
+
+const catalog = loadCatalog();
+const view = kitView(catalog, Astro.params.kit as string);
+if (!view) throw new Error(`Unknown kit ${Astro.params.kit}`);
+const licenses = licenseOptions(view.skills);
+---
+<Base title={view.kit.title} description={view.kit.description}>
+  <div class="kit-layout">
+    <aside class="kit-summary">
+      <h1>{view.kit.title}</h1>
+      <p>{view.kit.description}</p>
+      {!view.isEmpty && (
+        <>
+          <p class="muted">In this kit: {view.collections.length} collection{view.collections.length === 1 ? "" : "s"} to start with, {view.skills.length} skill{view.skills.length === 1 ? "" : "s"} to add.</p>
+          <div class="controls">
+            <label>License
+              <select id="license-filter">
+                <option value="">Any permissive license</option>
+                {licenses.map((license) => <option value={license}>{license}</option>)}
+              </select>
+            </label>
+            <label>Order
+              <select id="skill-sort">
+                <option value="curated">Recommended order</option>
+                <option value="review">Review score</option>
+                <option value="forks">Forks</option>
+              </select>
+            </label>
+          </div>
+        </>
+      )}
+      <p class="muted small">Reviewed {catalog.generatedAt.slice(0, 10)}. <a href="/methodology/">How we pick</a>.</p>
+    </aside>
+
+    <div class="kit-parts">
+      {view.isEmpty ? (
+        <p>No part of this kit is validated yet. Search the catalog in the meantime: <a href="/search/">search skills</a>.</p>
+      ) : (
+        <>
+          {view.collections.length > 0 && (
+            <section>
+              <h2>Start with a collection</h2>
+              <ul class="parts">{view.collections.map((collection) => <CollectionRow collection={collection} />)}</ul>
+            </section>
+          )}
+          <section>
+            <h2>Add these skills</h2>
+            <ul class="parts" id="skill-list">{view.skills.map((skill) => <SkillRow skill={skill} />)}</ul>
+            <p class="muted" id="no-match" hidden>No skill in this kit uses that license.</p>
+          </section>
+        </>
+      )}
+    </div>
+  </div>
+</Base>
+
+<script>
+  const list = document.getElementById("skill-list");
+  const licenseSelect = document.getElementById("license-filter") as HTMLSelectElement | null;
+  const sortSelect = document.getElementById("skill-sort") as HTMLSelectElement | null;
+  const noMatch = document.getElementById("no-match");
+
+  if (list && licenseSelect && sortSelect && noMatch) {
+    const rows = [...list.querySelectorAll<HTMLLIElement>("li.part")];
+    const curated = [...rows];
+
+    const apply = () => {
+      const license = licenseSelect.value;
+      const key = sortSelect.value;
+      const ordered =
+        key === "curated"
+          ? curated
+          : [...rows].sort((a, b) => Number(b.dataset[key]) - Number(a.dataset[key]));
+      let visible = 0;
+      for (const row of ordered) {
+        const show = license === "" || row.dataset.license === license;
+        row.hidden = !show;
+        if (show) visible += 1;
+        list.append(row);
+      }
+      noMatch.hidden = visible > 0;
+    };
+
+    licenseSelect.addEventListener("change", apply);
+    sortSelect.addEventListener("change", apply);
+  }
+</script>
+
+<style>
+  .kit-layout { display: grid; gap: 2rem; }
+  @media (min-width: 900px) {
+    .kit-layout { grid-template-columns: 18rem 1fr; gap: 3rem; }
+    .kit-summary { position: sticky; top: 1.5rem; align-self: start; }
+  }
+  .kit-summary h1 { font-size: 2rem; }
+  .controls { display: grid; gap: 0.75rem; margin: 1rem 0; }
+  .controls label { display: grid; gap: 0.25rem; font-size: 0.875rem; color: var(--muted); }
+  .kit-parts section + section { margin-top: 2.5rem; }
+  .small { font-size: 0.875rem; }
+</style>
