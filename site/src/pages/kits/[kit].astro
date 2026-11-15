@@ -1,8 +1,12 @@
 ---
 import Base from "../../layouts/Base.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CollectionRow from "../../components/CollectionRow.astro";
+import EmptyState from "../../components/EmptyState.astro";
+import Icon from "../../components/Icon.astro";
 import SkillRow from "../../components/SkillRow.astro";
 import { kitView, licenseOptions, loadCatalog } from "../../lib/catalog";
+import { kitIcon } from "../../lib/icons";
 
 export function getStaticPaths() {
   return loadCatalog().kits.map((kit) => ({ params: { kit: kit.id } }));
@@ -12,54 +16,83 @@ const catalog = loadCatalog();
 const view = kitView(catalog, Astro.params.kit as string);
 if (!view) throw new Error(`Unknown kit ${Astro.params.kit}`);
 const licenses = licenseOptions(view.skills);
+const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
 ---
 <Base title={view.kit.title} description={view.kit.description}>
-  <div class="kit-layout">
-    <aside class="kit-summary">
-      <h1>{view.kit.title}</h1>
-      <p>{view.kit.description}</p>
-      {!view.isEmpty && (
-        <>
-          <p class="muted">In this kit: {view.collections.length} collection{view.collections.length === 1 ? "" : "s"} to start with, {view.skills.length} skill{view.skills.length === 1 ? "" : "s"} to add.</p>
-          <div class="controls">
-            <label>License
-              <select id="license-filter">
-                <option value="">Any permissive license</option>
-                {licenses.map((license) => <option value={license}>{license}</option>)}
-              </select>
-            </label>
-            <label>Order
-              <select id="skill-sort">
-                <option value="curated">Recommended order</option>
-                <option value="review">Review score</option>
-                <option value="forks">Forks</option>
-              </select>
-            </label>
-          </div>
-        </>
-      )}
-      <p class="muted small">Reviewed {catalog.generatedAt.slice(0, 10)}. <a href="/methodology/">How we pick</a>.</p>
-    </aside>
-
-    <div class="kit-parts">
-      {view.isEmpty ? (
-        <p>No part of this kit is validated yet. Search the catalog in the meantime: <a href="/search/">search skills</a>.</p>
-      ) : (
-        <>
-          {view.collections.length > 0 && (
-            <section>
-              <h2>Start with a collection</h2>
-              <ul class="parts">{view.collections.map((collection) => <CollectionRow collection={collection} />)}</ul>
-            </section>
+  <div class="narrow">
+    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: view.kit.title }]} />
+    <header class="page-head">
+      <span class:list={["icon-tile", "large", { quiet: view.isEmpty }]}><Icon name={kitIcon(view.kit.id)} size={28} /></span>
+      <div class="page-head-text">
+        <h1>{view.kit.title}</h1>
+        <p class="lead muted">{view.kit.description}</p>
+        <p class="meta">
+          {view.isEmpty ? (
+            <span class="badge"><Icon name="clock" size={14} />Coming soon</span>
+          ) : (
+            <>
+              <span><Icon name="layers" size={14} />{plural(view.collections.length, "collection")}</span>
+              <span><Icon name="puzzle" size={14} />{plural(view.skills.length, "skill")}</span>
+            </>
           )}
-          <section>
-            <h2>Add these skills</h2>
-            <ul class="parts" id="skill-list">{view.skills.map((skill) => <SkillRow skill={skill} />)}</ul>
-            <p class="muted" id="no-match" hidden>No skill in this kit uses that license.</p>
+          <span><Icon name="clock" size={14} />Reviewed {catalog.generatedAt.slice(0, 10)}</span>
+          <a href="/methodology/">How we pick</a>
+        </p>
+      </div>
+    </header>
+
+    {view.isEmpty ? (
+      <div class="section">
+        <EmptyState icon="inbox" title="This kit is being assembled">
+          <p>No skill has passed review for this kit yet. The catalog search covers every reviewed skill in the meantime.</p>
+          <div class="button-row">
+            <a class="button primary" href="/search/"><Icon name="search" size={16} />Search all skills</a>
+            <a class="button" href="/#kits">Browse other kits</a>
+          </div>
+        </EmptyState>
+      </div>
+    ) : (
+      <>
+        {view.collections.length > 0 && (
+          <section class="section" aria-labelledby="collections-title">
+            <div class="section-head">
+              <h2 id="collections-title">Start with a collection</h2>
+              <p>Installs a whole repository of skills at once.</p>
+            </div>
+            <ul class="card-list">{view.collections.map((collection) => <CollectionRow collection={collection} />)}</ul>
           </section>
-        </>
-      )}
-    </div>
+        )}
+        {view.skills.length > 0 && (
+          <section class="section" aria-labelledby="skills-title">
+            <div class="section-head">
+              <h2 id="skills-title">Add these skills</h2>
+              <p id="skill-count" aria-live="polite">{plural(view.skills.length, "skill")}</p>
+            </div>
+            <div class="filter-bar" role="group" aria-label="Filter and order skills">
+              <label class="field" for="license-filter">License
+                <select id="license-filter">
+                  <option value="">All licenses</option>
+                  {licenses.map((license) => <option value={license}>{license}</option>)}
+                </select>
+              </label>
+              <label class="field" for="skill-sort">Order
+                <select id="skill-sort">
+                  <option value="curated">Recommended order</option>
+                  <option value="review">Review score</option>
+                  <option value="forks">Forks</option>
+                </select>
+              </label>
+            </div>
+            <ul class="card-list" id="skill-list">{view.skills.map((skill) => <SkillRow skill={skill} />)}</ul>
+            <div id="no-match" hidden>
+              <EmptyState icon="search-x" title="No skill uses that license" headingLevel={3}>
+                <p>Choose another license, or show every permissive license again.</p>
+              </EmptyState>
+            </div>
+          </section>
+        )}
+      </>
+    )}
   </div>
 </Base>
 
@@ -68,9 +101,10 @@ const licenses = licenseOptions(view.skills);
   const licenseSelect = document.getElementById("license-filter") as HTMLSelectElement | null;
   const sortSelect = document.getElementById("skill-sort") as HTMLSelectElement | null;
   const noMatch = document.getElementById("no-match");
+  const count = document.getElementById("skill-count");
 
-  if (list && licenseSelect && sortSelect && noMatch) {
-    const rows = [...list.querySelectorAll<HTMLLIElement>("li.part")];
+  if (list && licenseSelect && sortSelect && noMatch && count) {
+    const rows = [...list.querySelectorAll<HTMLLIElement>(":scope > li[data-license]")];
     const curated = [...rows];
 
     const apply = () => {
@@ -88,6 +122,7 @@ const licenses = licenseOptions(view.skills);
         list.append(row);
       }
       noMatch.hidden = visible > 0;
+      count.textContent = visible === rows.length ? `${rows.length} skill${rows.length === 1 ? "" : "s"}` : `${visible} of ${rows.length} skills`;
     };
 
     licenseSelect.addEventListener("change", apply);
@@ -96,15 +131,11 @@ const licenses = licenseOptions(view.skills);
 </script>
 
 <style>
-  .kit-layout { display: grid; gap: 2rem; }
-  @media (min-width: 900px) {
-    .kit-layout { grid-template-columns: 18rem 1fr; gap: 3rem; }
-    .kit-summary { position: sticky; top: 1.5rem; align-self: start; }
+  .filter-bar {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3);
+    margin-bottom: var(--space-4); padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface);
   }
-  .kit-summary h1 { font-size: 2rem; }
-  .controls { display: grid; gap: 0.75rem; margin: 1rem 0; }
-  .controls label { display: grid; gap: 0.25rem; font-size: 0.875rem; color: var(--muted); }
-  .kit-parts { min-width: 0; }
-  .kit-parts section + section { margin-top: 2.5rem; }
-  .small { font-size: 0.875rem; }
+  @media (min-width: 768px) { .filter-bar { grid-template-columns: repeat(2, minmax(0, 16rem)); } }
+  @media (max-width: 359px) { .filter-bar { grid-template-columns: minmax(0, 1fr); } }
 </style>

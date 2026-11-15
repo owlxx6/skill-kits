@@ -1,5 +1,6 @@
 ---
 import CopyCommand from "./CopyCommand.astro";
+import Icon from "./Icon.astro";
 import { type CatalogCollection, collectionHref, collectionInstallCommand, formatCount } from "../lib/catalog";
 
 interface Props {
@@ -7,15 +8,37 @@ interface Props {
 }
 const { collection } = Astro.props;
 ---
-<li class="part" data-license={collection.license}>
-  <div class="part-head">
-    <a class="part-name" href={collectionHref(collection.id)}>{collection.id}</a>
-    <span class="part-meta">{collection.skillCount} skills, {formatCount(collection.stars)} stars, {formatCount(collection.forks)} forks</span>
+<li class="card collection-card" data-license={collection.license}>
+  <p class="eyebrow"><Icon name="layers" size={16} />Start here</p>
+  <div class="collection-head">
+    <h3><a href={collectionHref(collection.id)}>{collection.id}</a></h3>
+    <p class="meta">
+      <span><Icon name="puzzle" size={14} />{collection.skillCount} skills</span>
+      <span><Icon name="star" size={14} />{formatCount(collection.stars)}<span class="visually-hidden"> stars</span></span>
+      <span><Icon name="git-fork" size={14} />{formatCount(collection.forks)}<span class="visually-hidden"> forks</span></span>
+    </p>
   </div>
-  {collection.description && <p class="part-why">{collection.description}</p>}
+  {collection.description && <p class="collection-why">{collection.description}</p>}
   <div class="badges">
-    <span class="badge">{collection.license}</span>
-    {collection.humanReviewed && <span class="badge">Reviewed by a human</span>}
+    <span class="badge"><Icon name="scale" size={14} />{collection.license}</span>
+    {collection.humanReviewed && <span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span>}
   </div>
-  <CopyCommand command={collectionInstallCommand(collection.id)} />
+  <CopyCommand command={collectionInstallCommand(collection.id)} label={`Copy install command for ${collection.id}`} />
 </li>
+
+<style>
+  .collection-card {
+    display: grid; gap: var(--space-3);
+    border-color: var(--accent-border);
+    background: linear-gradient(135deg, var(--accent-soft), var(--surface) 60%);
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: var(--space-2); color: var(--accent-text);
+    font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .collection-head { display: grid; gap: var(--space-1); }
+  .collection-head h3 { font-size: var(--text-lg); overflow-wrap: anywhere; }
+  .collection-head h3 a { color: var(--text); text-decoration: none; }
+  .collection-head h3 a:hover { color: var(--accent-text); text-decoration: underline; }
+  .collection-why { color: var(--text-muted); max-width: var(--measure); }
+</style>
