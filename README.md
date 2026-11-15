@@ -145,3 +145,13 @@ Pour récupérer les revues déjà payées :
 Le modèle est `claude-haiku-5-5`, défini dans `data/config.yaml`. Aux tarifs d'environ 0,10 USD par million de jetons en entrée et 0,50 USD par million en sortie, une semaine typique coûte environ 1 à 2 USD et le pire cas environ 9 USD.
 
 Ce sont des estimations. Les confirmer avec le mode d'essai, qui affiche les jetons par skill relu.
+
+## Le site
+
+Le site est un projet Astro statique dans `site/`. Il lit `catalog.json` et ne fait aucun appel réseau pendant la construction.
+
+- `npm run site:dev` : sert le site en local sur http://localhost:4321.
+- `npm run site:build` : construit le site dans `site/dist/`.
+- `npm run site:verify` : vérifie le site construit (pages attendues, contenu des kits, index de recherche). À lancer après `site:build`.
+
+Le déploiement viendra au sprint 3.
