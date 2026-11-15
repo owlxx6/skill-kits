@@ -441,4 +441,18 @@ describe("runPipeline", () => {
       await rm(restored, { recursive: true, force: true });
     }
   });
+
+  it("names the cache files of a dry run when the kits changed", async () => {
+    const cache = path.join(root, ".dry-run", "cache");
+    await mkdir(cache, { recursive: true });
+    await writeFile(path.join(cache, "triage.json"), JSON.stringify({ ["a".repeat(40)]: [] }));
+    await expect(
+      runPipeline(
+        { root, dryRun: true, steps: ["review"] },
+        { gh, getLlm: () => llm, now: NOW, log: () => {} },
+      ),
+    ).rejects.toThrow(
+      "kits.yaml changed since the last review: delete .dry-run/cache/triage.json, .dry-run/cache/reviews/ and .dry-run/cache/kits.sha256, then run again",
+    );
+  });
 });

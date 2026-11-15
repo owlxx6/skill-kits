@@ -173,11 +173,38 @@ describe("buildCatalog", () => {
     expect(catalog.kits[0].pending).toEqual([]);
   });
 
-  it("removes an approved id that matches no skill and no collection of a listed repository", () => {
+  it("removes an approved skill id that matches no extracted skill of a listed repository", () => {
     const catalog = build(curated(["acme/skills:skills/zzz"]));
     expect(catalog.kits[0].removed).toEqual([
-      { id: "acme/skills:skills/zzz", reason: "not found in the catalog" },
+      { id: "acme/skills:skills/zzz", reason: "skill no longer found in the repository" },
     ]);
+  });
+
+  it("compares repository names without letter case when explaining a removal", () => {
+    const catalog = build(curated(["ACME/Skills:skills/zzz"]));
+    expect(catalog.kits[0].removed).toEqual([
+      { id: "ACME/Skills:skills/zzz", reason: "skill no longer found in the repository" },
+    ]);
+  });
+
+  it("removes an approved collection that no longer qualifies", () => {
+    const catalog = buildCatalog({
+      repos: [repo],
+      skills: skills.slice(0, 2),
+      reviews,
+      kits: testKits,
+      curation: curated(["acme/skills"]),
+      config: testConfig,
+      now: NOW,
+    });
+    expect(catalog.kits[0].removed).toEqual([
+      { id: "acme/skills", reason: "collection below 3 skills or with no skill in the catalog" },
+    ]);
+  });
+
+  it("removes an approved collection whose repository is no longer listed", () => {
+    const catalog = build(curated(["gone/repo"]));
+    expect(catalog.kits[0].removed).toEqual([{ id: "gone/repo", reason: "repository no longer listed" }]);
   });
 
   it("does not mark a pending skill as human reviewed", () => {

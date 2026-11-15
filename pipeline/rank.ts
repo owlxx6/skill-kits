@@ -66,6 +66,7 @@ export function buildCatalog(input: RankInput): Catalog {
   const skillById = new Map(skills.map((skill) => [skill.id, skill]));
   const fingerprintById = new Map(skills.map((skill) => [skill.id, skill.fingerprint]));
   const approvedIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
+  const listedLower = new Set(repos.map((repo) => repo.fullName.toLowerCase()));
 
   const catalogSkills: CatalogSkill[] = [];
   const skillCountByRepo = new Map<string, number>();
@@ -173,8 +174,13 @@ export function buildCatalog(input: RankInput): Catalog {
       const record = skillById.get(id);
       // Skills of a repository dropped by the filter lose their record at extraction.
       const repoName = record?.repo ?? id.split(":")[0];
-      if (!repoByName.has(repoName)) return "repository no longer listed";
-      const review = record ? reviews.get(record.fingerprint) : undefined;
+      if (!listedLower.has(repoName.toLowerCase())) return "repository no longer listed";
+      if (!record) {
+        return id.includes(":")
+          ? "skill no longer found in the repository"
+          : `collection below ${config.collection.minSkills} skills or with no skill in the catalog`;
+      }
+      const review = reviews.get(record.fingerprint);
       if (!review) return "not found in the catalog";
       const value = reviewScore(review.scores);
       if (value < config.review.minCatalogScore) {

@@ -117,7 +117,12 @@ async function readOptionalText(file: string): Promise<string | undefined> {
 }
 
 // Triage answers and reviews depend on the kit list: a changed list makes them stale.
-async function checkKitsHash(paths: Paths, kits: Kit[], triage: TriageCache): Promise<void> {
+async function checkKitsHash(
+  root: string,
+  paths: Paths,
+  kits: Kit[],
+  triage: TriageCache,
+): Promise<void> {
   const current = hashKits(kits);
   const stored = (await readOptionalText(paths.kitsHash))?.trim();
   if (stored === current) return;
@@ -127,8 +132,10 @@ async function checkKitsHash(paths: Paths, kits: Kit[], triage: TriageCache): Pr
     await writeTextFile(paths.kitsHash, `${current}\n`);
     return;
   }
+  // Paths of this run, relative to the root: a dry run names its own .dry-run/cache copy.
+  const shown = (file: string): string => path.relative(root, file).split(path.sep).join("/");
   throw new Error(
-    "kits.yaml changed since the last review: delete data/cache/triage.json, data/cache/reviews/ and data/cache/kits.sha256, then run again",
+    `kits.yaml changed since the last review: delete ${shown(paths.triage)}, ${shown(paths.reviewsDir)}/ and ${shown(paths.kitsHash)}, then run again`,
   );
 }
 
@@ -173,7 +180,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const repos = await readJsonFile(paths.repos, z.array(RepoMetaSchema), []);
     const skills = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
     const triage = await readJsonFile(paths.triage, TriageCacheSchema, {});
-    await checkKitsHash(paths, kits, triage);
+    await checkKitsHash(options.root, paths, kits, triage);
     const curation = await readYamlFile(paths.curation, CurationSchema);
     // Approved skills are re-reviewed first, even when triage no longer proposes a kit for them.
     const priorityIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));

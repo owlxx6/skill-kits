@@ -80,7 +80,7 @@ Chaque lundi, le workflow ouvre une pull request `Pipeline run <date>`. Son corp
 
 - **Candidats** : par kit, les collections et skills proposés, avec identifiant, score et « Why it's here » ;
 - **Relus** : les fiches approuvées dont le contenu a changé et qui ont été relues ;
-- **Retirés** : les fiches approuvées sorties du kit, avec la raison : `review score … below 6` (note sous le seuil), `security severe` (alerte de sécurité sévère), `repository no longer listed` (dépôt exclu par le filtre : archivé, supprimé, licence changée, inactif), `not found in the catalog` (identifiant introuvable, souvent une faute de frappe dans `curation.yaml`) ;
+- **Retirés** : les fiches approuvées sorties du kit, avec la raison : `review score <note> below 6` (note de revue sous le seuil `review.minCatalogScore`), `security severe` (alerte de sécurité sévère), `repository no longer listed` (dépôt absent de la liste filtrée : archivé, supprimé, licence changée, inactif ou renommé), `collection below 3 skills or with no skill in the catalog` (le dépôt reste listé mais n'est plus une collection), `skill no longer found in the repository` (le dépôt reste listé mais le dossier du skill n'y est plus, ou l'identifiant est mal écrit), `not found in the catalog` (tout autre cas). Un dépôt renommé fait apparaître ses anciens identifiants comme `repository no longer listed` et figure dans la section « Renamed repositories » ;
 - **En attente de relecture** : les fiches approuvées modifiées, masquées du kit tant qu'elles ne sont pas relues ;
 - **Dépôts renommés** : à mettre à jour dans `data/curation.yaml` et `data/sources.yaml` si besoin ;
 - **Échecs** : skills ou dépôts non traités.
