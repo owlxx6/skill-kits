@@ -1,0 +1,34 @@
+---
+import Base from "../layouts/Base.astro";
+import { loadConfig } from "../lib/methodology";
+
+const config = await loadConfig();
+const { filter, review, scoring } = config;
+const percent = (value: number) => `${Math.round(value * 100)}%`;
+---
+<Base title="How we pick" description="How skills are found, filtered, reviewed and approved.">
+  <article class="sheet">
+    <h1>How we pick</h1>
+    <p>Every skill on this site went through the same four steps. Nothing enters a kit without a human approving it.</p>
+
+    <h2>1. Found and filtered</h2>
+    <p>We read public GitHub repositories tagged with agent-skill topics, plus a list we maintain. A repository stays only if it has a permissive license ({filter.allowedLicenses.join(", ")}), at least {filter.minStars} stars, is not archived, and was updated in the last {filter.maxDaysSinceLastCommit} days.</p>
+
+    <h2>2. Read and reviewed</h2>
+    <p>An AI reviewer reads each candidate SKILL.md and scores it from 0 to 10 on clarity (does an agent know what to do and when to stop), completeness (examples, scripts and references provided) and usefulness for the kit. It also flags security concerns: a notice when a skill runs commands, calls the network or handles credentials, and an exclusion when it hides behavior or asks an agent to bypass safeguards.</p>
+
+    <h2>3. Ranked</h2>
+    <p>A skill needs a review score of at least {review.minCatalogScore} to appear. Its ranking score is {percent(scoring.skill.review)} review and {percent(scoring.skill.repoSignal)} repository signal (stars, forks and recent activity on a log scale). A collection is a repository with at least {config.collection.minSkills} valid skills; its score for a kit combines its repository signal, the median review of its skills in that kit, and how many of them fit the kit.</p>
+
+    <h2>4. Approved by a human</h2>
+    <p>The best candidates are proposed to the curator, who approves or rejects each one and sets the order you see on a kit page. Skills marked "Reviewed by a human" passed that step.</p>
+
+    <h2>What this does not mean</h2>
+    <p>Skills are reviewed, not tested. Read a skill before you install it, especially one with a security notice.</p>
+  </article>
+</Base>
+
+<style>
+  .sheet { max-width: 48rem; }
+  h2 { margin-top: 2rem; }
+</style>
