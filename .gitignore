@@ -9,3 +9,5 @@ pipeline-run.json
 data/cache/candidates.json
 data/cache/repos.json
 data/cache/skills.json
+site/dist/
+site/.astro/
