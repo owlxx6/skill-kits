@@ -1,0 +1,1289 @@
+{
+  "generatedAt": "2026-11-15T21:18:59.715Z",
+  "kits": [
+    {
+      "id": "resume-career",
+      "title": "Resume & career agent",
+      "description": "Tailor a resume to a job offer, check it against ATS filters, write cover letters, and prepare interviews.",
+      "collections": [
+        "davila7/claude-code-templates"
+      ],
+      "skills": [
+        "alirezarezvani/claude-skills:marketing/linkedin/skills/linkedin-profile",
+        "github/awesome-copilot:skills/brag-sheet",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/resume-tailor",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/resume-ats-optimizer",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator"
+      ],
+      "pending": [],
+      "removed": [],
+      "proposals": {
+        "collections": [
+          {
+            "id": "LeoYeAI/agent-master-skills",
+            "score": 6.3
+          }
+        ],
+        "skills": [
+          {
+            "id": "davila7/claude-code-templates:cli-tool/components/skills/career/career-changer-translator",
+            "score": 7.6
+          },
+          {
+            "id": "davila7/claude-code-templates:cli-tool/components/skills/career/tech-resume-optimizer",
+            "score": 7.6
+          },
+          {
+            "id": "github/awesome-copilot:skills/technical-job-search",
+            "score": 7.4
+          },
+          {
+            "id": "davila7/claude-code-templates:cli-tool/components/skills/career/linkedin-profile-optimizer",
+            "score": 7.3
+          },
+          {
+            "id": "davila7/claude-code-templates:cli-tool/components/skills/career/resume-formatter",
+            "score": 7.1
+          },
+          {
+            "id": "davila7/claude-code-templates:cli-tool/components/skills/career/resume-quantifier",
+            "score": 7.1
+          },
+          {
+            "id": "LeoYeAI/agent-master-skills:skills/interview-coach-ai",
+            "score": 6.9
+          },
+          {
+            "id": "davepoon/buildwithclaude:plugins/all-skills/skills/tailored-resume-generator",
+            "score": 6.9
+          }
+        ]
+      }
+    },
+    {
+      "id": "web-app",
+      "title": "Web app builder",
+      "description": "Build, test and ship a web application, from frontend and backend to database and deployment.",
+      "collections": [],
+      "skills": [],
+      "pending": [],
+      "removed": [],
+      "proposals": {
+        "collections": [],
+        "skills": []
+      }
+    },
+    {
+      "id": "data-analysis",
+      "title": "Data analysis agent",
+      "description": "Load, clean, analyze and chart data from spreadsheets, CSV files and databases.",
+      "collections": [],
+      "skills": [],
+      "pending": [],
+      "removed": [],
+      "proposals": {
+        "collections": [],
+        "skills": []
+      }
+    },
+    {
+      "id": "docs-reports",
+      "title": "Docs & reports writer",
+      "description": "Write and format professional documents such as reports, proposals, slide decks, PDFs and technical documentation.",
+      "collections": [],
+      "skills": [],
+      "pending": [],
+      "removed": [],
+      "proposals": {
+        "collections": [],
+        "skills": []
+      }
+    },
+    {
+      "id": "marketing-content",
+      "title": "Marketing & content agent",
+      "description": "Plan and produce marketing content such as copywriting, SEO, social media posts, newsletters and campaigns.",
+      "collections": [],
+      "skills": [],
+      "pending": [],
+      "removed": [],
+      "proposals": {
+        "collections": [],
+        "skills": [
+          {
+            "id": "alirezarezvani/claude-skills:marketing/linkedin/skills/linkedin-profile",
+            "score": 8.7
+          },
+          {
+            "id": "Jakeschincariol/linkedin-agent-skill:skills/li-profile",
+            "score": 6.7
+          }
+        ]
+      }
+    },
+    {
+      "id": "research-monitoring",
+      "title": "Research & monitoring agent",
+      "description": "Research a topic across sources, track competitors and news, and produce sourced syntheses.",
+      "collections": [],
+      "skills": [],
+      "pending": [],
+      "removed": [],
+      "proposals": {
+        "collections": [],
+        "skills": []
+      }
+    },
+    {
+      "id": "ui-design",
+      "title": "UI design agent",
+      "description": "Design interfaces, including layouts, design systems, components, accessibility and visual polish.",
+      "collections": [],
+      "skills": [],
+      "pending": [],
+      "removed": [],
+      "proposals": {
+        "collections": [],
+        "skills": []
+      }
+    },
+    {
+      "id": "workflow-automation",
+      "title": "Workflow automation agent",
+      "description": "Automate recurring work with scheduled tasks, integrations between tools, browser automation and scripts.",
+      "collections": [],
+      "skills": [],
+      "pending": [],
+      "removed": [],
+      "proposals": {
+        "collections": [],
+        "skills": [
+          {
+            "id": "LeoYeAI/agent-master-skills:skills/job-hunt-tracker",
+            "score": 6.4
+          }
+        ]
+      }
+    }
+  ],
+  "skills": [
+    {
+      "id": "alirezarezvani/claude-skills:marketing/linkedin/skills/linkedin-profile",
+      "repo": "alirezarezvani/claude-skills",
+      "path": "marketing/linkedin/skills/linkedin-profile",
+      "name": "linkedin-profile",
+      "description": "Use when auditing or rewriting a LinkedIn profile (headline, About, experience, Featured). Scores the headline with headline_scorer.py, audits completeness with profile_completeness_auditor.py and drafts About with about_section_builder.py.",
+      "url": "https://github.com/alirezarezvani/claude-skills/tree/main/marketing/linkedin/skills/linkedin-profile",
+      "license": "MIT",
+      "stars": 29849,
+      "forks": 4142,
+      "pushedAt": "2026-11-12T10:35:06Z",
+      "review": {
+        "kits": [
+          "resume-career",
+          "marketing-content"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 7
+        },
+        "why": "Scores and rewrites a LinkedIn profile with bundled audit scripts, worksheet and references.",
+        "summary": "Audits a LinkedIn profile section by section, scores the headline, ranks fixes by points per hour and builds the About section using three Python scripts, a worksheet, an example input and reference notes.",
+        "strengths": [
+          "Ordered workflow with exit-code stop conditions",
+          "Three scripts plus worksheet and example input",
+          "Prioritizes fixes by effort"
+        ],
+        "cautions": [
+          "LinkedIn only, not a resume",
+          "Needs Python 3",
+          "Scripts must be read before trusting"
+        ],
+        "keywords": [
+          "linkedin",
+          "profile audit",
+          "headline",
+          "about section",
+          "personal branding",
+          "career",
+          "profile optimization",
+          "cv"
+        ],
+        "security": {
+          "level": "notice",
+          "notes": [
+            "Instructs running local Python scripts on user-provided profile data; review scripts before running."
+          ]
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 9.6,
+      "score": 8.7,
+      "humanReviewed": true
+    },
+    {
+      "id": "LeoYeAI/agent-master-skills:skills/linkedin-profile",
+      "repo": "LeoYeAI/agent-master-skills",
+      "path": "skills/linkedin-profile",
+      "name": "linkedin-profile",
+      "description": "Use when auditing or rewriting a LinkedIn profile (headline, About, experience, Featured). Scores the headline with headline_scorer.py, audits completeness with profile_completeness_auditor.py and drafts About with about_section_builder.py.",
+      "url": "https://github.com/LeoYeAI/agent-master-skills/tree/main/skills/linkedin-profile",
+      "license": "MIT",
+      "stars": 2193,
+      "forks": 333,
+      "pushedAt": "2026-11-13T02:01:09Z",
+      "review": {
+        "kits": [
+          "resume-career",
+          "marketing-content"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 7
+        },
+        "why": "Scores and rewrites a LinkedIn profile with bundled audit scripts, worksheet and references.",
+        "summary": "Audits a LinkedIn profile section by section, scores the headline, ranks fixes by points per hour and builds the About section using three Python scripts, a worksheet, an example input and reference notes.",
+        "strengths": [
+          "Ordered workflow with exit-code stop conditions",
+          "Three scripts plus worksheet and example input",
+          "Prioritizes fixes by effort"
+        ],
+        "cautions": [
+          "LinkedIn only, not a resume",
+          "Needs Python 3",
+          "Scripts must be read before trusting"
+        ],
+        "keywords": [
+          "linkedin",
+          "profile audit",
+          "headline",
+          "about section",
+          "personal branding",
+          "career",
+          "profile optimization",
+          "cv"
+        ],
+        "security": {
+          "level": "notice",
+          "notes": [
+            "Instructs running local Python scripts on user-provided profile data; review scripts before running."
+          ]
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 6.6,
+      "score": 7.8,
+      "humanReviewed": false
+    },
+    {
+      "id": "github/awesome-copilot:skills/brag-sheet",
+      "repo": "github/awesome-copilot",
+      "path": "skills/brag-sheet",
+      "name": "brag-sheet",
+      "description": "Turn vague \"what did I do?\" into evidence-backed impact statements for performance reviews, self-reviews, promotion packets, and weekly updates. Uniquely mines Copilot CLI session logs to reconstruct forgotten work, plus git commits and GitHub PRs. Enforces a 3-part impact contract (action → result → evidence). Works standalone with zero dependencies. Trigger for: \"brag\", \"log work\", \"what did I do\", \"backfill my work history\", \"performance review\", \"self-review\", \"self assessment\", \"write impact statement\", \"review prep\", \"promo packet\", \"promotion case\", \"weekly update\", \"status report\", \"accomplishments\", \"what did I ship\", \"I forgot to log my work\", \"summarize my work\", \"track my wins\", \"what should I highlight\", \"end of half\", \"career growth\", \"work journal\", or any request to document, summarize, or organize work accomplishments.",
+      "url": "https://github.com/github/awesome-copilot/tree/main/skills/brag-sheet",
+      "license": "MIT",
+      "stars": 41181,
+      "forks": 5363,
+      "pushedAt": "2026-11-14T20:42:30Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 6,
+          "usefulness": 6
+        },
+        "why": "Turns real work history from git and PRs into evidence-backed impact statements for reviews and resume bullets.",
+        "summary": "Writes impact statements in an action, result, evidence format for self-reviews, promotion packets and weekly updates. It can reconstruct past work from git commits, GitHub PRs and Copilot CLI session logs, and asks before saving.",
+        "strengths": [
+          "Strict rule against inventing metrics",
+          "Confirms scope and shows drafts before saving",
+          "Evidence ladder and anti-pattern table"
+        ],
+        "cautions": [
+          "Aimed at performance reviews more than job applications",
+          "Best value needs git, gh or Copilot logs",
+          "Engineering-centric"
+        ],
+        "keywords": [
+          "brag sheet",
+          "impact statements",
+          "achievements",
+          "self review",
+          "promotion",
+          "resume bullets",
+          "accomplishments",
+          "work journal",
+          "star"
+        ],
+        "security": {
+          "level": "notice",
+          "notes": [
+            "Reads local session logs, git history and GitHub PRs, which are personal work data",
+            "May run git and gh commands"
+          ]
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 9.9,
+      "score": 7.7,
+      "humanReviewed": true
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/career-changer-translator",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/career-changer-translator",
+      "name": "career-changer-translator",
+      "description": "Translate skills from one industry to another and identify transferable skills for career pivots. Use when the user mentions changing careers, switching industries, career pivot, transferable skills, or moving from one field to another.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/career-changer-translator",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 7
+        },
+        "why": "Helps reframe experience for a new industry when someone is changing careers.",
+        "summary": "Identifies transferable skills and translates experience into the vocabulary of a target industry, with before/after examples, gap-bridging ideas and a career-change narrative.",
+        "strengths": [
+          "Before/after translation examples",
+          "Transferable skills framework",
+          "Addresses the change narrative"
+        ],
+        "cautions": [
+          "Advice only; no scripts or templates",
+          "Examples may nudge toward over-stretching claims"
+        ],
+        "keywords": [
+          "career change",
+          "career pivot",
+          "transferable skills",
+          "resume",
+          "cv",
+          "reframe experience",
+          "industry switch",
+          "narrative"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 9.6,
+      "score": 7.6,
+      "humanReviewed": false
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/interview-prep-generator",
+      "name": "interview-prep-generator",
+      "description": "Generate STAR stories, practice questions, and talking points from a resume. Use when the user mentions interview prep, behavioral questions, STAR method, mock interview, or preparing for an upcoming interview.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/interview-prep-generator",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 7
+        },
+        "why": "Builds STAR stories and likely interview questions from a resume and a job description.",
+        "summary": "Generates role-specific interview questions, converts resume bullets into STAR stories, prepares talking points and answers for concerns, and suggests questions to ask, in three phases from role analysis to mock practice.",
+        "strengths": [
+          "Three-phase structure",
+          "STAR template with worked example",
+          "Uses the user's own resume"
+        ],
+        "cautions": [
+          "Company research is advised but no tool is given",
+          "Generic across roles",
+          "No scripts"
+        ],
+        "keywords": [
+          "interview prep",
+          "star stories",
+          "behavioral questions",
+          "mock interview",
+          "interview questions",
+          "talking points",
+          "resume",
+          "preparation"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 9.6,
+      "score": 7.6,
+      "humanReviewed": true
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/resume-ats-optimizer",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/resume-ats-optimizer",
+      "name": "resume-ats-optimizer",
+      "description": "Optimize resumes for Applicant Tracking Systems, check ATS compatibility, and analyze keyword match. Use when the user mentions ATS, applicant tracking, keyword optimization, parsing, or getting past resume screening software.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/resume-ats-optimizer",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 7
+        },
+        "why": "Checks a resume against ATS formatting rules and job keyword match, with a checklist and a keyword process.",
+        "summary": "Explains why resumes fail applicant tracking systems and gives a compatibility checklist (format, fonts, headers, contact info) plus a keyword extraction and match analysis process with placement advice.",
+        "strengths": [
+          "Practical checklist",
+          "Keyword match method by type",
+          "Clear triggers"
+        ],
+        "cautions": [
+          "Statistics like 75% rejection are unsourced",
+          "Match score is heuristic, no real ATS parser",
+          "No scripts"
+        ],
+        "keywords": [
+          "ats",
+          "applicant tracking system",
+          "resume",
+          "cv",
+          "keywords",
+          "parsing",
+          "keyword match",
+          "resume screening"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 9.6,
+      "score": 7.6,
+      "humanReviewed": true
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/resume-bullet-writer",
+      "name": "resume-bullet-writer",
+      "description": "Transform weak resume bullets into achievement-focused statements with metrics and impact. Use when the user wants to rewrite bullets, strengthen accomplishments, or add action verbs and impact to their resume.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/resume-bullet-writer",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 7
+        },
+        "why": "Rewrites weak resume bullets into achievement statements using X-Y-Z, STAR and CAR formulas with examples.",
+        "summary": "Transforms duty-style resume bullets into achievement-focused ones using the X-Y-Z, STAR and CAR frameworks, action verbs and metrics, with many before and after examples.",
+        "strengths": [
+          "Several proven frameworks",
+          "Many concrete rewrites",
+          "Easy to apply bullet by bullet"
+        ],
+        "cautions": [
+          "Examples show invented-looking metrics; user must supply real numbers",
+          "Long and generic across industries",
+          "No scripts"
+        ],
+        "keywords": [
+          "resume bullets",
+          "achievements",
+          "action verbs",
+          "xyz formula",
+          "star method",
+          "car method",
+          "cv",
+          "impact"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 9.6,
+      "score": 7.6,
+      "humanReviewed": true
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/resume-tailor",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/resume-tailor",
+      "name": "resume-tailor",
+      "description": "Customize resume for specific job postings while maintaining truthfulness. Use when the user wants to tailor, customize, or target their resume for a specific job, company, or role.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/resume-tailor",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 7
+        },
+        "why": "Tailors a resume to one job posting by reordering and rewording true experience, with before and after examples.",
+        "summary": "Guides tailoring a resume to a specific job: analyze the posting, audit each section, rewrite the summary, reorder skills and experience, and add keywords naturally. States a truthfulness principle and gives section-by-section examples.",
+        "strengths": [
+          "Explicit truthfulness principle",
+          "Before and after examples per section",
+          "Step order is clear"
+        ],
+        "cautions": [
+          "Assumes a job-description-analyzer skill is run first",
+          "Generic examples, mostly English-market",
+          "No scripts or templates"
+        ],
+        "keywords": [
+          "resume",
+          "cv",
+          "tailor",
+          "job posting",
+          "keywords",
+          "professional summary",
+          "targeted resume",
+          "customize"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 9.6,
+      "score": 7.6,
+      "humanReviewed": true
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/tech-resume-optimizer",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/tech-resume-optimizer",
+      "name": "tech-resume-optimizer",
+      "description": "Optimize resumes for software engineering, product management, and technical roles. Use when the user mentions software engineer, developer, PM, data scientist, ML, DevOps, or other technical role resumes.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/tech-resume-optimizer",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 7
+        },
+        "why": "Gives an agent concrete structure and wording rules for software, PM and data resumes.",
+        "summary": "Guides optimization of resumes for technical roles: section order, skills section layout, project and GitHub links, impact-oriented bullets and ATS-friendly formatting for tech recruiters.",
+        "strengths": [
+          "Tech-specific structure and contact section",
+          "Concrete bullet and skills examples",
+          "Clear trigger conditions"
+        ],
+        "cautions": [
+          "Guidance only, no scripts or templates",
+          "Generic in places; no stop condition"
+        ],
+        "keywords": [
+          "tech resume",
+          "software engineer resume",
+          "developer cv",
+          "ats",
+          "pm resume",
+          "data scientist",
+          "resume optimization",
+          "github portfolio"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 9.6,
+      "score": 7.6,
+      "humanReviewed": false
+    },
+    {
+      "id": "github/awesome-copilot:skills/technical-job-search",
+      "repo": "github/awesome-copilot",
+      "path": "skills/technical-job-search",
+      "name": "technical-job-search",
+      "description": "Use this skill when a software engineer asks for help with job search tasks: parsing or analyzing a job description, tailoring a CV/resume, writing a cover letter, evaluating a job offer, or drafting a post-interview follow-up email. Do not activate for general career advice unrelated to an active job search action.",
+      "url": "https://github.com/github/awesome-copilot/tree/main/skills/technical-job-search",
+      "license": "MIT",
+      "stars": 41181,
+      "forks": 5363,
+      "pushedAt": "2026-11-14T20:42:30Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 5,
+          "usefulness": 6
+        },
+        "why": "Short, concrete guidance for analyzing a job description, tailoring a CV, writing a cover letter and weighing an offer.",
+        "summary": "Covers discrete job search tasks for software engineers: splitting must-have from nice-to-have requirements in a job description, tailoring a CV, writing a short cover letter, evaluating an offer and drafting a follow-up email.",
+        "strengths": [
+          "Concise and easy to follow",
+          "Cover letter and follow-up rules are specific",
+          "Warns against keyword stuffing"
+        ],
+        "cautions": [
+          "Aimed at software engineers only",
+          "No templates, examples or scripts",
+          "Salary advice is generic and not sourced"
+        ],
+        "keywords": [
+          "job description",
+          "jd analysis",
+          "cv",
+          "resume",
+          "tailoring",
+          "cover letter",
+          "offer evaluation",
+          "follow-up email",
+          "software engineer"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.3,
+      "repoSignal": 9.9,
+      "score": 7.4,
+      "humanReviewed": false
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/linkedin-profile-optimizer",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/linkedin-profile-optimizer",
+      "name": "linkedin-profile-optimizer",
+      "description": "Optimize a LinkedIn profile for searchability, recruiter visibility, and engagement. Use when the user mentions LinkedIn profile, headline, About section, recruiter visibility, or social hiring.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/linkedin-profile-optimizer",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 6
+        },
+        "why": "Optimizes a LinkedIn profile headline, About section and experience to match a resume and attract recruiters.",
+        "summary": "Advice for LinkedIn profile sections: photo, banner, headline formulas, About structure, experience, keywords and aligning the profile with the resume, with weak and strong examples.",
+        "strengths": [
+          "Headline and About formulas",
+          "Notes differences with a resume",
+          "Concrete character limits"
+        ],
+        "cautions": [
+          "Statistics are unsourced",
+          "Cannot read the live profile, only pasted text",
+          "Outside core resume work"
+        ],
+        "keywords": [
+          "linkedin",
+          "profile",
+          "headline",
+          "about section",
+          "recruiter",
+          "keywords",
+          "personal branding",
+          "resume"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.3,
+      "repoSignal": 9.6,
+      "score": 7.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/resume-formatter",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/resume-formatter",
+      "name": "resume-formatter",
+      "description": "Ensure ATS-friendly formatting and create clean, scannable layouts. Use when the user mentions resume format, layout, template, design, or fixing formatting issues.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/resume-formatter",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 5,
+          "usefulness": 6
+        },
+        "why": "Gives ATS-safe layout rules for page length, margins, fonts, section order and headers.",
+        "summary": "Formatting guide for resumes: page length by seniority, margins, safe fonts and sizes, spacing, standard section order and headers, and what to avoid such as tables, columns and graphics.",
+        "strengths": [
+          "Clear do and don't lists",
+          "Seniority-based length guidance",
+          "Standard section order"
+        ],
+        "cautions": [
+          "Advice only, produces no file",
+          "Overlaps with the ATS optimizer",
+          "US conventions, not adapted to French CVs"
+        ],
+        "keywords": [
+          "resume format",
+          "cv layout",
+          "template",
+          "ats friendly",
+          "fonts",
+          "margins",
+          "section order",
+          "design"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6,
+      "repoSignal": 9.6,
+      "score": 7.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "davila7/claude-code-templates:cli-tool/components/skills/career/resume-quantifier",
+      "repo": "davila7/claude-code-templates",
+      "path": "cli-tool/components/skills/career/resume-quantifier",
+      "name": "resume-quantifier",
+      "description": "Find opportunities to add metrics and estimate numbers when exact data is unavailable. Use when the user wants to quantify achievements, add numbers, percentages, or impact metrics to a resume.",
+      "url": "https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/career/resume-quantifier",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 5
+        },
+        "why": "Helps find real metrics in past work through discovery questions by role, with a risk of estimated numbers.",
+        "summary": "Helps add numbers to resume bullets: metric categories, discovery questions, role-specific prompts and estimation techniques when exact data is missing, with notes documenting each estimate.",
+        "strengths": [
+          "Good discovery questions per role",
+          "Conservative estimation guidance",
+          "Estimates are documented"
+        ],
+        "cautions": [
+          "Encourages estimating numbers, which can slide into inventing facts",
+          "Must be checked with the user",
+          "Generic"
+        ],
+        "keywords": [
+          "quantify",
+          "metrics",
+          "resume",
+          "cv",
+          "achievements",
+          "impact",
+          "numbers",
+          "bullets"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6,
+      "repoSignal": 9.6,
+      "score": 7.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "LeoYeAI/agent-master-skills:skills/interview-coach-ai",
+      "repo": "LeoYeAI/agent-master-skills",
+      "path": "skills/interview-coach-ai",
+      "name": "interview-coach",
+      "description": "When user asks for interview prep, mock interview, practice questions, behavioral questions, technical interview, HR round, salary negotiation, STAR method, common interview questions, company research, interview tips, confidence building, answer feedback, body language tips, follow-up email after interview, or any job interview task. 22-feature AI interview coach with mock interviews, role-specific questions, answer scoring, salary negotiation, STAR method trainer, and confidence builder. All data stays local — NO external API calls, NO network requests, NO data sent to any server.",
+      "url": "https://github.com/LeoYeAI/agent-master-skills/tree/main/skills/interview-coach-ai",
+      "license": "MIT",
+      "stars": 2193,
+      "forks": 333,
+      "pushedAt": "2026-11-13T02:01:09Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 7,
+          "usefulness": 7
+        },
+        "why": "Runs mock interviews with scored answers, STAR practice and salary negotiation coaching.",
+        "summary": "Interview coach with mock interviews, role-specific questions, answer scoring, STAR method training, salary negotiation and follow-up emails, tracking practice history and weak areas in local files.",
+        "strengths": [
+          "Mock interview and scoring loop",
+          "Tracks weak areas over time",
+          "Covers negotiation and follow-up"
+        ],
+        "cautions": [
+          "Long, many features, little prioritization",
+          "Question banks are generic"
+        ],
+        "keywords": [
+          "interview",
+          "mock interview",
+          "star method",
+          "behavioral questions",
+          "salary negotiation",
+          "interview prep",
+          "practice",
+          "coach"
+        ],
+        "security": {
+          "level": "notice",
+          "notes": [
+            "Writes profile and history files under a local ~/.openclaw folder; stores personal data beyond the resume."
+          ]
+        }
+      },
+      "reviewScore": 7,
+      "repoSignal": 6.6,
+      "score": 6.9,
+      "humanReviewed": false
+    },
+    {
+      "id": "davepoon/buildwithclaude:plugins/all-skills/skills/tailored-resume-generator",
+      "repo": "davepoon/buildwithclaude",
+      "path": "plugins/all-skills/skills/tailored-resume-generator",
+      "name": "tailored-resume-generator",
+      "description": "Analyzes job descriptions and generates tailored resumes that highlight relevant experience, skills, and achievements to maximize interview chances",
+      "url": "https://github.com/davepoon/buildwithclaude/tree/main/plugins/all-skills/skills/tailored-resume-generator",
+      "license": "MIT",
+      "stars": 3749,
+      "forks": 730,
+      "pushedAt": "2026-11-15T11:50:07Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 5,
+          "usefulness": 8
+        },
+        "why": "Tailors a resume to a pasted job description, extracting keywords and priorities.",
+        "summary": "Analyzes a job posting for requirements and keywords, then reorders and rewrites the user's resume content to match, with usage prompts for existing resumes and career transitions, ATS tips and gap recommendations.",
+        "strengths": [
+          "Covers the core tailor-to-job workflow",
+          "States never to fabricate experience",
+          "Handles career transitions"
+        ],
+        "cautions": [
+          "No scripts or templates",
+          "Fairly generic output guidance"
+        ],
+        "keywords": [
+          "tailor resume",
+          "job description",
+          "ats",
+          "keywords",
+          "cv",
+          "resume generator",
+          "job application",
+          "customize resume"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 7.4,
+      "score": 6.9,
+      "humanReviewed": false
+    },
+    {
+      "id": "Jakeschincariol/linkedin-agent-skill:skills/li-profile",
+      "repo": "Jakeschincariol/linkedin-agent-skill",
+      "path": "skills/li-profile",
+      "name": "li-profile",
+      "description": "Score a LinkedIn profile out of 100 against a 12-part rubric and rewrite the parts that lose points - headline, about, experience, featured, banner. Use when the user says \"optimize my profile\", \"score my LinkedIn\", \"rewrite my headline\", \"fix my about section\", or pastes their profile and asks how it reads.",
+      "url": "https://github.com/Jakeschincariol/linkedin-agent-skill/tree/main/skills/li-profile",
+      "license": "MIT",
+      "stars": 3597,
+      "forks": 571,
+      "pushedAt": "2026-09-17T11:27:52Z",
+      "review": {
+        "kits": [
+          "resume-career",
+          "marketing-content"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 6,
+          "usefulness": 6
+        },
+        "why": "Scores a pasted LinkedIn profile against a 12-item rubric and rewrites the weakest parts.",
+        "summary": "Scores a LinkedIn profile out of 100 using a bundled rubric file, then rewrites headline, About and other sections in descending order of points lost. Works from pasted text and does not log in.",
+        "strengths": [
+          "Explicit scoring rubric and rewrite order",
+          "Does not log into LinkedIn",
+          "Concise and actionable"
+        ],
+        "cautions": [
+          "LinkedIn only",
+          "Short, no scripts or examples beyond the rubric"
+        ],
+        "keywords": [
+          "linkedin",
+          "profile score",
+          "headline",
+          "about section",
+          "rubric",
+          "profile rewrite",
+          "career",
+          "personal branding"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 6.8,
+      "score": 6.7,
+      "humanReviewed": false
+    },
+    {
+      "id": "LeoYeAI/agent-master-skills:skills/afrexai-career-accelerator",
+      "repo": "LeoYeAI/agent-master-skills",
+      "path": "skills/afrexai-career-accelerator",
+      "name": "afrexai-career-accelerator",
+      "description": "Complete career acceleration system — from self-assessment to offer negotiation. Covers career strategy, job search operations, resume/CV optimization, interview preparation, salary negotiation, career transitions, and long-term growth planning. Works for any role, any level, any industry.",
+      "url": "https://github.com/LeoYeAI/agent-master-skills/tree/main/skills/afrexai-career-accelerator",
+      "license": "MIT",
+      "stars": 2193,
+      "forks": 333,
+      "pushedAt": "2026-11-13T02:01:09Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 7,
+          "usefulness": 6
+        },
+        "why": "Covers career strategy, job search, resume tips, interviews and negotiation in one playbook.",
+        "summary": "Multi-phase career playbook: self-assessment, job search operations, resume optimization, interview prep, negotiation, transitions and growth planning, using YAML templates and tables.",
+        "strengths": [
+          "Structured phases with templates",
+          "Wide coverage end to end",
+          "Includes a README"
+        ],
+        "cautions": [
+          "Broad, partly generic advice",
+          "Reads USER.md for context, which may hold personal data",
+          "Branded for a vendor"
+        ],
+        "keywords": [
+          "career",
+          "job search",
+          "resume",
+          "cv",
+          "interview",
+          "negotiation",
+          "career transition",
+          "self-assessment"
+        ],
+        "security": {
+          "level": "notice",
+          "notes": [
+            "Reads a USER.md file for personal context."
+          ]
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 6.6,
+      "score": 6.7,
+      "humanReviewed": false
+    },
+    {
+      "id": "LeoYeAI/agent-master-skills:skills/resume-builder-ai",
+      "repo": "LeoYeAI/agent-master-skills",
+      "path": "skills/resume-builder-ai",
+      "name": "resume-builder",
+      "description": "When user asks to create a resume, build CV, update resume, generate cover letter, optimize resume for ATS, tailor resume for a job, format resume, add work experience, add skills, add education, create professional summary, export resume, review resume, or any resume/CV task. 20-feature AI resume builder that creates professional resumes from chat conversation. Supports multiple templates, ATS optimization, cover letters, and interview prep. All data stays local — NO external API calls, NO network requests, NO data sent to any server.",
+      "url": "https://github.com/LeoYeAI/agent-master-skills/tree/main/skills/resume-builder-ai",
+      "license": "MIT",
+      "stars": 2193,
+      "forks": 333,
+      "pushedAt": "2026-11-13T02:01:09Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 7,
+          "usefulness": 6
+        },
+        "why": "Builds, tailors and exports resumes and cover letters from chat with a stored local profile.",
+        "summary": "Chat-driven resume builder with a 20-feature menu: master profile storage, templates, tailoring, ATS check, cover letters and interview prep. Says never to fabricate and that data stays local.",
+        "strengths": [
+          "Persistent master profile",
+          "Wide feature coverage incl. cover letters",
+          "Forbids fabricating facts"
+        ],
+        "cautions": [
+          "Tied to an openclaw-style folder layout",
+          "Broad and shallow; overlaps other skills"
+        ],
+        "keywords": [
+          "resume builder",
+          "cv",
+          "cover letter",
+          "ats check",
+          "tailor resume",
+          "export",
+          "templates",
+          "profile"
+        ],
+        "security": {
+          "level": "notice",
+          "notes": [
+            "Writes profile and history files under a local ~/.openclaw folder; stores personal data beyond the resume. Runs mkdir commands."
+          ]
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 6.6,
+      "score": 6.7,
+      "humanReviewed": false
+    },
+    {
+      "id": "LeoYeAI/agent-master-skills:skills/job-hunt-tracker",
+      "repo": "LeoYeAI/agent-master-skills",
+      "path": "skills/job-hunt-tracker",
+      "name": "job-hunt-tracker",
+      "description": "When user asks to track job applications, manage job search, log interview, applied for job, job application status, track where I applied, job search organizer, application follow up, offer comparison, job pipeline, application stats, track rejection, track offer, job board, career tracker, job search progress, or any job hunting task. 20-feature AI job hunt tracker with application pipeline, interview scheduler, offer comparator, follow-up reminders, rejection analyzer, and job search gamification. Replaces $40/month job tracking tools for free. All data stays local — NO external API calls, NO network requests, NO data sent to any server.",
+      "url": "https://github.com/LeoYeAI/agent-master-skills/tree/main/skills/job-hunt-tracker",
+      "license": "MIT",
+      "stars": 2193,
+      "forks": 333,
+      "pushedAt": "2026-11-13T02:01:09Z",
+      "review": {
+        "kits": [
+          "resume-career",
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 6,
+          "usefulness": 6
+        },
+        "why": "Tracks job applications, follow-ups, interviews and offers in local JSON files.",
+        "summary": "Job search tracker that logs applications, interviews, rejections and offers, schedules follow-up reminders, compares offers and produces stats and weekly reports from local JSON files.",
+        "strengths": [
+          "Clear logging commands",
+          "Offer comparison and follow-up tracking",
+          "Useful pipeline stats"
+        ],
+        "cautions": [
+          "Reminders are only textual, no real scheduling",
+          "Gamification adds filler"
+        ],
+        "keywords": [
+          "job tracker",
+          "applications",
+          "job search",
+          "follow up",
+          "offers",
+          "pipeline",
+          "interview log",
+          "career"
+        ],
+        "security": {
+          "level": "notice",
+          "notes": [
+            "Writes profile and history files under a local ~/.openclaw folder; stores personal data beyond the resume."
+          ]
+        }
+      },
+      "reviewScore": 6.3,
+      "repoSignal": 6.6,
+      "score": 6.4,
+      "humanReviewed": false
+    }
+  ],
+  "collections": [
+    {
+      "id": "github/awesome-copilot",
+      "url": "https://github.com/github/awesome-copilot",
+      "description": "Community-contributed instructions, agents, skills, and configurations to help you make the most of GitHub Copilot.",
+      "license": "MIT",
+      "stars": 41181,
+      "forks": 5363,
+      "pushedAt": "2026-11-14T20:42:30Z",
+      "repoSignal": 9.9,
+      "skillCount": 481,
+      "catalogSkillIds": [
+        "github/awesome-copilot:skills/brag-sheet",
+        "github/awesome-copilot:skills/technical-job-search"
+      ],
+      "kitScores": {},
+      "humanReviewed": false
+    },
+    {
+      "id": "alirezarezvani/claude-skills",
+      "url": "https://github.com/alirezarezvani/claude-skills",
+      "description": "410 Claude Code skills & agent skills & plugins (120+ Agents, custom commands, 410+ skills, customizable references, scripts)for Claude Code, Codex, Gemini CLI, Cursor, and 8 more coding agents — engineering, marketing, product, compliance, C-level advisory, research, business operations, commercial & finance, and your daily productivity skills.",
+      "license": "MIT",
+      "stars": 29849,
+      "forks": 4142,
+      "pushedAt": "2026-11-12T10:35:06Z",
+      "repoSignal": 9.6,
+      "skillCount": 416,
+      "catalogSkillIds": [
+        "alirezarezvani/claude-skills:marketing/linkedin/skills/linkedin-profile"
+      ],
+      "kitScores": {},
+      "humanReviewed": false
+    },
+    {
+      "id": "davila7/claude-code-templates",
+      "url": "https://github.com/davila7/claude-code-templates",
+      "description": "Open-source registry and CLI for Claude Code components: agents, commands, skills, hooks, MCPs, settings and mods",
+      "license": "MIT",
+      "stars": 33750,
+      "forks": 3982,
+      "pushedAt": "2026-11-15T18:33:54Z",
+      "repoSignal": 9.6,
+      "skillCount": 932,
+      "catalogSkillIds": [
+        "davila7/claude-code-templates:cli-tool/components/skills/career/career-changer-translator",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/resume-ats-optimizer",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/resume-tailor",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/tech-resume-optimizer",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/linkedin-profile-optimizer",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/resume-formatter",
+        "davila7/claude-code-templates:cli-tool/components/skills/career/resume-quantifier"
+      ],
+      "kitScores": {
+        "resume-career": 8.3
+      },
+      "humanReviewed": true
+    },
+    {
+      "id": "davepoon/buildwithclaude",
+      "url": "https://github.com/davepoon/buildwithclaude",
+      "description": "A single hub to find Claude Skills, Agents, Commands, Hooks, Plugins, and Marketplace collections to extend Claude Code, Claude Desktop, Agent SDK and OpenClaw",
+      "license": "MIT",
+      "stars": 3749,
+      "forks": 730,
+      "pushedAt": "2026-11-15T11:50:07Z",
+      "repoSignal": 7.4,
+      "skillCount": 427,
+      "catalogSkillIds": [
+        "davepoon/buildwithclaude:plugins/all-skills/skills/tailored-resume-generator"
+      ],
+      "kitScores": {},
+      "humanReviewed": false
+    },
+    {
+      "id": "Jakeschincariol/linkedin-agent-skill",
+      "url": "https://github.com/Jakeschincariol/linkedin-agent-skill",
+      "description": "Eleven free Claude skills that run a LinkedIn account: posts off 21 hook formulas, comments, replies, profile score, weekly plan, and a humanizer that strips the AI fingerprint and scores the draft before it goes out.",
+      "license": "MIT",
+      "stars": 3597,
+      "forks": 571,
+      "pushedAt": "2026-09-17T11:27:52Z",
+      "repoSignal": 6.8,
+      "skillCount": 11,
+      "catalogSkillIds": [
+        "Jakeschincariol/linkedin-agent-skill:skills/li-profile"
+      ],
+      "kitScores": {},
+      "humanReviewed": false
+    },
+    {
+      "id": "LeoYeAI/agent-master-skills",
+      "url": "https://github.com/LeoYeAI/agent-master-skills",
+      "description": "🧠 Curated collection of 2700+ best agent skills — AI, coding, marketing, design, finance and more. Harness-agnostic: works with Claude Code, Codex, Cursor, Gemini CLI, OpenClaw, Hermes and any Agent Skills runtime. Refreshed daily by MyClaw.ai — Powered by MyClaw.ai",
+      "license": "MIT",
+      "stars": 2193,
+      "forks": 333,
+      "pushedAt": "2026-11-13T02:01:09Z",
+      "repoSignal": 6.6,
+      "skillCount": 3426,
+      "catalogSkillIds": [
+        "LeoYeAI/agent-master-skills:skills/linkedin-profile",
+        "LeoYeAI/agent-master-skills:skills/interview-coach-ai",
+        "LeoYeAI/agent-master-skills:skills/afrexai-career-accelerator",
+        "LeoYeAI/agent-master-skills:skills/resume-builder-ai",
+        "LeoYeAI/agent-master-skills:skills/job-hunt-tracker"
+      ],
+      "kitScores": {
+        "resume-career": 6.3
+      },
+      "humanReviewed": false
+    }
+  ]
+}

@@ -126,7 +126,7 @@ Choisir `maxReviewsPerRun` et `maxMinutes` à partir de la mesure du mode d'essa
 
 ## Données versionnées
 
-Seuls les fichiers coûteux à refaire sont dans git : `data/curation.yaml`, `data/cache/reviews/`, `data/cache/triage.json` et `data/cache/kits.sha256`. `candidates.json`, `repos.json` et `skills.json` sont reconstruits depuis GitHub à chaque passage (plusieurs dizaines de Mo) et restent hors de git. Un passage complet relit donc tous les `SKILL.md`, ce qui allonge sa durée.
+Seuls les fichiers coûteux à refaire sont dans git : `data/curation.yaml`, `data/cache/reviews/`, `data/cache/triage.json`, `data/cache/kits.sha256` et `catalog.json`. Le site est construit à partir de ce fichier. `candidates.json`, `repos.json` et `skills.json` sont reconstruits depuis GitHub à chaque passage (plusieurs dizaines de Mo) et restent hors de git. Un passage complet relit donc tous les `SKILL.md`, ce qui allonge sa durée.
 
 ## Après un échec
 

@@ -47,14 +47,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           BRANCH: pipeline/run-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
-          if [ -z "$(git status --porcelain data/cache)" ]; then
+          if [ -z "$(git status --porcelain data/cache catalog.json)" ]; then
             echo "No data change: no pull request."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
-          git add data/cache
+          git add data/cache catalog.json
           git commit -m "data: pipeline run $BRANCH"
           git push origin "$BRANCH"
           gh pr create --base main --head "$BRANCH" \
