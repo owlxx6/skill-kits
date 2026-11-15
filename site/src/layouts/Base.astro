@@ -1,0 +1,32 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const pageTitle = title === "Skill Kits" ? title : `${title} - Skill Kits`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <a class="brand" href="/">Skill Kits</a>
+        <nav aria-label="Main">
+          <a href="/search/">Search</a>
+          <a href="/methodology/">How we pick</a>
+        </nav>
+      </header>
+      <main><slot /></main>
+    </div>
+  </body>
+</html>

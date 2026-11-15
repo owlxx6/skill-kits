@@ -1,0 +1,24 @@
+---
+import CopyCommand from "./CopyCommand.astro";
+import { type CatalogSkill, formatCount, skillHref, skillInstallCommand } from "../lib/catalog";
+
+interface Props {
+  skill: CatalogSkill;
+}
+const { skill } = Astro.props;
+const notice = skill.review.security.level === "notice";
+---
+<li class="part" data-license={skill.license} data-review={skill.reviewScore} data-forks={skill.forks}>
+  <div class="part-head">
+    <a class="part-name" href={skillHref(skill.id)}>{skill.name}</a>
+    <span class="part-meta">from <a href={`/collections/${skill.repo}/`}>{skill.repo}</a>, {formatCount(skill.stars)} stars, {formatCount(skill.forks)} forks</span>
+  </div>
+  <p class="part-why">{skill.review.why}</p>
+  <div class="badges">
+    <span class="badge score" title="Review score out of 10">{skill.reviewScore.toFixed(1)}</span>
+    <span class="badge">{skill.license}</span>
+    {skill.humanReviewed && <span class="badge">Reviewed by a human</span>}
+    {notice && <span class="badge notice">Security notice</span>}
+  </div>
+  <CopyCommand command={skillInstallCommand(skill)} />
+</li>

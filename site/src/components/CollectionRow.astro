@@ -1,0 +1,21 @@
+---
+import CopyCommand from "./CopyCommand.astro";
+import { type CatalogCollection, collectionHref, collectionInstallCommand, formatCount } from "../lib/catalog";
+
+interface Props {
+  collection: CatalogCollection;
+}
+const { collection } = Astro.props;
+---
+<li class="part" data-license={collection.license}>
+  <div class="part-head">
+    <a class="part-name" href={collectionHref(collection.id)}>{collection.id}</a>
+    <span class="part-meta">{collection.skillCount} skills, {formatCount(collection.stars)} stars, {formatCount(collection.forks)} forks</span>
+  </div>
+  {collection.description && <p class="part-why">{collection.description}</p>}
+  <div class="badges">
+    <span class="badge">{collection.license}</span>
+    {collection.humanReviewed && <span class="badge">Reviewed by a human</span>}
+  </div>
+  <CopyCommand command={collectionInstallCommand(collection.id)} />
+</li>

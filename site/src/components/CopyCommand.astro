@@ -1,0 +1,25 @@
+---
+interface Props {
+  command: string;
+}
+const { command } = Astro.props;
+---
+<div class="command">
+  <code>{command}</code>
+  <button type="button" data-copy={command}>Copy</button>
+</div>
+
+<script>
+  // One listener for every copy button on the page.
+  document.addEventListener("click", async (event) => {
+    const button = (event.target as Element | null)?.closest<HTMLButtonElement>("button[data-copy]");
+    if (!button) return;
+    try {
+      await navigator.clipboard.writeText(button.dataset.copy ?? "");
+      button.textContent = "Copied";
+    } catch {
+      button.textContent = "Select and copy";
+    }
+    window.setTimeout(() => { button.textContent = "Copy"; }, 2000);
+  });
+</script>
