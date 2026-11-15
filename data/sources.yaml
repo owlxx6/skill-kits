@@ -11,3 +11,6 @@ topics:
   - claude-skills
   - claude-code-skills
 maxSearchPages: 2
+# Registries that copy thousands of other people's skills: slow to read, no original content.
+exclude:
+  - majiayu000/claude-skill-registry

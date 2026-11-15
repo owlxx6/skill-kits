@@ -15,10 +15,11 @@ export async function discover(
       names.push(...(await gh.searchReposByTopic(topic, minStars, sources.maxSearchPages)));
     }
   }
+  const excluded = new Set((sources.exclude ?? []).map((name) => name.toLowerCase()));
   const seen = new Set<string>();
   return names.filter((name) => {
     const key = name.toLowerCase();
-    if (seen.has(key)) return false;
+    if (excluded.has(key) || seen.has(key)) return false;
     seen.add(key);
     return true;
   });

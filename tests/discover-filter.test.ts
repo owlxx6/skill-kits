@@ -21,6 +21,17 @@ describe("discover", () => {
     ]);
   });
 
+  it("drops excluded repositories, whatever their letter case", async () => {
+    const gh = new FakeGitHub([], { "agent-skills": ["big/Registry", "acme/skills"] });
+    const sources = {
+      repos: ["solo/one"],
+      topics: ["agent-skills"],
+      maxSearchPages: 1,
+      exclude: ["Big/registry"],
+    };
+    expect(await discover(gh, sources, 50, false)).toEqual(["solo/one", "acme/skills"]);
+  });
+
   it("never searches topics in a dry run", async () => {
     const gh = new FakeGitHub([], { "agent-skills": ["topic/repo"] });
     await discover(gh, { repos: ["a/1"], topics: ["agent-skills"], maxSearchPages: 1 }, 50, true);

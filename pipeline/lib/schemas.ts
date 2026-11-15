@@ -21,6 +21,8 @@ export const SourcesSchema = z.object({
   repos: z.array(repoName),
   topics: z.array(z.string().regex(/^[a-z0-9][a-z0-9-]{0,49}$/, "expected a GitHub topic")),
   maxSearchPages: z.number().int().min(0).max(10),
+  // Repositories never processed, e.g. registries that copy thousands of other people's skills.
+  exclude: z.array(repoName).optional(),
 });
 export type Sources = z.infer<typeof SourcesSchema>;
 
