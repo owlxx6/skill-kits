@@ -122,7 +122,7 @@ Dans `data/config.yaml` :
 - `filter` : `allowedLicenses`, `minStars` (50), `maxDaysSinceLastCommit` (180) ;
 - `collection` : `minSkills` et `minKitSkills` (3).
 
-Choisir `maxReviewsPerRun` et `maxMinutes` à partir de la mesure du mode d'essai : coût par skill relu et durée totale (`time`). Diviser le budget de dépense par le coût par skill pour obtenir le plafond de revues. Vérifier que le temps par revue, multiplié par ce plafond, reste sous `maxMinutes` ; sinon, baisser le plafond ou accepter le report. L'étape du pipeline s'arrête à 170 minutes (le job, à 180 minutes).
+Choisir `maxReviewsPerRun` et `maxMinutes` à partir de la mesure du mode d'essai : coût par skill relu et durée totale (`time`). Diviser le budget de dépense par le coût par skill pour obtenir le plafond de revues. Vérifier que la durée des étapes avant les revues, plus le temps par revue multiplié par ce plafond, reste sous `maxMinutes` ; sinon, baisser le plafond ou accepter le report. L'étape du pipeline s'arrête à 170 minutes (le job, à 180 minutes).
 
 ## Après un échec
 
@@ -132,8 +132,8 @@ Pour récupérer les revues déjà payées :
 
 1. Télécharger l'artefact depuis la page du run (Actions > le run en échec > Artifacts).
 2. Créer une nouvelle branche depuis `main`.
-3. Si `data/kits.yaml` n'a pas changé depuis le passage en échec, copier de l'artefact vers `data/cache/` le dossier `reviews/`, `triage.json` et `kits.sha256`. Sinon, ne rien copier : le prochain passage repart de zéro.
-4. Committer, pousser et ouvrir une pull request.
+3. Si `data/kits.yaml` n'a pas changé depuis le passage en échec, copier de l'artefact vers `data/cache/` le dossier `reviews/`, `triage.json` et `kits.sha256`. Sinon, ne rien copier, abandonner la branche et relancer simplement le workflow : le prochain passage repart de zéro.
+4. Si des fichiers ont été copiés : committer, pousser et ouvrir une pull request.
 5. Fusionner, puis relancer le workflow : les revues récupérées ne sont pas refaites.
 
 ## Coûts
