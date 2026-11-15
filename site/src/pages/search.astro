@@ -1,0 +1,77 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="Search" description="Search the reviewed skills and collections.">
+  <h1>Search</h1>
+  <form role="search" id="search-form">
+    <label for="search-input" class="muted">Skills and collections, by task, tool or file type</label>
+    <input id="search-input" type="search" name="q" autocomplete="off" />
+  </form>
+  <p class="muted" id="search-status" aria-live="polite"></p>
+  <ul class="parts" id="search-results"></ul>
+</Base>
+
+<script>
+  import MiniSearch from "minisearch";
+  import { SEARCH_OPTIONS, type SearchDocument } from "../lib/search";
+
+  const input = document.getElementById("search-input") as HTMLInputElement;
+  const status = document.getElementById("search-status") as HTMLParagraphElement;
+  const results = document.getElementById("search-results") as HTMLUListElement;
+  const form = document.getElementById("search-form") as HTMLFormElement;
+
+  const indexPromise = fetch("/search-index.json")
+    .then((response) => {
+      if (!response.ok) throw new Error(`search index returned ${response.status}`);
+      return response.text();
+    })
+    .then((json) => MiniSearch.loadJSON<SearchDocument>(json, SEARCH_OPTIONS));
+
+  const render = async () => {
+    const query = input.value.trim();
+    const url = new URL(window.location.href);
+    if (query) url.searchParams.set("q", query);
+    else url.searchParams.delete("q");
+    window.history.replaceState(null, "", url);
+    results.replaceChildren();
+    if (!query) {
+      status.textContent = "Type a task, a tool or a file type, for example: resume, pdf, scraping.";
+      return;
+    }
+    let index: MiniSearch<SearchDocument>;
+    try {
+      index = await indexPromise;
+    } catch {
+      status.textContent = "Search is unavailable right now. Browse the kits from the home page instead.";
+      return;
+    }
+    const hits = index.search(query).slice(0, 50);
+    status.textContent = hits.length === 0 ? `Nothing matches "${query}". Try a broader word.` : `${hits.length} result${hits.length === 1 ? "" : "s"}`;
+    for (const hit of hits) {
+      const item = document.createElement("li");
+      item.className = "part";
+      const link = document.createElement("a");
+      link.className = "part-name";
+      link.href = hit.href;
+      link.textContent = hit.title;
+      const meta = document.createElement("span");
+      meta.className = "part-meta";
+      meta.textContent = ` ${hit.kind === "skill" ? "Skill" : "Collection"}, ${hit.license}`;
+      const why = document.createElement("p");
+      why.className = "part-why";
+      why.textContent = hit.why;
+      item.append(link, meta, why);
+      results.append(item);
+    }
+  };
+
+  input.value = new URL(window.location.href).searchParams.get("q") ?? "";
+  input.addEventListener("input", render);
+  form.addEventListener("submit", (event) => { event.preventDefault(); render(); });
+  render();
+</script>
+
+<style>
+  form { max-width: 40rem; margin-bottom: 1rem; display: grid; gap: 0.35rem; }
+  input { width: 100%; font-size: 1.1rem; }
+</style>
