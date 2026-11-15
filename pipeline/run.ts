@@ -53,7 +53,7 @@ export interface PipelineDeps {
   getLlm: (model: string) => LlmClient;
   // Dates written in records.
   now: Date;
-  // Measures the review time budget; Date.now by default, replaced in tests.
+  // Measures the time budget of the run; Date.now by default, replaced in tests.
   clock?: () => number;
   log: (message: string) => void;
 }
@@ -64,6 +64,8 @@ interface StepContext {
   kits: Kit[];
   options: PipelineOptions;
   deps: PipelineDeps;
+  // clock() reading when the run started: the time budget counts from here.
+  startedAt: number;
 }
 
 // A dry run measures cost and quality on a small sample: it never reviews more than this.
@@ -167,7 +169,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     deps.log(`${stats.skills} skills, ${stats.invalid} invalid, ${stats.failedRepos.length} repos failed`);
   },
 
-  async review({ paths, config, kits, options, deps }) {
+  async review({ paths, config, kits, options, deps, startedAt }) {
     const repos = await readJsonFile(paths.repos, z.array(RepoMetaSchema), []);
     const skills = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
     const triage = await readJsonFile(paths.triage, TriageCacheSchema, {});
@@ -178,7 +180,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const llm = deps.getLlm(config.review.model);
     const stats = emptyReviewStats();
     const clock = deps.clock ?? Date.now;
-    const end = clock() + config.review.maxMinutes * 60_000;
+    const end = startedAt + config.review.maxMinutes * 60_000;
     const deadline = (): boolean => clock() >= end;
 
     let completed = false;
@@ -255,6 +257,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
 };
 
 export async function runPipeline(options: PipelineOptions, deps: PipelineDeps): Promise<void> {
+  const startedAt = (deps.clock ?? Date.now)();
   const paths = resolvePaths(options.root, options.dryRun);
   const config = await readYamlFile(paths.config, ConfigSchema);
   const kits = await readYamlFile(paths.kits, KitsSchema);
@@ -263,6 +266,6 @@ export async function runPipeline(options: PipelineOptions, deps: PipelineDeps):
   for (const step of STEPS) {
     if (!options.steps.includes(step)) continue;
     deps.log(`> ${step}`);
-    await handlers[step]({ paths, config, kits, options, deps });
+    await handlers[step]({ paths, config, kits, options, deps, startedAt });
   }
 }

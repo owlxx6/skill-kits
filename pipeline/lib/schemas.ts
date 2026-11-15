@@ -51,7 +51,8 @@ export const ConfigSchema = z.object({
     maxReviewsPerRun: z.number().int().min(0),
     minCatalogScore: z.number().min(0).max(10),
     maxSkillChars: z.number().int().positive(),
-    // Wall-clock budget of the review step, below the workflow step limit (170 minutes).
+    // Minutes since the start of the run after which triage and reviews stop, so the run
+    // ends within the workflow step limit (170 minutes).
     maxMinutes: z.number().positive(),
   }),
   scoring: z.object({

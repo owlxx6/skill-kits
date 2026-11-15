@@ -118,11 +118,11 @@ Sans cela, le pipeline refuse de relire. Après la réinitialisation, toutes les
 Dans `data/config.yaml` :
 
 - `review.maxReviewsPerRun` : nombre maximal de revues complètes par passage ;
-- `review.maxMinutes` : budget de temps du passage (120 minutes). Une fois atteint, le tri et les revues s'arrêtent et le reste est reporté à la semaine suivante ;
+- `review.maxMinutes` : budget de temps du passage entier, compté depuis son démarrage (140 minutes). Une fois atteint, le tri et les revues s'arrêtent et le reste est reporté à la semaine suivante ;
 - `filter` : `allowedLicenses`, `minStars` (50), `maxDaysSinceLastCommit` (180) ;
 - `collection` : `minSkills` et `minKitSkills` (3).
 
-Choisir `maxReviewsPerRun` et `maxMinutes` à partir de la mesure du mode d'essai : coût par skill relu et durée totale (`time`). Diviser le budget de dépense par le coût par skill pour obtenir le plafond de revues. Vérifier que le temps par revue, multiplié par ce plafond, reste sous `maxMinutes` ; sinon, baisser le plafond ou accepter le report. Le job GitHub s'arrête à 180 minutes.
+Choisir `maxReviewsPerRun` et `maxMinutes` à partir de la mesure du mode d'essai : coût par skill relu et durée totale (`time`). Diviser le budget de dépense par le coût par skill pour obtenir le plafond de revues. Vérifier que le temps par revue, multiplié par ce plafond, reste sous `maxMinutes` ; sinon, baisser le plafond ou accepter le report. L'étape du pipeline s'arrête à 170 minutes (le job, à 180 minutes).
 
 ## Après un échec
 

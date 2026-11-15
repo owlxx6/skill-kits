@@ -11,7 +11,7 @@ review:
   maxReviewsPerRun: 500
   minCatalogScore: 6
   maxSkillChars: 24000
-  maxMinutes: 120
+  maxMinutes: 140
 scoring:
   stars: { min: 50, max: 50000 }
   forks: { min: 5, max: 5000 }

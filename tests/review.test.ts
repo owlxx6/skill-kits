@@ -170,6 +170,26 @@ describe("runTriage, isolation and progress", () => {
     expect(stats.stoppedByTimeBudget).toBe(true);
   });
 
+  it("does not split a failed batch further once the time budget is spent", async () => {
+    const skills = ["a", "b", "c", "d"].map(mk);
+    const llm = new FakeLlm(() => null, noReview);
+    const stats = emptyReviewStats();
+    const triage = await runTriage(
+      llm,
+      skills,
+      {},
+      testKits,
+      50,
+      stats,
+      noSave,
+      () => llm.triageCalls.length >= 1,
+    );
+    expect(llm.triageCalls).toHaveLength(1);
+    expect(triage).toEqual({});
+    expect(stats.triageMissing).toBe(4);
+    expect(stats.stoppedByTimeBudget).toBe(true);
+  });
+
   it("counts a single item whose call throws a plain error as missing", async () => {
     const llm = new FakeLlm(() => {
       throw new Error("network down");

@@ -32,7 +32,7 @@ describe("data files", () => {
     expect(config.filter.minStars).toBe(50);
     expect(config.filter.allowedLicenses).toContain("MIT");
     expect(config.review.model).toBe("claude-haiku-5-5");
-    expect(config.review.maxMinutes).toBe(120);
+    expect(config.review.maxMinutes).toBe(140);
     expect(config.scoring.skill).toEqual({ review: 0.7, repoSignal: 0.3 });
   });
 

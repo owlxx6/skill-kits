@@ -289,8 +289,8 @@ describe("runPipeline", () => {
   });
 
   it("stops reviewing at the time budget and still writes the catalog and the summary", async () => {
-    // The clock reads 0 when the review step starts, then jumps past review.maxMinutes after one review.
-    clock = () => (llm.reviewCalls.length >= 1 ? 121 * 60_000 : 0);
+    // The clock reads 0 when the run starts, then jumps past review.maxMinutes after one review.
+    clock = () => (llm.reviewCalls.length >= 1 ? 141 * 60_000 : 0);
     await run();
     const runInfo = await readRunInfo(root);
     expect(runInfo.review).toMatchObject({ triaged: 6, reviewed: 1, deferred: 4, stoppedByTimeBudget: true });
@@ -394,5 +394,28 @@ describe("runPipeline", () => {
     await run();
     await writeFile(path.join(root, "catalog.json"), "{ not json");
     await expect(run(["summary"])).rejects.toThrow(/catalog\.json/);
+  });
+
+  it("counts the time budget from the start of the run", async () => {
+    await approveAts();
+    await run();
+    const reviewCalls = llm.reviewCalls.length;
+    gh = makeGitHub({ atsBody: "Do the thing, version two." });
+    // The budget is spent while extract downloads the changed SKILL.md, before the review step.
+    clock = () => (gh.fileReads.length > 0 ? 141 * 60_000 : 0);
+    await run();
+    expect(llm.reviewCalls.length).toBe(reviewCalls);
+    const runInfo = await readRunInfo(root);
+    // The changed approved skill and the skill whose review failed last run both wait.
+    expect(runInfo.review).toMatchObject({
+      reviewed: 0,
+      deferred: 2,
+      triageMissing: 1,
+      stoppedByTimeBudget: true,
+    });
+    const resume = (await readCatalog(root)).kits.find((kit) => kit.id === "resume-career");
+    expect(resume?.pending).toEqual([atsId]);
+    const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
+    expect(summary).toContain("- Stopped by the time budget (review.maxMinutes)");
   });
 });

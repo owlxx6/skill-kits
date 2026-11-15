@@ -94,8 +94,15 @@ export async function runTriage(
         return;
       }
       const middle = Math.ceil(batch.length / 2);
-      await triageBatch(batch.slice(0, middle));
-      await triageBatch(batch.slice(middle));
+      for (const half of [batch.slice(0, middle), batch.slice(middle)]) {
+        // Out of time: this half stays untriaged and is retried next run.
+        if (deadline?.()) {
+          stats.triageMissing += half.length;
+          stats.stoppedByTimeBudget = true;
+          continue;
+        }
+        await triageBatch(half);
+      }
       return;
     }
     const answered = new Set<number>();
