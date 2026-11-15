@@ -1,6 +1,6 @@
 {
   "fingerprint": "9ad66982b650a84054658f22317d556a15b527e0",
-  "model": "claude-code-session",
+  "model": "in-session-review",
   "reviewedAt": "2026-11-15T12:00:00.000Z",
   "review": {
     "kits": [
