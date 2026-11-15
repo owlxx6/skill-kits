@@ -80,7 +80,7 @@ Chaque lundi, le workflow ouvre une pull request `Pipeline run <date>`. Son corp
 
 - **Candidats** : par kit, les collections et skills proposés, avec identifiant, score et « Why it's here » ;
 - **Relus** : les fiches approuvées dont le contenu a changé et qui ont été relues ;
-- **Retirés** : les fiches approuvées sorties du kit, avec la raison (note sous 6, alerte de sécurité sévère, dépôt archivé ou supprimé, licence modifiée) ;
+- **Retirés** : les fiches approuvées sorties du kit, avec la raison : `review score … below 6` (note sous le seuil), `security severe` (alerte de sécurité sévère), `repository no longer listed` (dépôt exclu par le filtre : archivé, supprimé, licence changée, inactif), `not found in the catalog` (identifiant introuvable, souvent une faute de frappe dans `curation.yaml`) ;
 - **En attente de relecture** : les fiches approuvées modifiées, masquées du kit tant qu'elles ne sont pas relues ;
 - **Dépôts renommés** : à mettre à jour dans `data/curation.yaml` et `data/sources.yaml` si besoin ;
 - **Échecs** : skills ou dépôts non traités.
