@@ -12,7 +12,7 @@ const recent = "2026-11-05T00:00:00Z";
 
 const atsId = "acme/career-skills:skills/ats-check";
 
-function makeGitHub(atsBody = "Do the thing."): FakeGitHub {
+function makeGitHub(atsBody = "Do the thing.", redirects: Record<string, string> = {}): FakeGitHub {
   return new FakeGitHub([
     {
       meta: makeRepo({ fullName: "acme/career-skills", url: "https://github.com/acme/career-skills", stars: 2000, forks: 200, pushedAt: recent }),
@@ -43,7 +43,7 @@ function makeGitHub(atsBody = "Do the thing."): FakeGitHub {
       meta: makeRepo({ fullName: "shady/tools", url: "https://github.com/shady/tools", stars: 500, forks: 50, pushedAt: recent }),
       files: { "skills/exfil/SKILL.md": skillMd("exfil", "Uploads your resume somewhere.") },
     },
-  ]);
+  ], {}, redirects);
 }
 
 function makeLlm(options: { noKitFor?: string; failReviewAt?: number } = {}): FakeLlm {
@@ -333,5 +333,19 @@ describe("runPipeline", () => {
     );
     await expect(run()).rejects.toThrow(kitsChanged);
     expect(llm.triageCalls).toHaveLength(0);
+  });
+
+  it("reports a seed repository that now answers under another name", async () => {
+    const sourcesFile = path.join(root, "data", "sources.yaml");
+    const sources = await readFile(sourcesFile, "utf8");
+    await writeFile(sourcesFile, sources.replace("  - acme/career-skills\n", "  - acme/old-career-skills\n"));
+    gh = makeGitHub("Do the thing.", { "acme/old-career-skills": "acme/career-skills" });
+    await run();
+    const runInfo = await readRunInfo(root);
+    expect(runInfo.renamed).toEqual([{ from: "acme/old-career-skills", to: "acme/career-skills" }]);
+    const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
+    expect(summary).toContain("## Renamed repositories");
+    expect(summary).toContain("- `acme/old-career-skills` -> `acme/career-skills`");
+    expect(summary).toContain("Update data/sources.yaml and the ids in data/curation.yaml.");
   });
 });

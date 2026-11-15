@@ -55,7 +55,7 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
     "",
   ];
 
-  const { review, extract, filtered } = runInfo;
+  const { review, extract, filtered, renamed } = runInfo;
   // A skill reviewed in this run while already approved is one whose content changed.
   const reviewedNow = new Set(review?.reviewedIds ?? []);
   if (review || extract) {
@@ -79,6 +79,16 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
       }
     }
     lines.push("");
+  }
+
+  if (renamed && renamed.length > 0) {
+    lines.push("## Renamed repositories", "");
+    lines.push(
+      ...capped(renamed.map((entry) => `- \`${inlineText(entry.from)}\` -> \`${inlineText(entry.to)}\``)),
+      "",
+      "Update data/sources.yaml and the ids in data/curation.yaml.",
+      "",
+    );
   }
 
   for (const kit of catalog.kits) {

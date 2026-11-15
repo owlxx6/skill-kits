@@ -2,7 +2,7 @@ import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
 import { compareText } from "./lib/text";
 import { RepoMetaSchema } from "./lib/schemas";
-import type { Config, FilteredRepo, RepoMeta } from "./lib/schemas";
+import type { Config, FilteredRepo, RenamedRepo, RepoMeta } from "./lib/schemas";
 import { daysBetween } from "./lib/scores";
 
 export type FilterVerdict = { ok: true } | { ok: false; reason: string };
@@ -32,9 +32,10 @@ export async function filterRepos(
   candidates: string[],
   filter: Config["filter"],
   now: Date,
-): Promise<{ repos: RepoMeta[]; filtered: FilteredRepo[] }> {
+): Promise<{ repos: RepoMeta[]; filtered: FilteredRepo[]; renamed: RenamedRepo[] }> {
   const repos: RepoMeta[] = [];
   const filtered: FilteredRepo[] = [];
+  const renamed: RenamedRepo[] = [];
   const seen = new Set<string>();
   for (const candidate of candidates) {
     let repo: RepoMeta | null;
@@ -51,15 +52,20 @@ export async function filterRepos(
     if (seen.has(key)) continue;
     seen.add(key);
     const verdict = checkRepo(repo, filter, now);
-    if (verdict.ok) repos.push(repo);
-    else {
+    // Renamed or transferred: GitHub followed a redirect to another name.
+    const moved = key !== candidate.toLowerCase();
+    if (verdict.ok) {
+      repos.push(repo);
+      // Approved ids still carry the old name: the curator has to update them.
+      if (moved) renamed.push({ from: candidate, to: repo.fullName });
+    } else {
       // A renamed or transferred repository is shown with the name listed in sources.yaml.
-      const renamed = key !== candidate.toLowerCase();
-      const fullName = renamed ? `${repo.fullName} (listed as ${candidate})` : repo.fullName;
+      const fullName = moved ? `${repo.fullName} (listed as ${candidate})` : repo.fullName;
       filtered.push({ fullName, reason: verdict.reason });
     }
   }
   repos.sort((a, b) => compareText(a.fullName, b.fullName));
   filtered.sort((a, b) => compareText(a.fullName, b.fullName));
-  return { repos, filtered };
+  renamed.sort((a, b) => compareText(a.from, b.from));
+  return { repos, filtered, renamed };
 }

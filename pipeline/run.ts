@@ -142,9 +142,14 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
 
   async filter({ paths, config, deps }) {
     const candidates = await readJsonFile(paths.candidates, z.array(z.string()), []);
-    const { repos, filtered } = await filterRepos(deps.gh, candidates, config.filter, deps.now);
+    const { repos, filtered, renamed } = await filterRepos(
+      deps.gh,
+      candidates,
+      config.filter,
+      deps.now,
+    );
     await writeJsonFile(paths.repos, repos);
-    await updateRunInfo(paths.runInfo, { filtered });
+    await updateRunInfo(paths.runInfo, { filtered, renamed });
     deps.log(`${repos.length} repos kept, ${filtered.length} excluded`);
   },
 

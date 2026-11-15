@@ -178,6 +178,9 @@ export type TokenUsage = z.infer<typeof TokenUsageSchema>;
 export const FilteredRepoSchema = z.object({ fullName: z.string(), reason: z.string() });
 export type FilteredRepo = z.infer<typeof FilteredRepoSchema>;
 
+export const RenamedRepoSchema = z.object({ from: z.string(), to: z.string() });
+export type RenamedRepo = z.infer<typeof RenamedRepoSchema>;
+
 export const ExtractStatsSchema = z.object({
   repos: z.number(),
   skills: z.number(),
@@ -205,6 +208,7 @@ export type ReviewStats = z.infer<typeof ReviewStatsSchema>;
 
 export const RunInfoSchema = z.object({
   filtered: z.array(FilteredRepoSchema).optional(),
+  renamed: z.array(RenamedRepoSchema).optional(),
   extract: ExtractStatsSchema.optional(),
   review: ReviewStatsSchema.optional(),
 });

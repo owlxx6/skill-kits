@@ -118,6 +118,20 @@ describe("buildSummary", () => {
     expect(stopped).toContain(line);
   });
 
+  it("lists renamed repositories right after the Run section", () => {
+    const text = buildSummary(catalog, {
+      ...runInfo,
+      renamed: [{ from: "old/name", to: "new/name" }],
+    });
+    expect(text).toContain(
+      "## Renamed repositories\n\n- `old/name` -> `new/name`\n\nUpdate data/sources.yaml and the ids in data/curation.yaml.\n",
+    );
+    expect(text.indexOf("## Run")).toBeLessThan(text.indexOf("## Renamed repositories"));
+    expect(text.indexOf("## Renamed repositories")).toBeLessThan(text.indexOf("## Resume & career agent"));
+    expect(summary).not.toContain("## Renamed repositories");
+    expect(buildSummary(catalog, { renamed: [] })).not.toContain("## Renamed repositories");
+  });
+
   it("works when no run information is available", () => {
     expect(buildSummary(catalog, {})).toContain("# Pipeline run 2026-11-11");
   });

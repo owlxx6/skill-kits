@@ -113,4 +113,36 @@ describe("filterRepos", () => {
       { fullName: "new/home (listed as old/name)", reason: "archived" },
     ]);
   });
+
+  it("reports kept repositories that now answer under another name", async () => {
+    const gh = new FakeGitHub(
+      [
+        { meta: makeRepo({ fullName: "zeta/new" }), files: {} },
+        { meta: makeRepo({ fullName: "acme/skills" }), files: {} },
+        { meta: makeRepo({ fullName: "gone/archived", archived: true }), files: {} },
+      ],
+      {},
+      { "zeta/old": "zeta/new", "beta/old": "acme/skills", "old/archived": "gone/archived" },
+    );
+    const result = await filterRepos(gh, ["zeta/old", "ACME/Skills", "beta/old", "old/archived"], filter, NOW);
+    expect(result.repos.map((repo) => repo.fullName)).toEqual(["acme/skills", "zeta/new"]);
+    // A change of letter case is not a rename; a rejected or already-seen repository is not reported.
+    expect(result.renamed).toEqual([{ from: "zeta/old", to: "zeta/new" }]);
+  });
+
+  it("sorts renamed repositories by their listed name", async () => {
+    const gh = new FakeGitHub(
+      [
+        { meta: makeRepo({ fullName: "x/one" }), files: {} },
+        { meta: makeRepo({ fullName: "y/two" }), files: {} },
+      ],
+      {},
+      { "b/old": "x/one", "a/old": "y/two" },
+    );
+    const result = await filterRepos(gh, ["b/old", "a/old"], filter, NOW);
+    expect(result.renamed).toEqual([
+      { from: "a/old", to: "y/two" },
+      { from: "b/old", to: "x/one" },
+    ]);
+  });
 });
