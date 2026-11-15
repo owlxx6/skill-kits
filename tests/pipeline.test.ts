@@ -418,4 +418,27 @@ describe("runPipeline", () => {
     const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
     expect(summary).toContain("- Stopped by the time budget (review.maxMinutes)");
   });
+
+  it("accepts a cache restored from a failure artifact and reviews nothing twice", async () => {
+    await run();
+    const reviewCalls = llm.reviewCalls.length;
+    const restored = await makeRoot();
+    try {
+      // What the recovery steps copy: reviews/, triage.json and kits.sha256, nothing else.
+      const from = path.join(root, "data", "cache");
+      const to = path.join(restored, "data", "cache");
+      await cp(path.join(from, "reviews"), path.join(to, "reviews"), { recursive: true });
+      await cp(path.join(from, "triage.json"), path.join(to, "triage.json"));
+      await cp(path.join(from, "kits.sha256"), path.join(to, "kits.sha256"));
+      await runPipeline(
+        { root: restored, dryRun: false, steps: [...STEPS] },
+        { gh, getLlm: () => llm, now: NOW, log: () => {} },
+      );
+      // Only the skill whose review failed is tried again: two attempts.
+      expect(llm.reviewCalls.length).toBe(reviewCalls + 2);
+      expect((await readCatalog(restored)).skills.length).toBe(3);
+    } finally {
+      await rm(restored, { recursive: true, force: true });
+    }
+  });
 });

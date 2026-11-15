@@ -132,7 +132,7 @@ Pour récupérer les revues déjà payées :
 
 1. Télécharger l'artefact depuis la page du run (Actions > le run en échec > Artifacts).
 2. Créer une nouvelle branche depuis `main`.
-3. Copier les fichiers de `reviews/` de l'artefact dans `data/cache/reviews/`.
+3. Si `data/kits.yaml` n'a pas changé depuis le passage en échec, copier de l'artefact vers `data/cache/` le dossier `reviews/`, `triage.json` et `kits.sha256`. Sinon, ne rien copier : le prochain passage repart de zéro.
 4. Committer, pousser et ouvrir une pull request.
 5. Fusionner, puis relancer le workflow : les revues récupérées ne sont pas refaites.
 
