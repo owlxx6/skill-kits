@@ -1,7 +1,26 @@
 ---
 import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import SearchBox from "../components/SearchBox.astro";
 ---
 <Base title="Page not found" description="This page does not exist.">
-  <h1>This page does not exist</h1>
-  <p>The skill or kit may have been removed after a review. Start again from the <a href="/">kits</a> or <a href="/search/">search the catalog</a>.</p>
+  <section class="not-found narrow">
+    <span class="icon-tile large quiet"><Icon name="compass" size={28} /></span>
+    <p class="code mono">404</p>
+    <h1>This page does not exist</h1>
+    <p class="muted">The skill or kit may have been removed after a review. Search the catalog, or start again from the kits.</p>
+    <div class="search"><SearchBox inputId="not-found-search" /></div>
+    <div class="button-row">
+      <a class="button primary" href="/#kits">Browse kits <Icon name="arrow-right" size={16} /></a>
+      <a class="button" href="/methodology/">How we pick</a>
+    </div>
+  </section>
 </Base>
+
+<style>
+  .not-found { display: grid; justify-items: center; gap: var(--space-4); padding: var(--space-7) 0; margin: 0 auto; text-align: center; }
+  .not-found .muted { max-width: 48ch; }
+  .code { color: var(--accent-text); font-size: var(--text-sm); letter-spacing: 0.1em; }
+  .search { width: 100%; max-width: 32rem; text-align: left; }
+  .button-row { justify-content: center; }
+</style>

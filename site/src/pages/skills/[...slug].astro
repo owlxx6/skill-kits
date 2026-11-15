@@ -1,7 +1,10 @@
 ---
 import Base from "../../layouts/Base.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CopyCommand from "../../components/CopyCommand.astro";
-import { formatCount, kitsOfSkill, loadCatalog, skillInstallCommand, skillSlug } from "../../lib/catalog";
+import Icon from "../../components/Icon.astro";
+import { collectionHref, formatCount, kitsOfSkill, loadCatalog, skillInstallCommand, skillSlug } from "../../lib/catalog";
+import { kitIcon } from "../../lib/icons";
 
 export function getStaticPaths() {
   return loadCatalog().skills.map((skill) => ({ params: { slug: skillSlug(skill.id) }, props: { skillId: skill.id } }));
@@ -12,44 +15,158 @@ const skill = catalog.skills.find((entry) => entry.id === Astro.props.skillId);
 if (!skill) throw new Error(`Unknown skill ${Astro.props.skillId}`);
 const kits = kitsOfSkill(catalog, skill.id);
 const { review } = skill;
+const firstKit = kits[0];
+const crumbs = [
+  { label: "Home", href: "/" },
+  ...(firstKit ? [{ label: firstKit.title, href: `/kits/${firstKit.id}/` }] : []),
+  { label: skill.name },
+];
+const scores = [
+  { label: "Clarity", value: review.scores.clarity },
+  { label: "Completeness", value: review.scores.completeness },
+  { label: "Usefulness", value: review.scores.usefulness },
+];
+const percent = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
 ---
 <Base title={skill.name} description={review.why}>
-  <article class="sheet">
-    <h1>{skill.name}</h1>
-    <p class="muted">From <a href={`/collections/${skill.repo}/`}>{skill.repo}</a>. {skill.license}, {formatCount(skill.stars)} stars, {formatCount(skill.forks)} forks. <a href={skill.url}>Source on GitHub</a>.</p>
-    <p class="lead">{review.summary}</p>
+  <div class="narrow">
+    <Breadcrumbs items={crumbs} />
+    <header class="page-head">
+      <span class="icon-tile large"><Icon name="puzzle" size={28} /></span>
+      <div class="page-head-text">
+        <h1>{skill.name}</h1>
+        <p class="meta">
+          <span><Icon name="layers" size={14} /><a href={collectionHref(skill.repo)}>{skill.repo}</a></span>
+          <span><Icon name="star" size={14} />{formatCount(skill.stars)} stars</span>
+          <span><Icon name="git-fork" size={14} />{formatCount(skill.forks)} forks</span>
+        </p>
+        <div class="badges">
+          <span class="badge"><Icon name="scale" size={14} />{skill.license}</span>
+          {skill.humanReviewed ? (
+            <span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span>
+          ) : (
+            <span class="badge"><Icon name="bot" size={14} />AI-reviewed</span>
+          )}
+          {review.security.level === "notice" && <span class="badge notice"><Icon name="shield-alert" size={14} />Security notice</span>}
+        </div>
+      </div>
+    </header>
 
-    <CopyCommand command={skillInstallCommand(skill)} />
+    <p class="lead summary">{review.summary}</p>
 
-    <dl class="scores">
-      <div><dt>Review score</dt><dd>{skill.reviewScore.toFixed(1)} / 10</dd></div>
-      <div><dt>Clarity</dt><dd>{review.scores.clarity}</dd></div>
-      <div><dt>Completeness</dt><dd>{review.scores.completeness}</dd></div>
-      <div><dt>Usefulness</dt><dd>{review.scores.usefulness}</dd></div>
-    </dl>
+    <section class="card install" aria-labelledby="install-title">
+      <h2 id="install-title"><Icon name="terminal" size={18} />Install</h2>
+      <CopyCommand command={skillInstallCommand(skill)} />
+      <p class="muted small">Reviewed, not tested: read the skill before you run it.</p>
+    </section>
 
-    {review.strengths.length > 0 && (<section><h2>Strengths</h2><ul>{review.strengths.map((item) => <li>{item}</li>)}</ul></section>)}
-    {review.cautions.length > 0 && (<section><h2>Before you install</h2><ul>{review.cautions.map((item) => <li>{item}</li>)}</ul></section>)}
+    <section class="card scores" aria-labelledby="scores-title">
+      <div class="overall">
+        <h2 id="scores-title">Review score</h2>
+        <p class="overall-value"><strong>{skill.reviewScore.toFixed(1)}</strong> <span class="muted">/ 10</span></p>
+        <div class="bar large" aria-hidden="true"><span style={`width: ${percent(skill.reviewScore)}`}></span></div>
+      </div>
+      <dl class="score-list">
+        {scores.map((score) => (
+          <div class="score-row">
+            <dt>{score.label}</dt>
+            <dd>
+              <div class="bar" aria-hidden="true"><span style={`width: ${percent(score.value)}`}></span></div>
+              <span class="score-value">{score.value}<span class="muted"> / 10</span></span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {(review.strengths.length > 0 || review.cautions.length > 0) && (
+      <div class="pros-cons">
+        {review.strengths.length > 0 && (
+          <section class="card" aria-labelledby="strengths-title">
+            <h2 id="strengths-title">Strengths</h2>
+            <ul class="icon-list">
+              {review.strengths.map((item) => <li><Icon name="circle-check" size={18} class="good" />{item}</li>)}
+            </ul>
+          </section>
+        )}
+        {review.cautions.length > 0 && (
+          <section class="card" aria-labelledby="cautions-title">
+            <h2 id="cautions-title">Before you install</h2>
+            <ul class="icon-list">
+              {review.cautions.map((item) => <li><Icon name="triangle-alert" size={18} class="warn" />{item}</li>)}
+            </ul>
+          </section>
+        )}
+      </div>
+    )}
+
     {review.security.level !== "none" && (
-      <section class="notice">
-        <h2>Security notice</h2>
-        <ul>{review.security.notes.map((note) => <li>{note}</li>)}</ul>
+      <section class="callout notice block" aria-labelledby="security-title">
+        <Icon name="shield-alert" size={22} />
+        <div>
+          <h2 id="security-title">Security notice</h2>
+          <ul>{review.security.notes.map((note) => <li>{note}</li>)}</ul>
+        </div>
       </section>
     )}
+
     {kits.length > 0 && (
-      <section><h2>In these kits</h2><ul>{kits.map((kit) => <li><a href={`/kits/${kit.id}/`}>{kit.title}</a></li>)}</ul></section>
+      <section class="block" aria-labelledby="kits-title">
+        <h2 id="kits-title" class="block-title">In these kits</h2>
+        <ul class="kit-links">
+          {kits.map((kit) => (
+            <li class="card is-clickable">
+              <span class="icon-tile"><Icon name={kitIcon(kit.id)} size={20} /></span>
+              <a class="card-link" href={`/kits/${kit.id}/`}>{kit.title}</a>
+              <Icon name="arrow-right" size={18} class="arrow" />
+            </li>
+          ))}
+        </ul>
+      </section>
     )}
-    <p class="muted small">{skill.humanReviewed ? "Reviewed by a human." : "AI-reviewed, not yet checked by a human."} Reviewed, not tested: read the skill before you run it.</p>
-  </article>
+
+    <div class="block button-row">
+      <a class="button" href={skill.url}>View source on GitHub <Icon name="external-link" size={16} /></a>
+    </div>
+  </div>
 </Base>
 
 <style>
-  .sheet { max-width: 48rem; }
-  .lead { font-size: 1.1rem; }
-  .scores { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 1.5rem 0; }
-  .scores dt { font-size: 0.875rem; color: var(--muted); }
-  .scores dd { margin: 0; font-weight: 650; }
-  section { margin-top: 1.5rem; }
-  .notice { background: var(--notice-bg); color: var(--notice-ink); padding: 1rem 1.25rem; border-radius: 4px; }
-  .small { font-size: 0.875rem; margin-top: 2rem; }
+  .summary { margin-top: var(--space-5); color: var(--text); }
+  .block, .install, .scores, .pros-cons { margin-top: var(--space-5); }
+  .block-title { margin-bottom: var(--space-3); }
+  .install { display: grid; gap: var(--space-3); }
+  .install h2, .pros-cons h2 { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-base); }
+  .install h2 { color: var(--text); }
+
+  .scores { display: grid; gap: var(--space-5); }
+  @media (min-width: 768px) { .scores { grid-template-columns: 14rem 1fr; align-items: center; } }
+  .overall { display: grid; gap: var(--space-2); }
+  .overall h2 { font-size: var(--text-sm); font-weight: 500; color: var(--text-muted); }
+  .overall-value { font-variant-numeric: tabular-nums; }
+  .overall-value strong { font-size: 2.5rem; line-height: 1; color: var(--accent-text); letter-spacing: -0.02em; }
+  .score-list { display: grid; gap: var(--space-3); margin: 0; }
+  .score-row { display: grid; gap: 6px; }
+  .score-row dt { font-size: var(--text-sm); color: var(--text-muted); }
+  .score-row dd { display: flex; align-items: center; gap: var(--space-3); margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .score-row .bar { flex: 1; }
+  .score-value { flex: none; white-space: nowrap; }
+  .bar { height: 8px; border-radius: 999px; background: var(--surface-muted); overflow: hidden; }
+  .bar.large { height: 10px; }
+  .bar span { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+
+  .pros-cons { display: grid; gap: var(--space-4); }
+  @media (min-width: 768px) { .pros-cons { grid-template-columns: 1fr 1fr; } }
+  .pros-cons h2 { margin-bottom: var(--space-3); }
+  .icon-list { list-style: none; display: grid; gap: var(--space-3); }
+  .icon-list li { display: flex; gap: var(--space-3); align-items: flex-start; }
+  .icon-list :global(.icon) { margin-top: 3px; }
+  .icon-list :global(.good) { color: var(--accent-text); }
+  .icon-list :global(.warn) { color: var(--notice-text); }
+
+  .kit-links { list-style: none; display: grid; gap: var(--space-3); }
+  @media (min-width: 768px) { .kit-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .kit-links li { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); }
+  .kit-links .card-link { flex: 1; font-weight: 600; }
+  .kit-links :global(.arrow) { color: var(--text-muted); }
 </style>
