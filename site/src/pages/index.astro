@@ -1,3 +1,49 @@
 ---
+import Base from "../layouts/Base.astro";
+import { kitView, loadCatalog } from "../lib/catalog";
+
+const catalog = loadCatalog();
+const kits = catalog.kits.map((kit) => kitView(catalog, kit.id)).filter((view) => view !== null);
+const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
 ---
-<html lang="en"><head><meta charset="utf-8" /><title>Skill Kits</title></head><body><p>Skill Kits</p></body></html>
+<Base title="Skill Kits" description="Hand-checked skill kits for the agent you want to build. Permissive licenses only.">
+  <section class="hero">
+    <h1>What are you building?</h1>
+    <p class="muted">Pick the agent you want to build and get the skills worth installing, checked by hand. Permissive licenses only.</p>
+    <form action="/search/" method="get" role="search">
+      <label for="home-search" class="visually-hidden">Search skills and collections</label>
+      <input id="home-search" type="search" name="q" placeholder="Search skills and collections: resume, scraping, pptx" />
+    </form>
+  </section>
+
+  <ul class="kits">
+    {kits.map((view) => (
+      <li class="kit-tile">
+        <a href={`/kits/${view.kit.id}/`}>
+          <span class="kit-title">{view.kit.title}</span>
+          <span class="kit-count">
+            {view.isEmpty ? "Being assembled" : `${plural(view.collections.length, "collection")}, ${plural(view.skills.length, "skill")}`}
+          </span>
+        </a>
+        <p class="muted">{view.kit.description}</p>
+      </li>
+    ))}
+  </ul>
+
+  <p class="muted updated">Last updated {catalog.generatedAt.slice(0, 10)}.</p>
+</Base>
+
+<style>
+  .hero { margin-bottom: 3rem; }
+  .hero form { max-width: 40rem; }
+  .hero input { width: 100%; font-size: 1.1rem; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .kits { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); border-top: 1px solid var(--rule); }
+  .kit-tile { padding: 1.25rem 1.25rem 1rem 0; border-bottom: 1px solid var(--rule); }
+  .kit-tile a { display: flex; flex-direction: column; gap: 0.25rem; text-decoration: none; color: var(--ink); }
+  .kit-title { font-size: 1.25rem; font-weight: 700; font-stretch: 112%; }
+  .kit-tile a:hover .kit-title { color: var(--spot); }
+  .kit-count { color: var(--spot); font-size: 0.875rem; }
+  .kit-tile p { margin: 0.5rem 0 0; font-size: 0.875rem; }
+  .updated { margin-top: 2rem; font-size: 0.875rem; }
+</style>
