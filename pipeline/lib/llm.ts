@@ -98,8 +98,8 @@ export function buildReviewUserMessage(
   ].join("\n");
 }
 
-// Cut or malformed output is not an error here: the caller's schema check rejects
-// null data and retries once, and the tokens of the call are still counted.
+// Cut or malformed output is not an error here: the caller's schema check rejects null
+// data (triage splits the batch, review retries once), and the tokens are still counted.
 export function toLlmResult(
   response: Pick<Anthropic.Message, "stop_reason" | "content"> & {
     usage: Pick<Anthropic.Usage, "input_tokens" | "output_tokens">;

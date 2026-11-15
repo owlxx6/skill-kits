@@ -1,4 +1,4 @@
-import { cp, mkdir, mkdtemp, readFile, readdir, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -12,10 +12,13 @@ const recent = "2026-11-05T00:00:00Z";
 
 const atsId = "acme/career-skills:skills/ats-check";
 
-function makeGitHub(atsBody = "Do the thing.", redirects: Record<string, string> = {}): FakeGitHub {
+function makeGitHub(
+  options: { atsBody?: string; redirects?: Record<string, string>; careerLicense?: string | null } = {},
+): FakeGitHub {
+  const { atsBody = "Do the thing.", redirects = {}, careerLicense = "MIT" } = options;
   return new FakeGitHub([
     {
-      meta: makeRepo({ fullName: "acme/career-skills", url: "https://github.com/acme/career-skills", stars: 2000, forks: 200, pushedAt: recent }),
+      meta: makeRepo({ fullName: "acme/career-skills", url: "https://github.com/acme/career-skills", stars: 2000, forks: 200, pushedAt: recent, license: careerLicense }),
       files: {
         "skills/resume-tailor/SKILL.md": skillMd("resume-tailor", "Tailors a resume to a job offer."),
         "skills/resume-tailor/examples.md": "Example",
@@ -46,7 +49,9 @@ function makeGitHub(atsBody = "Do the thing.", redirects: Record<string, string>
   ], {}, redirects);
 }
 
-function makeLlm(options: { noKitFor?: string; failReviewAt?: number } = {}): FakeLlm {
+function makeLlm(
+  options: { noKitFor?: string; failReviewAt?: number; invalidFor?: string } = {},
+): FakeLlm {
   let reviewCount = 0;
   const careerSkills = new Set(["resume-tailor", "ats-check", "cover-letter", "flaky", "exfil"]);
   return new FakeLlm(
@@ -59,7 +64,7 @@ function makeLlm(options: { noKitFor?: string; failReviewAt?: number } = {}): Fa
     (input) => {
       reviewCount += 1;
       if (reviewCount === options.failReviewAt) throw new FatalLlmError("bad key");
-      if (input.name === "flaky") return { nonsense: true };
+      if (input.name === "flaky" || input.name === options.invalidFor) return { nonsense: true };
       if (input.name === "exfil") {
         return makeReview({ security: { level: "severe", notes: ["Sends files to a remote host"] } });
       }
@@ -121,8 +126,9 @@ describe("runPipeline", () => {
     clock = undefined;
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     vi.restoreAllMocks();
+    await rm(root, { recursive: true, force: true });
   });
 
   it("builds the catalog from discovery to summary", async () => {
@@ -221,7 +227,7 @@ describe("runPipeline", () => {
       path.join(root, "data", "curation.yaml"),
       ["resume-career:", `  approved: ['${atsId}']`, "  rejected: []", ""].join("\n"),
     );
-    gh = makeGitHub("Do the thing, version two.");
+    gh = makeGitHub({ atsBody: "Do the thing, version two." });
     llm = makeLlm({ noKitFor: "ats-check" });
     await run();
 
@@ -339,7 +345,7 @@ describe("runPipeline", () => {
     const sourcesFile = path.join(root, "data", "sources.yaml");
     const sources = await readFile(sourcesFile, "utf8");
     await writeFile(sourcesFile, sources.replace("  - acme/career-skills\n", "  - acme/old-career-skills\n"));
-    gh = makeGitHub("Do the thing.", { "acme/old-career-skills": "acme/career-skills" });
+    gh = makeGitHub({ redirects: { "acme/old-career-skills": "acme/career-skills" } });
     await run();
     const runInfo = await readRunInfo(root);
     expect(runInfo.renamed).toEqual([{ from: "acme/old-career-skills", to: "acme/career-skills" }]);
@@ -347,5 +353,46 @@ describe("runPipeline", () => {
     expect(summary).toContain("## Renamed repositories");
     expect(summary).toContain("- `acme/old-career-skills` -> `acme/career-skills`");
     expect(summary).toContain("Update data/sources.yaml and the ids in data/curation.yaml.");
+  });
+
+  async function approveAts(): Promise<void> {
+    await writeFile(
+      path.join(root, "data", "curation.yaml"),
+      ["resume-career:", `  approved: ['${atsId}']`, "  rejected: []", ""].join("\n"),
+    );
+  }
+
+  it("removes an approved skill whose repository lost its license", async () => {
+    await run();
+    await approveAts();
+    gh = makeGitHub({ careerLicense: null });
+    await run();
+    const resume = (await readCatalog(root)).kits.find((kit) => kit.id === "resume-career");
+    expect(resume?.removed).toEqual([{ id: atsId, reason: "repository no longer listed" }]);
+    expect(resume?.skills).toEqual([]);
+    const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
+    expect(summary).toContain(`- \`${atsId}\` - repository no longer listed`);
+  });
+
+  it("keeps a changed approved skill pending when its review fails", async () => {
+    await run();
+    await approveAts();
+    gh = makeGitHub({ atsBody: "Do the thing, version two." });
+    llm = makeLlm({ invalidFor: "ats-check" });
+    await run();
+    const resume = (await readCatalog(root)).kits.find((kit) => kit.id === "resume-career");
+    expect(resume?.pending).toEqual([atsId]);
+    expect(resume?.removed).toEqual([]);
+    expect((await readRunInfo(root)).review?.failed.map((entry) => entry.skillId)).toContain(atsId);
+    const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
+    expect(summary).toContain(
+      `**Approved entries awaiting re-review (hidden until reviewed):**\n\n- \`${atsId}\`\n`,
+    );
+  });
+
+  it("names catalog.json when the summary step cannot read it", async () => {
+    await run();
+    await writeFile(path.join(root, "catalog.json"), "{ not json");
+    await expect(run(["summary"])).rejects.toThrow(/catalog\.json/);
   });
 });

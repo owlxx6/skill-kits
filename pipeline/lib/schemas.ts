@@ -90,9 +90,23 @@ export const ConfigSchema = z.object({
 });
 export type Config = z.infer<typeof ConfigSchema>;
 
+// A collection id (owner/repo) or a skill id (owner/repo:dir). No control character or
+// backtick: ids are printed in code spans of the pull request.
+const curationId = z.string().refine(
+  (value) => {
+    const colon = value.indexOf(":");
+    if (colon < 0) return repoName.safeParse(value).success;
+    return (
+      repoName.safeParse(value.slice(0, colon)).success &&
+      /^[^\x00-\x1f\x7f`]+$/.test(value.slice(colon + 1))
+    );
+  },
+  { message: "expected owner/repo or owner/repo:dir" },
+);
+
 export const CurationSchema = z.record(
   kitId,
-  z.object({ approved: z.array(z.string()), rejected: z.array(z.string()) }),
+  z.object({ approved: z.array(curationId), rejected: z.array(curationId) }),
 );
 export type Curation = z.infer<typeof CurationSchema>;
 
@@ -258,7 +272,7 @@ export const CatalogKitSchema = z.object({
   collections: z.array(z.string()),
   skills: z.array(z.string()),
   pending: z.array(z.string()),
-  removed: z.array(z.string()),
+  removed: z.array(z.object({ id: z.string(), reason: z.string() })),
   proposals: z.object({ collections: z.array(proposal), skills: z.array(proposal) }),
 });
 export type CatalogKit = z.infer<typeof CatalogKitSchema>;

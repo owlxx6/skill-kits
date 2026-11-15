@@ -7,11 +7,14 @@ const MAX_SUMMARY_CHARS = 60_000;
 const MAX_INLINE_CHARS = 300;
 
 // Text written by the model ends up in a pull request: strip what could break
-// the Markdown, and never let it notify a GitHub user with an @mention.
+// the Markdown, form a link or an image, and never let it notify a GitHub user with an @mention.
 const inlineText = (text: string): string =>
   Array.from(
     text
       .replace(/[`\r\n]+/g, " ")
+      // Backslash first, so a backslash in the text cannot cancel the escapes added below.
+      .replace(/\\/g, "\\\\")
+      .replace(/[[\]!]/g, (char) => `\\${char}`)
       .replace(/@/g, "(at)")
       .replace(/\s+/g, " ")
       .replace(/</g, "&lt;")
@@ -37,6 +40,19 @@ function skillRef(id: string, skillById: Map<string, Catalog["skills"][number]>)
     // encodeURI throws on a lone surrogate: fall back to the plain id.
     return `\`${id}\``;
   }
+}
+
+// One line per skill: link, score, the model's reason, and a security notice when there is one.
+function skillLine(
+  id: string,
+  score: number | undefined,
+  skillById: Map<string, Catalog["skills"][number]>,
+): string {
+  const review = skillById.get(id)?.review;
+  const scoreText = score === undefined ? "" : ` - score ${score}`;
+  const why = inlineText(review?.why ?? "");
+  const notice = review?.security.level === "notice" ? " - security notice" : "";
+  return `- ${skillRef(id, skillById)}${scoreText}${why ? ` - ${why}` : ""}${notice}`;
 }
 
 function capped(lines: string[]): string[] {
@@ -100,12 +116,15 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
     );
     const changed = kit.skills.filter((id) => reviewedNow.has(id));
     if (changed.length > 0) {
-      lines.push("**Approved skills re-reviewed this run (content changed):**", "");
-      lines.push(...capped(changed.map((id) => `- ${skillRef(id, skillById)}`)), "");
+      lines.push("**Approved skills re-reviewed this run:**", "");
+      lines.push(
+        ...capped(changed.map((id) => skillLine(id, skillById.get(id)?.score, skillById))),
+        "",
+      );
     }
     if (kit.removed.length > 0) {
       lines.push("**Approved entries that are no longer eligible (below threshold, severe, or gone):**", "");
-      lines.push(...capped(kit.removed.map((id) => `- \`${id}\``)), "");
+      lines.push(...capped(kit.removed.map((entry) => `- \`${entry.id}\` - ${entry.reason}`)), "");
     }
     if (kit.pending.length > 0) {
       lines.push("**Approved entries awaiting re-review (hidden until reviewed):**", "");
@@ -117,15 +136,7 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
     }
     if (kit.proposals.skills.length > 0) {
       lines.push("**Skill candidates:**", "");
-      lines.push(
-        ...kit.proposals.skills.map((entry) => {
-          const review = skillById.get(entry.id)?.review;
-          const why = inlineText(review?.why ?? "");
-          const notice = review?.security.level === "notice" ? " - security notice" : "";
-          return `- ${skillRef(entry.id, skillById)} - score ${entry.score}${why ? ` - ${why}` : ""}${notice}`;
-        }),
-        "",
-      );
+      lines.push(...kit.proposals.skills.map((entry) => skillLine(entry.id, entry.score, skillById)), "");
     }
   }
 

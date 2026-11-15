@@ -1,11 +1,21 @@
-import { mkdir, mkdtemp, readdir, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { z } from "zod";
 import { readJsonFile, readYamlFile, resolvePaths, writeJsonFile } from "../pipeline/lib/store";
 
-const makeRoot = (): Promise<string> => mkdtemp(path.join(os.tmpdir(), "skill-kits-store-"));
+const roots: string[] = [];
+
+async function makeRoot(): Promise<string> {
+  const root = await mkdtemp(path.join(os.tmpdir(), "skill-kits-store-"));
+  roots.push(root);
+  return root;
+}
+
+afterEach(async () => {
+  for (const root of roots.splice(0)) await rm(root, { recursive: true, force: true });
+});
 
 describe("resolvePaths", () => {
   const root = "/some/root";

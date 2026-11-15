@@ -148,6 +148,24 @@ describe("repo names and curation keys", () => {
     expect(SourcesSchema.safeParse(sources("../..")).success).toBe(false);
   });
 
+  it.each(["acme/skills", "acme/skills:skills/a", "acme/skills:.", "owner/.github:skills/x y"])(
+    "accepts the curation id %s",
+    (id) => {
+      expect(CurationSchema.safeParse({ "web-app": { approved: [id], rejected: [] } }).success).toBe(true);
+    },
+  );
+
+  it.each([
+    ["no owner", "skills"],
+    ["a backtick", "acme/skills:skills/a`b"],
+    ["a line break", "acme/skills:skills/a\nb"],
+    ["an empty folder", "acme/skills:"],
+    ["a bad repository", "acme/../x:skills/a"],
+    ["dot segments", "../..:skills/a"],
+  ])("rejects a curation id with %s", (_label, id) => {
+    expect(CurationSchema.safeParse({ "web-app": { approved: [], rejected: [id] } }).success).toBe(false);
+  });
+
   it("rejects a curation key that is not a kit id", () => {
     const result = CurationSchema.safeParse({ "Resume Career": { approved: [], rejected: [] } });
     expect(result.success).toBe(false);

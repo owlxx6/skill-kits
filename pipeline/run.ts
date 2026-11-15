@@ -69,6 +69,9 @@ interface StepContext {
 // A dry run measures cost and quality on a small sample: it never reviews more than this.
 const DRY_RUN_MAX_REVIEWS = 40;
 
+// Review files are named <fingerprint>.json.
+const fingerprintOf = (fileName: string): string => fileName.slice(0, -".json".length);
+
 async function listReviewFiles(dir: string): Promise<string[]> {
   try {
     // Temporary files left by an interrupted write end in .tmp and are ignored.
@@ -86,7 +89,7 @@ export async function loadReviews(dir: string): Promise<Map<string, Review>> {
     const record = await readJsonFile(file, ReviewRecordSchema.optional(), undefined);
     // undefined: the file was deleted between listing and reading. A null file fails the schema.
     if (record === undefined) continue;
-    if (record.fingerprint !== name.slice(0, -".json".length)) {
+    if (record.fingerprint !== fingerprintOf(name)) {
       throw new Error(`${file} does not match its fingerprint`);
     }
     reviews.set(record.fingerprint, record.review);
@@ -192,9 +195,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
       );
       await writeJsonFile(paths.triage, nextTriage);
 
-      const reviewed = new Set(
-        (await listReviewFiles(paths.reviewsDir)).map((name) => name.slice(0, -".json".length)),
-      );
+      const reviewed = new Set((await listReviewFiles(paths.reviewsDir)).map(fingerprintOf));
       const max = options.dryRun
         ? Math.min(config.review.maxReviewsPerRun, DRY_RUN_MAX_REVIEWS)
         : config.review.maxReviewsPerRun;
@@ -220,15 +221,12 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
       completed = true;
     } finally {
       // Written even when a fatal error stops the run: the reviews already paid for stay counted.
-      if (completed) {
+      try {
         await updateRunInfo(paths.runInfo, { review: stats });
-      } else {
-        try {
-          await updateRunInfo(paths.runInfo, { review: stats });
-        } catch (error) {
-          // Never let this hide the error that stopped the review.
-          console.error(`Could not save the review statistics: ${errorMessage(error)}`);
-        }
+      } catch (error) {
+        if (completed) throw error;
+        // Never let this hide the error that stopped the review.
+        console.error(`Could not save the review statistics: ${errorMessage(error)}`);
       }
     }
     deps.log(`${stats.reviewed} reviewed, ${stats.failed.length} failed, ${stats.deferred} deferred`);
@@ -247,7 +245,8 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
   },
 
   async summary({ paths, deps }) {
-    const catalog = CatalogSchema.parse(JSON.parse(await readFile(paths.catalog, "utf8")));
+    const catalog = await readJsonFile(paths.catalog, CatalogSchema.optional(), undefined);
+    if (catalog === undefined) throw new Error(`${paths.catalog} is missing: run the rank step first`);
     const runInfo = await readJsonFile(paths.runInfo, RunInfoSchema, {});
     await mkdir(path.dirname(paths.summary), { recursive: true });
     await writeFile(paths.summary, buildSummary(catalog, runInfo), "utf8");

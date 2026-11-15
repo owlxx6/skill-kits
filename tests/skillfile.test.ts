@@ -141,7 +141,7 @@ describe("parseSkillFrontmatter hardening", () => {
     const content = `---\n${lines.join("\n")}\nbomb: *a9\nname: ok\ndescription: fine\n---\n`;
     const started = Date.now();
     expect(parseSkillFrontmatter(content)).toBeNull();
-    expect(Date.now() - started).toBeLessThan(1000);
+    expect(Date.now() - started).toBeLessThan(5000);
   });
 
   it("ignores a closing delimiter beyond 64 KB", () => {

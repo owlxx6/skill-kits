@@ -168,6 +168,21 @@ export function buildCatalog(input: RankInput): Catalog {
       })
       .slice(0, config.proposals.skills);
     const notShown = decided.approved.filter((id) => !collectionIds.has(id) && !skillIds.has(id));
+    // Why an approved entry left the catalog, for the curator.
+    const removalReason = (id: string): string => {
+      const record = skillById.get(id);
+      // Skills of a repository dropped by the filter lose their record at extraction.
+      const repoName = record?.repo ?? id.split(":")[0];
+      if (!repoByName.has(repoName)) return "repository no longer listed";
+      const review = record ? reviews.get(record.fingerprint) : undefined;
+      if (!review) return "not found in the catalog";
+      const value = reviewScore(review.scores);
+      if (value < config.review.minCatalogScore) {
+        return `review score ${value} below ${config.review.minCatalogScore}`;
+      }
+      if (review.security.level === "severe") return "security severe";
+      return "not found in the catalog";
+    };
     // An approved skill whose new version waits for a review is pending, not removed.
     const pending = notShown.filter((id) => {
       const record = skillById.get(id);
@@ -180,7 +195,9 @@ export function buildCatalog(input: RankInput): Catalog {
       collections: decided.approved.filter((id) => collectionIds.has(id)),
       skills: decided.approved.filter((id) => skillIds.has(id)),
       pending,
-      removed: notShown.filter((id) => !pending.includes(id)),
+      removed: notShown
+        .filter((id) => !pending.includes(id))
+        .map((id) => ({ id, reason: removalReason(id) })),
       proposals: { collections: collectionProposals, skills: skillProposals },
     };
   });

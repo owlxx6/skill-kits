@@ -100,7 +100,7 @@ describe("buildCatalog", () => {
     const [resume] = catalog.kits;
     expect(resume.skills).toEqual(["acme/skills:skills/b"]);
     expect(resume.collections).toEqual(["acme/skills"]);
-    expect(resume.removed).toEqual(["gone/repo:skills/x"]);
+    expect(resume.removed).toEqual([{ id: "gone/repo:skills/x", reason: "repository no longer listed" }]);
     expect(resume.proposals.skills).toEqual([{ id: "acme/skills:skills/a", score: 7.8 }]);
     expect(resume.proposals.collections).toEqual([]);
     const byName = new Map(catalog.skills.map((entry) => [entry.name, entry.humanReviewed]));
@@ -160,15 +160,24 @@ describe("buildCatalog", () => {
 
   it("removes an approved skill whose review fell below the threshold", () => {
     const catalog = build(curated(["acme/skills:skills/d"]));
-    expect(catalog.kits[0].removed).toEqual(["acme/skills:skills/d"]);
+    expect(catalog.kits[0].removed).toEqual([
+      { id: "acme/skills:skills/d", reason: "review score 5 below 6" },
+    ]);
     expect(catalog.kits[0].pending).toEqual([]);
     expect(catalog.kits[0].skills).toEqual([]);
   });
 
   it("removes an approved skill whose review is severe", () => {
     const catalog = build(curated(["acme/skills:skills/e"]));
-    expect(catalog.kits[0].removed).toEqual(["acme/skills:skills/e"]);
+    expect(catalog.kits[0].removed).toEqual([{ id: "acme/skills:skills/e", reason: "security severe" }]);
     expect(catalog.kits[0].pending).toEqual([]);
+  });
+
+  it("removes an approved id that matches no skill and no collection of a listed repository", () => {
+    const catalog = build(curated(["acme/skills:skills/zzz"]));
+    expect(catalog.kits[0].removed).toEqual([
+      { id: "acme/skills:skills/zzz", reason: "not found in the catalog" },
+    ]);
   });
 
   it("does not mark a pending skill as human reviewed", () => {
@@ -335,7 +344,9 @@ describe("buildCatalog", () => {
       config: testConfig,
       now: NOW,
     });
-    expect(catalog.kits[0].removed).toEqual(["gone/repo:skills/z"]);
+    expect(catalog.kits[0].removed).toEqual([
+      { id: "gone/repo:skills/z", reason: "repository no longer listed" },
+    ]);
     expect(catalog.kits[0].pending).toEqual([]);
   });
 

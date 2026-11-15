@@ -12,7 +12,7 @@ const catalog: Catalog = {
       description: "Tailor a resume.",
       collections: ["acme/skills"],
       skills: ["acme/skills:skills/b"],
-      removed: ["gone/repo:skills/x"],
+      removed: [{ id: "gone/repo:skills/x", reason: "repository no longer listed" }],
       pending: ["acme/skills:skills/c"],
       proposals: {
         collections: [{ id: "other/skills", score: 6.2 }],
@@ -77,14 +77,38 @@ describe("buildSummary", () => {
   it("lists candidates, removals and counts per kit", () => {
     expect(summary).toContain("## Resume & career agent (`resume-career`)");
     expect(summary).toContain("Approved: 1 collections, 1 skills.");
-    expect(summary).toContain("**Approved skills re-reviewed this run (content changed):**");
+    expect(summary).toContain("**Approved skills re-reviewed this run:**");
     expect(summary).toContain("- `acme/skills:skills/b`");
     expect(summary).toContain("**Approved entries that are no longer eligible (below threshold, severe, or gone):**");
-    expect(summary).toContain("- `gone/repo:skills/x`");
+    expect(summary).toContain("- `gone/repo:skills/x` - repository no longer listed");
     expect(summary).toContain("- `other/skills` - score 6.2");
     expect(summary).toContain(
       "- [`acme/skills:skills/a`](https://github.com/acme/skills/tree/main/skills/a) - score 7.8 - Ask",
     );
+  });
+
+  it("writes a re-reviewed approved skill like a candidate", () => {
+    const approved = { ...catalog.skills[0], review: makeReview({ why: "Still good." }) };
+    const kit = { ...catalog.kits[0], skills: ["acme/skills:skills/a"], proposals: { collections: [], skills: [] } };
+    const text = buildSummary(
+      { ...catalog, kits: [kit], skills: [approved] },
+      { review: { ...(runInfo.review as NonNullable<RunInfo["review"]>), reviewedIds: ["acme/skills:skills/a"] } },
+    );
+    expect(text).toContain(
+      "**Approved skills re-reviewed this run:**\n\n- [`acme/skills:skills/a`](https://github.com/acme/skills/tree/main/skills/a) - score 7.8 - Still good.\n",
+    );
+  });
+
+  it("escapes brackets and exclamation marks so model text forms no link or image", () => {
+    const custom: Catalog = {
+      ...catalog,
+      skills: [
+        { ...catalog.skills[0], review: makeReview({ why: "See [docs](https://x.test) and ![img](y) or \\[z]" }) },
+      ],
+    };
+    const text = buildSummary(custom, {});
+    expect(text).toContain("See \\[docs\\](https://x.test) and \\!\\[img\\](y) or \\\\\\[z\\]");
+    expect(text).not.toContain("[docs](");
   });
 
   it("lists approved entries awaiting re-review", () => {
@@ -156,7 +180,7 @@ describe("buildSummary", () => {
       skills: [{ ...catalog.skills[0], review: makeReview({ why: "<!-- hidden --> see foo/bar#1" }) }],
     };
     const text = buildSummary(custom, {});
-    expect(text).toContain("&lt;!-- hidden --&gt;");
+    expect(text).toContain("&lt;\\!-- hidden --&gt;");
     expect(text).toContain("foo/bar# 1");
     expect(text).not.toContain("<!--");
   });
@@ -190,7 +214,10 @@ describe("buildSummary", () => {
       description: "d",
       collections: [],
       skills: [],
-      removed: Array.from({ length: 40 }, (_, n) => `o/r:${"p".repeat(140)}${index}${String(n).padStart(2, "0")}`),
+      removed: Array.from({ length: 40 }, (_, n) => ({
+        id: `o/r:${"p".repeat(140)}${index}${String(n).padStart(2, "0")}`,
+        reason: "security severe",
+      })),
       pending: [],
       proposals: { collections: [], skills: [] },
     }));
@@ -239,7 +266,10 @@ describe("buildSummary", () => {
   });
 
   it("caps long lists at 30 lines", () => {
-    const kit = { ...catalog.kits[0], removed: Array.from({ length: 31 }, (_, n) => `o/r:s${n}`) };
+    const kit = {
+      ...catalog.kits[0],
+      removed: Array.from({ length: 31 }, (_, n) => ({ id: `o/r:s${n}`, reason: "security severe" })),
+    };
     const text = buildSummary({ ...catalog, kits: [kit] }, {});
     const lines = text.split("\n").filter((line) => line.startsWith("- `o/r:s"));
     expect(lines).toHaveLength(30);

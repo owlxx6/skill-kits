@@ -1,5 +1,6 @@
 import { throttling } from "@octokit/plugin-throttling";
 import { Octokit } from "@octokit/rest";
+import { errorMessage } from "./errors";
 import type { RepoMeta } from "./schemas";
 import type { TreeEntry } from "./skillfile";
 
@@ -155,7 +156,7 @@ export function createGitHubClient(
         try {
           response = await fetch(url, { signal: AbortSignal.timeout(RAW_TIMEOUT_MS) });
         } catch (error) {
-          lastError = error instanceof Error ? error.message : String(error);
+          lastError = errorMessage(error);
         }
         if (response?.ok) {
           const declared = Number(response.headers.get("content-length"));
@@ -167,7 +168,7 @@ export function createGitHubClient(
           try {
             text = await response.text();
           } catch (error) {
-            lastError = error instanceof Error ? error.message : String(error);
+            lastError = errorMessage(error);
           }
           if (text !== undefined) {
             if (text.length > MAX_FILE_BYTES) {
