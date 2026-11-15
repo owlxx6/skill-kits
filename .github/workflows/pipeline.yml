@@ -31,7 +31,8 @@ jobs:
             echo "::error::A pipeline pull request is still open. Merge or close it, then run this workflow again."
             exit 1
           fi
-      - run: npm ci
+      # npm ci rejects a lock file made on macOS because of wasm32 optional packages (npm bug); npm install still follows the lock.
+      - run: npm install --no-audit --no-fund
       - name: Run the pipeline
         # Shorter than the job limit, so a timeout is a step failure and the paid reviews are still uploaded.
         timeout-minutes: 170

@@ -14,7 +14,8 @@ jobs:
         with:
           node-version: 24
           cache: npm
-      - run: npm ci
+      # npm ci rejects a lock file made on macOS because of wasm32 optional packages (npm bug); npm install still follows the lock.
+      - run: npm install --no-audit --no-fund
       - run: npm run typecheck
       - run: npm test
       - run: npm run site:build
