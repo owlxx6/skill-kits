@@ -1,0 +1,40 @@
+---
+import Base from "../../../layouts/Base.astro";
+import CopyCommand from "../../../components/CopyCommand.astro";
+import SkillRow from "../../../components/SkillRow.astro";
+import { collectionInstallCommand, collectionSlug, formatCount, kitsOfCollection, loadCatalog } from "../../../lib/catalog";
+
+export function getStaticPaths() {
+  const catalog = loadCatalog();
+  // Every repository that has a catalog skill gets a page, collection or not, so skill pages can link to it.
+  const repos = [...new Set(catalog.skills.map((skill) => skill.repo))];
+  return repos.map((id) => ({ params: collectionSlug(id), props: { repoId: id } }));
+}
+
+const catalog = loadCatalog();
+const repoId = Astro.props.repoId as string;
+const collection = catalog.collections.find((entry) => entry.id === repoId) ?? null;
+const skills = catalog.skills.filter((skill) => skill.repo === repoId);
+const kits = kitsOfCollection(catalog, repoId);
+const sample = skills[0];
+---
+<Base title={repoId} description={collection?.description ?? `Skills from ${repoId}`}>
+  <article class="sheet">
+    <h1>{repoId}</h1>
+    {sample && <p class="muted">{sample.license}, {formatCount(sample.stars)} stars, {formatCount(sample.forks)} forks. <a href={`https://github.com/${repoId}`}>Repository on GitHub</a>.</p>}
+    {collection?.description && <p class="lead">{collection.description}</p>}
+    {collection && <p>{collection.skillCount} skills in this repository; {skills.length} listed here after review.</p>}
+    <CopyCommand command={collectionInstallCommand(repoId)} />
+    {kits.length > 0 && (<section><h2>In these kits</h2><ul>{kits.map((kit) => <li><a href={`/kits/${kit.id}/`}>{kit.title}</a></li>)}</ul></section>)}
+    <section>
+      <h2>Reviewed skills</h2>
+      <ul class="parts">{skills.map((skill) => <SkillRow skill={skill} />)}</ul>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .sheet { max-width: 56rem; }
+  .lead { font-size: 1.1rem; }
+  section { margin-top: 2rem; }
+</style>

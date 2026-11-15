@@ -1,0 +1,55 @@
+---
+import Base from "../../layouts/Base.astro";
+import CopyCommand from "../../components/CopyCommand.astro";
+import { formatCount, kitsOfSkill, loadCatalog, skillInstallCommand, skillSlug } from "../../lib/catalog";
+
+export function getStaticPaths() {
+  return loadCatalog().skills.map((skill) => ({ params: { slug: skillSlug(skill.id) }, props: { skillId: skill.id } }));
+}
+
+const catalog = loadCatalog();
+const skill = catalog.skills.find((entry) => entry.id === Astro.props.skillId);
+if (!skill) throw new Error(`Unknown skill ${Astro.props.skillId}`);
+const kits = kitsOfSkill(catalog, skill.id);
+const { review } = skill;
+---
+<Base title={skill.name} description={review.why}>
+  <article class="sheet">
+    <h1>{skill.name}</h1>
+    <p class="muted">From <a href={`/collections/${skill.repo}/`}>{skill.repo}</a>. {skill.license}, {formatCount(skill.stars)} stars, {formatCount(skill.forks)} forks. <a href={skill.url}>Source on GitHub</a>.</p>
+    <p class="lead">{review.summary}</p>
+
+    <CopyCommand command={skillInstallCommand(skill)} />
+
+    <dl class="scores">
+      <div><dt>Review score</dt><dd>{skill.reviewScore.toFixed(1)} / 10</dd></div>
+      <div><dt>Clarity</dt><dd>{review.scores.clarity}</dd></div>
+      <div><dt>Completeness</dt><dd>{review.scores.completeness}</dd></div>
+      <div><dt>Usefulness</dt><dd>{review.scores.usefulness}</dd></div>
+    </dl>
+
+    {review.strengths.length > 0 && (<section><h2>Strengths</h2><ul>{review.strengths.map((item) => <li>{item}</li>)}</ul></section>)}
+    {review.cautions.length > 0 && (<section><h2>Before you install</h2><ul>{review.cautions.map((item) => <li>{item}</li>)}</ul></section>)}
+    {review.security.level !== "none" && (
+      <section class="notice">
+        <h2>Security notice</h2>
+        <ul>{review.security.notes.map((note) => <li>{note}</li>)}</ul>
+      </section>
+    )}
+    {kits.length > 0 && (
+      <section><h2>In these kits</h2><ul>{kits.map((kit) => <li><a href={`/kits/${kit.id}/`}>{kit.title}</a></li>)}</ul></section>
+    )}
+    <p class="muted small">{skill.humanReviewed ? "Reviewed by a human." : "AI-reviewed, not yet checked by a human."} Reviewed, not tested: read the skill before you run it.</p>
+  </article>
+</Base>
+
+<style>
+  .sheet { max-width: 48rem; }
+  .lead { font-size: 1.1rem; }
+  .scores { display: flex; flex-wrap: wrap; gap: 1.5rem; margin: 1.5rem 0; }
+  .scores dt { font-size: 0.875rem; color: var(--muted); }
+  .scores dd { margin: 0; font-weight: 650; }
+  section { margin-top: 1.5rem; }
+  .notice { background: var(--notice-bg); color: var(--notice-ink); padding: 1rem 1.25rem; border-radius: 4px; }
+  .small { font-size: 0.875rem; margin-top: 2rem; }
+</style>
