@@ -155,11 +155,14 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
 
   async filter({ paths, config, deps }) {
     const candidates = await readJsonFile(paths.candidates, z.array(z.string()), []);
+    // Repositories listed in sources.yaml are nominations: minStars does not apply to them.
+    const sources = await readYamlFile(paths.sources, SourcesSchema);
     const { repos, filtered, renamed } = await filterRepos(
       deps.gh,
       candidates,
       config.filter,
       deps.now,
+      new Set(sources.repos),
     );
     await writeJsonFile(paths.repos, repos);
     await updateRunInfo(paths.runInfo, { filtered, renamed });

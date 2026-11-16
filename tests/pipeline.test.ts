@@ -13,12 +13,17 @@ const recent = "2026-11-05T00:00:00Z";
 const atsId = "acme/career-skills:skills/ats-check";
 
 function makeGitHub(
-  options: { atsBody?: string; redirects?: Record<string, string>; careerLicense?: string | null } = {},
+  options: {
+    atsBody?: string;
+    redirects?: Record<string, string>;
+    careerLicense?: string | null;
+    careerArchived?: boolean;
+  } = {},
 ): FakeGitHub {
-  const { atsBody = "Do the thing.", redirects = {}, careerLicense = "MIT" } = options;
+  const { atsBody = "Do the thing.", redirects = {}, careerLicense = "MIT", careerArchived = false } = options;
   return new FakeGitHub([
     {
-      meta: makeRepo({ fullName: "acme/career-skills", url: "https://github.com/acme/career-skills", stars: 2000, forks: 200, pushedAt: recent, license: careerLicense }),
+      meta: makeRepo({ fullName: "acme/career-skills", url: "https://github.com/acme/career-skills", stars: 2000, forks: 200, pushedAt: recent, license: careerLicense, archived: careerArchived }),
       files: {
         "skills/resume-tailor/SKILL.md": skillMd("resume-tailor", "Tailors a resume to a job offer."),
         "skills/resume-tailor/examples.md": "Example",
@@ -136,13 +141,13 @@ describe("runPipeline", () => {
     const catalog = await readCatalog(root);
     const runInfo = await readRunInfo(root);
 
+    // A repository is no longer filtered for its license: nolicense/skills is read.
     expect(runInfo.filtered).toEqual([
       { fullName: "ghost/deleted", reason: "not found" },
-      { fullName: "nolicense/skills", reason: "license none not allowed" },
       { fullName: "old/archived-skills", reason: "archived" },
     ]);
-    expect(runInfo.extract).toMatchObject({ repos: 3, skills: 6, invalid: 1 });
-    expect(runInfo.review).toMatchObject({ triaged: 6, reviewed: 4, deferred: 0 });
+    expect(runInfo.extract).toMatchObject({ repos: 4, skills: 7, invalid: 1 });
+    expect(runInfo.review).toMatchObject({ triaged: 7, reviewed: 4, deferred: 0 });
     expect(runInfo.review?.failed.map((entry) => entry.skillId)).toEqual([
       "solo/broken:skills/flaky",
     ]);
@@ -293,7 +298,7 @@ describe("runPipeline", () => {
     clock = () => (llm.reviewCalls.length >= 1 ? 141 * 60_000 : 0);
     await run();
     const runInfo = await readRunInfo(root);
-    expect(runInfo.review).toMatchObject({ triaged: 6, reviewed: 1, deferred: 4, stoppedByTimeBudget: true });
+    expect(runInfo.review).toMatchObject({ triaged: 7, reviewed: 1, deferred: 4, stoppedByTimeBudget: true });
     expect(llm.reviewCalls).toHaveLength(1);
     const catalog = await readCatalog(root);
     expect(catalog.skills.map((skill) => skill.name)).toEqual(["ats-check"]);
@@ -362,10 +367,10 @@ describe("runPipeline", () => {
     );
   }
 
-  it("removes an approved skill whose repository lost its license", async () => {
+  it("removes an approved skill whose repository is no longer listed", async () => {
     await run();
     await approveAts();
-    gh = makeGitHub({ careerLicense: null });
+    gh = makeGitHub({ careerArchived: true });
     await run();
     const resume = (await readCatalog(root)).kits.find((kit) => kit.id === "resume-career");
     expect(resume?.removed).toEqual([{ id: atsId, reason: "repository no longer listed" }]);
