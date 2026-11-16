@@ -99,10 +99,11 @@ The Lenovo main checkout has an earlier uncommitted one-line portability fix in 
 Only main existed on the remote when this plan was prepared. No unpushed Mac work has been inspected.
 
 
-## Current design implementation — local review
+## Current design implementation — owner accepted
 
 The Build Room homepage is integrated on codex/design-switchyard in the skill-kits-design worktree. It uses the existing catalog and install helpers, retains skill/kit/collection routes, adds immediate directory filtering and a shared persisted icon-only theme toggle. Empty kits offer browsing, with no invented install command.
 The catalog order is displayed as selection order, not an asserted dependency/install order. Explicit workflow ordering requires curator input later.
 Verified: 276 existing tests, typecheck, site build and site:verify. A DOM interaction check covered selection, install switching and clipboard content, search/clear, no-JavaScript content and theme state. Browser preview connection failed from the tool environment; actual desktop/mobile visual review remains pending.
 The existing one-line Windows test-fixture path fix is included in this worktree.
 No account backend or subscription system is part of this implementation. Accounts are an agreed future milestone. Billing remains exploratory.
+\nThe owner accepted the homepage on 2026-11-16 and requested synchronization after every validated sprint. Follow AGENTS.md and docs/SPRINT-STATUS.md for the accepted baseline and cross-machine handoff.\n
