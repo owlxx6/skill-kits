@@ -134,7 +134,7 @@ describe("identifyFrontmatterLicense", () => {
     expect(identifyFrontmatterLicense(value)).toEqual({ kind: "file", names });
   });
 
-  it.each(["Proprietary", "MIT License", "Apache 2.0", "MIT OR Apache-2.0", "see the license file", ""])(
+  it.each(["Proprietary", "MIT License", "Apache 2.0", "MIT OR Apache-2.0", "MIT-only", "see the license file", ""])(
     "reads %j as custom",
     (value) => {
       expect(identifyFrontmatterLicense(value)).toEqual({ kind: "custom" });

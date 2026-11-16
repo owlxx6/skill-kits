@@ -116,8 +116,9 @@ export type FrontmatterLicense =
   | { kind: "file"; names: string[] }
   | { kind: "custom" };
 
+// GNU ids also come as -only or -or-later; GitHub reports both under the base id.
 function knownSpdx(value: string): string | null {
-  const lower = value.trim().toLowerCase().replace(/-(?:only|or-later)$/, "");
+  const lower = value.trim().toLowerCase().replace(/^((?:a|l)?gpl-\d\.\d)-(?:only|or-later)$/, "$1");
   return KNOWN_BY_LOWER.get(lower) ?? null;
 }
 
