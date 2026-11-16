@@ -4,7 +4,18 @@ Status: proposed on `claude/license-resolution`. Fields marked *new* are additiv
 
 ## Goal
 
-Decide license eligibility per skill, from evidence, instead of rejecting whole repositories whose GitHub-detected license is missing or not on the allowed list. A publisher's reputation never stands in for a license: a skill is published only when evidence shows an allowed license applies to it.
+Resolve the license of each skill from evidence, instead of rejecting whole repositories whose GitHub-detected license is missing or not on the allowed list, and show it honestly. A publisher's reputation never stands in for a license: a skill is shown with an allowed license only when evidence shows that license applies to it. Which skills are published is set by the publication policy below.
+
+## Publication policy
+
+Owner decision (pull request #1): skills whose license is not allowed or not usable are published too, but only once an automated safety scan finds nothing blocking in them, and always displayed honestly.
+
+- A skill whose license is identified and in `filter.allowedLicenses` is published, as before.
+- A skill whose license is identified but not allowed (GPL, AGPL, LGPL, MPL, CC-BY-SA, CC0, CC-BY...), missing, or unclear (`custom`, or `ambiguous` after every file was read) is published only once the safety scan clears it.
+- A skill whose license was not re-read this run (`unread`), or that has no resolution yet, is not published in this run.
+- The catalog shows the SPDX id for any identified license, `No license` for a missing one and `Unclear license` for a custom or ambiguous one: never a permissive id without evidence. A license category (`permissive`, `copyleft`, `other`, `none`, `unclear`) lets the site explain the obligations.
+
+The safety scan is built on another branch and is not integrated yet. Until it is, it clears no skill: every skill that needs it stays out of the catalog, and an approved one stays pending with the reason `waiting for the safety scan`. The pipeline takes the scan as an injected function (`isSafetyCleared`, `NO_SAFETY_SCAN` by default in `pipeline/run.ts`), so today's catalog is unchanged.
 
 ## Rules
 
@@ -77,17 +88,25 @@ GitHub's answer is recorded as `github` evidence whenever it is not `null`.
 
 Dual licensing (two different licenses offered as a choice) is not decided yet: two license files that disagree are `ambiguous`, and an SPDX expression in the front matter is `custom`. Both keep the skill out of the catalog until the owner decides how to present a choice.
 
-### 4. Eligibility (`pipeline/rank.ts`)
+### 4. Eligibility (`pipeline/rank.ts`, `pipeline/lib/license.ts`)
 
-A skill can enter the catalog only if its outcome is `identified` and its SPDX id is in `filter.allowedLicenses`. Every other outcome keeps it out of the catalog. An approved skill that loses eligibility is reported as removed with the reason `license <outcome>`, `license <spdx> not allowed` or `license unresolved`.
+One predicate, `isPublishable(skill, allowedLicenses, isSafetyCleared)`, decides whether a skill can be published; triage, review selection and rank all use it:
 
-An approved skill whose license was not re-read this run (a license file or its changed SKILL.md could not be read) is kept pending, not removed: it is neither listed nor reported as a license problem until a run reads it. Any other approved skill that is not eligible is removed, never kept pending.
+| License | Publishable |
+|---|---|
+| `identified`, id in `filter.allowedLicenses` | Yes |
+| `identified` with any other id, `missing`, `custom`, or `ambiguous` without `unread` | Only if `isSafetyCleared(skill)` is true |
+| `ambiguous` with `unread` (not re-read), or no resolution | No, not in this run |
 
-A collection (whole-repository install) is listed only if every extracted skill of the repository is eligible, because installing the repository installs all of them. Individual eligible skills from that repository stay listed. A repository whose tree listing was truncated at the last extraction lists no collection either: skills past the cut are unknown but would be installed (the rank step reads the truncated repositories from `pipeline-run.json`).
+The scan is consulted only for the middle row.
 
-Triage and review selection skip skills that are not eligible, approved ones included, so no model call is spent on a skill that cannot be published.
+Triage and review selection skip skills that cannot be published, approved ones included, so no model call is spent on a skill that cannot be published.
 
-An approved collection that is no longer listed is reported with the reason `license not eligible for <n> of <m> skills of the repository`, or `repository listing truncated: skills past the cut are unknown`. Repository names are compared without letter case.
+An approved skill that cannot be published yet is kept pending, never removed, with its reason in `pendingReasons`: `waiting for the safety scan`, `license not re-read`, `license unresolved`. An approved skill that is publishable but whose new version has no review yet is pending with `awaiting re-review`. Once publishable and reviewed, an approved skill follows the usual review rules (score threshold, severe security).
+
+A collection (whole-repository install) is listed only if every extracted skill of the repository is publishable, because installing the repository installs all of them. Individual publishable skills from that repository stay listed. A repository whose tree listing was truncated at the last extraction lists no collection either: skills past the cut are unknown but would be installed (the rank step reads the truncated repositories from `pipeline-run.json`).
+
+An approved collection whose repository has skills that cannot be published yet is pending with the reason `<n> of <m> skills of the repository not publishable yet`. One whose listing was truncated is removed with the reason `repository listing truncated: skills past the cut are unknown`. Repository names are compared without letter case.
 
 ### 5. Caching and invalidation
 
@@ -97,7 +116,7 @@ The cache file records the version of the identification rules: `{ "rulesVersion
 
 ### 6. Old records
 
-`SkillRecord.license` (*new*) is optional when reading. A record without it (written before this change) is treated as unresolved: not eligible, never silently assigned a license, and reported as `license unresolved` when approved. A stored resolution in a shape this code no longer reads is dropped the same way. The next successful extract of its repository fills it: its SKILL.md is read again, so the front matter is known before the license is resolved. A record marked not re-read (`unread: "skill-file"`) also has its SKILL.md read again, even when its fingerprint matches.
+`SkillRecord.license` (*new*) is optional when reading. A record without it (written before this change) is treated as unresolved: not publishable in this run, never silently assigned a license, and kept pending with the reason `license unresolved` when approved. A stored resolution in a shape this code no longer reads is dropped the same way. The next successful extract of its repository fills it: its SKILL.md is read again, so the front matter is known before the license is resolved. A record marked not re-read (`unread: "skill-file"`) also has its SKILL.md read again, even when its fingerprint matches.
 
 A changed skill whose SKILL.md download fails keeps its old record, but its license becomes not re-read for that run (see Resolution). A record kept from a failed repository read, or past the cut of a truncated listing, keeps its previous `license`, or none.
 
@@ -126,20 +145,23 @@ Each evidence entry carries the `level` it counts at. `kind`: `file` | `frontmat
 
 ### Run statistics (`pipeline-run.json`)
 
-`extract.licenses` (*new*, optional so older run information still loads): counts of the skills kept after extraction, `identifiedAllowed`, `identifiedNotAllowed`, `custom`, `ambiguous`, `missing`, `notReRead` (ambiguous because something could not be read, counted apart from `ambiguous`), `unresolved`, and `failedDownloads` (license files that could not be read: failed download, other content than the listed blob, or an unresolved link). The pull request summary shows them on one line of the Run section.
+`extract.licenses` (*new*, optional so older run information still loads): counts of the skills kept after extraction, `identifiedAllowed`, `identifiedNotAllowed`, `custom`, `ambiguous`, `missing`, `notReRead` (ambiguous because something could not be read, counted apart from `ambiguous`), `waitingForSafetyScan` (skills publishable once the safety scan clears them, and not cleared), `unresolved`, and `failedDownloads` (license files that could not be read: failed download, other content than the listed blob, or an unresolved link). The pull request summary shows them on one line of the Run section, and lists each pending approved entry with its reason.
 
 ### Catalog (`catalog.json`, read by the site)
 
-- `skills[].license`: unchanged type (string). It now holds the SPDX id resolved for the skill, which can differ from its repository's.
-- `skills[].licenseEvidence` (*new*, optional): `{ "level": "skill" | "ancestor" | "repository", "path": string | null, "url": string | null }`, from the first evidence of the deciding level that names the resolved id (a file before the front matter, a root file before GitHub). `url` points to the evidence file (`https://github.com/<repo>/blob/<branch>/<path>`, each segment percent-encoded, SKILL.md for front matter evidence), or to the repository when the evidence is GitHub's detection (`path` is then null). The URL uses the default branch: the recorded `revision` is a tree id, which GitHub blob URLs do not accept. The skill's own `url` is unchanged.
-- `collections[].license`: unchanged type. It holds the single SPDX id when all skills of the repository share it, otherwise `Mixed`.
-- `collections[].licenses` (*new*, optional): the sorted SPDX ids of all skills of the repository (all eligible when the collection is listed), since installing the collection installs every one of them.
+- `skills[].license`: unchanged type (string). It holds the SPDX id resolved for the skill when identified (which can differ from its repository's, and can be a non-permissive id such as `GPL-3.0`), `No license` when missing, or `Unclear license` when custom or ambiguous.
+- `skills[].licenseOutcome` (*new*, optional): `identified` | `missing` | `custom` | `ambiguous`.
+- `skills[].licenseCategory` (*new*, optional): `permissive` (id in `filter.allowedLicenses`) | `copyleft` (GPL, AGPL, LGPL, MPL or CC-BY-SA family) | `other` (any other identified id, such as CC0 or CC-BY) | `none` (missing) | `unclear` (custom or ambiguous).
+- `skills[].licenseEvidence` (*new*, optional): `{ "level": "skill" | "ancestor" | "repository", "path": string | null, "url": string | null }`, from the first evidence of the deciding level that names the resolved id (a file before the front matter, a root file before GitHub). For an unclear license it is the first non-auxiliary evidence of the deciding level; a missing license has none (the field is absent). `url` points to the evidence file (`https://github.com/<repo>/blob/<branch>/<path>`, each segment percent-encoded, SKILL.md for front matter evidence), or to the repository when the evidence is GitHub's detection (`path` is then null). The URL uses the default branch: the recorded `revision` is a tree id, which GitHub blob URLs do not accept. The skill's own `url` is unchanged.
+- `collections[].license`: unchanged type. It holds the single license label when all skills of the repository share it, otherwise `Mixed`.
+- `collections[].licenses` (*new*, optional): the sorted license labels (SPDX ids, `No license`, `Unclear license`) of all skills of the repository (all publishable when the collection is listed), since installing the collection installs every one of them.
+- `kits[].pendingReasons` (*new*, optional, present when something is pending): the reason of each pending approved entry, by id.
 
-Both new catalog fields are optional so the current site keeps building on an old `catalog.json`. Text the site shows about selection (the methodology page currently says repositories need a permissive license and at least 50 stars) becomes outdated once this lands; that page belongs to the design branch.
+All new catalog fields are optional so the current site keeps building on an old `catalog.json`. Text the site shows about selection (the methodology page currently says repositories need a permissive license and at least 50 stars) becomes outdated once this lands; that page belongs to the design branch.
 
 ## Catalog impact
 
-Documented in the pull request after a run on the existing cache: outcomes per level, skills from formerly excluded repositories that become eligible, and collections that lose whole-repository eligibility because of mixed licenses. No catalog entry is added without a review and the owner's approval.
+Documented in the pull request after a run on the existing cache: outcomes per level, skills from formerly excluded repositories that become publishable, skills waiting for the safety scan, and collections that lose whole-repository eligibility because one of their skills cannot be published. No catalog entry is added without a review and the owner's approval.
 
 ## Follow-ups (not in this change)
 
