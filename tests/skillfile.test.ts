@@ -35,6 +35,49 @@ describe("parseSkillFrontmatter", () => {
     expect(parseSkillFrontmatter("---\nname: [unclosed\n---\n")).toBeNull();
   });
 
+  it("reads an optional license value, trimmed", () => {
+    const content = "---\nname: a\ndescription: b\nlicense: '  Complete terms in LICENSE.txt  '\n---\n";
+    expect(parseSkillFrontmatter(content)).toEqual({
+      name: "a",
+      description: "b",
+      license: "Complete terms in LICENSE.txt",
+    });
+  });
+
+  it("has no license key when the front matter has no license", () => {
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\n---\n")).not.toHaveProperty("license");
+  });
+
+  it("drops an empty license value", () => {
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: '  '\n---\n")).not.toHaveProperty(
+      "license",
+    );
+  });
+
+  it("removes line breaks and control characters from the license value", () => {
+    const content = "---\nname: a\ndescription: b\nlicense: \"Complete terms\\nin\\u0007 LICENSE.txt\\u202E\"\n---\n";
+    expect(parseSkillFrontmatter(content)?.license).toBe("Complete terms in LICENSE.txt");
+  });
+
+  it("keeps at most 200 characters of the license value", () => {
+    const content = `---\nname: a\ndescription: b\nlicense: ${"x".repeat(300)}\n---\n`;
+    expect(parseSkillFrontmatter(content)?.license).toBe("x".repeat(200));
+  });
+
+  it("keeps a license value that is not a string as text, so it is never ignored", () => {
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: [MIT, Apache-2.0]\n---\n")?.license).toBe(
+      '["MIT","Apache-2.0"]',
+    );
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: 2\n---\n")?.license).toBe("2");
+  });
+
+  it("does not reject a skill for its license value", () => {
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: null\n---\n")).toEqual({
+      name: "a",
+      description: "b",
+    });
+  });
+
   it("never treats a code front matter block as front matter", () => {
     expect(parseSkillFrontmatter("---js\nprocess.exit(1)\n---\n")).toBeNull();
   });

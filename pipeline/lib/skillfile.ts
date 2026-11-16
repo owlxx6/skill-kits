@@ -10,6 +10,8 @@ export interface TreeEntry {
 export interface SkillFrontmatter {
   name: string;
   description: string;
+  // The license field, as text: evidence for license resolution, never a decision.
+  license?: string;
 }
 
 export interface SkillLocation {
@@ -25,12 +27,34 @@ const MAX_LISTED_FILES = 50;
 const MAX_NAME_CHARS = 64;
 const MAX_DESCRIPTION_CHARS = 1024;
 const MAX_FRONTMATTER_SCAN_CHARS = 64 * 1024;
+const MAX_LICENSE_CHARS = 200;
 const FRONTMATTER = /^\uFEFF?---[ \t]*\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/;
 // Control, zero-width and bidirectional-override characters (no g flag: used with test()).
 const FORBIDDEN_IN_NAME = /[\u0000-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2066-\u2069]/;
 // Same set minus tab (0009) and line feed (000A), which a description may keep.
 const FORBIDDEN_IN_DESCRIPTION =
   /[\u0000-\u0008\u000B-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g;
+// Same set as FORBIDDEN_IN_NAME, global: line breaks become spaces, the rest is removed.
+const FORBIDDEN_IN_LICENSE = /[\u0000-\u0008\u000B-\u001F\u007F-\u009F\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g;
+
+// A value that is not a string (a list, a number) is kept as text so that it still counts
+// as front matter evidence; null or an empty value is no evidence.
+function cleanLicense(value: unknown): string | undefined {
+  if (value === undefined || value === null) return undefined;
+  const text = typeof value === "string" ? value : JSON.stringify(value);
+  if (typeof text !== "string") return undefined;
+  const clean = Array.from(
+    text
+      .replace(/[\t\n]/g, " ")
+      .replace(FORBIDDEN_IN_LICENSE, "")
+      .replace(/ {2,}/g, " ")
+      .trim(),
+  )
+    .slice(0, MAX_LICENSE_CHARS)
+    .join("")
+    .trim();
+  return clean || undefined;
+}
 
 // SKILL.md files are untrusted. The front matter is cut out by hand and parsed with a
 // data-only YAML parser: front matter libraries that support "---js" blocks evaluate code.
@@ -44,7 +68,7 @@ export function parseSkillFrontmatter(content: string): SkillFrontmatter | null 
     return null; // invalid YAML means "not a valid skill", which the caller counts
   }
   if (typeof data !== "object" || data === null) return null;
-  const { name, description } = data as Record<string, unknown>;
+  const { name, description, license } = data as Record<string, unknown>;
   if (typeof name !== "string" || typeof description !== "string") return null;
   const cleanName = name.trim();
   if (!cleanName || cleanName.length > MAX_NAME_CHARS || FORBIDDEN_IN_NAME.test(cleanName)) {
@@ -55,7 +79,10 @@ export function parseSkillFrontmatter(content: string): SkillFrontmatter | null 
     .join("")
     .trim();
   if (!cleanDescription) return null;
-  return { name: cleanName, description: cleanDescription };
+  const cleanLicenseValue = cleanLicense(license);
+  return cleanLicenseValue === undefined
+    ? { name: cleanName, description: cleanDescription }
+    : { name: cleanName, description: cleanDescription, license: cleanLicenseValue };
 }
 
 // Owner and repository names cannot contain a colon, so split an id on the first colon only.
