@@ -47,6 +47,11 @@ describe("resolvePaths", () => {
       expect(path.dirname(real[key])).toBe(root);
     }
   });
+
+  it("keeps the license cache in data/cache, and a dry run in its own cache folder", () => {
+    expect(resolvePaths(root, false).licenses).toBe(path.join(root, "data", "cache", "licenses.json"));
+    expect(resolvePaths(root, true).licenses).toBe(path.join(root, ".dry-run", "cache", "licenses.json"));
+  });
 });
 
 describe("json and yaml files", () => {

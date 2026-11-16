@@ -15,6 +15,7 @@ import {
   CurationSchema,
   type Kit,
   KitsSchema,
+  LicenseCacheSchema,
   RepoMetaSchema,
   type Review,
   ReviewRecordSchema,
@@ -165,11 +166,25 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     deps.log(`${repos.length} repos kept, ${filtered.length} excluded`);
   },
 
-  async extract({ paths, deps }) {
+  async extract({ paths, config, deps }) {
     const repos = await readJsonFile(paths.repos, z.array(RepoMetaSchema), []);
     const previous = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
-    const { skills, stats } = await runExtract(deps.gh, repos, previous, (progress) =>
-      writeJsonFile(paths.skills, progress),
+    const licenseCache = await readJsonFile(paths.licenses, LicenseCacheSchema, {});
+    const { skills, stats } = await runExtract(
+      deps.gh,
+      repos,
+      previous,
+      (progress) => writeJsonFile(paths.skills, progress),
+      {
+        cache: licenseCache,
+        // Sorted by blob id so the versioned cache changes only where a file changed.
+        save: (cache) =>
+          writeJsonFile(
+            paths.licenses,
+            Object.fromEntries(Object.entries(cache).sort(([a], [b]) => compareText(a, b))),
+          ),
+        allowed: config.filter.allowedLicenses,
+      },
     );
     await writeJsonFile(paths.skills, skills);
     await updateRunInfo(paths.runInfo, { extract: stats });
