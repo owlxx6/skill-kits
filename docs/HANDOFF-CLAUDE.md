@@ -1,6 +1,6 @@
 Tu travailles sur owlxx6/skill-kits avec un autre agent. Lis docs/LAUNCH-PLAN.md avant toute modification. Le public comprend développeurs et utilisateurs moins techniques. Chaque agent utilise sa propre branche et son propre dossier de travail. Ne modifie pas le dossier de travail de l'autre agent. Ne réinitialise pas les modifications existantes.
 
-La direction choisie est Switchyard + Career Desk, blanc/noir/rouge et bouton de thème icon-only. Les références approuvées comme direction sont docs/design-previews/signal-map.html et career-desk.html. Leur intégration Astro devra encore être montrée et approuvée.
+La direction retenue pour l’accueil est maintenant Build Room, blanc/noir/rouge et bouton de thème icon-only. La référence est docs/design-previews/build-room.html. Les anciens Switchyard/Career Desk restent des alternatives historiques. Les pages de détail Astro sont conservées pour le moment. Le rendu intégré doit encore être validé visuellement sur desktop/mobile.
 
 Main est la branche de production prévue. Travaille sur la branche indiquée, avec commits ciblés et PR relue. Aucun merge dans main sans validation du propriétaire. Pour le design, montre le résultat desktop/mobile avant de pousser l'implémentation. Les trois branches initiales ont été vérifiées sur GitHub au commit 38b3c4f. Récupère aussi le dernier plan depuis planning/launch-parallel avant de commencer.
 

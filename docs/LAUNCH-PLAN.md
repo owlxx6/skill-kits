@@ -5,8 +5,8 @@ Planning baseline: origin/main cce38ff. This document records a proposed allocat
 ## Product and design decisions already made
 
 Audience: developers and people who want a guided kit for a task.
-Approved visual direction: Switchyard homepage, Career Desk kit experience, white/black/red palette, icon-only Night Shift control. The HTML samples in design-previews/ are the design references. Their layouts need desktop/mobile browser validation before final approval. Translate to Astro and existing catalog data, retaining useful navigation, accessibility and reduced motion.
-The later supplied design sprint adds a real parts list, explicit install order, signature install command and bold type. Preserve the selected Switchyard and Career Desk direction while accommodating those requirements. Avoid decorative badges, a metrics strip, identical cards and suggestion chips.
+Approved homepage direction: Build Room, white/black/red palette and icon-only Night Shift control. The owner selected the Build Room prototype after comparing it with Astro and earlier concepts. design-previews/build-room.html is the homepage reference. Earlier Switchyard/Career Desk files are historical alternatives. Preserve current Astro detail pages while extending the shared theme. The integrated result needs desktop/mobile browser validation before final approval.
+The later supplied design sprint adds a real parts list, explicit install order, signature install command and bold type. Use the selected Build Room direction while accommodating those requirements. Avoid decorative badges, a metrics strip, identical cards and suggestion chips.
 Use 21st free component search when available, at most two component pulls per day as requested. Browser login does not by itself prove that authenticated MCP tools are available. State precisely which source/tool was used. No paid generation or plan upgrades are authorized by this brief.
 Design remains subject to owner approval before publishing the implementation branch. The current coordination push contains only this plan and the selected standalone reference samples.
 
@@ -97,3 +97,12 @@ Design and license investigation can start together. License implementation is a
 
 The Lenovo main checkout has an earlier uncommitted one-line portability fix in tests/store.test.ts. This coordination worktree leaves it untouched. Review it in a separate commit/branch before deciding whether to integrate it.
 Only main existed on the remote when this plan was prepared. No unpushed Mac work has been inspected.
+
+
+## Current design implementation — local review
+
+The Build Room homepage is integrated on codex/design-switchyard in the skill-kits-design worktree. It uses the existing catalog and install helpers, retains skill/kit/collection routes, adds immediate directory filtering and a shared persisted icon-only theme toggle. Empty kits offer browsing, with no invented install command.
+The catalog order is displayed as selection order, not an asserted dependency/install order. Explicit workflow ordering requires curator input later.
+Verified: 276 existing tests, typecheck, site build and site:verify. A DOM interaction check covered selection, install switching and clipboard content, search/clear, no-JavaScript content and theme state. Browser preview connection failed from the tool environment; actual desktop/mobile visual review remains pending.
+The existing one-line Windows test-fixture path fix is included in this worktree.
+No account backend or subscription system is part of this implementation. Accounts are an agreed future milestone. Billing remains exploratory.

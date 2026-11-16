@@ -1,273 +1,87 @@
 ---
 import Base from "../layouts/Base.astro";
+import CopyCommand from "../components/CopyCommand.astro";
 import Icon from "../components/Icon.astro";
-import SearchBox from "../components/SearchBox.astro";
-import { kitView, loadCatalog } from "../lib/catalog";
-import { kitIcon } from "../lib/icons";
-
+import { collectionHref, collectionInstallCommand, kitView, loadCatalog, skillHref, skillInstallCommand } from "../lib/catalog";
+import "../styles/build-room.css";
 const catalog = loadCatalog();
-const views = catalog.kits.map((kit) => kitView(catalog, kit.id)).filter((view) => view !== null);
-// Ready kits first; the catalog order is kept inside each group.
-const kits = [...views.filter((view) => !view.isEmpty), ...views.filter((view) => view.isEmpty)];
-const readyCount = views.filter((view) => !view.isEmpty).length;
-const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
-const suggestions = ["resume", "pdf", "interview", "scraping", "slides", "testing"];
-const stats = [
-  { value: catalog.skills.length, suffix: "", label: "skills reviewed" },
-  { value: catalog.collections.length, suffix: "", label: catalog.collections.length === 1 ? "collection" : "collections" },
-  { value: readyCount, suffix: ` of ${views.length}`, label: "kits ready" },
-];
-
-// "Resume & career agent" becomes "a resume & career agent"; acronyms such as "UI" keep their case.
-const phrase = (title: string) => {
-  const lowered = /^[A-Z]{2}/.test(title) ? title : title.charAt(0).toLowerCase() + title.slice(1);
-  return `${/^[aeio]/i.test(lowered) ? "an" : "a"} ${lowered}`;
-};
-const phrases = kits.map((view) => phrase(view.kit.title));
+const views = catalog.kits.map((kit) => kitView(catalog, kit.id)!);
+const names: Record<string, string> = {"resume-career":"Career","web-app":"Web apps","data-analysis":"Data analysis","docs-reports":"Documents","marketing-content":"Marketing","research-monitoring":"Research","ui-design":"UI design","workflow-automation":"Automation"};
+const firstReady = Math.max(0, views.findIndex((view) => !view.isEmpty));
+const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/-/g, " ");
 ---
-<Base title="Skill Kits" description="Hand-checked skill kits for the agent you want to build. Permissive licenses only.">
-  <section class="hero" aria-labelledby="hero-title">
-    <p class="hero-eyebrow"><Icon name="badge-check" size={16} />Agent skills, reviewed by hand</p>
-    <h1 id="hero-title">What are you building?</h1>
-    <div class="hero-typed-row">
-      <p class="hero-typed" data-typed>
-        <span class="typed-box" aria-hidden="true">
-          {phrases.map((item) => <span class="typed-sizer">{item}</span>)}
-          <span class="typed-live"><span class="typed-text" data-phrases={JSON.stringify(phrases)}>{phrases[0]}</span><span class="caret"></span></span>
-        </span>
-        <span class="visually-hidden">Kits for {phrases.join(", ")}.</span>
-      </p>
-      <button type="button" class="typed-toggle" data-typed-toggle aria-label="Pause the rotating examples" hidden>
-        <Icon name="pause" size={16} class="icon-pause" />
-        <Icon name="play" size={16} class="icon-play" />
-      </button>
-    </div>
-    <p class="hero-sub">Pick the agent you want to build and get the skills worth installing. Permissive licenses only.</p>
-    <div class="hero-search">
-      <SearchBox inputId="home-search" large />
-    </div>
-    <div class="chips hero-chips">
-      <span class="muted small">Try</span>
-      {suggestions.map((word) => <a class="chip" href={`/search/?q=${encodeURIComponent(word)}`}>{word}</a>)}
-    </div>
-  </section>
-
-  <dl class="stats">
-    {stats.map((stat) => (
-      <div class="stat">
-        <dt>{stat.label}</dt>
-        <dd>
-          <span class="visually-hidden">{stat.value}{stat.suffix}</span>
-          <span aria-hidden="true"><span data-count-to={stat.value}>{stat.value}</span>{stat.suffix}</span>
-        </dd>
-      </div>
-    ))}
-  </dl>
-
-  <section class="section" id="kits" aria-labelledby="kits-title">
-    <div class="section-head">
-      <h2 id="kits-title">Browse kits</h2>
-      <p>One kit per kind of agent. New kits open as their skills pass review.</p>
-    </div>
-    <ul class="kit-grid">
-      {kits.map((view) => (
-        <li class:list={["card", "is-clickable", "kit-card", { soon: view.isEmpty }]} data-reveal>
-          <span class:list={["icon-tile", { quiet: view.isEmpty }]}><Icon name={kitIcon(view.kit.id)} size={24} /></span>
-          <h3><a class="card-link" href={`/kits/${view.kit.id}/`}>{view.kit.title}</a></h3>
-          <p class="kit-desc">{view.kit.description}</p>
-          <p class="kit-foot">
-            {view.isEmpty ? (
-              <span class="badge"><Icon name="clock" size={14} />Coming soon</span>
-            ) : (
-              <>
-                <span class="kit-count">{plural(view.collections.length, "collection")}, {plural(view.skills.length, "skill")}</span>
-                <Icon name="arrow-right" size={18} class="kit-arrow" />
-              </>
-            )}
-          </p>
-        </li>
-      ))}
-    </ul>
-  </section>
+<Base title="Skill Kits" description="Explore skills for your project. Inspect curated kits and copy individual installation commands.">
+<section class="build-intro" aria-labelledby="build-title">
+  <h1 id="build-title">Pick a project.<br /><span>Build your toolkit.</span></h1>
+  <p>A closer look at the skills behind each kit. Choose a project to see what goes inside.</p>
+</section>
+<div class="build-room" id="kits" data-build-room data-first-kit={firstReady}>
+ <div class="project-list" aria-label="Choose your project" hidden>
+ {views.map((view,index) => <button type="button" class="project-choice" data-project={index} aria-controls={"project-"+view.kit.id}><span>{names[view.kit.id] ?? view.kit.title}</span><Icon name="arrow-right" size={18}/></button>)}
+ </div>
+ <div class="project-workspace">
+ {views.map((view,index) => <section class="project-panel" id={"project-"+view.kit.id} data-project-panel={index} aria-labelledby={"title-"+view.kit.id}>
+  <div class="project-meta"><span>{view.isEmpty ? "Awaiting curation" : "Curated selection"}</span><span>{String(index+1).padStart(2,"0")} / {String(views.length).padStart(2,"0")}</span></div>
+  <h2 id={"title-"+view.kit.id}>{view.kit.title}</h2><p class="project-description">{view.kit.description}</p>
+  {view.isEmpty ? <div class="project-empty"><Icon name="layers" size={28}/><p>This kit is still being selected.</p><p>Explore the skill directory while it takes shape.</p><a class="project-link" href="#directory">Browse the directory <Icon name="arrow-right" size={16}/></a></div> : <>
+   {view.skills.length > 0 && <>
+    <p class="parts-caption">{view.skills.length} selected {view.skills.length===1 ? "skill" : "skills"} · choose one to install</p>
+    <ul class="project-parts">{view.skills.map((skill,i) => <li><a href={skillHref(skill.id)}>{skill.name.replace(/-/g," ")}</a><button type="button" class="part-install" data-install={i} aria-controls={"install-"+view.kit.id+"-"+i} aria-label={"Show install command for "+skill.name} hidden>Install <Icon name="arrow-right" size={14}/></button></li>)}</ul>
+    {view.skills.map((skill,i) => <div class="project-install" id={"install-"+view.kit.id+"-"+i} data-install-panel={i}><span class="install-label">Install {skill.name}</span><CopyCommand command={skillInstallCommand(skill)} label={"Copy install command for "+skill.name}/><a href={skillHref(skill.id)} class="install-details">Read prerequisites and review <Icon name="arrow-right" size={14}/></a></div>)}
+   </>}
+   {view.collections.length>0 && <details class="project-collections"><summary>Included {view.collections.length===1 ? "collection" : "collections"}</summary>{view.collections.map((collection)=><div class="collection-install"><a href={collectionHref(collection.id)}>{collection.id}</a><CopyCommand command={collectionInstallCommand(collection.id)}/></div>)}</details>}
+   <a class="project-link" href={"/kits/"+view.kit.id+"/"}>Explore the full kit <Icon name="arrow-right" size={16}/></a>
+  </>}
+ </section>)}
+ </div><p class="visually-hidden" role="status" data-project-status></p>
+</div>
+<section class="build-directory" id="directory" aria-labelledby="directory-title">
+ <div class="directory-heading"><div><h2 id="directory-title">Find a specific skill.</h2><p>Search by task, name or publisher.</p></div>
+ <form class="directory-search" action="/search/" method="get" role="search"><label for="build-search" class="visually-hidden">Search skills by task, name or publisher</label><Icon name="search" size={20}/><input id="build-search" name="q" type="search" placeholder="Search skills…" autocomplete="off" data-search-shortcut/><button type="submit" aria-label="Open full search results" title="Open full search results"><Icon name="arrow-right" size={20}/></button></form></div>
+ <p class="directory-count" data-directory-count role="status">{catalog.skills.length} skills</p>
+ <ul class="build-results">{catalog.skills.map((skill)=><li data-directory-item data-search-text={normalize(skill.name+" "+skill.description+" "+skill.repo+" "+skill.review.keywords.join(" "))}>
+  <div class="directory-name"><h3><a href={skillHref(skill.id)}>{skill.name.replace(/-/g," ")}</a></h3><a class="directory-repo" href={collectionHref(skill.repo)}>{skill.repo}</a></div>
+  <div class="directory-description"><p>{skill.review.why || skill.description}</p><span>{skill.license} · Catalog review {skill.reviewScore.toFixed(1)}/10</span></div>
+  <a class="directory-open" href={skillHref(skill.id)} aria-label={"View "+skill.name}><Icon name="arrow-right" size={20}/></a>
+ </li>)}</ul>
+ <p class="directory-empty" hidden data-directory-empty>No matches. Try a broader task or <button type="button" data-clear-search>clear the search</button>.</p>
+</section>
 </Base>
-
 <script>
-  // Types the kit phrases one after another under the headline. The first phrase is already in
-  // the HTML, so nothing moves without JavaScript or with reduced motion. The rotation pauses on
-  // hover, on focus, when the hero leaves the screen, while the tab is hidden, and with the
-  // pause button (WCAG 2.2.2).
-  const line = document.querySelector<HTMLElement>("[data-typed]");
-  const text = line?.querySelector<HTMLElement>("[data-phrases]");
-  const toggle = document.querySelector<HTMLButtonElement>("[data-typed-toggle]");
-  const motion = document.documentElement.classList.contains("motion");
-
-  if (line && text && toggle && motion) {
-    const parsed: unknown = JSON.parse(text.dataset.phrases ?? "[]");
-    const phrases = Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string") : [];
-    const hero = line.closest<HTMLElement>(".hero") ?? line;
-
-    let index = 0;
-    let length = phrases[0]?.length ?? 0;
-    let deleting = true;
-    let timer = 0;
-    let stoppedByUser = false;
-    let hovered = false;
-    let focused = false;
-    let offscreen = false;
-
-    const TYPE_MS = 55;
-    const DELETE_MS = 28;
-    const HOLD_MS = 1900;
-    const GAP_MS = 350;
-
-    const paused = () => stoppedByUser || hovered || focused || offscreen || document.hidden;
-
-    const tick = () => {
-      timer = 0;
-      if (paused()) return;
-      const current = phrases[index] ?? "";
-      let delay = deleting ? DELETE_MS : TYPE_MS;
-      if (deleting) {
-        length -= 1;
-        if (length <= 0) {
-          length = 0;
-          deleting = false;
-          index = (index + 1) % phrases.length;
-          delay = GAP_MS;
-        }
-      } else {
-        length += 1;
-        if (length >= current.length) {
-          length = current.length;
-          deleting = true;
-          delay = HOLD_MS;
-        }
-      }
-      text.textContent = (phrases[index] ?? "").slice(0, length);
-      timer = window.setTimeout(tick, delay);
-    };
-
-    const sync = () => {
-      line.classList.toggle("is-paused", paused());
-      if (!paused() && timer === 0) timer = window.setTimeout(tick, HOLD_MS);
-      if (paused() && timer !== 0) {
-        window.clearTimeout(timer);
-        timer = 0;
-      }
-    };
-
-    toggle.hidden = false;
-    toggle.addEventListener("click", () => {
-      stoppedByUser = !stoppedByUser;
-      toggle.classList.toggle("is-stopped", stoppedByUser);
-      toggle.setAttribute("aria-label", stoppedByUser ? "Play the rotating examples" : "Pause the rotating examples");
-      sync();
-    });
-    line.addEventListener("pointerenter", () => { hovered = true; sync(); });
-    line.addEventListener("pointerleave", () => { hovered = false; sync(); });
-    hero.addEventListener("focusin", () => { focused = true; sync(); });
-    hero.addEventListener("focusout", (event) => {
-      focused = event.relatedTarget instanceof Node && hero.contains(event.relatedTarget);
-      sync();
-    });
-    document.addEventListener("visibilitychange", sync);
-    new IntersectionObserver(([entry]) => {
-      offscreen = !entry?.isIntersecting;
-      sync();
-    }).observe(line);
-    if (phrases.length > 1) sync();
-  }
+const room = document.querySelector<HTMLElement>("[data-build-room]");
+if(room){
+ const buttons=[...room.querySelectorAll<HTMLButtonElement>("[data-project]")];
+ const panels=[...room.querySelectorAll<HTMLElement>("[data-project-panel]")];
+ const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
+ const selectProject=(index:number)=>{
+  panels.forEach((p,i)=>{p.hidden=i!==index;});
+  buttons.forEach((b,i)=>b.setAttribute("aria-pressed",String(i===index)));
+  const panel=panels[index];if(!panel)return;
+  const status=room.querySelector<HTMLElement>("[data-project-status]");
+  if(status)status.textContent=panel.querySelector("h2")?.textContent+" — "+panel.querySelector(".project-meta span")?.textContent;
+  if(!reduced.matches){panel.getAnimations().forEach(a=>a.cancel());panel.animate([{opacity:.3,transform:"translateY(8px)"},{opacity:1,transform:"translateY(0)"}],{duration:260,easing:"ease-out"});}
+ };
+ for(const b of buttons)b.addEventListener("click",()=>selectProject(Number(b.dataset.project)));
+ for(const panel of panels){
+  const buttons=[...panel.querySelectorAll<HTMLButtonElement>("[data-install]")];
+  const commands=[...panel.querySelectorAll<HTMLElement>("[data-install-panel]")];
+  const selectCommand=(index:number)=>{commands.forEach((c,i)=>{c.hidden=i!==index;});buttons.forEach((b,i)=>b.setAttribute("aria-pressed",String(i===index)));};
+  for(const b of buttons){b.hidden=false;b.addEventListener("click",()=>selectCommand(Number(b.dataset.install)));}
+  selectCommand(0);
+ }
+ selectProject(Number(room.dataset.firstKit));
+ const list=room.querySelector<HTMLElement>(".project-list");if(list)list.hidden=false;
+}
+const search=document.querySelector<HTMLInputElement>("#build-search");
+const items=[...document.querySelectorAll<HTMLElement>("[data-directory-item]")];
+const count=document.querySelector<HTMLElement>("[data-directory-count]");
+const empty=document.querySelector<HTMLElement>("[data-directory-empty]");
+const filter=()=>{
+ const query=(search?.value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/-/g," ").trim();
+ let visible=0;for(const item of items){item.hidden=!(item.dataset.searchText??"").includes(query);if(!item.hidden)visible++;}
+ if(count)count.textContent=visible+" "+(visible===1?"skill":"skills");if(empty)empty.hidden=visible>0;
+};
+search?.addEventListener("input",filter);
+document.querySelector("[data-clear-search]")?.addEventListener("click",()=>{if(search){search.value="";filter();search.focus();}});
+filter();
 </script>
-
-<style>
-  .hero {
-    position: relative; display: grid; justify-items: center; gap: var(--space-4);
-    padding: var(--space-7) 0 var(--space-6); text-align: center; isolation: isolate;
-  }
-  /* A static dot grid fading out from the centre: texture without motion behind the text. */
-  .hero::before {
-    content: ""; position: absolute; z-index: -1; inset: -1.5rem -16px 0;
-    background-image: radial-gradient(circle at 1px 1px, rgb(0 0 0 / 0.09) 1px, transparent 0);
-    background-size: 22px 22px;
-    mask-image: radial-gradient(ellipse 70% 65% at 50% 35%, #000 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 35%, #000 30%, transparent 75%);
-    pointer-events: none;
-  }
-  .hero::after {
-    content: ""; position: absolute; z-index: -1; left: 50%; top: 2rem; width: min(36rem, 90%); height: 14rem;
-    transform: translateX(-50%); border-radius: 50%;
-    background: radial-gradient(closest-side, rgb(220 38 38 / 0.1), transparent);
-    pointer-events: none;
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: var(--space-2); padding: 6px 12px;
-    border: 1px solid var(--accent-border); border-radius: 999px; background: var(--accent-soft);
-    color: var(--accent-text); font-size: var(--text-sm); font-weight: 500;
-  }
-  .hero h1 { font-size: clamp(2.25rem, 6vw + 0.5rem, 3.75rem); max-width: 18ch; }
-
-  .hero-typed-row {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-2);
-    min-height: var(--target); margin-top: calc(var(--space-3) * -1);
-  }
-  .hero-typed {
-    font-size: clamp(1.125rem, 2.4vw + 0.6rem, 2rem); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em;
-    color: var(--accent); white-space: nowrap;
-  }
-  /* Every phrase sits invisibly in the same cell, so the line keeps the width of the longest one
-     and the pause button does not move while a phrase is typed. */
-  .typed-box { display: inline-grid; text-align: left; }
-  .typed-box > * { grid-area: 1 / 1; }
-  .typed-sizer { visibility: hidden; padding-right: 6px; }
-  .caret {
-    display: none; width: 3px; height: 1.05em; margin-left: 3px; vertical-align: -0.12em;
-    background: var(--accent); border-radius: 1px;
-  }
-  :global(.motion) .caret { display: inline-block; animation: caret-blink 1s steps(1) infinite; }
-  .hero-typed.is-paused .caret { animation: none; }
-  @keyframes caret-blink { 50% { opacity: 0; } }
-
-  .typed-toggle {
-    position: relative; display: grid; place-items: center; flex: none; width: var(--target); height: var(--target);
-    border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text-muted); cursor: pointer;
-    transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease), background-color var(--fast) var(--ease);
-  }
-  .typed-toggle:hover { color: var(--on-ink); background: var(--ink); border-color: var(--ink); }
-  .typed-toggle :global(.icon) { grid-area: 1 / 1; }
-  .typed-toggle :global(.icon-play), .typed-toggle.is-stopped :global(.icon-pause) { display: none; }
-  .typed-toggle.is-stopped :global(.icon-play) { display: block; }
-
-  .hero-sub { color: var(--text-muted); font-size: var(--text-lg); max-width: 52ch; }
-  .hero-search { width: 100%; max-width: 40rem; margin-top: var(--space-3); text-align: left; }
-  .hero-chips { justify-content: center; max-width: 40rem; }
-
-  .stats {
-    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: var(--space-4) auto 0; max-width: 40rem;
-    border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-subtle);
-  }
-  .stat { display: flex; flex-direction: column-reverse; gap: 2px; padding: var(--space-4); text-align: center; }
-  .stat + .stat { border-left: 1px solid var(--border); }
-  .stat dt { color: var(--text-muted); font-size: var(--text-xs); }
-  .stat dd { margin: 0; color: var(--heading); font-size: 1.75rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-  .stat dd [data-count-to] { color: var(--accent); }
-  @media (max-width: 479px) {
-    .stat { padding: var(--space-3) var(--space-2); }
-    .stat dd { font-size: 1.375rem; }
-  }
-
-  .kit-grid { list-style: none; display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr)); }
-  .kit-card { display: flex; flex-direction: column; gap: var(--space-3); }
-  .kit-card h3 { font-size: var(--text-lg); }
-  .kit-desc { color: var(--text-muted); font-size: var(--text-sm); flex: 1; }
-  .kit-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: 26px; }
-  .kit-count { color: var(--accent-text); font-size: var(--text-sm); font-weight: 600; }
-  .kit-card :global(.kit-arrow) { color: var(--accent); transition: transform var(--base) var(--ease-out); }
-  .kit-card:not(.soon):hover :global(.kit-arrow) { transform: translateX(4px); }
-  .kit-card:not(.soon):hover .icon-tile { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-
-  /* Kits that are not ready stay quiet: no lift, no red. */
-  .kit-card.soon { background: var(--surface-subtle); box-shadow: none; }
-  .kit-card.soon h3 a { color: var(--text-muted); }
-  .kit-card.soon:hover { transform: none; border-color: var(--border-strong); box-shadow: none; }
-  .kit-card.soon:hover h3 a { color: var(--heading); }
-</style>

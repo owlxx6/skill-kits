@@ -18,7 +18,7 @@ afterEach(async () => {
 });
 
 describe("resolvePaths", () => {
-  const root = "/some/root";
+  const root = path.resolve("/some/root");
 
   it("keeps the YAML inputs identical in dry-run and real mode", () => {
     const dry = resolvePaths(root, true);
