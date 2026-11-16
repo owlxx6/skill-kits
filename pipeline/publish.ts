@@ -80,6 +80,13 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
       lines.push(
         `- Extract: ${extract.repos} repos read, ${extract.skills} skills, ${extract.invalid} invalid SKILL.md files, ${extract.failedDownloads} failed downloads`,
       );
+      // Absent from run information written before license resolution.
+      const licenses = extract.licenses;
+      if (licenses) {
+        lines.push(
+          `- Licenses: ${licenses.identifiedAllowed} identified and allowed, ${licenses.identifiedNotAllowed} identified but not allowed, ${licenses.custom} custom, ${licenses.ambiguous} ambiguous, ${licenses.missing} missing, ${licenses.unresolved} unresolved, ${licenses.failedDownloads} failed license downloads`,
+        );
+      }
     }
     if (review) {
       const perSkillIn = review.reviewed ? Math.round(review.reviewUsage.inputTokens / review.reviewed) : 0;

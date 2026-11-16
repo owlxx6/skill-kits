@@ -125,6 +125,30 @@ describe("buildSummary", () => {
     expect(summary).toContain("2 invalid SKILL.md files, 3 failed downloads");
   });
 
+  it("reports license outcomes on one line of the Run section", () => {
+    const extract = runInfo.extract as NonNullable<RunInfo["extract"]>;
+    const withLicenses = buildSummary(catalog, {
+      extract: {
+        ...extract,
+        licenses: {
+          identifiedAllowed: 30,
+          identifiedNotAllowed: 2,
+          custom: 3,
+          ambiguous: 4,
+          missing: 1,
+          unresolved: 0,
+          failedDownloads: 1,
+        },
+      },
+    });
+    const run = withLicenses.slice(withLicenses.indexOf("## Run"));
+    expect(run).toContain(
+      "- Licenses: 30 identified and allowed, 2 identified but not allowed, 3 custom, 4 ambiguous, 1 missing, 0 unresolved, 1 failed license downloads\n",
+    );
+    // Run information written before license resolution has no license line.
+    expect(summary).not.toContain("- Licenses:");
+  });
+
   it("reports token use per reviewed skill, failures and filtered repos", () => {
     expect(summary).toContain("Review tokens: 20000 in, 4000 out (5000 in, 1000 out per reviewed skill)");
     expect(summary).toContain("Triage tokens: 5000 in, 500 out");
