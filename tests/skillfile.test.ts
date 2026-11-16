@@ -64,11 +64,20 @@ describe("parseSkillFrontmatter", () => {
     expect(parseSkillFrontmatter(content)?.license).toBe("x".repeat(200));
   });
 
-  it("keeps a license value that is not a string as text, so it is never ignored", () => {
-    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: [MIT, Apache-2.0]\n---\n")?.license).toBe(
-      '["MIT","Apache-2.0"]',
-    );
+  it("keeps a number or boolean license value as text", () => {
     expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: 2\n---\n")?.license).toBe("2");
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: true\n---\n")?.license).toBe("true");
+  });
+
+  it.each([
+    ["a list", "[MIT, Apache-2.0]"],
+    ["a map", "{ name: MIT }"],
+    ["a circular alias list", "&a [*a]"],
+    ["a circular alias map", "&a { b: *a }"],
+  ])("marks %s as a non-text license value, never ignored and never throwing", (_label, value) => {
+    const parse = () => parseSkillFrontmatter(`---\nname: a\ndescription: b\nlicense: ${value}\n---\n`);
+    expect(parse).not.toThrow();
+    expect(parse()?.license).toBe("[non-text value]");
   });
 
   it("does not reject a skill for its license value", () => {
