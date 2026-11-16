@@ -1,6 +1,6 @@
 # Safety scan contract
 
-Rules version: 1
+Rules version: 2
 
 The safety scan is the first, automatic filter on every candidate skill. It is static: it reads the
 text files of one skill folder (SKILL.md, scripts, references) and looks for known risky patterns.
@@ -49,29 +49,43 @@ only (for example: 3 blocked, 5 to review).
 
 ## Rules
 
-Severity is the base severity; the escalation column gives the cases where it rises.
-Markdown means SKILL.md and reference files (.md, .txt, .rst); scripts means code files or files
-starting with `#!`; data means other text files (JSON, YAML, CSV...).
+Severity is the base severity; the adjustment column gives the cases where it changes.
+Markdown (documentation) means SKILL.md and reference files (.md, .markdown, .mdx, .txt, .rst,
+.adoc); scripts means code files (.sh, .bash, .zsh, .ps1, .py, .js, .mjs, .cjs, .ts, .rb, .pl...)
+or files starting with `#!`; data means other text files (JSON, YAML, CSV...), which keep the
+script severities because configuration such as CI workflows can run commands.
 
-| Rule id | Severity | Escalation | Applies to | Signal |
+### Documentation versus scripts
+
+Documentation often quotes official installers and attack strings for the reader. In Markdown,
+`remote-code-execution`, `destructive-command`, `exfiltration-endpoint` and `crypto-mining` are
+`warn`: the skill goes to review, not out of the catalog. They stay `block` in scripts and data
+files. They also stay `block` in Markdown when the text tells the agent to act: a destructive
+command or a miner right after "run", "execute", "start"... ("Run `rm -rf ~`"), or an exfiltration
+endpoint in a sentence that tells the agent to send, post or upload there. A remote-execution
+command right after such a verb ("Run: curl https://... | bash") is reported by
+`agent-remote-script-instruction`, which blocks. Negated text ("Never run ...") is not treated as
+an instruction.
+
+| Rule id | Severity | Adjustment | Applies to | Signal |
 | --- | --- | --- | --- | --- |
-| `remote-code-execution` | block | | all | Download piped to a shell or interpreter (`curl ... \| sh`, `wget -qO- \| python3`), `iex (iwr ...)`, `Invoke-Expression` of downloaded content, `bash <(curl ...)`, `sh -c "$(curl ...)"`, download then run of the same file, `exec(urlopen(...))`, reverse shells. Pipes into `jq`, `tar`, `python -m json.tool` or `python -c` are not flagged. |
+| `remote-code-execution` | block | warn in Markdown | all | Download piped to a shell or interpreter (`curl ... \| sh`, `wget -qO- \| python3`), `iex (iwr ...)`, `Invoke-Expression` of downloaded content, `bash <(curl ...)`, `sh -c "$(curl ...)"`, download then run of the same file, `exec(urlopen(...))`, reverse shells. Pipes into `jq`, `tar`, `python -m json.tool` or `python -c` are not flagged. |
 | `encoded-execution` | block | | all | base64 or hex decoding feeding `eval`, `exec`, `Function`, a shell or `python -c` on the same line; `powershell -enc`. |
 | `encoded-blob` | warn | | Markdown, scripts | Opaque base64-like run over 400 characters. `data:image/...;base64,` URIs are ignored. |
 | `credential-access` | warn | block when the file also calls the network (Markdown: within 3 lines) | all | `~/.ssh` private keys, `id_rsa`, `.aws/credentials`, `.netrc`, `.git-credentials`, Docker, kube and gcloud credentials, browser cookie and login stores, keychain dumps, `/etc/shadow`, `.env` in the home folder, whole-environment dumps (`env`, `printenv`, `json.dumps(os.environ)`, `JSON.stringify(process.env)`). Public keys, `known_hosts`, `os.environ.get(...)` and env spreads for child processes are not flagged. |
-| `exfiltration-endpoint` | block | | all | Discord webhooks, pastebin, paste.ee, hastebin, transfer.sh, ngrok tunnels, requestbin, pipedream, webhook.site, interact.sh, OAST and Burp Collaborator hosts. |
+| `exfiltration-endpoint` | block | warn in Markdown unless the sentence tells the agent to send data there | all | Discord webhooks, pastebin, paste.ee, hastebin, transfer.sh, ngrok tunnels, requestbin, pipedream, webhook.site, interact.sh, OAST and Burp Collaborator hosts. |
 | `file-upload` | warn | block when the upload carries the environment or credentials | all | `curl -d @file`, `-F name=@file`, `-T file`, `wget --post-file`, `curl -d "$(env)"`. |
 | `network-host` | info | | scripts | Unknown host or raw IP address in a script, recorded once per file. Common registries and schema hosts are ignored. |
-| `destructive-command` | block | | all | Recursive `rm` of `/`, `/*`, `~`, `$HOME`; `mkfs` on a device; `dd of=/dev/...`; `shred`/`wipefs` on a device; `diskutil eraseDisk`; `format C:`; fork bombs. |
-| `persistence` | warn | block when the same file also runs remote code | all | Writes to shell profiles (`.bashrc`, `.zshrc`, `.profile`...), `crontab` changes, `launchctl load`, LaunchAgents, `systemctl enable`, systemd units, Windows Run keys, `schtasks /create`, sudoers, `authorized_keys`. |
+| `destructive-command` | block | warn in Markdown unless the agent is told to run it | all | Recursive `rm` of `/`, `/*`, `~`, `$HOME`; `mkfs` on a device; `dd of=/dev/...`; `shred`/`wipefs` on a device; `diskutil eraseDisk`; `format C:`; fork bombs. |
+| `persistence` | warn | block when the same script or data file also runs remote code | all | Writes to shell profiles (`.bashrc`, `.zshrc`, `.profile`...), `crontab` changes, `launchctl load`, LaunchAgents, `systemctl enable`, systemd units, Windows Run keys, `schtasks /create`, sudoers, `authorized_keys`. |
 | `privilege-escalation` | warn | | all; `sudo`, `doas`, `pkexec` in scripts only | `chmod 777` on system paths, setuid bits, disabling SELinux, Gatekeeper, SIP, Defender or the firewall, removing the macOS quarantine flag, `-Verb RunAs`. |
 | `obfuscated-code` | warn | | scripts | Lines over 2,000 characters, dense escape sequences, minified code or `.min.js` files. |
 | `hidden-text` | warn | block in SKILL.md | all | Zero-width characters, bidirectional overrides and isolates (U+202A-U+202E, U+2066-U+2069), Unicode tag characters (U+E0000-U+E007F), a byte order mark after the start. Emoji ZWJ sequences, ZWNJ/ZWJ between non-Latin letters and subdivision flags are allowed. |
 | `prompt-injection` | warn | | Markdown | "ignore all previous instructions", "do not tell the user", "without asking the user", "without the user's permission", "disable safety", jailbreak role switches ("you are now DAN", "developer mode"). Negated guidance ("never ... without asking the user") is not flagged. |
 | `hidden-comment-instruction` | warn | | Markdown | HTML comments, invisible once rendered, that address the agent or hold commands. |
 | `agent-exfiltration-instruction` | block | | Markdown | A sentence telling the agent to send secrets (API keys, tokens, credentials, environment variables, cookies) to a URL, endpoint, server or webhook. |
-| `agent-remote-script-instruction` | block | | Markdown | A sentence telling the agent to run a script, installer or code from a URL, or to "download and run" one. |
-| `crypto-mining` | block | | all | `xmrig`, `stratum+tcp://`, `coinhive`, `cryptonight`. |
+| `agent-remote-script-instruction` | block | | Markdown | A remote-execution command right after "run", "execute"... ("Run: curl https://... \| bash"), or a sentence telling the agent to run a script, installer or code from a URL, or to "download and run" one. |
+| `crypto-mining` | block | warn in Markdown unless the agent is told to run it | all | `xmrig`, `stratum+tcp://`, `coinhive`, `cryptonight`. |
 | `scan-truncated` | warn | | all | The file is larger than the scan cap; the rest was not scanned. |
 | `unscanned-file` | warn | | metadata-only files | A file passed without content that is not plain media (images, fonts, audio, video, PDF). |
 
@@ -97,10 +111,13 @@ Not wired yet: the pipeline schemas are changing on the license branch. After th
 - Static rules miss obfuscated, split or remote-staged payloads (a script that downloads its real
   code later, decoding across several lines or files, string concatenation).
 - Combinations are checked within one file (credentials plus network), not across files.
-- False positives are expected. Seen on real skills: official installers such as the Homebrew
-  `bash -c "$(curl ...)"` line are blocked; security documentation that quotes attack strings
-  (`; rm -rf ~`, "ignore previous instructions") is flagged; template comments addressed to the
-  agent are flagged for review; `curl -F file=@...` uploads to legitimate APIs are flagged for review.
+- False positives are expected. Seen on real skills: official installers quoted in Markdown, such
+  as the Homebrew `bash -c "$(curl ...)"` line, and security documentation that quotes attack
+  strings (`; rm -rf ~`, "ignore previous instructions") go to review; template comments addressed
+  to the agent go to review; `curl -F file=@...` uploads to legitimate APIs go to review. A SKILL.md
+  that tells the agent "Run `curl ... | sh`" blocks, even for an official installer.
+- The "told to act" test looks at the words just before the command or in the same sentence; an
+  instruction phrased differently can stay at `warn`, which still sends the skill to review.
 - The owner validates every `block` and `review` before a final decision.
 
 ## Reference

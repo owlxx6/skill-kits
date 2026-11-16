@@ -5,7 +5,7 @@
 // so cached reports are recomputed.
 import { compareText } from "./text";
 
-export const SAFETY_RULES_VERSION = 1;
+export const SAFETY_RULES_VERSION = 2;
 
 export type SafetySeverity = "info" | "warn" | "block";
 export type SafetyVerdict = "clear" | "review" | "block";
@@ -13,7 +13,8 @@ export type SafetyVerdict = "clear" | "review" | "block";
 export interface SafetyRule {
   id: string;
   severity: SafetySeverity;
-  escalation?: string;
+  // When the severity differs from the base one (documentation, combinations).
+  adjustment?: string;
   reason: string;
 }
 
@@ -21,6 +22,7 @@ export const SAFETY_RULES = [
   {
     id: "remote-code-execution",
     severity: "block",
+    adjustment: "warn in documentation (an instruction to the agent is reported by agent-remote-script-instruction)",
     reason: "Downloads code and runs it, or opens a remote shell.",
   },
   { id: "encoded-execution", severity: "block", reason: "Decodes an encoded payload and runs it." },
@@ -28,30 +30,32 @@ export const SAFETY_RULES = [
   {
     id: "credential-access",
     severity: "warn",
-    escalation: "block when the file also calls the network (Markdown: within 3 lines)",
+    adjustment: "block when the file also calls the network (Markdown: within 3 lines)",
     reason: "Reads credentials, a secret store or the whole environment.",
   },
   {
     id: "exfiltration-endpoint",
     severity: "block",
+    adjustment: "warn in documentation, unless the sentence tells the agent to send data there",
     reason: "Uses a webhook, paste, tunnel or request-capture service often used to exfiltrate data.",
   },
   {
     id: "file-upload",
     severity: "warn",
-    escalation: "block when the upload carries the environment or credentials",
+    adjustment: "block when the upload carries the environment or credentials",
     reason: "Sends a local file or the environment to a network endpoint.",
   },
   { id: "network-host", severity: "info", reason: "Script refers to an unknown host or a raw IP address." },
   {
     id: "destructive-command",
     severity: "block",
+    adjustment: "warn in documentation, unless the agent is told to run it",
     reason: "Can wipe the home folder, the root folder or a disk.",
   },
   {
     id: "persistence",
     severity: "warn",
-    escalation: "block when the same file also runs remote code",
+    adjustment: "block when the same script or data file also runs remote code",
     reason: "Changes shell profiles, scheduled tasks, startup items, SSH access or sudoers.",
   },
   {
@@ -67,7 +71,7 @@ export const SAFETY_RULES = [
   {
     id: "hidden-text",
     severity: "warn",
-    escalation: "block in SKILL.md",
+    adjustment: "block in SKILL.md",
     reason: "Invisible, bidirectional-override or Unicode tag characters.",
   },
   {
@@ -90,7 +94,12 @@ export const SAFETY_RULES = [
     severity: "block",
     reason: "Tells the agent to run a script downloaded from the internet.",
   },
-  { id: "crypto-mining", severity: "block", reason: "References a cryptocurrency miner or mining pool." },
+  {
+    id: "crypto-mining",
+    severity: "block",
+    adjustment: "warn in documentation, unless the agent is told to run it",
+    reason: "References a cryptocurrency miner or mining pool.",
+  },
   { id: "scan-truncated", severity: "warn", reason: "File exceeds the scan cap; the rest was not scanned." },
   {
     id: "unscanned-file",
@@ -173,6 +182,8 @@ interface Draft {
   ruleId: SafetyRuleId;
   severity: SafetySeverity;
   line: number;
+  // Position of the match in its line, used by severity adjustments; not reported.
+  index: number;
   excerpt: string;
   reason: string;
 }
@@ -201,7 +212,9 @@ export function scanSkillFiles(
         ? []
         : [draft("unscanned-file", 0, `${path} (${file.size} bytes)`, 0)];
     }
-    for (const item of drafts) findings.push({ ...item, path });
+    for (const { ruleId, severity, line, excerpt, reason } of drafts) {
+      findings.push({ ruleId, severity, path, line, excerpt, reason });
+    }
   }
   findings.sort(
     (a, b) =>
@@ -249,6 +262,7 @@ function scanTextFile(path: string, content: string, maxScanChars: number): Draf
     drafts.push(draft("obfuscated-code", 0, path, 0, "warn", "Minified script: its code cannot be reviewed by reading."));
   }
   escalate(drafts, kind, networkLines);
+  if (kind === "skill" || kind === "doc") downgradeDocumentation(drafts, lines);
   if (truncated) {
     drafts.push(draft("scan-truncated", 0, `${content.length} characters, ${maxScanChars} scanned`, 0));
   }
@@ -269,11 +283,53 @@ function escalate(drafts: Draft[], kind: FileKind, networkLines: readonly number
         item.reason = "Reads credentials, a secret store or the whole environment, and calls the network.";
       }
     }
-    if (item.ruleId === "persistence" && runsRemoteCode) {
+    if (item.ruleId === "persistence" && runsRemoteCode && kind !== "skill" && kind !== "doc") {
       item.severity = "block";
       item.reason = "Installs persistence in a file that also runs remote code.";
     }
   }
+}
+
+// Documentation often quotes installers and attack strings for the reader. There these signals
+// go to review; they keep blocking when the sentence tells the agent to act on them.
+const DOWNGRADED_IN_DOCUMENTATION: ReadonlySet<SafetyRuleId> = new Set<SafetyRuleId>([
+  "remote-code-execution",
+  "destructive-command",
+  "exfiltration-endpoint",
+  "crypto-mining",
+]);
+
+function downgradeDocumentation(drafts: Draft[], lines: readonly string[]): void {
+  for (const item of drafts) {
+    if (!DOWNGRADED_IN_DOCUMENTATION.has(item.ruleId) || item.severity !== "block") continue;
+    const line = lines[item.line - 1] ?? "";
+    const directed =
+      item.ruleId === "exfiltration-endpoint"
+        ? toldToSend(line, item.index)
+        : item.ruleId !== "remote-code-execution" && toldToRun(line, item.index);
+    if (directed) continue;
+    item.severity = "warn";
+    item.reason = `${item.reason} Found in documentation, so sent to review.`;
+  }
+}
+
+// The command right after "run", "execute", "start"... ("Run: curl ... | sh", "Run `rm -rf ~`").
+const RUN_DIRECTIVE =
+  /\b(?:run|execute|exec|eval|source|start|launch)\b(?:\s+(?:this|it|the\s+(?:following\s+)?(?:command|script)))?\s*:?\s*[`'"]*\s*(?:\$\s+)?(?:sudo\s+)?(?:\/?[\w.-]+\/)*$/i;
+const SEND_DIRECTIVE = /\b(?:send|post|upload|forward|transmit|exfiltrate|report|deliver|push)\b/gi;
+
+function toldToRun(line: string, index: number): boolean {
+  const start = Math.max(0, index - 60);
+  const directive = RUN_DIRECTIVE.exec(line.slice(start, index));
+  return directive !== null && !negatedBefore(line, start + directive.index);
+}
+
+function toldToSend(line: string, index: number): boolean {
+  const window = line.slice(Math.max(0, index - 200), index);
+  const sentenceEnd = Math.max(window.lastIndexOf(". "), window.lastIndexOf("! "), window.lastIndexOf("? "));
+  const sentence = window.slice(sentenceEnd + 1);
+  const offset = index - sentence.length;
+  return allMatches(SEND_DIRECTIVE, sentence).some((verb) => !negatedBefore(line, offset + verb.index));
 }
 
 function dedupe(drafts: Draft[]): Draft[] {
@@ -315,6 +371,7 @@ function draft(
     ruleId,
     severity: severity ?? rule?.severity ?? "warn",
     line,
+    index,
     excerpt: excerptOf(source, index),
     reason: reason ?? rule?.reason ?? ruleId,
   };
@@ -474,8 +531,14 @@ const PIPE_FROM_DOWNLOAD = new RegExp(
 // Flags that give the interpreter its program inline, so stdin is only data.
 const INLINE_PROGRAM_FLAG = /^-(?:c|e|m|p|pe|ne|r|E|-eval|-print|-command|command|-version|V|h|-help)$/i;
 
-function readsProgramFromStdin(args: string): boolean {
+// A shell reads its program from stdin unless -c gives it inline ("| bash -s -- --yes",
+// "| sh before answering"). Other interpreters often read stdin as data ("| python3 parse.py").
+function readsProgramFromStdin(interpreter: string, args: string): boolean {
   const tokens = args.trim().split(/\s+/).filter(Boolean);
+  if (/^(?:ba|z|da|k|fi)?sh$/i.test(interpreter)) {
+    const end = tokens.findIndex((token) => token.startsWith("#") || token === "--");
+    return !tokens.slice(0, end < 0 ? tokens.length : end).some((token) => /^-c$/i.test(token));
+  }
   for (const token of tokens) {
     if (token.startsWith("#")) return true; // a shell comment ends the command
     if (/^\d*[<>]/.test(token)) continue; // redirection such as 2>&1 or >/dev/null
@@ -550,7 +613,7 @@ function runsFile(segment: string, names: ReadonlySet<string>): boolean {
 
 function matchRemoteExecution(line: string): LineMatch[] {
   for (const pipe of allMatches(PIPE_FROM_DOWNLOAD, line)) {
-    if (readsProgramFromStdin(pipe[2])) return [{ index: pipe.index }];
+    if (readsProgramFromStdin(pipe[1], pipe[2])) return [{ index: pipe.index }];
   }
   const index = firstIndex(REMOTE_EXEC_PATTERNS, line);
   if (index >= 0) return [{ index }];
@@ -927,7 +990,10 @@ function orderedIn(sentence: string, patterns: readonly RegExp[]): number {
 
 function sentenceRule(patterns: readonly RegExp[]): (line: string) => LineMatch[] {
   return (line) => {
-    for (const sentence of allMatches(SENTENCE, line)) {
+    // Cheap whole-line check first: most lines never contain the leading verb.
+    if (orderedIn(line, patterns.slice(0, 1)) < 0) return [];
+    const sentences = new RegExp(SENTENCE.source, "g");
+    for (let sentence = sentences.exec(line); sentence; sentence = sentences.exec(line)) {
       const found = orderedIn(sentence[0], patterns);
       if (found >= 0 && !negatedBefore(sentence[0], found)) return [{ index: sentence.index + found }];
     }
@@ -939,9 +1005,18 @@ const matchAgentExfiltration = sentenceRule([SEND_VERB, SECRET_OBJECT, DESTINATI
 const matchRunScriptFromUrl = sentenceRule([RUN_VERB, SCRIPT_OBJECT, FROM_URL]);
 const matchDownloadAndRun = sentenceRule([DOWNLOAD_AND_RUN]);
 
+// "Run: curl https://... | bash": a remote-execution command given to the agent to run.
+function matchRunRemoteCommand(line: string): LineMatch[] {
+  const [remote] = matchRemoteExecution(line);
+  return remote && toldToRun(line, remote.index) ? [{ index: remote.index }] : [];
+}
+
 function matchAgentRemoteScript(line: string): LineMatch[] {
-  const staged = matchRunScriptFromUrl(line);
-  return staged.length > 0 ? staged : matchDownloadAndRun(line);
+  for (const matcher of [matchRunRemoteCommand, matchRunScriptFromUrl, matchDownloadAndRun]) {
+    const found = matcher(line);
+    if (found.length > 0) return found;
+  }
+  return [];
 }
 
 const COMMENT_INSTRUCTION =
