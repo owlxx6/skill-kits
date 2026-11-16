@@ -277,8 +277,11 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const skills = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
     const reviews = await loadReviews(paths.reviewsDir);
     const curation = await readYamlFile(paths.curation, CurationSchema);
+    // Repositories listed only in part at the last extraction get no collection.
+    const runInfo = await readJsonFile(paths.runInfo, RunInfoSchema, {});
+    const truncatedRepos = runInfo.extract?.truncatedRepos ?? [];
     const catalog = CatalogSchema.parse(
-      buildCatalog({ repos, skills, reviews, kits, curation, config, now: deps.now }),
+      buildCatalog({ repos, skills, reviews, kits, curation, config, now: deps.now, truncatedRepos }),
     );
     await writeJsonFile(paths.catalog, catalog);
     deps.log(`catalog: ${catalog.skills.length} skills, ${catalog.collections.length} collections`);

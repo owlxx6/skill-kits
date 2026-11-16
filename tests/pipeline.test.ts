@@ -181,6 +181,7 @@ describe("runPipeline", () => {
       custom: 0,
       ambiguous: 0,
       missing: 1,
+      notReRead: 0,
       unresolved: 0,
       failedDownloads: 0,
     });
@@ -468,7 +469,13 @@ describe("runPipeline", () => {
       .array(SkillRecordSchema)
       .parse(JSON.parse(await readFile(path.join(root, "data", "cache", "skills.json"), "utf8")));
     const splitSkills = skills.filter((skill) => skill.repo === "split/skills");
-    expect(splitSkills.map((skill) => [skill.name, skill.license?.outcome, skill.license?.spdx])).toEqual([
+    expect(
+      splitSkills.map((skill) => [
+        skill.name,
+        skill.license?.outcome,
+        skill.license?.outcome === "identified" ? skill.license.spdx : undefined,
+      ]),
+    ).toEqual([
       ["negotiation", "missing", undefined],
       ["salary-coach", "identified", "MIT"],
     ]);
@@ -492,7 +499,7 @@ describe("runPipeline", () => {
     const licenseCache = JSON.parse(await readFile(licensesFile(), "utf8"));
     expect(licenseCache).toEqual({
       rulesVersion: LICENSE_RULES_VERSION,
-      entries: { [blobOf(MIT_TEXT)]: { spdx: "MIT" } },
+      entries: { [blobOf(MIT_TEXT)]: { kind: "spdx", spdx: "MIT" } },
     });
   });
 
@@ -512,7 +519,7 @@ describe("runPipeline", () => {
     expect(catalog.skills.map((skill) => skill.name)).toContain("salary-coach");
     expect(JSON.parse(await readFile(licensesFile(), "utf8"))).toEqual({
       rulesVersion: LICENSE_RULES_VERSION,
-      entries: { [blobOf(MIT_TEXT)]: { spdx: "MIT" } },
+      entries: { [blobOf(MIT_TEXT)]: { kind: "spdx", spdx: "MIT" } },
     });
   });
 
@@ -532,6 +539,34 @@ describe("runPipeline", () => {
     gh = makeGitHub({ extraRepos: [splitRepo()] });
     await run(["extract"]);
     expect(gh.fileReads).not.toContain("split/skills/skills/salary-coach/LICENSE");
+  });
+
+  it("lists no collection for a repository whose tree listing was truncated", async () => {
+    // Three skills, each with its own MIT license: eligible even in a truncated listing.
+    const licensed: FakeRepo = {
+      meta: makeRepo({ fullName: "big/skills", url: "https://github.com/big/skills", license: null, pushedAt: recent }),
+      files: Object.fromEntries(
+        ["resume-tailor", "ats-check", "cover-letter"].flatMap((name) => [
+          [`skills/${name}/SKILL.md`, skillMd(name, `Does ${name}.`)],
+          [`skills/${name}/LICENSE`, MIT_TEXT],
+        ]),
+      ),
+    };
+    gh = makeGitHub({ extraRepos: [licensed] });
+    const sourcesFile = path.join(root, "data", "sources.yaml");
+    const sources = await readFile(sourcesFile, "utf8");
+    await writeFile(sourcesFile, sources.replace("repos:\n", "repos:\n  - big/skills\n"));
+    await run();
+    expect((await readCatalog(root)).collections.map((collection) => collection.id)).toContain("big/skills");
+
+    gh.truncateTreeFor.add("big/skills");
+    await run();
+    const catalog = await readCatalog(root);
+    expect(catalog.skills.filter((skill) => skill.repo === "big/skills")).toHaveLength(3);
+    expect(catalog.collections.map((collection) => collection.id)).not.toContain("big/skills");
+    // rank run alone reads the truncated repositories from the run information.
+    await run(["rank"]);
+    expect((await readCatalog(root)).collections.map((collection) => collection.id)).not.toContain("big/skills");
   });
 
   it("keeps a changed approved skill pending when its review fails", async () => {

@@ -1,13 +1,19 @@
 import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
 import {
+  gitBlobId,
   identifyLicenseText,
   indexLicenseFiles,
   isLicenseEligible,
+  isNotReRead,
+  type LicenseFileRef,
   type LicenseIndex,
   type LicenseQuery,
   licenseFilesFor,
+  notReReadLicense,
   resolveLicense,
+  resolveLinkTarget,
+  type TextIdentification,
 } from "./lib/license";
 import type {
   ExtractStats,
@@ -25,7 +31,9 @@ import {
 } from "./lib/skillfile";
 import { compareText } from "./lib/text";
 
-type ExtractClient = Pick<GitHubClient, "getTree" | "getFileText">;
+type ExtractClient = Pick<GitHubClient, "getTree" | "getFileText" | "getFileBytes">;
+
+const SYMLINK_MODE = "120000";
 
 // The front matter license a resolution was computed with: a reused record is not
 // downloaded again, so its front matter value comes from its previous evidence.
@@ -34,29 +42,60 @@ function frontmatterLicenseOf(license: LicenseResolution): string | undefined {
   return entry?.kind === "frontmatter" ? entry.value : undefined;
 }
 
-// Downloads and identifies the license files the skills need, skipping blob ids already in
-// the cache. A failed download is not cached: the file is unidentified for this run only.
-async function identifyLicenseFiles(
+// Reads and identifies the license files the skills need, skipping blob ids already in the
+// cache. The downloaded bytes must have the listed blob id: the tree is listed by branch name
+// and the branch can move before the download. A file not read (failed download, other
+// content, unresolved link) is never cached and stays unread for this run.
+async function readLicenseFiles(
   gh: ExtractClient,
   repo: RepoMeta,
   index: LicenseIndex,
-  queries: LicenseQuery[],
+  files: LicenseFileRef[],
   cache: LicenseCache,
-): Promise<number> {
+): Promise<{ results: Map<string, TextIdentification>; unread: number }> {
+  const results = new Map<string, TextIdentification>();
   const failed = new Set<string>();
-  for (const query of queries) {
-    for (const file of licenseFilesFor(index, query)) {
-      if (Object.hasOwn(cache, file.blob) || failed.has(file.blob)) continue;
-      try {
-        const text = await gh.getFileText(repo.fullName, repo.defaultBranch, file.path);
-        cache[file.blob] = { spdx: identifyLicenseText(text) };
-      } catch (error) {
-        console.warn(`License file ${repo.fullName}/${file.path} not read: ${errorMessage(error)}`);
-        failed.add(file.blob);
+  const decoder = new TextDecoder("utf-8");
+  // The bytes of a file, or undefined when they could not be read or are not the listed blob.
+  const download = async (file: LicenseFileRef): Promise<Uint8Array | undefined> => {
+    try {
+      const bytes = await gh.getFileBytes(repo.fullName, repo.defaultBranch, file.path);
+      if (gitBlobId(bytes) === file.blob) return bytes;
+      console.warn(`License file ${repo.fullName}/${file.path} changed since the listing: not used`);
+    } catch (error) {
+      console.warn(`License file ${repo.fullName}/${file.path} not read: ${errorMessage(error)}`);
+    }
+    return undefined;
+  };
+  const identify = async (file: LicenseFileRef): Promise<TextIdentification | undefined> => {
+    if (Object.hasOwn(cache, file.blob)) return cache[file.blob];
+    if (failed.has(file.blob)) return undefined;
+    const bytes = await download(file);
+    if (bytes === undefined) {
+      failed.add(file.blob);
+      return undefined;
+    }
+    const identification = identifyLicenseText(decoder.decode(bytes));
+    cache[file.blob] = identification;
+    return identification;
+  };
+  for (const file of files) {
+    if (results.has(file.path) || failed.has(`link:${file.path}`)) continue;
+    let target: LicenseFileRef | undefined = file;
+    if (file.mode === SYMLINK_MODE) {
+      // A link's blob holds the target path: follow it one hop, inside the repository.
+      const bytes = await download(file);
+      target = bytes === undefined ? undefined : resolveLinkTarget(index, file, decoder.decode(bytes));
+      if (target === undefined) {
+        console.warn(`License link ${repo.fullName}/${file.path} not resolved inside the repository`);
+        failed.add(`link:${file.path}`);
+        continue;
       }
     }
+    const identification = await identify(target);
+    if (identification !== undefined) results.set(file.path, identification);
   }
-  return failed.size;
+  return { results, unread: failed.size };
 }
 
 export async function extractRepo(
@@ -75,6 +114,7 @@ export async function extractRepo(
   const skills: SkillRecord[] = [];
   // Records whose license is resolved from this tree, by position in skills.
   const toResolve: { position: number; query: LicenseQuery }[] = [];
+  const revision = tree.sha === undefined ? {} : { revision: tree.sha };
   const queue = (record: SkillRecord, frontmatterLicense: string | undefined): void => {
     toResolve.push({
       position: skills.length,
@@ -83,6 +123,7 @@ export async function extractRepo(
         frontmatterLicense,
         githubLicense: repo.license,
         truncated: tree.truncated,
+        ...revision,
       },
     });
     skills.push(record);
@@ -99,10 +140,14 @@ export async function extractRepo(
     }
     const id = skillId(repo.fullName, location.dir);
     const known = previous.get(id);
-    // A record written before license resolution has no front matter evidence: its
-    // SKILL.md is read again once, so its license is never resolved without it.
-    if (known && known.fingerprint === location.fingerprint && known.license) {
-      queue(known, frontmatterLicenseOf(known.license));
+    // A record written before license resolution, or whose SKILL.md was not re-read, has no
+    // front matter evidence: its SKILL.md is read again, so its license is never resolved
+    // without it.
+    const license = known?.license;
+    const knowsFrontmatter =
+      license !== undefined && !(license.outcome === "ambiguous" && license.unread === "skill-file");
+    if (known && license && knowsFrontmatter && known.fingerprint === location.fingerprint) {
+      queue(known, frontmatterLicenseOf(license));
       continue;
     }
     let content: string;
@@ -114,10 +159,10 @@ export async function extractRepo(
       );
     } catch (error) {
       console.warn(`Skipping ${id}: ${errorMessage(error)}`);
-      // A failed download must not drop a skill that already has a record; it keeps its
-      // previous license, or none.
+      // A failed download must not drop a skill that already has a record. Its license is
+      // not known for the changed content: not re-read, so neither eligible nor removed.
       failedDownloads += 1;
-      if (known) skills.push(known);
+      if (known) skills.push({ ...known, license: notReReadLicense(tree.sha) });
       continue;
     }
     const frontmatter = parseSkillFrontmatter(content);
@@ -142,18 +187,16 @@ export async function extractRepo(
   // Every listed skill is resolved again from the current tree: a license file outside the
   // skill folder can change while the skill's fingerprint does not.
   const index = indexLicenseFiles(tree.entries);
-  const licenseFailedDownloads = await identifyLicenseFiles(
+  const { results, unread: licenseFailedDownloads } = await readLicenseFiles(
     gh,
     repo,
     index,
-    toResolve.map((item) => item.query),
+    toResolve.flatMap((item) => licenseFilesFor(index, item.query)),
     licenseCache,
   );
-  const spdxOfBlob = (blob: string): string | null =>
-    Object.hasOwn(licenseCache, blob) ? licenseCache[blob].spdx : null;
   for (const { position, query } of toResolve) {
     const { license: _previous, ...record } = skills[position];
-    skills[position] = { ...record, license: resolveLicense(index, query, spdxOfBlob) };
+    skills[position] = { ...record, license: resolveLicense(index, query, (file) => results.get(file.path)) };
   }
   // A truncated listing is partial: skills past the cut are unknown, not deleted. They keep
   // their previous license, or none.
@@ -185,12 +228,14 @@ export function countLicenses(
     custom: 0,
     ambiguous: 0,
     missing: 0,
+    notReRead: 0,
     unresolved: 0,
     failedDownloads,
   };
   for (const skill of skills) {
     const outcome = skill.license?.outcome;
     if (outcome === undefined) stats.unresolved += 1;
+    else if (isNotReRead(skill.license)) stats.notReRead += 1;
     else if (outcome !== "identified") stats[outcome] += 1;
     else if (isLicenseEligible(skill.license, allowed)) stats.identifiedAllowed += 1;
     else stats.identifiedNotAllowed += 1;

@@ -128,44 +128,83 @@ export type RepoMeta = z.infer<typeof RepoMetaSchema>;
 
 export const LICENSE_OUTCOMES = ["identified", "custom", "ambiguous", "missing"] as const;
 export const LICENSE_LEVELS = ["skill", "ancestor", "repository", "none"] as const;
+const evidenceLevel = z.enum(["skill", "ancestor", "repository"]);
+// identified: a known license; restricted: a known license modified or with added terms;
+// multiple: several licenses in one text; unknown: no known license recognised; unread: the
+// text could not be read this run (download failed, wrong content, unresolved link);
+// auxiliary: a license-named file that never decides (third-party list, notice, data file).
+export const LICENSE_FILE_STATUSES = [
+  "identified",
+  "restricted",
+  "multiple",
+  "unknown",
+  "unread",
+  "auxiliary",
+] as const;
 
-// One piece of license evidence. A file is identified from its text, a front matter value
-// from its SPDX id, and "github" is the id GitHub detected for the repository (value is the
-// raw RepoMeta.license: an id, NOASSERTION or null).
+// One piece of license evidence, with the level it counts at. A file is identified from its
+// text, a front matter value from its SPDX id, and "github" is the id GitHub detected for the
+// repository (value is RepoMeta.license: an id or NOASSERTION; null is not recorded).
 export const LicenseEvidenceSchema = z.discriminatedUnion("kind", [
-  z.object({
+  z.strictObject({
     kind: z.literal("file"),
+    level: evidenceLevel,
     path: z.string(),
     blob: gitObjectId,
+    status: z.enum(LICENSE_FILE_STATUSES),
     spdx: z.string().nullable(),
   }),
-  z.object({
+  z.strictObject({
     kind: z.literal("frontmatter"),
+    level: z.literal("skill"),
     path: z.string(),
     value: z.string(),
     spdx: z.string().nullable(),
   }),
-  z.object({
+  z.strictObject({
     kind: z.literal("github"),
-    value: z.string().nullable(),
+    level: z.literal("repository"),
+    value: z.string(),
     spdx: z.string().nullable(),
   }),
 ]);
 export type LicenseEvidence = z.infer<typeof LicenseEvidenceSchema>;
 
-// See docs/LICENSE-RESOLUTION.md. spdx is set only when the outcome is "identified".
-export const LicenseResolutionSchema = z.object({
-  outcome: z.enum(LICENSE_OUTCOMES),
-  spdx: z.string().optional(),
-  level: z.enum(LICENSE_LEVELS),
+// Shared by every outcome: the evidence, and the id of the tree it was read from.
+const resolutionBase = {
   evidence: z.array(LicenseEvidenceSchema),
-});
+  revision: z.string().optional(),
+};
+
+// See docs/LICENSE-RESOLUTION.md. spdx exists only when the outcome is "identified".
+// unread: the outcome is ambiguous because a deciding license file ("license-file") or the
+// changed SKILL.md ("skill-file") could not be read in this run.
+export const LicenseResolutionSchema = z.discriminatedUnion("outcome", [
+  z.strictObject({ outcome: z.literal("identified"), spdx: z.string(), level: evidenceLevel, ...resolutionBase }),
+  z.strictObject({ outcome: z.literal("custom"), level: evidenceLevel, ...resolutionBase }),
+  z.strictObject({
+    outcome: z.literal("ambiguous"),
+    level: z.enum(LICENSE_LEVELS),
+    unread: z.enum(["license-file", "skill-file"]).optional(),
+    ...resolutionBase,
+  }),
+  z.strictObject({ outcome: z.literal("missing"), level: z.literal("none"), ...resolutionBase }),
+]);
 export type LicenseResolution = z.infer<typeof LicenseResolutionSchema>;
 export type LicenseOutcome = LicenseResolution["outcome"];
 export type LicenseLevel = LicenseResolution["level"];
 
+// What a license text was identified as.
+export const TextIdentificationSchema = z.discriminatedUnion("kind", [
+  z.strictObject({ kind: z.literal("spdx"), spdx: z.string() }),
+  z.strictObject({ kind: z.literal("restricted") }),
+  z.strictObject({ kind: z.literal("multiple") }),
+  z.strictObject({ kind: z.literal("unknown") }),
+]);
+export type TextIdentification = z.infer<typeof TextIdentificationSchema>;
+
 // Identified license texts, by git blob id: a changed file has a new id and is identified again.
-export const LicenseCacheSchema = z.record(gitObjectId, z.object({ spdx: z.string().nullable() }));
+export const LicenseCacheSchema = z.record(gitObjectId, TextIdentificationSchema);
 export type LicenseCache = z.infer<typeof LicenseCacheSchema>;
 
 export const SkillRecordSchema = z.object({
@@ -177,8 +216,9 @@ export const SkillRecordSchema = z.object({
   description: z.string().min(1),
   fingerprint: gitObjectId,
   files: z.array(z.string()),
-  // Optional when reading: a record without it is unresolved, never eligible.
-  license: LicenseResolutionSchema.optional(),
+  // Optional when reading: a record without it is unresolved, never eligible. A resolution in
+  // a shape this code no longer reads is dropped, so the next extract resolves it again.
+  license: LicenseResolutionSchema.optional().catch(undefined),
 });
 export type SkillRecord = z.infer<typeof SkillRecordSchema>;
 
@@ -250,8 +290,12 @@ export const LicenseStatsSchema = z.object({
   custom: z.number(),
   ambiguous: z.number(),
   missing: z.number(),
+  // Ambiguous because a license file or the changed SKILL.md could not be read this run.
+  notReRead: z.number().default(0),
   // Records without a resolution (kept from a failed or truncated read before this change).
   unresolved: z.number(),
+  // License files that could not be read: failed download, content not matching the listed
+  // blob, or a symbolic link that could not be resolved.
   failedDownloads: z.number(),
 });
 export type LicenseStats = z.infer<typeof LicenseStatsSchema>;

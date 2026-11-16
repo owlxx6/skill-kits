@@ -64,7 +64,12 @@ export const fp = (hexChar: string): string => hexChar.repeat(40);
 
 // GitHub's detection alone, as for a repository without license files.
 export function githubLicense(spdx: string): LicenseResolution {
-  return { outcome: "identified", spdx, level: "repository", evidence: [{ kind: "github", value: spdx, spdx }] };
+  return {
+    outcome: "identified",
+    spdx,
+    level: "repository",
+    evidence: [{ kind: "github", level: "repository", value: spdx, spdx }],
+  };
 }
 
 export function makeSkill(overrides: Partial<SkillRecord> = {}): SkillRecord {

@@ -84,7 +84,7 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
       const licenses = extract.licenses;
       if (licenses) {
         lines.push(
-          `- Licenses: ${licenses.identifiedAllowed} identified and allowed, ${licenses.identifiedNotAllowed} identified but not allowed, ${licenses.custom} custom, ${licenses.ambiguous} ambiguous, ${licenses.missing} missing, ${licenses.unresolved} unresolved, ${licenses.failedDownloads} failed license downloads`,
+          `- Licenses: ${licenses.identifiedAllowed} identified and allowed, ${licenses.identifiedNotAllowed} identified but not allowed, ${licenses.custom} custom, ${licenses.ambiguous} ambiguous, ${licenses.missing} missing, ${licenses.notReRead} not re-read, ${licenses.unresolved} unresolved, ${licenses.failedDownloads} failed license downloads`,
         );
       }
     }

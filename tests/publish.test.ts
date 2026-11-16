@@ -136,6 +136,7 @@ describe("buildSummary", () => {
           custom: 3,
           ambiguous: 4,
           missing: 1,
+          notReRead: 2,
           unresolved: 0,
           failedDownloads: 1,
         },
@@ -143,7 +144,7 @@ describe("buildSummary", () => {
     });
     const run = withLicenses.slice(withLicenses.indexOf("## Run"));
     expect(run).toContain(
-      "- Licenses: 30 identified and allowed, 2 identified but not allowed, 3 custom, 4 ambiguous, 1 missing, 0 unresolved, 1 failed license downloads\n",
+      "- Licenses: 30 identified and allowed, 2 identified but not allowed, 3 custom, 4 ambiguous, 1 missing, 2 not re-read, 0 unresolved, 1 failed license downloads\n",
     );
     // Run information written before license resolution has no license line.
     expect(summary).not.toContain("- Licenses:");

@@ -91,7 +91,11 @@ describe("extractRepo", () => {
     gh.failFileFor.add("acme/skills/skills/resume/SKILL.md");
     const known = new Map(first.skills.map((skill) => [skill.id, skill]));
     const second = await extractRepo(gh, repo.meta, known);
-    expect(second.skills).toEqual(first.skills);
+    // The record stays, but its license was not re-read for the changed content.
+    expect(second.skills.map(({ license: _license, ...rest }) => rest)).toEqual(
+      first.skills.map(({ license: _license, ...rest }) => rest),
+    );
+    expect(second.skills[0].license).toMatchObject({ outcome: "ambiguous", unread: "skill-file" });
     expect(second.invalid).toBe(1);
     expect(second.failedDownloads).toBe(1);
   });
@@ -264,13 +268,24 @@ describe("license resolution during extraction", () => {
     const gh = new FakeGitHub([repo]);
     const cache: LicenseCache = {};
     const result = await extractRepo(gh, repo.meta, new Map(), cache);
+    const tree = await gh.getTree("acme/skills");
     expect(resumeOf(result.skills)?.license).toEqual({
       outcome: "identified",
       spdx: "MIT",
       level: "skill",
-      evidence: [{ kind: "file", path: "skills/resume/LICENSE", blob: blobOf(MIT_TEXT), spdx: "MIT" }],
+      revision: tree.sha,
+      evidence: [
+        {
+          kind: "file",
+          level: "skill",
+          path: "skills/resume/LICENSE",
+          blob: blobOf(MIT_TEXT),
+          status: "identified",
+          spdx: "MIT",
+        },
+      ],
     });
-    expect(cache).toEqual({ [blobOf(MIT_TEXT)]: { spdx: "MIT" } });
+    expect(cache).toEqual({ [blobOf(MIT_TEXT)]: { kind: "spdx", spdx: "MIT" } });
   });
 
   it("uses the front matter license of a new record", async () => {
@@ -303,8 +318,10 @@ describe("license resolution during extraction", () => {
     expect(resume?.license).toMatchObject({ outcome: "ambiguous", level: "skill" });
     expect(resume?.license?.evidence).toContainEqual({
       kind: "file",
+      level: "ancestor",
       path: "skills/LICENSE",
       blob: blobOf(MIT_TEXT),
+      status: "identified",
       spdx: "MIT",
     });
   });
@@ -326,7 +343,7 @@ describe("license resolution during extraction", () => {
     expect(gh.fileReads).toContain("acme/skills/skills/LICENSE");
     expect(gh.fileReads).not.toContain("acme/skills/skills/resume/SKILL.md");
     expect(resumeOf(second.skills)?.license).toMatchObject({ outcome: "custom", level: "ancestor" });
-    expect(cache[blobOf(CUSTOM_TEXT)]).toEqual({ spdx: null });
+    expect(cache[blobOf(CUSTOM_TEXT)]).toEqual({ kind: "unknown" });
   });
 
   it("identifies again a changed root license while the skill fingerprint is unchanged", async () => {
@@ -346,9 +363,11 @@ describe("license resolution during extraction", () => {
   it("does not download a license text whose blob id is cached", async () => {
     const repo = licensed();
     const gh = new FakeGitHub([repo]);
-    const result = await extractRepo(gh, repo.meta, new Map(), { [blobOf(MIT_TEXT)]: { spdx: "MIT" } });
+    const result = await extractRepo(gh, repo.meta, new Map(), {
+      [blobOf(MIT_TEXT)]: { kind: "spdx", spdx: "MIT" },
+    });
     expect(gh.fileReads).not.toContain("acme/skills/skills/resume/LICENSE");
-    expect(resumeOf(result.skills)?.license?.spdx).toBe("MIT");
+    expect(resumeOf(result.skills)?.license).toMatchObject({ outcome: "identified", spdx: "MIT" });
   });
 
   it("downloads a root license shared by several skills once", async () => {
@@ -358,19 +377,64 @@ describe("license resolution during extraction", () => {
     const gh = new FakeGitHub([repo]);
     const result = await extractRepo(gh, repo.meta, new Map(), {});
     expect(gh.fileReads.filter((read) => read === "acme/skills/LICENSE")).toHaveLength(1);
-    expect(result.skills.map((skill) => skill.license?.spdx)).toEqual(["MIT", "MIT"]);
+    expect(result.skills.map((skill) => skill.license)).toMatchObject([
+      { outcome: "identified", spdx: "MIT" },
+      { outcome: "identified", spdx: "MIT" },
+    ]);
   });
 
-  it("treats a license file that cannot be downloaded as unidentified, without caching it", async () => {
+  it("reports a license file that cannot be downloaded as not re-read, without caching it", async () => {
     const repo = licensed();
     const gh = new FakeGitHub([repo]);
     gh.failFileFor.add("acme/skills/skills/resume/LICENSE");
     const cache: LicenseCache = {};
     const result = await extractRepo(gh, repo.meta, new Map(), cache);
-    expect(resumeOf(result.skills)?.license).toMatchObject({ outcome: "custom", level: "skill" });
+    expect(resumeOf(result.skills)?.license).toMatchObject({ outcome: "ambiguous", level: "skill", unread: "license-file" });
     expect(result.licenseFailedDownloads).toBe(1);
     expect(result.failedDownloads).toBe(0);
     expect(cache).toEqual({});
+  });
+
+  it("does not cache or use a downloaded text whose blob id differs from the listed one", async () => {
+    const repo = licensed();
+    const gh = new FakeGitHub([repo]);
+    // The branch moved between the listing and the download.
+    gh.serveInstead.set("acme/skills/skills/resume/LICENSE", APACHE_TEXT);
+    const cache: LicenseCache = {};
+    const result = await extractRepo(gh, repo.meta, new Map(), cache);
+    expect(resumeOf(result.skills)?.license).toMatchObject({ outcome: "ambiguous", unread: "license-file" });
+    expect(result.licenseFailedDownloads).toBe(1);
+    expect(cache).toEqual({});
+  });
+
+  it("checks the blob id on the raw bytes, a BOM and CRLF line endings included", async () => {
+    const repo = licensed();
+    repo.files["skills/resume/LICENSE"] = `\uFEFF${MIT_TEXT.replace(/\n/g, "\r\n")}`;
+    const gh = new FakeGitHub([repo]);
+    const result = await extractRepo(gh, repo.meta, new Map(), {});
+    expect(resumeOf(result.skills)?.license).toMatchObject({ outcome: "identified", spdx: "MIT" });
+  });
+
+  it("follows a symbolic license file to its target inside the repository", async () => {
+    const repo = acme();
+    repo.meta = makeRepo({ license: null });
+    repo.files.LICENSE = MIT_TEXT;
+    repo.links = { "skills/resume/LICENSE": "../../LICENSE" };
+    const gh = new FakeGitHub([repo]);
+    const cache: LicenseCache = {};
+    const result = await extractRepo(gh, repo.meta, new Map(), cache);
+    expect(resumeOf(result.skills)?.license).toMatchObject({ outcome: "identified", spdx: "MIT", level: "skill" });
+    expect(cache).toEqual({ [blobOf(MIT_TEXT)]: { kind: "spdx", spdx: "MIT" } });
+  });
+
+  it("reports a symbolic license file pointing outside the repository as not re-read", async () => {
+    const repo = acme();
+    repo.meta = makeRepo({ license: null });
+    repo.links = { "skills/resume/LICENSE": "../../../LICENSE" };
+    const gh = new FakeGitHub([repo]);
+    const result = await extractRepo(gh, repo.meta, new Map(), {});
+    expect(resumeOf(result.skills)?.license).toMatchObject({ outcome: "ambiguous", unread: "license-file" });
+    expect(result.licenseFailedDownloads).toBe(1);
   });
 
   it("downloads again the SKILL.md of an unchanged record written before license resolution", async () => {
@@ -389,7 +453,7 @@ describe("license resolution during extraction", () => {
     expect(resumeOf(second.skills)?.license).toMatchObject({ outcome: "custom", level: "skill" });
   });
 
-  it("keeps the previous license of a record kept after a failed SKILL.md download", async () => {
+  it("drops the license of a changed record whose SKILL.md cannot be downloaded", async () => {
     const repo = licensed();
     const gh = new FakeGitHub([repo]);
     const first = await extractRepo(gh, repo.meta, new Map(), {});
@@ -398,7 +462,25 @@ describe("license resolution during extraction", () => {
     gh.failFileFor.add("acme/skills/skills/resume/SKILL.md");
     const known = new Map(first.skills.map((skill) => [skill.id, skill]));
     const second = await extractRepo(gh, repo.meta, known, {});
-    expect(resumeOf(second.skills)).toEqual(resumeOf(first.skills));
+    const tree = await gh.getTree("acme/skills");
+    expect(resumeOf(second.skills)).toEqual({
+      ...resumeOf(first.skills),
+      license: { outcome: "ambiguous", level: "none", unread: "skill-file", evidence: [], revision: tree.sha },
+    });
+  });
+
+  it("reads the SKILL.md again for a record whose license was not re-read, even with an unchanged fingerprint", async () => {
+    const repo = licensed();
+    const gh = new FakeGitHub([repo]);
+    const first = await extractRepo(gh, repo.meta, new Map(), {});
+    const stale = first.skills.map((skill) => ({
+      ...skill,
+      license: { outcome: "ambiguous" as const, level: "none" as const, unread: "skill-file" as const, evidence: [] },
+    }));
+    gh.fileReads = [];
+    const second = await extractRepo(gh, repo.meta, new Map(stale.map((skill) => [skill.id, skill])), {});
+    expect(gh.fileReads).toContain("acme/skills/skills/resume/SKILL.md");
+    expect(resumeOf(second.skills)?.license).toMatchObject({ outcome: "identified", spdx: "MIT" });
   });
 
   it("resolves listed skills of a truncated tree and keeps records past the cut as they were", async () => {
@@ -444,6 +526,7 @@ describe("runExtract licenses", () => {
       custom: 0,
       ambiguous: 0,
       missing: 1,
+      notReRead: 0,
       unresolved: 0,
       failedDownloads: 0,
     });
@@ -470,7 +553,7 @@ describe("runExtract licenses", () => {
     const gh = new FakeGitHub([repo]);
     gh.failFileFor.add("acme/skills/LICENSE");
     const { stats } = await runExtract(gh, [repo.meta], [], noSave);
-    expect(stats.licenses?.failedDownloads).toBe(1);
+    expect(stats.licenses).toMatchObject({ failedDownloads: 1, notReRead: 1, ambiguous: 0 });
     expect(stats.failedRepos).toEqual([]);
   });
 });
