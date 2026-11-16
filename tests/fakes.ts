@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import type { GitHubClient } from "../pipeline/lib/github";
+import { gitBlobId } from "../pipeline/lib/license";
 import type { LlmClient, LlmResult, ReviewInput, TriageItem } from "../pipeline/lib/llm";
 import type { RepoMeta } from "../pipeline/lib/schemas";
 import type { TreeEntry } from "../pipeline/lib/skillfile";
@@ -7,14 +8,20 @@ import type { TreeEntry } from "../pipeline/lib/skillfile";
 export interface FakeRepo {
   meta: RepoMeta;
   files: Record<string, string>;
+  // Symbolic links: path -> link text (the target path), stored as a blob of mode 120000.
+  links?: Record<string, string>;
 }
 
 const sha1 = (text: string): string => createHash("sha1").update(text).digest("hex");
+export const blobIdOf = (text: string): string => gitBlobId(new TextEncoder().encode(text));
 
-// In-memory GitHub. Tree ids are derived from file contents, like git does,
+// In-memory GitHub. Blob ids are git blob ids of the contents and tree ids derive from them,
 // so editing a file in a test changes the fingerprint of its folder.
 export class FakeGitHub implements GitHubClient {
   fileReads: string[] = [];
+  // owner/repo/path -> content served instead of the listed one, as when a branch moves
+  // between the tree listing and the download.
+  serveInstead = new Map<string, string>();
   failTreeFor = new Set<string>();
   truncateTreeFor = new Set<string>();
   failFileFor = new Set<string>();
@@ -51,15 +58,21 @@ export class FakeGitHub implements GitHubClient {
     return this.find(target ?? fullName)?.meta ?? null;
   }
 
-  async getTree(fullName: string): Promise<{ entries: TreeEntry[]; truncated: boolean }> {
+  async getTree(fullName: string): Promise<{ entries: TreeEntry[]; truncated: boolean; sha?: string }> {
     if (this.inSet(this.failTreeFor, fullName)) throw new Error(`network error for ${fullName}`);
     const repo = this.find(fullName);
     if (!repo) return { entries: [], truncated: false };
-    const files = Object.entries(repo.files);
+    const links = Object.entries(repo.links ?? {});
+    const files = [...Object.entries(repo.files), ...links];
+    const linkPaths = new Set(links.map(([filePath]) => filePath));
     const entries: TreeEntry[] = [];
     const dirs = new Set<string>();
     for (const [filePath, content] of files) {
-      entries.push({ path: filePath, type: "blob", sha: sha1(content) });
+      entries.push(
+        linkPaths.has(filePath)
+          ? { path: filePath, type: "blob", sha: blobIdOf(content), mode: "120000" }
+          : { path: filePath, type: "blob", sha: blobIdOf(content), mode: "100644" },
+      );
       const parts = filePath.split("/");
       for (let depth = 1; depth < parts.length; depth += 1) {
         dirs.add(parts.slice(0, depth).join("/"));
@@ -68,12 +81,13 @@ export class FakeGitHub implements GitHubClient {
     for (const dir of dirs) {
       const inside = files
         .filter(([filePath]) => filePath.startsWith(`${dir}/`))
-        .map(([filePath, content]) => `${filePath}:${sha1(content)}`)
+        .map(([filePath, content]) => `${filePath}:${blobIdOf(content)}`)
         .sort()
         .join("\n");
-      entries.push({ path: dir, type: "tree", sha: sha1(inside) });
+      entries.push({ path: dir, type: "tree", sha: sha1(inside), mode: "040000" });
     }
-    return { entries, truncated: this.inSet(this.truncateTreeFor, fullName) };
+    const all = files.map(([filePath, content]) => `${filePath}:${blobIdOf(content)}`).sort().join("\n");
+    return { entries, truncated: this.inSet(this.truncateTreeFor, fullName), sha: sha1(all) };
   }
 
   async getFileText(fullName: string, _ref: string, filePath: string): Promise<string> {
@@ -81,9 +95,15 @@ export class FakeGitHub implements GitHubClient {
     if (this.inSet(this.failFileFor, `${fullName}/${filePath}`)) {
       throw new Error(`network error for ${fullName}/${filePath}`);
     }
-    const content = this.find(fullName)?.files[filePath];
+    const repo = this.find(fullName);
+    const content =
+      this.serveInstead.get(`${fullName}/${filePath}`) ?? repo?.files[filePath] ?? repo?.links?.[filePath];
     if (content === undefined) throw new Error(`missing file ${fullName}/${filePath}`);
     return content;
+  }
+
+  async getFileBytes(fullName: string, ref: string, filePath: string): Promise<Uint8Array> {
+    return new TextEncoder().encode(await this.getFileText(fullName, ref, filePath));
   }
 }
 

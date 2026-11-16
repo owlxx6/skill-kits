@@ -1,12 +1,11 @@
-import { createHash } from "node:crypto";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { extractRepo, runExtract } from "../pipeline/extract";
 import type { LicenseCache, SkillRecord } from "../pipeline/lib/schemas";
-import { FakeGitHub, type FakeRepo } from "./fakes";
+import { FakeGitHub, type FakeRepo, blobIdOf } from "./fakes";
 import { makeRepo, skillMd } from "./fixtures";
 import { APACHE_TEXT, CUSTOM_TEXT, MIT_TEXT } from "./license-texts";
 
-const blobOf = (text: string): string => createHash("sha1").update(text).digest("hex");
+const blobOf = blobIdOf;
 
 function acme(): FakeRepo {
   return {

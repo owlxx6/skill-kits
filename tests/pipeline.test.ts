@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -13,12 +12,12 @@ import {
 } from "../pipeline/lib/schemas";
 import { FatalLlmError } from "../pipeline/lib/errors";
 import { STEPS, loadReviews, runPipeline } from "../pipeline/run";
-import { FakeGitHub, FakeLlm, type FakeRepo } from "./fakes";
+import { FakeGitHub, FakeLlm, type FakeRepo, blobIdOf } from "./fakes";
 import { NOW, makeRepo, makeReview, skillMd } from "./fixtures";
 import { MIT_TEXT } from "./license-texts";
 import { LICENSE_RULES_VERSION } from "../pipeline/lib/license";
 
-const blobOf = (text: string): string => createHash("sha1").update(text).digest("hex");
+const blobOf = blobIdOf;
 
 const recent = "2026-11-05T00:00:00Z";
 

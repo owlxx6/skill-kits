@@ -5,6 +5,8 @@ export interface TreeEntry {
   path: string;
   type: "blob" | "tree";
   sha: string;
+  // Git file mode, when known: "120000" is a symbolic link.
+  mode?: string;
 }
 
 export interface SkillFrontmatter {

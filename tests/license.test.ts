@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import {
   decidingEvidence,
+  gitBlobId,
   identifyFrontmatterLicense,
   identifyLicenseText,
   indexLicenseFiles,
@@ -602,5 +603,12 @@ describe("decidingEvidence", () => {
   it("returns nothing when the license is not identified", () => {
     const result = resolve(skill("skills/pdf"), { skillPath: "skills/pdf" });
     expect(decidingEvidence(result, "skills/pdf")).toBeUndefined();
+  });
+});
+
+describe("gitBlobId", () => {
+  it("matches git hash-object", () => {
+    // printf 'hello\n' | git hash-object --stdin
+    expect(gitBlobId(new TextEncoder().encode("hello\n"))).toBe("ce013625030ba8dba906f756967f9e9ca394464a");
   });
 });

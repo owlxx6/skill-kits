@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { z } from "zod";
 import {
   type LicenseCache,
@@ -450,4 +451,9 @@ export function licenseCacheFile(cache: LicenseCache): LicenseCacheFile {
     rulesVersion: LICENSE_RULES_VERSION,
     entries: Object.fromEntries(Object.entries(cache).sort(([a], [b]) => compareText(a, b))),
   };
+}
+
+// The git blob id of a file's bytes: sha1 of "blob <length>\0" followed by the bytes.
+export function gitBlobId(bytes: Uint8Array): string {
+  return createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
 }

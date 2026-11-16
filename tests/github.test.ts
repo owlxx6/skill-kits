@@ -153,3 +153,53 @@ describe("getRepo", () => {
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 });
+
+describe("getFileBytes", () => {
+  it("returns the raw bytes, a leading BOM and CRLF line endings included", async () => {
+    const bytes = new Uint8Array([0xef, 0xbb, 0xbf, 0x4d, 0x49, 0x54, 0x0d, 0x0a]);
+    const fetchMock = stubFetch(new Response(bytes, { status: 200 }));
+    const result = await client().getFileBytes("acme/skills", "main", "skills/a b/LICENSE");
+    expect([...result]).toEqual([...bytes]);
+    expect(fetchMock.mock.calls[0]?.[0]).toBe(
+      "https://raw.githubusercontent.com/acme/skills/main/skills/a%20b/LICENSE",
+    );
+  });
+
+  it("retries on 503 then succeeds", async () => {
+    const fetchMock = stubFetch(new Response("", { status: 503 }), new Response("ok", { status: 200 }));
+    const result = await client().getFileBytes("acme/skills", "main", "LICENSE");
+    expect(new TextDecoder().decode(result)).toBe("ok");
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("refuses a file above the cap", async () => {
+    stubFetch(new Response(new Uint8Array(1_000_001), { status: 200 }));
+    await expect(client().getFileBytes("acme/skills", "main", "LICENSE")).rejects.toThrow("is larger than");
+  });
+});
+
+describe("getTree", () => {
+  const json = (status: number, body: unknown) =>
+    new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
+
+  it("keeps each entry's mode and returns the tree id", async () => {
+    stubFetch(
+      json(200, {
+        sha: "f".repeat(40),
+        truncated: false,
+        tree: [
+          { path: "LICENSE", type: "blob", sha: "a".repeat(40), mode: "120000" },
+          { path: "skills", type: "tree", sha: "b".repeat(40), mode: "040000" },
+        ],
+      }),
+    );
+    await expect(client().getTree("acme/skills", "main")).resolves.toEqual({
+      entries: [
+        { path: "LICENSE", type: "blob", sha: "a".repeat(40), mode: "120000" },
+        { path: "skills", type: "tree", sha: "b".repeat(40), mode: "040000" },
+      ],
+      truncated: false,
+      sha: "f".repeat(40),
+    });
+  });
+});
