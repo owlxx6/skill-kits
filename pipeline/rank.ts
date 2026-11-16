@@ -10,6 +10,7 @@ import type {
   Review,
   SkillRecord,
 } from "./lib/schemas";
+import { decidingEvidence, isLicenseEligible, licenseIneligibility } from "./lib/license";
 import { compareText } from "./lib/text";
 import { collectionKitScore, repoSignal, reviewScore, skillScore } from "./lib/scores";
 
@@ -33,6 +34,21 @@ const byScoreThenId = (a: Scored, b: Scored): number =>
 
 const duplicates = (ids: string[]): string[] =>
   ids.filter((id, index) => ids.indexOf(id) !== index);
+
+// Where an eligible skill's license comes from: the evidence file at its blob URL, or the
+// repository when the evidence is GitHub's detection.
+function licenseEvidenceOf(skill: SkillRecord, repo: RepoMeta): CatalogSkill["licenseEvidence"] {
+  const license = skill.license;
+  if (!license || license.level === "none") return undefined;
+  const evidence = decidingEvidence(license, skill.path);
+  if (!evidence) return undefined;
+  if (evidence.kind === "github") return { level: license.level, path: null, url: repo.url };
+  return {
+    level: license.level,
+    path: evidence.path,
+    url: `${repo.url}/blob/${repo.defaultBranch}/${evidence.path}`,
+  };
+}
 
 export function validateCuration(curation: Curation, kits: Kit[]): void {
   const kitIds = new Set(kits.map((kit) => kit.id));
@@ -67,13 +83,27 @@ export function buildCatalog(input: RankInput): Catalog {
   const fingerprintById = new Map(skills.map((skill) => [skill.id, skill.fingerprint]));
   const approvedIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
   const listedLower = new Set(repos.map((repo) => repo.fullName.toLowerCase()));
+  const allowed = config.filter.allowedLicenses;
+  const eligible = (skill: SkillRecord): boolean => isLicenseEligible(skill.license, allowed);
 
   const catalogSkills: CatalogSkill[] = [];
   const skillCountByRepo = new Map<string, number>();
+  // Keyed by lower-case repository name, to explain the removal of an approved collection.
+  const ineligibleByRepo = new Map<string, number>();
+  const licensesByRepo = new Map<string, Set<string>>();
   for (const skill of skills) {
     const repo = repoByName.get(skill.repo);
     if (!repo) continue;
     skillCountByRepo.set(skill.repo, (skillCountByRepo.get(skill.repo) ?? 0) + 1);
+    // Only an identified, allowed license lets a skill into the catalog.
+    if (!eligible(skill) || skill.license?.spdx === undefined) {
+      const key = skill.repo.toLowerCase();
+      ineligibleByRepo.set(key, (ineligibleByRepo.get(key) ?? 0) + 1);
+      continue;
+    }
+    const licenses = licensesByRepo.get(skill.repo) ?? new Set<string>();
+    licenses.add(skill.license.spdx);
+    licensesByRepo.set(skill.repo, licenses);
     const review = reviews.get(skill.fingerprint);
     if (!review) continue;
     const reviewValue = reviewScore(review.scores);
@@ -87,7 +117,8 @@ export function buildCatalog(input: RankInput): Catalog {
       name: skill.name,
       description: skill.description,
       url: skill.path ? `${repo.url}/tree/${repo.defaultBranch}/${skill.path}` : repo.url,
-      license: repo.license ?? "",
+      license: skill.license.spdx,
+      licenseEvidence: licenseEvidenceOf(skill, repo),
       stars: repo.stars,
       forks: repo.forks,
       pushedAt: repo.pushedAt,
@@ -105,6 +136,9 @@ export function buildCatalog(input: RankInput): Catalog {
     const total = skillCountByRepo.get(repo.fullName) ?? 0;
     const listed = catalogSkills.filter((skill) => skill.repo === repo.fullName);
     if (total < config.collection.minSkills || listed.length === 0) continue;
+    // Installing a repository installs all its skills: every one must be eligible.
+    if ((ineligibleByRepo.get(repo.fullName.toLowerCase()) ?? 0) > 0) continue;
+    const licenses = [...(licensesByRepo.get(repo.fullName) ?? [])].sort(compareText);
     const signal = signalByRepo.get(repo.fullName) ?? 0;
     const kitScores: Record<string, number> = {};
     for (const kit of kits) {
@@ -119,7 +153,8 @@ export function buildCatalog(input: RankInput): Catalog {
       id: repo.fullName,
       url: repo.url,
       description: repo.description,
-      license: repo.license ?? "",
+      license: licenses.length === 1 ? licenses[0] : "Mixed",
+      licenses,
       stars: repo.stars,
       forks: repo.forks,
       pushedAt: repo.pushedAt,
@@ -176,10 +211,16 @@ export function buildCatalog(input: RankInput): Catalog {
       const repoName = record?.repo ?? id.split(":")[0];
       if (!listedLower.has(repoName.toLowerCase())) return "repository no longer listed";
       if (!record) {
-        return id.includes(":")
-          ? "skill no longer found in the repository"
-          : `collection below ${config.collection.minSkills} skills or with no skill in the catalog`;
+        if (id.includes(":")) return "skill no longer found in the repository";
+        const ineligible = ineligibleByRepo.get(repoName.toLowerCase()) ?? 0;
+        if (ineligible > 0) {
+          const total = skills.filter((skill) => skill.repo.toLowerCase() === repoName.toLowerCase()).length;
+          return `license not eligible for ${ineligible} of ${total} skills of the repository`;
+        }
+        return `collection below ${config.collection.minSkills} skills or with no skill in the catalog`;
       }
+      const licenseReason = licenseIneligibility(record.license, allowed);
+      if (licenseReason) return licenseReason;
       const review = reviews.get(record.fingerprint);
       if (!review) return "not found in the catalog";
       const value = reviewScore(review.scores);
@@ -190,9 +231,15 @@ export function buildCatalog(input: RankInput): Catalog {
       return "not found in the catalog";
     };
     // An approved skill whose new version waits for a review is pending, not removed.
+    // An ineligible one is never reviewed, so it is removed instead.
     const pending = notShown.filter((id) => {
       const record = skillById.get(id);
-      return record !== undefined && repoByName.has(record.repo) && !reviews.has(record.fingerprint);
+      return (
+        record !== undefined &&
+        repoByName.has(record.repo) &&
+        eligible(record) &&
+        !reviews.has(record.fingerprint)
+      );
     });
     return {
       id: kit.id,

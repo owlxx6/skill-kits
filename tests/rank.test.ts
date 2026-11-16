@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import type { Curation, Review, SkillRecord } from "../pipeline/lib/schemas";
+import type { Curation, LicenseResolution, Review, SkillRecord } from "../pipeline/lib/schemas";
 import { buildCatalog, validateCuration } from "../pipeline/rank";
-import { NOW, fp, makeRepo, makeReview, makeSkill, testConfig, testKits } from "./fixtures";
+import { NOW, fp, githubLicense, makeRepo, makeReview, makeSkill, testConfig, testKits } from "./fixtures";
 
 const repo = makeRepo(); // repo signal = 5
 
@@ -394,6 +394,123 @@ describe("buildCatalog", () => {
 
   it("gives the same output for the same input", () => {
     expect(JSON.stringify(build(emptyCuration))).toBe(JSON.stringify(build(emptyCuration)));
+  });
+});
+
+describe("buildCatalog licenses", () => {
+  const custom: LicenseResolution = {
+    outcome: "custom",
+    level: "skill",
+    evidence: [{ kind: "file", path: "skills/f/LICENSE", blob: fp("9"), spdx: null }],
+  };
+  const skillFile = (dir: string, spdx: string): LicenseResolution => ({
+    outcome: "identified",
+    spdx,
+    level: "skill",
+    evidence: [
+      { kind: "file", path: `${dir}/LICENSE`, blob: fp("1"), spdx },
+      { kind: "github", value: "NOASSERTION", spdx: null },
+    ],
+  });
+  const withLicense = (letter: string, license: LicenseResolution | undefined): SkillRecord => {
+    const { license: _default, ...record } = skill(letter);
+    return license === undefined ? record : { ...record, license };
+  };
+  const buildWith = (list: SkillRecord[], curation: Curation = emptyCuration) =>
+    buildCatalog({ repos: [repo], skills: list, reviews, kits: testKits, curation, config: testConfig, now: NOW });
+
+  it("keeps out skills whose license is not identified and allowed", () => {
+    const list = [
+      withLicense("a", custom),
+      withLicense("b", { outcome: "ambiguous", level: "skill", evidence: [] }),
+      withLicense("c", githubLicense("GPL-3.0")),
+      ...["d", "e", "f"].map(skill),
+    ];
+    expect(buildWith(list).skills).toEqual([]);
+    const missing = buildWith([withLicense("a", { outcome: "missing", level: "none", evidence: [] }), skill("b")]);
+    expect(missing.skills.map((entry) => entry.name)).toEqual(["b"]);
+  });
+
+  it("keeps out a record written before license resolution", () => {
+    const catalog = buildWith([withLicense("a", undefined), skill("b")]);
+    expect(catalog.skills.map((entry) => entry.name)).toEqual(["b"]);
+  });
+
+  it("shows the license resolved for the skill and where it comes from", () => {
+    const catalog = buildWith([withLicense("a", skillFile("skills/a", "Apache-2.0")), skill("b")]);
+    const [a, b] = catalog.skills;
+    expect(a).toMatchObject({
+      license: "Apache-2.0",
+      licenseEvidence: {
+        level: "skill",
+        path: "skills/a/LICENSE",
+        url: "https://github.com/acme/skills/blob/main/skills/a/LICENSE",
+      },
+    });
+    expect(b).toMatchObject({
+      license: "MIT",
+      licenseEvidence: { level: "repository", path: null, url: "https://github.com/acme/skills" },
+    });
+  });
+
+  it("links front matter evidence to the SKILL.md file", () => {
+    const license: LicenseResolution = {
+      outcome: "identified",
+      spdx: "MIT",
+      level: "skill",
+      evidence: [{ kind: "frontmatter", path: "skills/a/SKILL.md", value: "mit", spdx: "MIT" }],
+    };
+    const [a] = buildWith([withLicense("a", license)]).skills;
+    expect(a.licenseEvidence).toEqual({
+      level: "skill",
+      path: "skills/a/SKILL.md",
+      url: "https://github.com/acme/skills/blob/main/skills/a/SKILL.md",
+    });
+  });
+
+  it("does not list a collection with an ineligible skill, but keeps its eligible skills", () => {
+    // f has no review, so it is not in the catalog either way; its license still blocks the collection.
+    const list = [...["a", "b", "c", "d", "e"].map(skill), withLicense("f", custom)];
+    const catalog = buildWith(list, {
+      "resume-career": { approved: ["acme/skills"], rejected: [] },
+      "web-app": { approved: [], rejected: [] },
+    });
+    expect(catalog.collections).toEqual([]);
+    expect(catalog.skills.map((entry) => entry.name)).toEqual(["a", "b", "c"]);
+    expect(catalog.kits[0].removed).toEqual([
+      { id: "acme/skills", reason: "license not eligible for 1 of 6 skills of the repository" },
+    ]);
+    expect(catalog.kits[0].proposals.collections).toEqual([]);
+  });
+
+  it("gives a collection the single license of its skills, or Mixed", () => {
+    const same = buildWith(skills).collections[0];
+    expect(same).toMatchObject({ license: "MIT", licenses: ["MIT"] });
+    const mixed = buildWith([withLicense("a", skillFile("skills/a", "Apache-2.0")), ...["b", "c", "d"].map(skill)]);
+    expect(mixed.collections[0]).toMatchObject({ license: "Mixed", licenses: ["Apache-2.0", "MIT"] });
+  });
+
+  it.each([
+    ["license custom", custom],
+    ["license GPL-3.0 not allowed", githubLicense("GPL-3.0")],
+    ["license unresolved", undefined],
+  ])("reports an approved skill that lost eligibility: %s", (reason, license) => {
+    const list = [withLicense("a", license), ...["b", "c"].map(skill)];
+    const catalog = buildWith(list, {
+      "resume-career": { approved: ["acme/skills:skills/a"], rejected: [] },
+      "web-app": { approved: [], rejected: [] },
+    });
+    expect(catalog.kits[0].removed).toEqual([{ id: "acme/skills:skills/a", reason }]);
+    expect(catalog.kits[0].pending).toEqual([]);
+  });
+
+  it("removes rather than keeps pending an approved ineligible skill that has no review", () => {
+    const catalog = buildWith([withLicense("f", { outcome: "missing", level: "none", evidence: [] })], {
+      "resume-career": { approved: ["acme/skills:skills/f"], rejected: [] },
+      "web-app": { approved: [], rejected: [] },
+    });
+    expect(catalog.kits[0].pending).toEqual([]);
+    expect(catalog.kits[0].removed).toEqual([{ id: "acme/skills:skills/f", reason: "license missing" }]);
   });
 });
 
