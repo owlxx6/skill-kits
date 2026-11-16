@@ -7,6 +7,7 @@ import { runExtract } from "./extract";
 import { filterRepos } from "./filter";
 import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
+import { isLicenseEligible } from "./lib/license";
 import type { LlmClient } from "./lib/llm";
 import {
   CatalogSchema,
@@ -21,6 +22,7 @@ import {
   ReviewRecordSchema,
   type RunInfo,
   RunInfoSchema,
+  type SkillRecord,
   SkillRecordSchema,
   SourcesSchema,
   type TriageCache,
@@ -202,6 +204,9 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const curation = await readYamlFile(paths.curation, CurationSchema);
     // Approved skills are re-reviewed first, even when triage no longer proposes a kit for them.
     const priorityIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
+    // A skill whose license keeps it out of the catalog is neither triaged nor reviewed.
+    const isEligible = (skill: SkillRecord): boolean =>
+      isLicenseEligible(skill.license, config.filter.allowedLicenses);
     const llm = deps.getLlm(config.review.model);
     const stats = emptyReviewStats();
     const clock = deps.clock ?? Date.now;
@@ -212,7 +217,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     try {
       const nextTriage = await runTriage(
         llm,
-        skills,
+        skills.filter(isEligible),
         triage,
         kits,
         config.review.triageBatchSize,
@@ -226,7 +231,15 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
       const max = options.dryRun
         ? Math.min(config.review.maxReviewsPerRun, DRY_RUN_MAX_REVIEWS)
         : config.review.maxReviewsPerRun;
-      const { selected, deferred } = selectForReview(skills, nextTriage, reviewed, repos, max, priorityIds);
+      const { selected, deferred } = selectForReview(
+        skills,
+        nextTriage,
+        reviewed,
+        repos,
+        max,
+        priorityIds,
+        isEligible,
+      );
       stats.deferred = deferred;
 
       await runReviews(
