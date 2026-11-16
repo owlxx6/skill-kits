@@ -61,3 +61,23 @@ describe("search index", () => {
     expect(searchDocuments(catalog).map((doc) => doc.kind)).toEqual(["skill", "collection"]);
   });
 });
+
+describe("public search metadata", () => {
+  it("includes mixed license labels without exporting internal review or pending data", () => {
+    const fixture = structuredClone(catalog);
+    fixture.skills[0].review.security = { level: "notice", notes: ["PRIVATE_FINDING_MARKER"] };
+    fixture.kits = [{
+      id: "resume-career", title: "Career", description: "Career skills", collections: [], skills: [],
+      pending: ["acme/skills:skills/pending"],
+      pendingReasons: { "acme/skills:skills/pending": "PRIVATE_PENDING_MARKER" },
+      removed: [], proposals: { collections: [], skills: [] },
+    }];
+    fixture.collections[0].license = "Mixed";
+    fixture.collections[0].licenses = ["GPL-3.0", "No license"];
+    const docs = searchDocuments(fixture);
+    expect(docs.find((doc) => doc.kind === "collection")?.license).toBe("Mixed (GPL-3.0, No license)");
+    const serialized = JSON.stringify(buildSearchIndex(fixture));
+    expect(serialized).not.toContain("PRIVATE_FINDING_MARKER");
+    expect(serialized).not.toContain("PRIVATE_PENDING_MARKER");
+  });
+});

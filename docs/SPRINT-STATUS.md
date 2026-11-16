@@ -44,3 +44,12 @@ Exit zero means the branch contains the accepted baseline. Report that result an
 ## Sync state
 
 Prepared locally on Lenovo. Remote publication and the Mac fetch/merge need separate verification. Repeat the AGENTS.md checklist after every validated sprint.
+
+
+## Public license information follow-up
+
+The latest license branch at 0dc3b37 was fast-forwarded into the frontend branch for contract compatibility. Optional licenseOutcome/category/evidence and mixed collections are usable without changing the shared schemas.
+The owner accepted the resolver limitation where a restriction on a Copyright line can be ignored. That finding is not a merge blocker at the owner's request; no frontend workaround or resolver change was made.
+Public skill cards and detail pages no longer render review.security. Methodology now describes skill-level license resolution, topic-search thresholds versus nominations, and the actual review/ranking process. Pending reasons remain unused by public pages. Mixed collection labels are expanded in cards, repository pages, homepage and search. Optional skill evidence links and categories are displayed when supplied, with legacy catalogs still supported.
+Checks: 596 tests, typecheck, site build (37 pages), site:verify. Rendered pages were checked for removed public security notices and permissive-only promises. Added regressions for mixed/legacy license display and exclusion of internal findings/pending reasons from the search index. Desktop/mobile rendering of these text changes has not been independently repeated.
+No package, lockfile, catalog or workflow changes. No account UI. Public main and the draft safety branch remain untouched. Ready for feature-branch review.

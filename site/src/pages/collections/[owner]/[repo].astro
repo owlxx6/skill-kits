@@ -4,7 +4,7 @@ import Breadcrumbs from "../../../components/Breadcrumbs.astro";
 import CopyCommand from "../../../components/CopyCommand.astro";
 import Icon from "../../../components/Icon.astro";
 import SkillRow from "../../../components/SkillRow.astro";
-import { collectionInstallCommand, collectionSlug, formatCount, kitsOfCollection, kitsOfSkill, loadCatalog } from "../../../lib/catalog";
+import { collectionInstallCommand, collectionLicenseLabel, collectionSlug, formatCount, kitsOfCollection, kitsOfSkill, loadCatalog } from "../../../lib/catalog";
 import { kitIcon } from "../../../lib/icons";
 
 export function getStaticPaths() {
@@ -20,6 +20,7 @@ const collection = catalog.collections.find((entry) => entry.id === repoId) ?? n
 const skills = catalog.skills.filter((skill) => skill.repo === repoId);
 const kits = kitsOfCollection(catalog, repoId);
 const sample = skills[0];
+const listedLicenses = [...new Set(skills.map((skill) => skill.license))].sort();
 // The breadcrumb goes through a kit when the collection, or else one of its skills, belongs to one.
 const crumbKit = kits[0] ?? skills.flatMap((skill) => kitsOfSkill(catalog, skill.id))[0];
 const crumbs = [
@@ -37,7 +38,7 @@ const crumbs = [
         <h1>{repoId}</h1>
         {sample && (
           <p class="meta">
-            <span><Icon name="scale" size={14} />{sample.license}</span>
+
             <span><Icon name="star" size={14} />{formatCount(sample.stars)} stars</span>
             <span><Icon name="git-fork" size={14} />{formatCount(sample.forks)} forks</span>
             <a href={`https://github.com/${repoId}`}><Icon name="external-link" size={14} />Repository on GitHub</a>
@@ -49,6 +50,10 @@ const crumbs = [
       </div>
     </header>
 
+    <p class="muted small">
+      <Icon name="scale" size={14} />
+      {collection ? collectionLicenseLabel(collection) : "Licenses of listed skills: " + listedLicenses.join(", ")}
+    </p>
     {collection?.description && <p class="lead summary">{collection.description}</p>}
 
     <section class="card install" aria-labelledby="install-title">

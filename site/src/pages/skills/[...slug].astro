@@ -3,6 +3,7 @@ import Base from "../../layouts/Base.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CopyCommand from "../../components/CopyCommand.astro";
 import Icon from "../../components/Icon.astro";
+import LicenseDetails from "../../components/LicenseDetails.astro";
 import { collectionHref, formatCount, kitsOfSkill, loadCatalog, skillInstallCommand, skillSlug } from "../../lib/catalog";
 import { kitIcon } from "../../lib/icons";
 
@@ -41,13 +42,12 @@ const percent = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
           <span><Icon name="git-fork" size={14} />{formatCount(skill.forks)} forks</span>
         </p>
         <div class="badges">
-          <span class="badge"><Icon name="scale" size={14} />{skill.license}</span>
+          <LicenseDetails skill={skill} />
           {skill.humanReviewed ? (
             <span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span>
           ) : (
             <span class="badge"><Icon name="bot" size={14} />AI-reviewed</span>
           )}
-          {review.security.level === "notice" && <span class="badge notice"><Icon name="shield-alert" size={14} />Security notice</span>}
         </div>
       </div>
     </header>
@@ -98,16 +98,6 @@ const percent = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
           </section>
         )}
       </div>
-    )}
-
-    {review.security.level !== "none" && (
-      <section class="callout notice block" aria-labelledby="security-title">
-        <Icon name="shield-alert" size={22} />
-        <div>
-          <h2 id="security-title">Security notice</h2>
-          <ul>{review.security.notes.map((note) => <li>{note}</li>)}</ul>
-        </div>
-      </section>
     )}
 
     {kits.length > 0 && (
