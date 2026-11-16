@@ -95,7 +95,7 @@ describe("identifyLicenseText", () => {
   });
 
   it("identifies a text reflowed with Markdown and curly quotes", () => {
-    const reflowed = `# MIT License\n\n${MIT_TEXT.replace(/\n/g, " ").replace(/"/g, "“")}`;
+    const reflowed = `# MIT License\n\n${MIT_TEXT.replace(/\n/g, " ").replace(/"/g, "\u201C")}`;
     expect(identifyLicenseText(reflowed)).toBe("MIT");
   });
 

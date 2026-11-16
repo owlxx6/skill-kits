@@ -36,8 +36,8 @@ export function isLicenseFileName(name: string): boolean {
 // a reflowed or Markdown-formatted copy of a license reads the same.
 function normalizeText(text: string): string {
   return text
-    .replace(/[‘’]/g, "'")
-    .replace(/[“”]/g, '"')
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
     .replace(/[*#>`_]/g, " ")
     .replace(/\s+/g, " ")
     .toLowerCase()
