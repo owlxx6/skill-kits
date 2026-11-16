@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -15,6 +16,9 @@ import { STEPS, loadReviews, runPipeline } from "../pipeline/run";
 import { FakeGitHub, FakeLlm, type FakeRepo } from "./fakes";
 import { NOW, makeRepo, makeReview, skillMd } from "./fixtures";
 import { MIT_TEXT } from "./license-texts";
+import { LICENSE_RULES_VERSION } from "../pipeline/lib/license";
+
+const blobOf = (text: string): string => createHash("sha1").update(text).digest("hex");
 
 const recent = "2026-11-05T00:00:00Z";
 
@@ -429,8 +433,8 @@ describe("runPipeline", () => {
     expect(summary).toContain(`- \`${atsId}\` - license missing`);
   });
 
-  it("publishes the one skill whose folder has an MIT license from a repository with no GitHub license", async () => {
-    const split: FakeRepo = {
+  function splitRepo(): FakeRepo {
+    return {
       meta: makeRepo({
         fullName: "split/skills",
         url: "https://github.com/split/skills",
@@ -445,11 +449,20 @@ describe("runPipeline", () => {
         "skills/negotiation/SKILL.md": skillMd("negotiation", "Negotiates an offer."),
       },
     };
-    gh = makeGitHub({ extraRepos: [split] });
+  }
+
+  async function nominateSplit(): Promise<void> {
+    gh = makeGitHub({ extraRepos: [splitRepo()] });
     const sourcesFile = path.join(root, "data", "sources.yaml");
     const sources = await readFile(sourcesFile, "utf8");
     // A nominated repository with 3 stars: kept despite minStars.
     await writeFile(sourcesFile, sources.replace("repos:\n", "repos:\n  - split/skills\n"));
+  }
+
+  const licensesFile = (): string => path.join(root, "data", "cache", "licenses.json");
+
+  it("publishes the one skill whose folder has an MIT license from a repository with no GitHub license", async () => {
+    await nominateSplit();
     await run();
 
     const skills = z
@@ -477,8 +490,49 @@ describe("runPipeline", () => {
     expect(llm.reviewCalls.map((call) => call.name)).not.toContain("negotiation");
     expect(catalog.collections.map((collection) => collection.id)).not.toContain("split/skills");
 
-    const licenseCache = JSON.parse(await readFile(path.join(root, "data", "cache", "licenses.json"), "utf8"));
-    expect(Object.values(licenseCache)).toEqual([{ spdx: "MIT" }]);
+    const licenseCache = JSON.parse(await readFile(licensesFile(), "utf8"));
+    expect(licenseCache).toEqual({
+      rulesVersion: LICENSE_RULES_VERSION,
+      entries: { [blobOf(MIT_TEXT)]: { spdx: "MIT" } },
+    });
+  });
+
+  it.each([
+    ["written by other identification rules", { rulesVersion: LICENSE_RULES_VERSION + 1, entries: {} }],
+    ["in the shape written before rules versions", {}],
+  ])("identifies every license text again when the cache was %s", async (_label, shape) => {
+    await nominateSplit();
+    await mkdir(path.dirname(licensesFile()), { recursive: true });
+    // A stale answer for the MIT text: it must not be used.
+    const stale = { [blobOf(MIT_TEXT)]: { spdx: null } };
+    const file = "entries" in shape ? { ...shape, entries: stale } : stale;
+    await writeFile(licensesFile(), JSON.stringify(file));
+    await run();
+    expect(gh.fileReads).toContain("split/skills/skills/salary-coach/LICENSE");
+    const catalog = await readCatalog(root);
+    expect(catalog.skills.map((skill) => skill.name)).toContain("salary-coach");
+    expect(JSON.parse(await readFile(licensesFile(), "utf8"))).toEqual({
+      rulesVersion: LICENSE_RULES_VERSION,
+      entries: { [blobOf(MIT_TEXT)]: { spdx: "MIT" } },
+    });
+  });
+
+  it("replaces a discarded cache file even when no license text is downloaded", async () => {
+    await mkdir(path.dirname(licensesFile()), { recursive: true });
+    await writeFile(licensesFile(), JSON.stringify({ ["a".repeat(40)]: { spdx: "MIT" } }));
+    await run();
+    expect(JSON.parse(await readFile(licensesFile(), "utf8"))).toEqual({
+      rulesVersion: LICENSE_RULES_VERSION,
+      entries: {},
+    });
+  });
+
+  it("does not download a license text again with a cache of the current rules", async () => {
+    await nominateSplit();
+    await run();
+    gh = makeGitHub({ extraRepos: [splitRepo()] });
+    await run(["extract"]);
+    expect(gh.fileReads).not.toContain("split/skills/skills/salary-coach/LICENSE");
   });
 
   it("keeps a changed approved skill pending when its review fails", async () => {

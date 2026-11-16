@@ -1,4 +1,11 @@
-import type { LicenseEvidence, LicenseLevel, LicenseResolution } from "./schemas";
+import { z } from "zod";
+import {
+  type LicenseCache,
+  LicenseCacheSchema,
+  type LicenseEvidence,
+  type LicenseLevel,
+  type LicenseResolution,
+} from "./schemas";
 import { type TreeEntry, skillFilePath } from "./skillfile";
 import { compareText } from "./text";
 
@@ -116,10 +123,35 @@ export type FrontmatterLicense =
   | { kind: "file"; names: string[] }
   | { kind: "custom" };
 
-// GNU ids also come as -only or -or-later; GitHub reports both under the base id.
+// Common spellings that name one license without doubt, lower case.
+const SPDX_ALIASES = new Map<string, string>([
+  ["mit license", "MIT"],
+  ["the mit license", "MIT"],
+  ["apache 2.0", "Apache-2.0"],
+  ["apache-2", "Apache-2.0"],
+  ["apache license 2.0", "Apache-2.0"],
+  ["apache license, version 2.0", "Apache-2.0"],
+  ["bsd 3-clause", "BSD-3-Clause"],
+  ["bsd-3", "BSD-3-Clause"],
+  ["new bsd", "BSD-3-Clause"],
+  ["bsd 2-clause", "BSD-2-Clause"],
+  ["simplified bsd", "BSD-2-Clause"],
+  ["isc license", "ISC"],
+]);
+
+// SPDX expression operators are upper case. Dual licensing is not decided yet, so an
+// expression is custom, even when it also names a file.
+const SPDX_OPERATOR = /(?:^|[\s(])(?:OR|AND|WITH)(?=[\s)]|$)/;
+
+// A known id (case-insensitive) or an alias. GNU ids also come as -only or -or-later;
+// GitHub reports both under the base id.
 function knownSpdx(value: string): string | null {
-  const lower = value.trim().toLowerCase().replace(/^((?:a|l)?gpl-\d\.\d)-(?:only|or-later)$/, "$1");
-  return KNOWN_BY_LOWER.get(lower) ?? null;
+  const lower = value
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase()
+    .replace(/^((?:a|l)?gpl-\d\.\d)-(?:only|or-later)$/, "$1");
+  return KNOWN_BY_LOWER.get(lower) ?? SPDX_ALIASES.get(lower) ?? null;
 }
 
 // A word names a file when it is a license file name with an extension or suffix, an
@@ -138,6 +170,7 @@ function fileReference(word: string): string | null {
 export function identifyFrontmatterLicense(value: string): FrontmatterLicense {
   const spdx = knownSpdx(value);
   if (spdx) return { kind: "spdx", spdx };
+  if (SPDX_OPERATOR.test(value)) return { kind: "custom" };
   const names: string[] = [];
   for (const word of value.split(/[\s,;]+/)) {
     const name = fileReference(word);
@@ -204,6 +237,8 @@ interface Gathered {
   frontmatter: FrontmatterLicense | null;
   missingReference: boolean;
   ancestorFiles: LicenseFileRef[];
+  // Files of the nearest ancestor folder that has any: that folder decides.
+  nearestAncestorFiles: LicenseFileRef[];
   rootFiles: LicenseFileRef[];
 }
 
@@ -220,10 +255,19 @@ function gather(index: LicenseIndex, query: LicenseQuery): Gathered {
       else if (!skillFiles.some((file) => file.path === filePath)) skillFiles.push({ path: filePath, blob });
     }
   }
-  const ancestorFiles = ancestorDirs(query.skillPath).flatMap((dir) => index.byDir.get(dir) ?? []);
+  const ancestorGroups = ancestorDirs(query.skillPath)
+    .map((dir) => index.byDir.get(dir) ?? [])
+    .filter((files) => files.length > 0);
   // For a skill at the root, root files are its own: they count at the skill level.
   const rootFiles = query.skillPath ? (index.byDir.get("") ?? []) : [];
-  return { skillFiles, frontmatter, missingReference, ancestorFiles, rootFiles };
+  return {
+    skillFiles,
+    frontmatter,
+    missingReference,
+    ancestorFiles: ancestorGroups.flat(),
+    nearestAncestorFiles: ancestorGroups[0] ?? [],
+    rootFiles,
+  };
 }
 
 // The files whose text must be identified to resolve this skill, nearest first.
@@ -245,18 +289,22 @@ function decide(pieces: (string | null)[]): Decision {
   return { outcome: "ambiguous" };
 }
 
-// At the repository level, an identified root file must agree with GitHub's detection;
-// an unidentified root file defers to GitHub's detected id.
-function decideRepository(rootIds: (string | null)[], github: string | null): Decision {
-  if (rootIds.length === 0) {
-    return isDetected(github) ? { outcome: "identified", spdx: github } : { outcome: "missing" };
+// Root files next to GitHub's detection. null and NOASSERTION are no detection, not a
+// disagreement: an identified root file decides unless GitHub detected another id, and an
+// unidentified root file defers to GitHub's detected id. byGithub tells which decided.
+function decideWithGithub(
+  rootIds: (string | null)[],
+  github: string | null,
+): Decision & { byGithub: boolean } {
+  const files = rootIds.length === 0 ? null : decide(rootIds);
+  if (files === null || files.outcome === "custom") {
+    if (isDetected(github)) return { outcome: "identified", spdx: github, byGithub: true };
+    return { outcome: files === null ? "missing" : "custom", byGithub: false };
   }
-  const files = decide(rootIds);
-  if (files.outcome === "custom") {
-    return isDetected(github) ? { outcome: "identified", spdx: github } : { outcome: "custom" };
+  if (files.outcome === "identified" && isDetected(github) && files.spdx !== github) {
+    return { outcome: "ambiguous", byGithub: false };
   }
-  if (files.outcome === "identified" && files.spdx === github) return files;
-  return { outcome: "ambiguous" };
+  return { ...files, byGithub: false };
 }
 
 export function resolveLicense(
@@ -306,17 +354,36 @@ export function resolveLicense(
 
   if (skillFileEvidence.length > 0 || frontmatterEvidence.length > 0) {
     if (gathered.missingReference) return result({ outcome: "ambiguous" }, "skill");
+    // A skill at the root with only root license files: they are also the repository's,
+    // so GitHub's detection applies as for any other skill. GitHub's id, when used, is
+    // repository-level evidence.
+    if (query.skillPath === "" && frontmatterEvidence.length === 0) {
+      const { byGithub, ...decision } = decideWithGithub(spdxOf(skillFileEvidence), query.githubLicense);
+      return result(decision, byGithub ? "repository" : "skill");
+    }
     // A front matter reference defers to the file: it is not a piece of its own.
     const pieces = [
       ...spdxOf(skillFileEvidence),
       ...(gathered.frontmatter?.kind === "file" ? [] : spdxOf(frontmatterEvidence)),
     ];
-    return result(decide(pieces), "skill");
+    const decision = decide(pieces);
+    // A root skill's root files are the repository's too: another id detected by GitHub
+    // is a disagreement.
+    const rootDisagrees =
+      query.skillPath === "" &&
+      skillFileEvidence.length > 0 &&
+      decision.outcome === "identified" &&
+      isDetected(query.githubLicense) &&
+      decision.spdx !== query.githubLicense;
+    return result(rootDisagrees ? { outcome: "ambiguous" } : decision, "skill");
   }
   // Files past the cut are unknown: a license in the skill folder may be among them.
   if (query.truncated) return result({ outcome: "ambiguous" }, "none");
-  if (ancestorEvidence.length > 0) return result(decide(spdxOf(ancestorEvidence)), "ancestor");
-  const repository = decideRepository(spdxOf(rootEvidence), query.githubLicense);
+  // The nearest ancestor folder with a license governs its subtree; farther ones are recorded.
+  if (gathered.nearestAncestorFiles.length > 0) {
+    return result(decide(spdxOf(fileEvidence(gathered.nearestAncestorFiles))), "ancestor");
+  }
+  const { byGithub: _byGithub, ...repository } = decideWithGithub(spdxOf(rootEvidence), query.githubLicense);
   return result(repository, repository.outcome === "missing" ? "none" : "repository");
 }
 
@@ -356,4 +423,31 @@ export function isLicenseEligible(
   allowed: readonly string[],
 ): boolean {
   return licenseIneligibility(license, allowed) === null;
+}
+
+// Bump whenever identification changes (text rules, file names): cached results from other
+// rules are discarded and every license text is identified again.
+export const LICENSE_RULES_VERSION = 1;
+
+export const LicenseCacheFileSchema = z.object({
+  rulesVersion: z.number().int(),
+  entries: LicenseCacheSchema,
+});
+export type LicenseCacheFile = z.infer<typeof LicenseCacheFileSchema>;
+
+// The cached entries when they were identified by the current rules. Another version, the
+// shape written before rules versions, or no file: an empty cache. A file of the current
+// version with an invalid entry is an error, like any corrupted cache.
+export function readLicenseCache(data: unknown): LicenseCache {
+  const versioned = z.object({ rulesVersion: z.number().int() }).safeParse(data);
+  if (!versioned.success || versioned.data.rulesVersion !== LICENSE_RULES_VERSION) return {};
+  return LicenseCacheFileSchema.parse(data).entries;
+}
+
+// Sorted by blob id so the versioned cache changes only where a file changed.
+export function licenseCacheFile(cache: LicenseCache): LicenseCacheFile {
+  return {
+    rulesVersion: LICENSE_RULES_VERSION,
+    entries: Object.fromEntries(Object.entries(cache).sort(([a], [b]) => compareText(a, b))),
+  };
 }

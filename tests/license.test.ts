@@ -6,9 +6,12 @@ import {
   identifyLicenseText,
   indexLicenseFiles,
   isLicenseFileName,
+  LICENSE_RULES_VERSION,
+  licenseCacheFile,
   licenseFilesFor,
   licenseIneligibility,
   type LicenseQuery,
+  readLicenseCache,
   resolveLicense,
 } from "../pipeline/lib/license";
 import type { LicenseOutcome, LicenseResolution } from "../pipeline/lib/schemas";
@@ -134,7 +137,34 @@ describe("identifyFrontmatterLicense", () => {
     expect(identifyFrontmatterLicense(value)).toEqual({ kind: "file", names });
   });
 
-  it.each(["Proprietary", "MIT License", "Apache 2.0", "MIT OR Apache-2.0", "MIT-only", "see the license file", ""])(
+  it.each([
+    ["MIT License", "MIT"],
+    ["The MIT License", "MIT"],
+    [" mit license ", "MIT"],
+    ["Apache 2.0", "Apache-2.0"],
+    ["Apache-2", "Apache-2.0"],
+    ["Apache License 2.0", "Apache-2.0"],
+    ["apache license, version 2.0", "Apache-2.0"],
+    ["BSD 3-Clause", "BSD-3-Clause"],
+    ["BSD-3", "BSD-3-Clause"],
+    ["New BSD", "BSD-3-Clause"],
+    ["BSD 2-Clause", "BSD-2-Clause"],
+    ["Simplified BSD", "BSD-2-Clause"],
+    ["ISC License", "ISC"],
+  ])("reads the common spelling %j as a known SPDX id", (value, spdx) => {
+    expect(identifyFrontmatterLicense(value)).toEqual({ kind: "spdx", spdx });
+  });
+
+  it.each([
+    "MIT OR Apache-2.0",
+    "MIT AND ISC",
+    "Apache-2.0 WITH LLVM-exception",
+    "(MIT OR Apache-2.0), see LICENSE",
+  ])("reads the license expression %j as custom: dual licensing is not decided yet", (value) => {
+    expect(identifyFrontmatterLicense(value)).toEqual({ kind: "custom" });
+  });
+
+  it.each(["Proprietary", "MIT-only", "BSD", "Apache", "MIT License v2", "see the license file", ""])(
     "reads %j as custom",
     (value) => {
       expect(identifyFrontmatterLicense(value)).toEqual({ kind: "custom" });
@@ -270,17 +300,34 @@ describe("resolveLicense", () => {
     expect(result).toMatchObject({ outcome: "identified", spdx: "BSD-3-Clause", level: "ancestor" });
   });
 
-  it("lists ancestor files nearest first and is ambiguous when they disagree", () => {
+  it("lets the nearest ancestor folder with a license decide, and records the farther ones", () => {
     const result = resolve(
       { ...skill("a/b/skill"), "a/b/LICENSE": MIT_TEXT, "a/LICENSE": APACHE_TEXT },
       { skillPath: "a/b/skill" },
     );
-    expect(result).toMatchObject({ outcome: "ambiguous", level: "ancestor" });
+    expect(result).toMatchObject({ outcome: "identified", spdx: "MIT", level: "ancestor" });
+    expect(decidingEvidence(result, "a/b/skill")).toMatchObject({ kind: "file", path: "a/b/LICENSE" });
     // GitHub detected nothing (null): no GitHub entry is recorded.
     expect(result.evidence.map((entry) => (entry.kind === "file" ? entry.path : entry.kind))).toEqual([
       "a/b/LICENSE",
       "a/LICENSE",
     ]);
+  });
+
+  it("keeps the nearest ancestor's custom text even when a farther one is permissive", () => {
+    const result = resolve(
+      { ...skill("a/b/skill"), "a/b/LICENSE": CUSTOM_TEXT, "a/LICENSE": MIT_TEXT },
+      { skillPath: "a/b/skill" },
+    );
+    expect(result).toMatchObject({ outcome: "custom", level: "ancestor" });
+  });
+
+  it("is ambiguous with two different licenses in the nearest ancestor folder", () => {
+    const result = resolve(
+      { ...skill("a/b/skill"), "a/b/LICENSE-MIT": MIT_TEXT, "a/b/LICENSE-APACHE": APACHE_TEXT, "a/LICENSE": MIT_TEXT },
+      { skillPath: "a/b/skill" },
+    );
+    expect(result).toMatchObject({ outcome: "ambiguous", level: "ancestor" });
   });
 
   it("uses a nested skill's parent skill folder license as an ancestor", () => {
@@ -307,13 +354,24 @@ describe("resolveLicense", () => {
     });
   });
 
-  it.each([
-    ["another id", "Apache-2.0"],
-    ["NOASSERTION", "NOASSERTION"],
-    ["nothing", null],
-  ])("is ambiguous when an identified root file meets GitHub detecting %s", (_label, githubLicense) => {
-    const result = resolve({ ...skill("skills/pdf"), LICENSE: MIT_TEXT }, { skillPath: "skills/pdf", githubLicense });
+  it("is ambiguous when an identified root file meets another id detected by GitHub", () => {
+    const result = resolve(
+      { ...skill("skills/pdf"), LICENSE: MIT_TEXT },
+      { skillPath: "skills/pdf", githubLicense: "Apache-2.0" },
+    );
     expect(result).toMatchObject({ outcome: "ambiguous", level: "repository" });
+  });
+
+  // null and NOASSERTION are the absence of a detection, not a disagreement.
+  it.each([null, "NOASSERTION"])("lets an identified root file decide when GitHub reports %j", (githubLicense) => {
+    const result = resolve({ ...skill("skills/pdf"), LICENSE: MIT_TEXT }, { skillPath: "skills/pdf", githubLicense });
+    expect(result).toMatchObject({ outcome: "identified", spdx: "MIT", level: "repository" });
+    expect(decidingEvidence(result, "skills/pdf")).toEqual({
+      kind: "file",
+      path: "LICENSE",
+      blob: sha(MIT_TEXT),
+      spdx: "MIT",
+    });
   });
 
   it("uses GitHub's detection when the root file is not identified, and records it", () => {
@@ -364,14 +422,52 @@ describe("resolveLicense", () => {
     });
   });
 
-  it("counts root files at the skill level for a root skill", () => {
+  it("uses GitHub's id for a root skill whose root file is not identified, like any skill", () => {
+    const result = resolve({ "SKILL.md": "x", LICENSE: CUSTOM_TEXT }, { skillPath: "", githubLicense: "MIT" });
+    expect(result).toEqual({
+      outcome: "identified",
+      spdx: "MIT",
+      level: "repository",
+      evidence: [
+        { kind: "file", path: "LICENSE", blob: sha(CUSTOM_TEXT), spdx: null },
+        { kind: "github", value: "MIT", spdx: "MIT" },
+      ],
+    });
+    expect(decidingEvidence(result, "")).toEqual({ kind: "github", value: "MIT", spdx: "MIT" });
+  });
+
+  it.each([null, "NOASSERTION"])(
+    "keeps a root skill custom when its root file is not identified and GitHub reports %j",
+    (githubLicense) => {
+      const result = resolve({ "SKILL.md": "x", LICENSE: CUSTOM_TEXT }, { skillPath: "", githubLicense });
+      expect(result).toMatchObject({ outcome: "custom", level: "skill" });
+    },
+  );
+
+  it("is ambiguous for a root skill whose identified root file disagrees with GitHub", () => {
+    const result = resolve({ "SKILL.md": "x", LICENSE: MIT_TEXT }, { skillPath: "", githubLicense: "Apache-2.0" });
+    expect(result).toMatchObject({ outcome: "ambiguous", level: "skill" });
+    const withFrontmatter = resolve(
+      { "SKILL.md": "x", LICENSE: MIT_TEXT },
+      { skillPath: "", frontmatterLicense: "MIT", githubLicense: "Apache-2.0" },
+    );
+    expect(withFrontmatter).toMatchObject({ outcome: "ambiguous", level: "skill" });
+  });
+
+  it.each([null, "NOASSERTION", "MIT"])(
+    "identifies a root skill from its identified root file when GitHub reports %j",
+    (githubLicense) => {
+      const result = resolve({ "SKILL.md": "x", LICENSE: MIT_TEXT }, { skillPath: "", githubLicense });
+      expect(result).toMatchObject({ outcome: "identified", spdx: "MIT", level: "skill" });
+    },
+  );
+
+  it("keeps a root skill custom when its front matter is custom, whatever GitHub detects", () => {
     const result = resolve(
       { "SKILL.md": "x", LICENSE: CUSTOM_TEXT },
-      { skillPath: "", githubLicense: "MIT" },
+      { skillPath: "", frontmatterLicense: "Proprietary", githubLicense: "MIT" },
     );
-    // GitHub's detection belongs to the farther repository level: the root file decides.
     expect(result).toMatchObject({ outcome: "custom", level: "skill" });
-    expect(result.evidence[0]).toMatchObject({ kind: "file", path: "LICENSE" });
   });
 
   it("identifies a root skill from its root file and front matter", () => {
@@ -404,6 +500,35 @@ describe("resolveLicense", () => {
     const { index } = setup({ ...skill("skills/pdf"), "skills/pdf/LICENSE": MIT_TEXT });
     const result = resolveLicense(index, { skillPath: "skills/pdf", githubLicense: "MIT", truncated: false }, () => null);
     expect(result).toMatchObject({ outcome: "custom", level: "skill" });
+  });
+});
+
+describe("license cache file", () => {
+  const blob = "a".repeat(40);
+
+  it("reads the entries written with the current rules version", () => {
+    const file = { rulesVersion: LICENSE_RULES_VERSION, entries: { [blob]: { spdx: "MIT" } } };
+    expect(readLicenseCache(file)).toEqual({ [blob]: { spdx: "MIT" } });
+  });
+
+  it.each([
+    ["another rules version", { rulesVersion: LICENSE_RULES_VERSION + 1, entries: { [blob]: { spdx: "MIT" } } }],
+    ["the shape written before rules versions", { [blob]: { spdx: "MIT" } }],
+    ["no file", undefined],
+  ])("discards %s, so every text is identified again", (_label, file) => {
+    expect(readLicenseCache(file)).toEqual({});
+  });
+
+  it("rejects a current-version file with an invalid entry", () => {
+    expect(() =>
+      readLicenseCache({ rulesVersion: LICENSE_RULES_VERSION, entries: { LICENSE: { spdx: "MIT" } } }),
+    ).toThrow();
+  });
+
+  it("writes the rules version and the entries sorted by blob id", () => {
+    const file = licenseCacheFile({ ["b".repeat(40)]: { spdx: null }, [blob]: { spdx: "MIT" } });
+    expect(file).toEqual({ rulesVersion: LICENSE_RULES_VERSION, entries: { [blob]: { spdx: "MIT" }, ["b".repeat(40)]: { spdx: null } } });
+    expect(Object.keys(file.entries)).toEqual([blob, "b".repeat(40)]);
   });
 });
 

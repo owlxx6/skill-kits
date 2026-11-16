@@ -7,7 +7,7 @@ import { runExtract } from "./extract";
 import { filterRepos } from "./filter";
 import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
-import { isLicenseEligible } from "./lib/license";
+import { isLicenseEligible, licenseCacheFile, readLicenseCache } from "./lib/license";
 import type { LlmClient } from "./lib/llm";
 import {
   CatalogSchema,
@@ -16,7 +16,6 @@ import {
   CurationSchema,
   type Kit,
   KitsSchema,
-  LicenseCacheSchema,
   RepoMetaSchema,
   type Review,
   ReviewRecordSchema,
@@ -174,7 +173,13 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
   async extract({ paths, config, deps }) {
     const repos = await readJsonFile(paths.repos, z.array(RepoMetaSchema), []);
     const previous = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
-    const licenseCache = await readJsonFile(paths.licenses, LicenseCacheSchema, {});
+    // Entries identified by other rules (or written before rules versions) are dropped.
+    const storedLicenses = await readJsonFile(paths.licenses, z.unknown(), undefined);
+    const licenseCache = readLicenseCache(storedLicenses);
+    // A discarded file is replaced now, so a stale one never stays on disk.
+    if (storedLicenses !== undefined && Object.keys(licenseCache).length === 0) {
+      await writeJsonFile(paths.licenses, licenseCacheFile(licenseCache));
+    }
     const { skills, stats } = await runExtract(
       deps.gh,
       repos,
@@ -182,12 +187,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
       (progress) => writeJsonFile(paths.skills, progress),
       {
         cache: licenseCache,
-        // Sorted by blob id so the versioned cache changes only where a file changed.
-        save: (cache) =>
-          writeJsonFile(
-            paths.licenses,
-            Object.fromEntries(Object.entries(cache).sort(([a], [b]) => compareText(a, b))),
-          ),
+        save: (cache) => writeJsonFile(paths.licenses, licenseCacheFile(cache)),
         allowed: config.filter.allowedLicenses,
       },
     );
