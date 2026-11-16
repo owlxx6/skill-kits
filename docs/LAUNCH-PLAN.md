@@ -1,6 +1,6 @@
 # Launch plan and parallel work
 
-Planning baseline: origin/main cce38ff. This document records a proposed allocation of work from the supplied sprints. The license choice and whether accounts are required for first launch still need the owner's decision.
+Planning baseline: origin/main cce38ff. This document records a proposed allocation of work from the supplied sprints. The owner confirmed option B: skill-level license resolution. Whether accounts are required for first launch still needs the owner's decision.
 
 ## Product and design decisions already made
 
@@ -16,7 +16,7 @@ Design remains subject to owner approval before publishing the implementation br
 | --- | --- | --- | --- |
 | planning/launch-parallel | Coordinator | Plan, handoffs and selected design references | Common base for the first two branches |
 | codex/design-switchyard | Codex | Astro pages, components, styles, theme, kit parts list and install UX | Existing catalog schema initially |
-| claude/license-resolution | Claude Code | License resolution, pipeline schemas, extraction, ranking and regression tests | License approach requires owner choice |
+| claude/license-resolution | Claude Code | License resolution, pipeline schemas, extraction, ranking and regression tests | Option B confirmed |
 
 Branch names assign responsibility, not permanent model roles. Use a separate checkout or worktree per active branch. One owner per file while work overlaps. Neither implementation agent updates main directly. Review each other's PR and let the owner authorize merging. Only commit relevant files. Do not run blanket git add, reset or clean in a checkout with unrelated edits.
 
@@ -40,12 +40,24 @@ Done: owner approves the actual integrated pages, then explicitly authorized fea
 
 ## Sprint 2 — License decision
 
-Recommendation: B, resolve applicable license evidence at skill level. Owner has not selected A or B yet.
-The current early repository filter rejects missing/disallowed repository licenses before extraction. The change must allow candidates with unknown repository licensing to reach license inspection, while retaining other filters and final publication eligibility.
+Decision confirmed: B, resolve applicable license evidence at skill level.
+The current early repository filter rejects missing/disallowed repository licenses before extraction. The change must allow candidates with unknown repository licensing to reach license inspection, while retaining archive/activity checks and final publication eligibility. Replace the hard minimum-stars exclusion with the discovery policy below.
 Inspect skill metadata and referenced/local license files, applicable parent/repository evidence and mixed-license cases. Record the evidence URL/path, reviewed revision and resolution outcome. A publisher's reputation does not establish a skill's license.
 Missing, ambiguous, custom and excluded licenses remain explicit outcomes. Do not label an unlicensed skill MIT by exception. Define collection eligibility when members have different licenses. Migrate old records/cache without silently assigning new rights. Include root skills and changed license files in invalidation tests.
-If A is chosen instead, the allowlist is permission to inspect a repository. Each admitted skill still needs recorded license evidence and correct display.
 Done: eligible skills from formerly excluded repositories can appear with their actual applicable license, covered by tests. Not every official skill necessarily qualifies under the allowed-license policy.
+
+## Selection policy confirmed by the owner
+
+Reliable skills with demonstrated value can be admitted even if they have few users, stars or forks. Popularity is discovery metadata, not proof of quality or an admission requirement.
+- Keep broad discovery bounded through topic relevance, targeted searches, explicit source nominations and review budgets. These are separate discovery lanes. The current hard minStars filter must not block a nominated or relevant low-star candidate.
+- Review an individual skill against a concrete task and the relevant kit. Record the inputs, useful outcome, limits, dependencies and reproducible evidence. Use synthetic inputs where practical.
+- Compare with an existing skill for the same task. State what it adds: a missing capability, a better result, lower setup burden or useful coverage of a specific need. Avoid admitting duplicates solely to increase counts.
+- Assess reliability across the complete instructions and relevant scripts/references. Check documented prerequisites, risky behavior, external calls and failure handling. Distinguish inspection from execution and record what was actually tested.
+- Record license evidence, reviewed revision, review method/date and practical limitations. Re-review changes that affect the decision.
+- Do not raise quality scores using stars or forks as a substitute for task usefulness. The current 30% repository contribution to skill score needs review. Prefer relevance, task evidence and reliability, with popularity used only as supplementary context.
+- Keep eligible candidates pending when evidence is incomplete. The owner retains the final curation approval.
+
+Implementation sequencing: Claude documents the low-star discovery/filter/ranking contract during the license task. Implement the broader discovery/ranking changes in a follow-up branch after agreeing the schema, rather than mixing an unbounded crawler redesign into license resolution.
 
 ## Sprint 3 — Curation
 
@@ -79,7 +91,7 @@ Optional later: automatic API reviews, semantic search, French locale and custom
 
 ## Dependencies
 
-Design and license investigation can start together. License implementation depends on the owner's A/B choice. Final curation depends on license resolution and full-review handling. Frontend integration of new metadata follows the agreed schema. Production launch depends on approved design, enough useful kits, and the explicit accounts decision.
+Design and license investigation can start together. License implementation is authorized under option B. Final curation depends on license resolution and full-review handling. Frontend integration of new metadata follows the agreed schema. Production launch depends on approved design, enough useful kits, and the explicit accounts decision.
 
 ## Current working-copy note
 
