@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   SAFETY_RULES,
@@ -60,6 +61,12 @@ describe("scanSkillFiles report", () => {
     expect(SAFETY_RULES_VERSION).toBeGreaterThanOrEqual(1);
     const ids = SAFETY_RULES.map((rule) => rule.id);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("documents every rule and the rules version in docs/SAFETY-SCAN.md", () => {
+    const contract = readFileSync(new URL("../docs/SAFETY-SCAN.md", import.meta.url), "utf8");
+    for (const rule of SAFETY_RULES) expect(contract).toContain(`\`${rule.id}\``);
+    expect(contract).toContain(`Rules version: ${SAFETY_RULES_VERSION}`);
   });
 
   it("is review when the worst finding is a warning and block when any finding blocks", () => {
