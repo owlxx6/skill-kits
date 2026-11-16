@@ -126,6 +126,48 @@ export const RepoMetaSchema = z.object({
 });
 export type RepoMeta = z.infer<typeof RepoMetaSchema>;
 
+export const LICENSE_OUTCOMES = ["identified", "custom", "ambiguous", "missing"] as const;
+export const LICENSE_LEVELS = ["skill", "ancestor", "repository", "none"] as const;
+
+// One piece of license evidence. A file is identified from its text, a front matter value
+// from its SPDX id, and "github" is the id GitHub detected for the repository (value is the
+// raw RepoMeta.license: an id, NOASSERTION or null).
+export const LicenseEvidenceSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("file"),
+    path: z.string(),
+    blob: gitObjectId,
+    spdx: z.string().nullable(),
+  }),
+  z.object({
+    kind: z.literal("frontmatter"),
+    path: z.string(),
+    value: z.string(),
+    spdx: z.string().nullable(),
+  }),
+  z.object({
+    kind: z.literal("github"),
+    value: z.string().nullable(),
+    spdx: z.string().nullable(),
+  }),
+]);
+export type LicenseEvidence = z.infer<typeof LicenseEvidenceSchema>;
+
+// See docs/LICENSE-RESOLUTION.md. spdx is set only when the outcome is "identified".
+export const LicenseResolutionSchema = z.object({
+  outcome: z.enum(LICENSE_OUTCOMES),
+  spdx: z.string().optional(),
+  level: z.enum(LICENSE_LEVELS),
+  evidence: z.array(LicenseEvidenceSchema),
+});
+export type LicenseResolution = z.infer<typeof LicenseResolutionSchema>;
+export type LicenseOutcome = LicenseResolution["outcome"];
+export type LicenseLevel = LicenseResolution["level"];
+
+// Identified license texts, by git blob id: a changed file has a new id and is identified again.
+export const LicenseCacheSchema = z.record(gitObjectId, z.object({ spdx: z.string().nullable() }));
+export type LicenseCache = z.infer<typeof LicenseCacheSchema>;
+
 export const SkillRecordSchema = z.object({
   // No control character or backtick: the id is printed in code spans of the pull request.
   id: z.string().min(1).regex(/^[^\x00-\x1f\x7f`]+$/, "unsafe skill id"),
@@ -135,6 +177,8 @@ export const SkillRecordSchema = z.object({
   description: z.string().min(1),
   fingerprint: gitObjectId,
   files: z.array(z.string()),
+  // Optional when reading: a record without it is unresolved, never eligible.
+  license: LicenseResolutionSchema.optional(),
 });
 export type SkillRecord = z.infer<typeof SkillRecordSchema>;
 
@@ -198,6 +242,20 @@ export type FilteredRepo = z.infer<typeof FilteredRepoSchema>;
 export const RenamedRepoSchema = z.object({ from: z.string(), to: z.string() });
 export type RenamedRepo = z.infer<typeof RenamedRepoSchema>;
 
+// License outcomes of the skills kept after extraction. Optional in ExtractStats so run
+// information written before license resolution still loads.
+export const LicenseStatsSchema = z.object({
+  identifiedAllowed: z.number(),
+  identifiedNotAllowed: z.number(),
+  custom: z.number(),
+  ambiguous: z.number(),
+  missing: z.number(),
+  // Records without a resolution (kept from a failed or truncated read before this change).
+  unresolved: z.number(),
+  failedDownloads: z.number(),
+});
+export type LicenseStats = z.infer<typeof LicenseStatsSchema>;
+
 export const ExtractStatsSchema = z.object({
   repos: z.number(),
   skills: z.number(),
@@ -205,6 +263,7 @@ export const ExtractStatsSchema = z.object({
   failedDownloads: z.number(),
   truncatedRepos: z.array(z.string()),
   failedRepos: z.array(z.object({ repo: z.string(), error: z.string() })),
+  licenses: LicenseStatsSchema.optional(),
 });
 export type ExtractStats = z.infer<typeof ExtractStatsSchema>;
 
@@ -241,6 +300,14 @@ export const CatalogSkillSchema = z.object({
   description: z.string(),
   url: z.url(),
   license: z.string(),
+  // Where the license comes from. Optional so the site builds on an older catalog.json.
+  licenseEvidence: z
+    .object({
+      level: z.enum(["skill", "ancestor", "repository"]),
+      path: z.string().nullable(),
+      url: z.url().nullable(),
+    })
+    .optional(),
   stars: z.number(),
   forks: z.number(),
   pushedAt: z.string(),
@@ -256,7 +323,10 @@ export const CatalogCollectionSchema = z.object({
   id: repoName,
   url: z.url(),
   description: z.string().nullable(),
+  // The single SPDX id of the repository's skills, or "Mixed".
   license: z.string(),
+  // Sorted SPDX ids of the repository's skills. Optional so the site builds on an older catalog.json.
+  licenses: z.array(z.string()).optional(),
   stars: z.number(),
   forks: z.number(),
   pushedAt: z.string(),

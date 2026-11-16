@@ -3,7 +3,9 @@ import { describe, expect, it } from "vitest";
 import {
   ConfigSchema,
   CurationSchema,
+  ExtractStatsSchema,
   KitsSchema,
+  LicenseCacheSchema,
   RepoMetaSchema,
   ReviewSchema,
   SkillRecordSchema,
@@ -218,6 +220,62 @@ describe("SkillRecordSchema id", () => {
 
   it("rejects an id containing a backtick", () => {
     expect(SkillRecordSchema.safeParse({ ...record, id: `acme/skills:skills/a${"`"}b` }).success).toBe(false);
+  });
+});
+
+describe("SkillRecordSchema license", () => {
+  const record = {
+    id: "acme/skills:skills/a",
+    repo: "acme/skills",
+    path: "skills/a",
+    name: "a",
+    description: "Skill a",
+    fingerprint: "a".repeat(40),
+    files: [],
+  };
+
+  it("reads a record written before license resolution, without a license", () => {
+    expect(SkillRecordSchema.parse(record).license).toBeUndefined();
+  });
+
+  it("accepts the resolution of the contract", () => {
+    const license = {
+      outcome: "identified",
+      spdx: "Apache-2.0",
+      level: "skill",
+      evidence: [
+        { kind: "file", path: "skills/a/LICENSE.txt", blob: "b".repeat(40), spdx: "Apache-2.0" },
+        { kind: "frontmatter", path: "skills/a/SKILL.md", value: "Complete terms in LICENSE.txt", spdx: null },
+        { kind: "github", value: "NOASSERTION", spdx: null },
+      ],
+    };
+    expect(SkillRecordSchema.parse({ ...record, license }).license).toEqual(license);
+  });
+
+  it.each([
+    ["an unknown outcome", { outcome: "maybe", level: "skill", evidence: [] }],
+    ["an unknown level", { outcome: "missing", level: "folder", evidence: [] }],
+    ["a file without a blob id", { outcome: "custom", level: "skill", evidence: [{ kind: "file", path: "LICENSE", blob: "x", spdx: null }] }],
+  ])("rejects %s", (_label, license) => {
+    expect(SkillRecordSchema.safeParse({ ...record, license }).success).toBe(false);
+  });
+});
+
+describe("LicenseCacheSchema", () => {
+  it("maps blob ids to identified ids or null", () => {
+    const cache = { ["a".repeat(40)]: { spdx: "MIT" }, ["b".repeat(40)]: { spdx: null } };
+    expect(LicenseCacheSchema.parse(cache)).toEqual(cache);
+  });
+
+  it("rejects a key that is not a blob id", () => {
+    expect(LicenseCacheSchema.safeParse({ LICENSE: { spdx: "MIT" } }).success).toBe(false);
+  });
+});
+
+describe("ExtractStatsSchema", () => {
+  it("reads extract statistics written before license counts", () => {
+    const old = { repos: 1, skills: 2, invalid: 0, failedDownloads: 0, truncatedRepos: [], failedRepos: [] };
+    expect(ExtractStatsSchema.parse(old).licenses).toBeUndefined();
   });
 });
 
