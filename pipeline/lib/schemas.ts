@@ -292,6 +292,9 @@ export const LicenseStatsSchema = z.object({
   missing: z.number(),
   // Ambiguous because a license file or the changed SKILL.md could not be read this run.
   notReRead: z.number().default(0),
+  // Publishable once the safety scan clears them: any identified license that is not
+  // allowed, a missing license, or an unclear one (custom, ambiguous after every read).
+  waitingForSafetyScan: z.number().default(0),
   // Records without a resolution (kept from a failed or truncated read before this change).
   unresolved: z.number(),
   // License files that could not be read: failed download, content not matching the listed
@@ -343,7 +346,13 @@ export const CatalogSkillSchema = z.object({
   name: z.string(),
   description: z.string(),
   url: z.url(),
+  // The SPDX id when identified, otherwise "No license" or "Unclear license".
   license: z.string(),
+  // Optional so the site builds on an older catalog.json.
+  licenseOutcome: z.enum(["identified", "missing", "custom", "ambiguous"]).optional(),
+  // permissive: allowed by the config; copyleft: GPL, AGPL, LGPL, MPL or CC-BY-SA family;
+  // other: any other identified id; none: no license; unclear: custom or ambiguous.
+  licenseCategory: z.enum(["permissive", "copyleft", "other", "none", "unclear"]).optional(),
   // Where the license comes from. Optional so the site builds on an older catalog.json.
   licenseEvidence: z
     .object({
@@ -389,6 +398,8 @@ export const CatalogKitSchema = z.object({
   collections: z.array(z.string()),
   skills: z.array(z.string()),
   pending: z.array(z.string()),
+  // Why each pending entry waits. Optional so the site builds on an older catalog.json.
+  pendingReasons: z.record(z.string(), z.string()).optional(),
   removed: z.array(z.object({ id: z.string(), reason: z.string() })),
   proposals: z.object({ collections: z.array(proposal), skills: z.array(proposal) }),
 });

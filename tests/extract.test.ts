@@ -527,9 +527,24 @@ describe("runExtract licenses", () => {
       ambiguous: 0,
       missing: 1,
       notReRead: 0,
+      // GPL-3.0 and the missing license: publishable once the safety scan clears them.
+      waitingForSafetyScan: 2,
       unresolved: 0,
       failedDownloads: 0,
     });
+  });
+
+  it("counts no skill as waiting for the safety scan once the scan clears it", async () => {
+    const repo = acme();
+    repo.meta = makeRepo({ license: null });
+    const gh = new FakeGitHub([repo]);
+    const { stats } = await runExtract(gh, [repo.meta], [], noSave, {
+      cache: {},
+      save: async () => {},
+      allowed: ["MIT"],
+      isSafetyCleared: () => true,
+    });
+    expect(stats.licenses).toMatchObject({ missing: 1, waitingForSafetyScan: 0 });
   });
 
   it("keeps the previous license of the records of a repository that fails", async () => {

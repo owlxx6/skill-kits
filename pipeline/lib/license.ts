@@ -14,6 +14,7 @@ import {
   LicenseCacheSchema,
   type LicenseEvidence,
   type LicenseResolution,
+  type SkillRecord,
   type TextIdentification,
 } from "./schemas";
 import { type TreeEntry, skillFilePath } from "./skillfile";
@@ -736,6 +737,68 @@ export function licenseIneligibility(
 
 export function isLicenseEligible(license: LicenseResolution | undefined, allowed: readonly string[]): boolean {
   return licenseIneligibility(license, allowed) === null;
+}
+
+// ---------------------------------------------------------------------------------------
+// Publication policy (docs/LICENSE-RESOLUTION.md, "Publication policy")
+
+// Whether the automated safety scan found nothing blocking in a skill.
+export type SafetyCleared = (skill: SkillRecord) => boolean;
+
+// The safety scan is not integrated yet: no skill is cleared.
+export const NO_SAFETY_SCAN: SafetyCleared = () => false;
+
+export const NO_LICENSE_LABEL = "No license";
+export const UNCLEAR_LICENSE_LABEL = "Unclear license";
+export const WAITING_FOR_SAFETY_SCAN = "waiting for the safety scan";
+
+// publishable: may enter the catalog. waiting: not yet (pending when approved), with the
+// reason shown to the curator.
+export type Publication = { status: "publishable" } | { status: "waiting"; reason: string };
+
+// An identified allowed license publishes. Any other identified license, a missing license,
+// or an unclear one (custom, or ambiguous after every file was read) publishes once the
+// safety scan clears the skill. A license not re-read this run, or a record not resolved
+// yet, waits for the next run. The scan is consulted only when it decides.
+export function publication(
+  skill: SkillRecord,
+  allowed: readonly string[],
+  isSafetyCleared: SafetyCleared,
+): Publication {
+  const license = skill.license;
+  if (!license) return { status: "waiting", reason: "license unresolved" };
+  if (isNotReRead(license)) return { status: "waiting", reason: "license not re-read" };
+  if (license.outcome === "identified" && allowed.includes(license.spdx)) return { status: "publishable" };
+  return isSafetyCleared(skill) ? { status: "publishable" } : { status: "waiting", reason: WAITING_FOR_SAFETY_SCAN };
+}
+
+export function isPublishable(
+  skill: SkillRecord,
+  allowed: readonly string[],
+  isSafetyCleared: SafetyCleared,
+): boolean {
+  return publication(skill, allowed, isSafetyCleared).status === "publishable";
+}
+
+export type LicenseCategory = "permissive" | "copyleft" | "other" | "none" | "unclear";
+
+// Copyleft families: their obligations differ from a permissive license's.
+const COPYLEFT_ID = /^(?:a|l)?gpl-|^mpl-|^cc-by-sa-/i;
+
+// So the catalog can explain obligations: permissive (allowed), copyleft, other identified
+// ids (CC0, CC-BY...), none (missing) or unclear (custom, ambiguous).
+export function licenseCategory(license: LicenseResolution, allowed: readonly string[]): LicenseCategory {
+  if (license.outcome === "missing") return "none";
+  if (license.outcome !== "identified") return "unclear";
+  if (allowed.includes(license.spdx)) return "permissive";
+  return COPYLEFT_ID.test(license.spdx) ? "copyleft" : "other";
+}
+
+// What the catalog shows: the SPDX id when identified, otherwise an honest label, never a
+// permissive id without evidence.
+export function licenseLabel(license: LicenseResolution): string {
+  if (license.outcome === "identified") return license.spdx;
+  return license.outcome === "missing" ? NO_LICENSE_LABEL : UNCLEAR_LICENSE_LABEL;
 }
 
 // ---------------------------------------------------------------------------------------

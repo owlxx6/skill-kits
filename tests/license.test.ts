@@ -7,21 +7,27 @@ import {
   indexLicenseFiles,
   isDecidingLicenseName,
   isLicenseFileName,
+  isPublishable,
   LICENSE_RULES_VERSION,
   licenseCacheFile,
   licenseFilesFor,
   type LicenseFileRef,
   licenseIneligibility,
+  licenseCategory,
+  licenseLabel,
   type LicenseQuery,
+  NO_SAFETY_SCAN,
   notReReadLicense,
+  publication,
   readLicenseCache,
   resolveLicense,
   resolveLinkTarget,
   type TextIdentification,
 } from "../pipeline/lib/license";
-import type { LicenseEvidence, LicenseResolution } from "../pipeline/lib/schemas";
+import type { LicenseEvidence, LicenseResolution, SkillRecord } from "../pipeline/lib/schemas";
 import type { TreeEntry } from "../pipeline/lib/skillfile";
 import { blobIdOf as sha } from "./fakes";
+import { makeSkill } from "./fixtures";
 import {
   AGPL3_TEXT,
   APACHE_NOTICE,
@@ -927,5 +933,100 @@ describe("gitBlobId", () => {
   it("matches git hash-object", () => {
     // printf 'hello\n' | git hash-object --stdin
     expect(gitBlobId(new TextEncoder().encode("hello\n"))).toBe("ce013625030ba8dba906f756967f9e9ca394464a");
+  });
+});
+
+describe("publication", () => {
+  const record = (license: LicenseResolution | undefined): SkillRecord => {
+    const { license: _default, ...rest } = makeSkill();
+    return license === undefined ? rest : { ...rest, license };
+  };
+  const identified = (spdx: string): LicenseResolution => ({
+    outcome: "identified",
+    spdx,
+    level: "repository",
+    evidence: [github(spdx)],
+  });
+  const allowed = ["MIT", "Apache-2.0"];
+  const cleared = (): boolean => true;
+  const notCleared = (): boolean => false;
+
+  it("publishes an identified allowed license, scan or not", () => {
+    for (const scan of [cleared, notCleared]) {
+      expect(publication(record(identified("MIT")), allowed, scan)).toEqual({ status: "publishable" });
+      expect(isPublishable(record(identified("MIT")), allowed, scan)).toBe(true);
+    }
+  });
+
+  it.each([
+    ["an identified non-permissive license", identified("GPL-3.0")],
+    ["a missing license", { outcome: "missing", level: "none", evidence: [] } satisfies LicenseResolution],
+    ["a custom license", { outcome: "custom", level: "skill", evidence: [] } satisfies LicenseResolution],
+    ["an ambiguous license", { outcome: "ambiguous", level: "repository", evidence: [] } satisfies LicenseResolution],
+  ])("publishes %s only once the safety scan clears the skill", (_label, license) => {
+    expect(publication(record(license), allowed, cleared)).toEqual({ status: "publishable" });
+    expect(isPublishable(record(license), allowed, cleared)).toBe(true);
+    expect(publication(record(license), allowed, notCleared)).toEqual({
+      status: "waiting",
+      reason: "waiting for the safety scan",
+    });
+    expect(isPublishable(record(license), allowed, notCleared)).toBe(false);
+  });
+
+  it.each([
+    ["a license file not read", { outcome: "ambiguous", level: "skill", unread: "license-file", evidence: [] } satisfies LicenseResolution, "license not re-read"],
+    ["a SKILL.md not read", notReReadLicense(), "license not re-read"],
+    ["no resolution", undefined, "license unresolved"],
+  ])("never publishes a skill with %s in this run, even when cleared", (_label, license, reason) => {
+    for (const scan of [cleared, notCleared]) {
+      expect(publication(record(license), allowed, scan)).toEqual({ status: "waiting", reason });
+      expect(isPublishable(record(license), allowed, scan)).toBe(false);
+    }
+  });
+
+  it("consults the safety scan only for a license that is not allowed or not clear", () => {
+    const calls: string[] = [];
+    const scan = (skill: SkillRecord): boolean => {
+      calls.push(skill.license?.outcome ?? "none");
+      return true;
+    };
+    publication(record(identified("MIT")), allowed, scan);
+    publication(record(notReReadLicense()), allowed, scan);
+    publication(record(undefined), allowed, scan);
+    expect(calls).toEqual([]);
+    publication(record(identified("GPL-3.0")), allowed, scan);
+    expect(calls).toEqual(["identified"]);
+  });
+
+  it("clears no skill by default", () => {
+    expect(NO_SAFETY_SCAN(record(undefined))).toBe(false);
+  });
+
+  it.each([
+    [identified("MIT"), "MIT"],
+    [{ outcome: "missing", level: "none", evidence: [] } satisfies LicenseResolution, "No license"],
+    [{ outcome: "custom", level: "skill", evidence: [] } satisfies LicenseResolution, "Unclear license"],
+    [{ outcome: "ambiguous", level: "skill", evidence: [] } satisfies LicenseResolution, "Unclear license"],
+  ])("labels %j as %s", (license, label) => {
+    expect(licenseLabel(license)).toBe(label);
+  });
+
+  it.each([
+    [identified("MIT"), "permissive"],
+    [identified("Apache-2.0"), "permissive"],
+    [identified("ISC"), "other"],
+    [identified("GPL-3.0"), "copyleft"],
+    [identified("AGPL-3.0"), "copyleft"],
+    [identified("LGPL-2.1"), "copyleft"],
+    [identified("MPL-2.0"), "copyleft"],
+    [identified("CC-BY-SA-4.0"), "copyleft"],
+    [identified("CC0-1.0"), "other"],
+    [identified("CC-BY-4.0"), "other"],
+    [{ outcome: "missing", level: "none", evidence: [] } satisfies LicenseResolution, "none"],
+    [{ outcome: "custom", level: "skill", evidence: [] } satisfies LicenseResolution, "unclear"],
+    [{ outcome: "ambiguous", level: "skill", evidence: [] } satisfies LicenseResolution, "unclear"],
+  ])("puts %j in the %s category", (license, category) => {
+    // ISC is identified but not in this allowed list: other.
+    expect(licenseCategory(license, allowed)).toBe(category);
   });
 });

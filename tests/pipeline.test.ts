@@ -182,6 +182,7 @@ describe("runPipeline", () => {
       ambiguous: 0,
       missing: 1,
       notReRead: 0,
+      waitingForSafetyScan: 1,
       unresolved: 0,
       failedDownloads: 0,
     });
@@ -196,6 +197,13 @@ describe("runPipeline", () => {
       "cover-letter",
     ]);
     expect(catalog.collections.map((collection) => collection.id)).toEqual(["acme/career-skills"]);
+    // No safety scan yet: the unlicensed skill of nolicense/skills stays out, as before.
+    expect(catalog.skills.map((skill) => [skill.license, skill.licenseOutcome, skill.licenseCategory])).toEqual([
+      ["MIT", "identified", "permissive"],
+      ["MIT", "identified", "permissive"],
+      ["MIT", "identified", "permissive"],
+    ]);
+    expect(catalog.collections[0]).toMatchObject({ license: "MIT", licenses: ["MIT"] });
     const resume = catalog.kits.find((kit) => kit.id === "resume-career");
     expect(resume?.proposals.skills.map((entry) => entry.id)).toEqual([
       "acme/career-skills:skills/resume-tailor",
@@ -417,20 +425,22 @@ describe("runPipeline", () => {
     expect(summary).toContain(`- \`${atsId}\` - repository no longer listed`);
   });
 
-  it("removes an approved skill whose license is now missing, without reviewing it", async () => {
+  it("keeps an approved skill whose license is now missing pending for the safety scan, without reviewing it", async () => {
     await run();
     await approveAts();
     gh = makeGitHub({ careerLicense: null, atsBody: "Do the thing, version two." });
     const reviewCalls = llm.reviewCalls.length;
     await run();
     const resume = (await readCatalog(root)).kits.find((kit) => kit.id === "resume-career");
-    expect(resume?.removed).toEqual([{ id: atsId, reason: "license missing" }]);
-    expect(resume?.pending).toEqual([]);
+    expect(resume?.pending).toEqual([atsId]);
+    expect(resume?.pendingReasons).toEqual({ [atsId]: "waiting for the safety scan" });
+    expect(resume?.removed).toEqual([]);
     expect(resume?.skills).toEqual([]);
     // The changed approved skill is not reviewed: only the failed flaky skill is tried again.
     expect(llm.reviewCalls.slice(reviewCalls).map((call) => call.name)).toEqual(["flaky", "flaky"]);
     const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
-    expect(summary).toContain(`- \`${atsId}\` - license missing`);
+    expect(summary).toContain(`- \`${atsId}\` - waiting for the safety scan`);
+    expect(summary).toMatch(/- Licenses: .* 5 waiting for the safety scan,/);
   });
 
   function splitRepo(): FakeRepo {
@@ -581,7 +591,7 @@ describe("runPipeline", () => {
     expect((await readRunInfo(root)).review?.failed.map((entry) => entry.skillId)).toContain(atsId);
     const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
     expect(summary).toContain(
-      `**Approved entries awaiting re-review (hidden until reviewed):**\n\n- \`${atsId}\`\n`,
+      `**Approved entries pending (hidden until ready):**\n\n- \`${atsId}\` - awaiting re-review\n`,
     );
   });
 

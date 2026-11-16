@@ -10,10 +10,14 @@ import {
   type LicenseIndex,
   type LicenseQuery,
   licenseFilesFor,
+  NO_SAFETY_SCAN,
   notReReadLicense,
+  publication,
   resolveLicense,
   resolveLinkTarget,
+  type SafetyCleared,
   type TextIdentification,
+  WAITING_FOR_SAFETY_SCAN,
 } from "./lib/license";
 import type {
   ExtractStats,
@@ -215,12 +219,15 @@ export interface ExtractLicenseOptions {
   save: (cache: LicenseCache) => Promise<void>;
   // config.filter.allowedLicenses, for the statistics.
   allowed: readonly string[];
+  // The safety scan, for the count of skills waiting for it (none cleared by default).
+  isSafetyCleared?: SafetyCleared;
 }
 
 export function countLicenses(
   skills: SkillRecord[],
   allowed: readonly string[],
   failedDownloads: number,
+  isSafetyCleared: SafetyCleared = NO_SAFETY_SCAN,
 ): LicenseStats {
   const stats: LicenseStats = {
     identifiedAllowed: 0,
@@ -229,10 +236,13 @@ export function countLicenses(
     ambiguous: 0,
     missing: 0,
     notReRead: 0,
+    waitingForSafetyScan: 0,
     unresolved: 0,
     failedDownloads,
   };
   for (const skill of skills) {
+    const status = publication(skill, allowed, isSafetyCleared);
+    if (status.status === "waiting" && status.reason === WAITING_FOR_SAFETY_SCAN) stats.waitingForSafetyScan += 1;
     const outcome = skill.license?.outcome;
     if (outcome === undefined) stats.unresolved += 1;
     else if (isNotReRead(skill.license)) stats.notReRead += 1;
@@ -298,6 +308,6 @@ export async function runExtract(
   }
   const skills = all();
   stats.skills = skills.length;
-  stats.licenses = countLicenses(skills, licenses.allowed, licenseFailedDownloads);
+  stats.licenses = countLicenses(skills, licenses.allowed, licenseFailedDownloads, licenses.isSafetyCleared);
   return { skills, stats };
 }

@@ -7,7 +7,7 @@ import { runExtract } from "./extract";
 import { filterRepos } from "./filter";
 import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
-import { isLicenseEligible, licenseCacheFile, readLicenseCache } from "./lib/license";
+import { isPublishable, licenseCacheFile, NO_SAFETY_SCAN, readLicenseCache } from "./lib/license";
 import type { LlmClient } from "./lib/llm";
 import {
   CatalogSchema,
@@ -189,6 +189,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         cache: licenseCache,
         save: (cache) => writeJsonFile(paths.licenses, licenseCacheFile(cache)),
         allowed: config.filter.allowedLicenses,
+        isSafetyCleared: NO_SAFETY_SCAN,
       },
     );
     await writeJsonFile(paths.skills, skills);
@@ -204,9 +205,10 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const curation = await readYamlFile(paths.curation, CurationSchema);
     // Approved skills are re-reviewed first, even when triage no longer proposes a kit for them.
     const priorityIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
-    // A skill whose license keeps it out of the catalog is neither triaged nor reviewed.
+    // A skill that cannot be published (see the publication policy) is neither triaged nor
+    // reviewed. The safety scan is not integrated yet: no skill is cleared by it.
     const isEligible = (skill: SkillRecord): boolean =>
-      isLicenseEligible(skill.license, config.filter.allowedLicenses);
+      isPublishable(skill, config.filter.allowedLicenses, NO_SAFETY_SCAN);
     const llm = deps.getLlm(config.review.model);
     const stats = emptyReviewStats();
     const clock = deps.clock ?? Date.now;
@@ -281,7 +283,17 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const runInfo = await readJsonFile(paths.runInfo, RunInfoSchema, {});
     const truncatedRepos = runInfo.extract?.truncatedRepos ?? [];
     const catalog = CatalogSchema.parse(
-      buildCatalog({ repos, skills, reviews, kits, curation, config, now: deps.now, truncatedRepos }),
+      buildCatalog({
+        repos,
+        skills,
+        reviews,
+        kits,
+        curation,
+        config,
+        now: deps.now,
+        truncatedRepos,
+        isSafetyCleared: NO_SAFETY_SCAN,
+      }),
     );
     await writeJsonFile(paths.catalog, catalog);
     deps.log(`catalog: ${catalog.skills.length} skills, ${catalog.collections.length} collections`);
