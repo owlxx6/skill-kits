@@ -1,0 +1,41 @@
+{
+  "fingerprint": "efd22703ddf9d6991970eb00fb40286a8a6e9447",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:40.907Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 7
+    },
+    "why": "Writes data and ML resumes that separate offline evaluation, experiments and production results.",
+    "summary": "Resume writing for analysts, analytics and data engineers, data scientists and ML engineers. A role table says what evidence to prioritize, and rules keep claims honest: metric with baseline, experiment versus correlation, pipeline volume with time basis, forecast versus realized savings.",
+    "strengths": [
+      "Role-by-role evidence table for the five data job families",
+      "Rules that stop common overclaims (AUC as business lift, backfill as throughput)",
+      "Worked example that refuses to invent a churn reduction"
+    ],
+    "cautions": [
+      "Instructions only: no template or keyword list",
+      "Defers job matching to another skill (resume-tailor)",
+      "Needs the user to supply evaluation details to be useful"
+    ],
+    "keywords": [
+      "data resume",
+      "data scientist resume",
+      "data engineer resume",
+      "machine learning resume",
+      "analytics resume",
+      "ml engineer cv",
+      "model evaluation",
+      "data analyst cv"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

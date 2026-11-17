@@ -1,0 +1,35 @@
+{
+  "fingerprint": "dc6533cc5ac8cfe99a888e05fcf2386271d9596a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 4,
+      "completeness": 1,
+      "usefulness": 2
+    },
+    "why": "Catalogue stub that points to an upstream bundle; it has no instructions of its own.",
+    "summary": "Entry that advertises a DOCX creation skill from another project and tells the user to install that upstream bundle. It holds no steps, scripts or examples, so on its own it gives an agent nothing to do.",
+    "strengths": [
+      "Says plainly that it only points to the upstream bundle"
+    ],
+    "cautions": [
+      "No usable instructions: the real skill lives elsewhere",
+      "Cannot work until the upstream bundle is installed",
+      "Adds nothing over a real DOCX skill"
+    ],
+    "keywords": [
+      "docx",
+      "openxml",
+      "branded report",
+      "proposal document",
+      "template authoring",
+      "catalogue entry"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

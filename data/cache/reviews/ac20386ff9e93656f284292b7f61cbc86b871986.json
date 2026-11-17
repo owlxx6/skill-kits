@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ac20386ff9e93656f284292b7f61cbc86b871986",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:37.145Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 9,
+      "usefulness": 5
+    },
+    "why": "Audits list and deliverability, then writes lifecycle email, SMS and push flows as build sheets to load into the user's own tool. Never sends.",
+    "summary": "Chooses a mode (build, weekly, monthly, seasonal, incident), audits the list, consent and authentication, picks the flows the business needs first, defines segments and cadence, writes each flow with its trigger, exit, timing and finished messages, prices offers, and plans broadcasts. Every flow is marked ready to load or not ready, with the blocker in plain words.",
+    "strengths": [
+      "Never reports a green item the agent did not verify itself",
+      "Hard stops for purchased or no-consent lists",
+      "Nothing is sent, scheduled or paused by the skill"
+    ],
+    "cautions": [
+      "Tied to one marketing service and many sibling skills not included",
+      "Very large procedure with two intake rounds; thirteen reference files are not read here",
+      "Offer depth and cadence are proposals that need the user's approval"
+    ],
+    "keywords": [
+      "lifecycle email",
+      "email flows",
+      "deliverability",
+      "abandoned cart",
+      "welcome emails",
+      "sms",
+      "push notifications",
+      "win-back"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

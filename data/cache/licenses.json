@@ -1,0 +1,2373 @@
+{
+  "rulesVersion": 2,
+  "entries": {
+    "001a3281169d6ade30cd1a44544029254ba490a8": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "00ae3499955d2b64bb0af475b0a34910e4eb574a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "01836d57266532c82eb3347081018283a613859d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "01a2ec0cdea4177e718945abff4de705b4ee424e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "02a3ec3002641c92323353f98097ca69d84b4345": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0315882e02a459db076c45f833cc48d37d955039": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0316c222c45ac709697bffb85c22288208295d56": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "035888fab55c5418b718575a1bdde0da7a2ff306": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "037b3bceb0e1e3151caac1cacf9fec113cd50781": {
+      "kind": "restricted"
+    },
+    "03fd69c267451c91f3e02715247c3e9e91af41d6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "05676553d9d10a0effff673b507b4fcfed652c17": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "05ca8370d039d358f7ab1b8f38792952b3daf0e0": {
+      "kind": "restricted"
+    },
+    "0674e76c53992e82024c1cbe9091ba643cd94d77": {
+      "kind": "unknown"
+    },
+    "06a54cd88eb82872b0d6dfd21eb510f80be4437f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "06bce046737eefee70d35819222b5ae7d4599cb2": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "07217e28d50ac04d72c8b1483487754938378175": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "07ab6b09f5be1f263cd925470b13de3c9f8fe6f9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "083fd9e3235cabce08b15415a70da74eb6acc36b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "086fec6289537bb6c5615dd50338ec770c521558": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0934d3a5689c308e5d6797899b65ca7e0e9ab9fe": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "094e15e1beb5b639309cc5a920e9b85d2be725ce": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "097b281f49bedd157cc43301552c3449f4c14af2": {
+      "kind": "unknown"
+    },
+    "09859d8077a8d3f22e13ef42afb0ebed1b1737fe": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "09aac3c3b7f6e26e8520b362eb048d4d8f9165c3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "09bcb053c038168d485fed3c533674953a4a30e5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0a1e3f2b02fcbeffd2f01f6a3f886f6ee8571db7": {
+      "kind": "restricted"
+    },
+    "0ad25db4bd1d86c452db3f9602ccdbe172438f52": {
+      "kind": "spdx",
+      "spdx": "AGPL-3.0"
+    },
+    "0b34f0c37f2c76b64bb2dae71561e6d069521639": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0beb9ce357e0412d3d7a3c92e7d549b315f27409": {
+      "kind": "restricted"
+    },
+    "0cb862a19f00c36d4670130d507baa00bb6c0311": {
+      "kind": "restricted"
+    },
+    "0cc6cfa8609c01e97d5d57dacb4c6c62c7113208": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0ce76b887a63e9964ed26265161cf938b45b9eae": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0d2a43e6b124f41e11bc99f654b319c2a94f7212": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0ddfa4e23f95354ee161cc8134c034788dbf3076": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0debf0cc948075b224722509141d116ca1ad22c4": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0e259d42c996742e9e3cba14c677129b2c1b6311": {
+      "kind": "unknown"
+    },
+    "0e66ebe5d1fa0f2584a3917bca2386341541f628": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0f9ef9bf2a6ec138a87ace2ee8ed931390f0dfe6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0f9f9397a0496ef63c7d555d36b40c3f932aff84": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0fab9e1430a5e1d8ddfdec047dd47997c5c38466": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "0fe6a519bfbed7b6872cd81c1316aac818975d14": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1053d12088308bffa9261121b5f17de0373ac907": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "109d4bfe051a63fc9cd17004162eb01a2d364a30": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1101e8ddf64e41b345f5db1f19b40af2318dd763": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "1108413c8e848d0c0f1cf79b48a2773fb305d284": {
+      "kind": "spdx",
+      "spdx": "AGPL-3.0"
+    },
+    "112f90d6d88ce2c55aad2b87f6f011611683a2d2": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "11efdd9450462ca9ca51d57926a44eca6aee5317": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1373e1a27b591be19a51842b20ab9eb3367f828b": {
+      "kind": "restricted"
+    },
+    "13e25df86ce06eb6488e6a6bc5c5847f5dedc352": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "1470b964a5ce5dd2d47f22171e597e3985c29f0f": {
+      "kind": "spdx",
+      "spdx": "AGPL-3.0"
+    },
+    "14fac913ccf80234b1848540089a3bbcb6e5283d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "156cf3ff8ef837c9a0947ae3b0d396038409802f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "157f90697fb75ab4c5be9689fa5087f2a28d9d5c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "15dce701bd0f9421a562a0e6b49119a910db3cbe": {
+      "kind": "unknown"
+    },
+    "15f73e2ef14646e944ff8e3cdfaaaf0b817a3baf": {
+      "kind": "unknown"
+    },
+    "177ee00a4b131e893e1714b6844cc61692cf8681": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "17eca290eefa4fa9d5594edcad845be8df899eb0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1842cf8baaeaec7c09f9445d31a0d6a11ca6e2c1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "18a4a19ccf45da309ae42725ee931ee02ddb665b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "19212f2fd716aa7efd99bdc252462e4559aec5c7": {
+      "kind": "restricted"
+    },
+    "19db5f1b0ca65e277c158bd4c4263139ccfd859c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1a0fa894f031d29c52bf4396ea17aff07b029468": {
+      "kind": "restricted"
+    },
+    "1a2b77274dce340260e12e6f63ba1c13a249887a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1a71cb64397535482ff19542d1093c0d4a6442d0": {
+      "kind": "unknown"
+    },
+    "1d2a42d3a6545c93df1093827dc5042d7a2e6f1a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1d30c68420786178f4db473518eb297550736d01": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1e71cbf26660f31903807d099fe902c098fc7e4c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1e7d178a25fad9668773be595dd53e913bebbf39": {
+      "kind": "restricted"
+    },
+    "1e7ee819908546d4161065a46c8559ea809bd69f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1e8c5372fa8492445d4d16889f2e90a1c48c2ce3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1ea2ec32da72b1cb829068e8fee385f79527d665": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1f142d3166096175d48df4bdb70bb562a7dace94": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1f2f138b4ed4b1f858690ad43f943318de2c65fd": {
+      "kind": "unknown"
+    },
+    "1f3d3dc99aee718c80f75814432434df466f1f59": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1f4127f78b6bfd3a39f7fc9bae035f5abaa48be1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1f50ffd2b1559e6c7a7186d0f10ae63abc7e4c49": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "1f79643d40a9f9a75bae6905c3c28d4441dfb09a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "20aff8a343774bbfa8a18d96c928cb275cc558b6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "212f3d4efc4b204aeeff1e82867bcd20c17b0346": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2184289b2ce39c7feb9f36bd2c3079806687ea47": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "225c18bba9e68dfcf0f2e0f7973ff218f19db1af": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "22ce895b205810d98d1a9e8519a5098901c1377d": {
+      "kind": "restricted"
+    },
+    "234cc2396ef9ed37c4ea1d8c6026ed2e3b6001f6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "24e3cc9b3ec64d20e4fa401e2b794b0b5ecc719f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "25663c16da99bbac5b1131a78ee45d939441573d": {
+      "kind": "restricted"
+    },
+    "259bd3027402ef9434e7e885cdcc25637c0d173b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "27ca7521a530e3fc110f29369cad27986b257100": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "28a93ded92b2d465e295994148b2d2caf234f5fd": {
+      "kind": "restricted"
+    },
+    "28f98304ac6db414af24a4e9cb31407dd524329f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2912297399358807e9a72d7a4256c5d40bfdc6d3": {
+      "kind": "restricted"
+    },
+    "293aac6d8b54118d8ba4dcae40f7c36d18796764": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2973c0c5bcbe674d056bd82872f4ddd7245b741c": {
+      "kind": "unknown"
+    },
+    "2981fc500e29f9306e2f506c710564529d057494": {
+      "kind": "restricted"
+    },
+    "29902265803b1402473476a0ec7a14f00540dc86": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "29d8e7b039c2bb49681073a8a0b52976c53accd1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "29f64e0a93476a23cb4e5864696f673bf05caa43": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2b5a31714bf95df3682784af69a42b504b02d452": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2bdc797c61cc63f392175124e8c485651e8e2da7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2ca3c718eb093cdd671e680b580ca788f6f6328a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2d476d24fa5a9ae2ab35e5fd121494049eb2ee5d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2d4f49fef0c56a5fe30b90cd6950ca0a73aad42c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2d848c9f3fed5317d59e0b88cafa289b42a29d2d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2e5ef3ec71babf5a5df5efeb473dc6286fbc232c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2eca460438a0275f1abac83e8b4858ff14d1ac2a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2ef008a43c28d1de7b1762d928cf59186a264537": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2f9df7d6e6bbe35e9a01d670567f6809eb096e68": {
+      "kind": "restricted"
+    },
+    "2fbcd55c452a545d8fe75efeb3bae0c6ab01d1cc": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "2ff78ff0a2f05ba6dff12b8ebaf23422962efab5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3023a7202bf4b99792b34c6b9deb18a434169d9d": {
+      "kind": "unknown"
+    },
+    "3064e6c70158b6a8a2dc75ab13176733e8998566": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "31a0293cbf4ef0e3418ec31d6d8bd5bec3f50e0c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "326f0a55c96e672fedf9d807ca043c00df05ba0e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "32ba103fa9f4c8d9b8a9e66b789a7374b3f60850": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "33098f2f587669680578077a8827adf3b2257652": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3370b0256da0e20f19fbdc2e5ed1721d36880a55": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "33b83a8c796dcae2c62fdb5438cfee262cb518be": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "33d692ee84f4464f575f2d1e927f19cf1c8ccc57": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "34067ffbd356465c03c82d0e44f866900f8ea72c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "34079929eb10ccbaf827a04d9b57190280bf4340": {
+      "kind": "unknown"
+    },
+    "34d81ae5d35d8306d877a8be0dd11c9d2eda2ae8": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "35095f60b4edca47f043dc77e3dc2ea6a36bddee": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "356b112bcc4f07e03b6e57569eedf9d79978d2d5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3589b03981381f5f6f6d3762764c195d7be5770d": {
+      "kind": "restricted"
+    },
+    "35a39c8223b848a95988f6ec6dbf2df833119c61": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "36119f623e10a6a7af16aec2816c2d1febe34a89": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3620a6809c33e44de7f82ecd8e81802031904f30": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "36d9c87b35e2ac77f621ee88b25a68d680f5fa04": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "37f94b76710b2cda2de53781d0ae34101481dc23": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "392d1a91b3fab7d38b6df94c0f649abbaf3f64d7": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "396bcb036392a3639898273f611a38bebf2918a1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "39a10a64aeea888afa5ffbb68bb85dc0f1ac6671": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3a2aeb6b910067aac43c6db18dcab9f59c3ef895": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3a5f93c8e882f8f115758ad4e7fa4e91d1c787b2": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3b7b82d0da2db857eda1a798dbd908ea136f07b5": {
+      "kind": "unknown"
+    },
+    "3ccf5cacea97a55a314d7b0c8b9333875bc4b7e0": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "3dee87cc29b08a77b82b11a9eed7cc0a270c2a3a": {
+      "kind": "restricted"
+    },
+    "3e3c264e6b76346b2037fd454fbb0bc699b7ff59": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "3e8ba72f69be5744b50a6347ec62253112c066b8": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "3ebb69c2234f26ce81fa7fb3c67d783f9228bf25": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3f0172f1db4910abef4a43ea72e05fbd296ac7f3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3f122c07d4cd1a032825a9d11b239659e96ed413": {
+      "kind": "restricted"
+    },
+    "3f361df0f623aebd8be1de6f838ee808c23484de": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3f6a4b30eebcea768c7f1e3fb97a4dcb1ef90659": {
+      "kind": "unknown"
+    },
+    "3f709c423026e30972b83813fc8a58a71495abf0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "3fb66876edcbb7862d4463097775b499198cce60": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "403dc75539849c4fec75acb2ed6c726e4374d94f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "405f74dcdd91d680b83271005310600f323c2fc7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4157dfcc0e73f2359c314987a9ab7eb67085fa4e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4168f57935176ed8f9c937b9d40f6a84bcacf52a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "41889521f7dedb506da3ce1c9998b78965e45e6e": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "42473d1fa6b90560451bc9e3e8fcac5b55b7cb9b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "426ec9628c6bed8d6a5bc2c576b21c1f0c610ea7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "428c8666bb6d24f5f6af34cc140958b3c6372c66": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "434dd5da7ecf5129eee5f64b783c0d2f65d93a64": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "43af505d600cc14bc92a99e62e5ae29a2cedf0b6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "43c53f8df4111fb7d5f2a7a508377bad4babbb62": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "44538bed2121005352d88d85bac3bcb094238ac0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "446995fac42be1057d527f5fe95aef597c958071": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4594fb738451be2147f68c09954732d7a306727e": {
+      "kind": "unknown"
+    },
+    "4622c986a759300b3ac0fcf5bafdb1405d87193a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4623130339cc7f684bb692ef3635a448b3836785": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "466654e439b32e997f43200fad13d6e27f5ffdd0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "467ec035d4f54749073a2b993490b759e826e494": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "472b0db9c93f3f8757194ba753422c5b53323305": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "474c93d9dc3f213c2fd6d735162777f6e9022021": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "477403ec7d794950076f8be4d9374714bca69192": {
+      "kind": "restricted"
+    },
+    "47c884ced3bd22db965a8e3fdf36970c04290289": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4803b932d79c14a86e3b639e4d59bf1326e57dfc": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4820aff8887321671df0621c958cc48a1009af47": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4896314a6c7063e6ff52ee0e1bbe20650357a740": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "48a2f6640b81ff8eca9ce7f6a96337692713ef5b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "48afca9e235dc4e1c05cf1aca7b111328ce6fa86": {
+      "kind": "restricted"
+    },
+    "48d2036bfa55407295165497e614597d484167d5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "48d71e69dd25a513cdf96663c666cc3385cf0743": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "49c6a01add829b224cf23e672825ea079e8129cf": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "49f8600931998aa1a104ee3ecdf4724066573f65": {
+      "kind": "spdx",
+      "spdx": "ISC"
+    },
+    "4ae50432934561a2fb2aa368892c3facf6e02d96": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4baeb7160e9d9142d67b7513209dcbe38887c4f9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4d226b6b61420f3eb8c5e295fa498dffe80bbef5": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "4d4a00e54a4a255d906f371d9990e367b7e32add": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "4ef166f2dcafadbb0b73dfac496da5fa37b5663a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "4f881c52d1f72f4cfb720e339e2d35c3058d01a9": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "4fd5461cb00b578b2e3fe95d64301726bce17fd5": {
+      "kind": "restricted"
+    },
+    "503d8bf23223daae639db7375e3f5cffe16314a9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "50e3ad8c0fd381aa4af2a752794a6824a715c198": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "511ec418189c4b03f25f711074f122b3f3ca016b": {
+      "kind": "restricted"
+    },
+    "5270ecfc40942fc2da652a7a2f3e687fc6851ba3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "53e4674a3e91df7b85c74e1bbf9f0fe37f8b2c8b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "53e5f88f82e9d953eabc8ad44aa51fadd72dea96": {
+      "kind": "unknown"
+    },
+    "5461740aedad083ecd4f54ab998ce8475dbd2cb5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5482ffa8d1dd33147a265a76c551d41f9513fa5b": {
+      "kind": "restricted"
+    },
+    "54e95cc8d1188045cd6f0954afdf2f1b685d47f9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "55471dd88f43e003cd6e8679593586a57cfe03cc": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "55cf24db88cbad4004ee10797ea69533b0c3629b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "55e1e59fa7f7367233924401ba0d214cf8f02a86": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "56246aaa45a1e7e23b84a9346661fdbf79b7c888": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "563effa41c51ef1589d0bcee82aaef8f911160fc": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "566e96e24e3166ad589ffd6cd4292f2fb38e43ab": {
+      "kind": "restricted"
+    },
+    "5700b997827973cb0eb6d84a2782bb08a5872434": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "576f7bc8a82e02a0d09a6f955612050cf15873a8": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "57b46f1fd11dc62351ea548104a88aa3f659c11b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "57d6df8dfc71cd3e6b35fd6c2776084843f2d73b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "57fab96ee6d980b75d6be413197f9366fe8e7190": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "58050cd3a39ad49548d10eb7b80d7de6933c3b7e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5833a80c7606a73c3bed116665e34dfbc891a422": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "58411dc6502cbacf9ab9adfaa4f5a782055bc45b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "58bcefc38b84960cf5b1da53a11069e23255a562": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "59004a10e30413174f4622b280a7fcf88ceba3ab": {
+      "kind": "restricted"
+    },
+    "5905104d976d283df868721d187704b481ed662c": {
+      "kind": "restricted"
+    },
+    "5975b3a59235da2f2205b064b815bc6e584e936a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5982a8720a1cb87c26a36bb31d5019f119841769": {
+      "kind": "unknown"
+    },
+    "5a41d5100c461bf76c532736319a1de058fd637d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5b2d7518e7a19e425741c0c556ac2122ca5298a6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5bc52a481ab04d9c2801eb01b54d6673e908e0c8": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5c092cb1a88819c9446753c1c343120f7bdec0b1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5c7720b24e8d24177847e32f8fa498328167f6ba": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5cea5d78a41df83eafe1fb9fc0710675a5b7acf6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5d40ba0e4e8be1cf170fb43e41ab5991ad7012b2": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5d61984851188b93ec46f0165de09a205f848040": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5db038258492ce47a5f3d27d78562c90d3f78331": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "5df102e8a2e29cdfb881ae7ec5040f2766564680": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5f803f6301be52d06ab97db3b1d3edbcd880f168": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5f8933a91a8a0f3ade6146390d2f0d332989ad8e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5fcb1aeeed359de8a83a9830caab05740c6236ad": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "5fdb95f1efdbd865b9e8958d6ec5f20a06bcb951": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "60797866e4ebc7b608a87e590eba4f3a817511a3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "60f5ec2ee3f794cfeffb26caaff36efc76bbb478": {
+      "kind": "restricted"
+    },
+    "60fed987617bd66ce0e5df7407c40132b966115b": {
+      "kind": "unknown"
+    },
+    "6170859542913d403316ed4556e43d6f31d97512": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "625297fb778f32eb39d3a5b97e3e3b611b7304d6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "62d4531cb41f6510cb1d57538e611953bb19568a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "634708a2ef8873032ca8293d68377c59f8b670ee": {
+      "kind": "restricted"
+    },
+    "63781f6a7e9b14c9d9cde312c35ebb4fa9b275c7": {
+      "kind": "restricted"
+    },
+    "63bc102a6def74cd25ea53807c082c70aaef9a4c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "63cbe8623de4db6676f024ad65b4463a1b5896f0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "64ce2885cb4dde07ac19729500ea7c3fc0cb9a7a": {
+      "kind": "restricted"
+    },
+    "64f643cb46df6c759b56f487748e1125b1c788c5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "65156e42cecc7db042cf127e3bed34c8b017a2c0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "656eca77b5aedacdbcd0d9ea3452a3cfd2a5f544": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "65c6042036f695a4b7b3a1f1e6e7081f3f29732f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6654bc59d22a3a55d8953f5e64a41d6436443d6e": {
+      "kind": "restricted"
+    },
+    "67c1a5c01cc519d46cb6a4d2f5da760771bb49f3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "67fef6979db85d91c2f8bd7cfb2211ebb8c8bc60": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "684ffc4ae84ee9602f649aa1912c3a3c5ffaba71": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "69239ead1ed4a05db45c0da08d1b8f64c0a76ee4": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6933084931cf19ee36e0519a68d21e3627bdf0e1": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "69cc33af7094daf5bb11f4988c66e88518aeb2a9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6a067e906e1346e640a0cda6ed37c5fb793104e4": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6a1f4a794a6a8d5b2a6710500dd96bb570f56143": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6a910166264ef67ecc6e531d1de2613ccda5b7fd": {
+      "kind": "unknown"
+    },
+    "6afb38b1a2a01d4c3a985aeb741f28353411c598": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6b5400237fdf6545be0b8fae370d6f2fcff8fb25": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6c44d346dc52cedc04c104a6ff10dd5ae021d5f8": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6c4961d4d237bbd87484a78a2d5596cba24ac17a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6c5b4dc9628583b174164db2b5f9672e005969f6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6c6bdcca1691aed80c4b2fbeeb1fd31becbf1b22": {
+      "kind": "restricted"
+    },
+    "6c7f56251cd1021ea295023d31221a5677772d55": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6ca207ef004cb69d03041e7e5c288a2be4968045": {
+      "kind": "unknown"
+    },
+    "6cbd388c6bb138dd7c9ab684d35d3a96b19670e7": {
+      "kind": "restricted"
+    },
+    "6d4d4c6921e844f3a9d20bad24979eb05ae29399": {
+      "kind": "restricted"
+    },
+    "6d76d5f6cce41e74b6cebdbf013faddf3abb1afe": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6d80b890b891d104dec2f05b4432e6476906ab2c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6dbc9ecb3a5b9080e95b962869e8c7ab16cfdc20": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6e7a068284fdd4e857950d2d8ecadee5bf445d13": {
+      "kind": "restricted"
+    },
+    "6ea2e76c813f12b078e82823703d58033a04fee2": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "6f6d78a8c8c4fa1af36a19632e41db2ada7fccdd": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "700778a10a9f27cc005b140fd177c63742ecf01c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "709cfec85cb12e70613558818eed4d6579974429": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "71059205904b021061fb1a3695bf2f42071bbf05": {
+      "kind": "spdx",
+      "spdx": "AGPL-3.0"
+    },
+    "715d483338cea4365f0d91a27799cf61226d6bcf": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "715e02c14fb418382ca11675ee0a1bd3f9b950b9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "715ff3121b94f15448714aa54a60867ce327b2f8": {
+      "kind": "restricted"
+    },
+    "71f979ed8418c082f7123ca1f4360a14cd4efffc": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "71ffb8bd20fc152507c1b3dd48f2890bef493ca6": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "72196cbc30eb50ce810cd1538f6dd70f824a053f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "722c7829e1a4346beb96d35a4f8f5bd2a3826290": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "728e24cb12b775e8bf8ef292700127ce082004d6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "72d929eacfa169eed3ac37b36c37f60dd61c1ce7": {
+      "kind": "restricted"
+    },
+    "72e63408aae121d7616d7a3e173377c6fddb3e83": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "7304135edce0306a5ab57c218dcfbcfd3747df19": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "736a8caa599e4b6cdb23e82f38ae914f2bd42f51": {
+      "kind": "unknown"
+    },
+    "737ac7ecf213b1b65a77e61924a5a276b1a6485a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "744a78e34097522aab29bb0c20e7aa8f92366139": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "746da6896f2da755b5b54987b4f29a7eea1320b5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "74c9ecbbd0e17fd3bf29bbf724003a3457876b8f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "74eff5d22b4195a2b1690d1c769fd5f2537e7cf6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "751cf8ec02ba2e599ff3483a1e193f48d89695c0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "756830b17f7ddfbc55affbf883b6c3f621eb66ad": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "759872d3617beef76585c990045e9b5ba2f83cd6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "75dc0bacacbcca119943655b02d363c179c2f58e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "766e4f1459a29c3d249fe5e000c39e963d512f23": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "775c46f30e9dac227cc94eedfc1bb98a2be09f97": {
+      "kind": "restricted"
+    },
+    "778e672cdac2edd4f205cbaed9df3bc39b4a5cff": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "77d70e53aab5bc753caa80dd404fea35f75dbedf": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "78c7f07151faf9202062c6a59c52ee58db1a1bb6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "78c90a342a8db0a0e446a38dea73cd4101f53da4": {
+      "kind": "restricted"
+    },
+    "7924f75c96b11e228e4ca03df12643af39959e63": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "79656060de00aa4659ad2c276d5be8830664d544": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "7a4a3ea2424c09fbe48d455aed1eaa94d9124835": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "7a9e1a9aeaed631cb451438d525c4fee0712362d": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "7c48dd638a9ebed49a8ef0c0c4eea90105381cdf": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "7c4fcb556a3813583aa02dd7a071d57d5be95084": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "7cd17a191e34124982f4df9173f9737140186fe3": {
+      "kind": "unknown"
+    },
+    "7cdbe0b482f604a06a0988dad8877ae8d9257f7d": {
+      "kind": "unknown"
+    },
+    "7cfb68cb8093298eb93401dbf5f0edf95493364a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "7dbb9bb89ccf5c96bce636cc3519e234db47b0f6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "7dcf98737a8bad703ee701310885040ae56ff527": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "7e2580e1d5b8410309b4d16b670bd16394438344": {
+      "kind": "restricted"
+    },
+    "7ecc2cbcd580bcf3824a86a73eca5f17e8be9d0b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "7f7aea74e9a02049273a24664b468283eb72411d": {
+      "kind": "restricted"
+    },
+    "7fef282b7f26abfddcc97299dee4b8780f66ea4e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "80fa9b501db35793dcca9b6ccf3e8cdd2db0f057": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8129f43c2cc5c712d6df53e2a6eaf701ab501822": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8168a989db907a10605f36aff7a70b6f45c75a0c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8171b9291ad1521e220cf81fa1149c6d647020e6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "81825539ef318a25245de31ff0034c93b20497c7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "81ba7c02174787ec958a41ceec152825f7193515": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8214975aa77d7605c5ab2ede526bedae40333163": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8226d363f88a734e52cc79ead7a5588cc55e76f7": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "82b4de97c7e3246775ac5836680284ea8a628dd9": {
+      "kind": "unknown"
+    },
+    "82feab771185584190c5050ffc244a22cdd6f4f9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "84d65424990a9462826b1a3ec46cac1352fad043": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "854bbb3a9ea4e82f4bdfb0325ecbfd5267bb1074": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8599e1f182b34c69322f95298498fc69a324b5ba": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "85c2f8765b2abb92096668fa9e0e808edafadc19": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "85e4d86aa58713465a30b2751243f59287cb8471": {
+      "kind": "unknown"
+    },
+    "86fb7e73196d2be4cb7660d309e3a4dba7c48fe6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "87a40598bec6f6d53d1704216d9e9931af2c98b2": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "89a81d9066afcc2e44a2b8a575fbc08b6832d7c2": {
+      "kind": "restricted"
+    },
+    "89bc5e962c9944cdb050887062afdaaf89be504a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "89c4ce0ad6b1db98d827ddd9725da5efdff55997": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8a03976f8422e280d42d103d1bf3cc2e06c4a3e4": {
+      "kind": "restricted"
+    },
+    "8a8576ce865bbf42e161ddbbc510d7decb98bb96": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8ae0a615d79de09a1fd391eef1ef72d8cb039939": {
+      "kind": "unknown"
+    },
+    "8b77653a1c4d6cad03ea39fd0023a990bdab0546": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8ca3d202745af1e93de29fe795bd3cbafaa75d8c": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "8dc54093646fce85ba25e4a3d691fb064cf1cb30": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8dd19202b8a21d3ff319fad3da61af7565e4ae8f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8dd821341442fbe021d2dfab7b0d9777a3153f27": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8dfb11f8b3fd235fe83f30d9dbfe1644b584da2e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8e6d1979b42354d1dcb654e16f57c3ab90fd2276": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8ed6d1c2bac96c8a9252598151c6d1bfe15e838d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "8fe03d26d87a5e5d4934ee50039ff255eb67406a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9002e264940ffea8c0f17b050935f44bc431c7a7": {
+      "kind": "restricted"
+    },
+    "90715bb429f374dcc4e05c35535b049d3c077313": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "909dcd966f9ebfebff3bcdc8042abc59b7f7c96b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "90c0bbcac2088805343360cffce2d42f505526ff": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "91fa65dfc1c4ebf3ab863eb47b654c186b90cbd3": {
+      "kind": "restricted"
+    },
+    "92e8f34c401ab97f3e46a36c80f633a04f13fe0b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9344296ee39debe88441c4d04401934061e28ad9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "93ab105f1f96bbac15f28721d5bde843ade663b1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "94046ad4856bb89023c9cd3a0ed2bb44782448fe": {
+      "kind": "restricted"
+    },
+    "943d5753a5f02f9ef352ff8a1706f167004d6e6d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "944d8ac4dec743b1c972550f9f6f09aaacdc83cd": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9483c070b83e1ebaf7dfbf72f9e6e6a636aa5f3f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "94df5bf89dbb6210a707fb4edbf3aade96bc4318": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "958bb949bca48ee53f9b63f53b214e78779c56d2": {
+      "kind": "restricted"
+    },
+    "95ade2f9cdde45c7933a706d514bc60f64f140a8": {
+      "kind": "unknown"
+    },
+    "96b4f516dc76433949e5682ea7a547bc1456d593": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "96d0f881510d00370d543c83b56447c8405b3b19": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "984713a49622a96da110443c15477613bc12656b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "98f0fea8339524b456755672fd2f8ff0914f9235": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9a239244ba179fe6ae7bb21c07d5df894ee6f5b5": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "9b62238504f0feb80cf3b390f181cef476c60d9e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9cf106272ac3b56b0c4c80218e8fc10a664ca5f4": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9d5acfd7a3ad1c3c164a15834a06ff101197cae4": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9d6dd3b420fda1f7de7a72a0cd139a07801ea0ef": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9d84f9e269c910c4ba7e636f6c3febce1c468ac4": {
+      "kind": "restricted"
+    },
+    "9dbe4336671713b6ba7c10f84de83d46975f379a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9dd2bae4a0c88077f40ba756c49b92213af82415": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9dde23f100fdf0d3937a6a9a6a71dc5666ba42e7": {
+      "kind": "unknown"
+    },
+    "9e841e7a26e4eb057b24511e7b92d42b257a80e5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9ea2fc7d45f2c4941c0633ff642ed22a897ed0bc": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9f2cc0d74570c5841f02b639593d12a70dc7dc65": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9fb19f714da74472d435279eebc1a8e51c45e16e": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "9fb562c4dc27e135fbf565ac95b619d19bd78b9f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9fc6a756254551135b7deeb7c274206bf874dc63": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "9ff7c75aaf9f65fd80632727527ab2aebbd71251": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a00edac2c06c65f72f6fa7dc75512541213aa771": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a05729079e1aaa9728b266d7d4827b714e2f982c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a2290fbb43e4b0ceda2694a4a748ff477e445fec": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a2340caf9e78e56f0e4220fed084c21b9e2ec854": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a2d71aed19ccc43d94b9c3afe6430da9b2277f32": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a2f31544b8ce3c1fa39511c9513466fb6bbfaafe": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a3bd27fbacd5ac8f9f619d6e04a9870a4ff9c271": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a40f4c4e482092730e5faab10cf684229413d9a2": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "a56853bb1c46d967e5d95b1be9b5eef0ec334a2f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a5956fb9822fc725076d3bef61d58f2d12ebc01a": {
+      "kind": "unknown"
+    },
+    "a5c740ae7bcb89e0140cca8f7d72369780fdf436": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a618c28c1b7517ced276c5b509ae57ee7a58e612": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a63594a5150d0ae00c3ddc36b61fa8f708c3ca8c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a638b33c53c25fb7c32d81ab52257f47b726b16f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a64226e9ea89c9623b95739b383295e030aa948a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a700ae4375809d54dc7e93327e2338991a5b20c1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a735185b841ea93cd52437fb4724b3c3bfe50a2b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a75437e27e0ce7ce6dc6b23303a22375638744fb": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "a9c3e2f54f01bdc8d98234a043354e72dd819f84": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "aa0b61a0af2b2e91f690da7b7d950f8a3fad45d5": {
+      "kind": "restricted"
+    },
+    "aa20733917ffc919b6b04834e6a6e22909df7c76": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "aa451387fdc53bf54ffd2b60c312e35893349dad": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "aad13a1b9395c7a4915af2969d7c5ff22dc50725": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "aadec62f5cf87aae35a0423382bca6f2849abdb5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "aafdf1f8e09859665f65255a5bb39206fcf55148": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "abf0390320aa14406af7a520b9b0739fdda9bf08": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ac31f09aba721de8d139c7bef3d5024421426472": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ac602842d08afe0af4da9d926ce6994fb668526e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ac8854130fbce7019423c53172914105591851f1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "adadf1b01cbd2c6294eb9e88e1b1132ff32ae76a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ae06b37e1c5116ccfaa615ac25ec1aabf5658d8c": {
+      "kind": "restricted"
+    },
+    "aeaeb848e2e44d7762363b2eac04eb146e085dd7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "aeeec28487b4bfd0698a5be2ee53f8aa37772de7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b000bdffeaa2b2576273fbf2c9b848b34859ceae": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b082e88fc465f0d40f1ad6ddbac7282cad5fc6e5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b0a8e9b81083294360c69b4ec45d3d39a2b28197": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b0de5b1eb94213e92ad03b131684bae483db2bd9": {
+      "kind": "unknown"
+    },
+    "b0e2dd5bf0c059a8e4605989391e59963b49802f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b156d61ff0743b154761a43140588c90a07f59ea": {
+      "kind": "spdx",
+      "spdx": "GPL-3.0"
+    },
+    "b1aaafaa1174473a263c4b827cecd5bef8598f16": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b1c998253632781329985274ce06b09ac35a6888": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b20442685375f4dd187888288c53f98217268eef": {
+      "kind": "unknown"
+    },
+    "b2a42d50ba460efe7f718b0e0031021333b84f8c": {
+      "kind": "restricted"
+    },
+    "b3575a3c1358eac4b9ee36a4c851872d81417760": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b3851e5dd0a780271f84a6180216390ca316657d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b3905ed58dd6fba6dbfb310a5cab5e9bcc79d37a": {
+      "kind": "restricted"
+    },
+    "b3a5f823a69b4b010f92930ac09e8a776daf65c6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b43024732d67072a617e1658d4ea112f56148341": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "b43112ff9a968712c8de3993355e93d06da891d9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b5115460b179b251754281be0842641faabc7223": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b5215f702f3c7d267b696c2d829e9ef066b5ced4": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b5bcd5600b8a948254250cfa0a71570e9b2fc7a7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b5ed4ecec27b39347f6f6c081cf6c512f62bca0a": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "b6695b0595130e9ff7bf8b225614d1497acb1d45": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b77bf2ab726c6e7cb5a81a9d3b7dc38266ebfd3d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b785cf08b4c694cccf7994445328cf6b4bc16dad": {
+      "kind": "restricted"
+    },
+    "b7e9a3b792dc31b8ce5a2161a841486e88fca25a": {
+      "kind": "unknown"
+    },
+    "b87ad365270116823e55782fc04eb129a7e45813": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b92d7062bc207a15cf2fee3d04280fec730c8440": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b9514c51192e03d4c0c55369015f597ac05f6724": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "b95c3fcf6bcd81713196a8523188be50fa712edf": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ba089d2dbbd7767635cfbbbc876b9a1241bcc6ac": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ba19ee18fd446ae6cb3e5817c017fb7f8666e2d8": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ba2441b32d4aa5a20c660389170a8a26f87721e9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ba5298f62178cc0d030be01d40b480b8ed21a5db": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ba59a5f947a4f89c4bc4a379b68104e03c2becea": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "bb3f6d23b1f8025514a62a12b51b47d73e3c9aa9": {
+      "kind": "restricted"
+    },
+    "bd0b16d3b394f0cec3b2fb4dcae15b6286249dd2": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "be185632f9881301cbc0ceb73296a6cf9c8ff149": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "be3f7b28e564e7dd05eaf59d64adba1a4065ac0e": {
+      "kind": "spdx",
+      "spdx": "AGPL-3.0"
+    },
+    "bea81ff4259794f4b8acc72d27614d8f1fcf4f07": {
+      "kind": "restricted"
+    },
+    "bed5da1ead8bbf2109da6524e1a20cde8e3847ed": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "bed931aa268f2d2c1fe2041ac7c64fc205e2dfd6": {
+      "kind": "restricted"
+    },
+    "beeaf19c6865865368fa4551b4de2e5a307fa3ce": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "beef293a40004e5e00c76bcd899dda2920e52236": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "befee9a14e5e45705dc4b54c249be20d630e3f84": {
+      "kind": "unknown"
+    },
+    "bf2ce508d637e7f377c1fd9e3b4ec84cb8c55a16": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "bf4dfe2e9c9943535853e1e3725e6a38c320792f": {
+      "kind": "restricted"
+    },
+    "c05ea285ed28f096801a8fa081ee27d91b435a1e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c06ed54658a30ec6ab956fce974b04e0cb927c5a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c08a796ba95152c4725fea852f68d592076b2f5f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c0a0960d0175a19f9a017b0065bf89522b37f381": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c13f99117e366fd54b4c097b67ca34dfb1fb8ba1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c1860129ee5b95c4a5b15b63d33f0b0a98d21a6e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c1b61e56658396dd7bc3208e8779662132775f6b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c1d7dbe780519e911afa78937298b0dd8de037e1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c22edde8a701dfd8f535de28108224fe6d27246e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c2f7d4cae773c720d764701ab01c6480332e5cc6": {
+      "kind": "unknown"
+    },
+    "c3658bebefc3bb3908356816354c9aabb052d44c": {
+      "kind": "restricted"
+    },
+    "c3a824ddcf82ee03b971df66bb5643047f18cc38": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c3e30bcc287d6a1ebdb4ab29c10d344fd1053639": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c43d7eaba3472ffc4beb87cfe6e57b9eff1e390b": {
+      "kind": "restricted"
+    },
+    "c51625cfa127c6cb25b37eba98e48fcfceaf561a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c55ab42224874608473643de0a85736b7fec0730": {
+      "kind": "unknown"
+    },
+    "c5a1d56c6d623c72d077f8aab56b31d7dc371cbb": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c604bbda7a2d576245d173454a9246148f330209": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c60546d3b06d79e776408a1f336e404bb586661a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c71119323e8397ed3307004e4ecce4f0dca92908": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c7891a4aa50246479be0f3d43d4b24f937a358cc": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c79f3f8e71012685da9a0f34c9f8162322226f7b": {
+      "kind": "unknown"
+    },
+    "c7cd735642b26f589cd949914afaa3a7abd2c360": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c7d2838bcc549a5cda7b7a3556a422e0074e56a5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c7fc0c6d59cb8129a0e30fe13f5a6118f3933c44": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "c85ed5c11e0ed104d7b1954189ff1bce82e90d42": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c8d4819f3e1a3bc29ab4fae17adef5818efe951c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "c97f3156e62dcd4961db71fac049e19577ca1a7c": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "ca2bba771cd39dbef6acf96b52481133983451f3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "cb9abe0d91abe945cf2048b86acb986deeb0f904": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "cbfdbce4e3915444b5a70d46af3a1066607d4622": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "cd45ffce6c1c288b4f571eebea68885e172a5b3d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "cd8d62d37497c0bd8d4124e895648850d4ca815a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "cdef61bab184da8f8d1e114dfd2bdd1ede990ddb": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ce64d27c220a8ea1bceec3b304205eced0320f28": {
+      "kind": "restricted"
+    },
+    "ce77b3c19783faef213aac04759b539019f934f7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "cefe596afef12e19a8e5e923f1a04c7da3188760": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "cf7bcb2ba475e33648180599c0f83c425f1705d9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "cf9899ab256218c002c13c5b5b28068fec9c2ab2": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d00355ae795c9644ade23b871b88e10ef784878c": {
+      "kind": "restricted"
+    },
+    "d0674dcea57ffb53ca70ef412b5c4a0f3f20df65": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d06c94336db22ab3dd790f135b64c73becc41aaf": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d0adf66e94fe0341cb145309045239fbc5e172e6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d176c86103f615ca0a71eca3ed2c838b6d2cdd45": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d1a3da856fed3bbd15316c700a902133250c9dbf": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d2042c20a6e4c6b1050543776ca5470151eda412": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d235daba6af422ff12911e6972c93ec5cfd6d673": {
+      "kind": "unknown"
+    },
+    "d24ab435093a0c0dd35f31f68224ee276c9cc2ef": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d30ffeeacafc266236a3ade4c1be1ee0fbc5bf85": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d3803662347669ba91a762dee8bca380d3765265": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d38b18c6c5e2b5dcc37d10c1a2a6b3741bbdd7eb": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d3c9e94fbc6c28f66ecb5a01407d543c99c811b6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d3ec4135ada7f22eaace31b25feaae5f0edecf8d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d4b4c80f41c257d19431d4c00a2d8a79aab52940": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d4ef51765f940b14984e77d47009d51b5f70e87b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d52db8a33d26aa39e5a330e5faeb2a7a2dc0a868": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d5fb797d08725991f833cb9ab303a34542a28f7f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d645695673349e3947e8e5ae42332d0ac3164cd7": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "d6510aafc4b4d2201df5fd16df457838480d8fd6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d67778ada6b9cda6227e9130da182c13e73c8b2e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d6e0abd9c9ebddde28f789e911ea61b28c58f4d5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d711ac16168c561d7fe8c19b0ae8752e0f529220": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d7a3e836d59debf0e4ab5dd036c95d575acf8d11": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d80f01f94b2a790a6ed2aefcf67b0803f2c67a8f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d8c7e2af6f82139765a78ba85184fef15710f7bf": {
+      "kind": "unknown"
+    },
+    "d8fddab504f968b514eefe28ae5186b03b51f2aa": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "d968996514e428467eaef5862dac97b033238ff8": {
+      "kind": "unknown"
+    },
+    "d97d8d656a0d8894786faab277ec0134fad2016e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "da1b176cb2a397763849f99f36512d6a9285ef98": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "da29834388e13478b4c4596573166aa3964a42dd": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "da684a5244545bd15ff2b9d5c82cdb7d9b81f37e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "da6ab6cc8f333d7e89a99812866df8f24374d47c": {
+      "kind": "unknown"
+    },
+    "daaec10e7853c3131a05695ebe5e447ff3e3a39f": {
+      "kind": "restricted"
+    },
+    "dac34903a7cda291f4023b4433e86f2594fc4e45": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "dbf94b3120976588976c51e1d7d96012b4f9a130": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "dc9079e0ebc14cc9432b5070a8a23267a399667e": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "dd0a6cd8acff5eeb188bc18ee6885e3e183b8770": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "dd43f03914c11ebf49a357d307089fc1982317d2": {
+      "kind": "restricted"
+    },
+    "dd4f9d7daaf1a31a3793741931b6b4a80fca0c23": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "dda6d726c243715bb8b699db221c31bf926b5394": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "de1454f06b6da1d078d47088ae473778c0b87089": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "dec068515ec56cbd7f56555cebc9d64818072e64": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "df939465a4982f884b7a2705100da50c8d84516f": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "dfa950fc5b689b2f6bd6bdc62f4d38175b75ce3d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "dfed7a9ac997fd21ef29a1ea4017a965678506e3": {
+      "kind": "unknown"
+    },
+    "e01079401553929f053bbc7cbe72125056f13fb2": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e01f008a1febe41946345c425832c6aa093731d3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e09dd3da258abd7a2400cdcff1678022be1d92b6": {
+      "kind": "unknown"
+    },
+    "e0c33dd64641022d5efce1518821e5691a808617": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e0d97f2d1fb18c31ba8f719aa838abc342599011": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e0e69a6ed3424395694a2fc8ac350da25574cf0a": {
+      "kind": "restricted"
+    },
+    "e0ede9b66618724f59a1bad9ef1681db43d0334c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e2d76d01de5653110900fc072e21c627217bbd78": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e399590b7e54a2ccc7f0715761a2e736fa757e57": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "e4ae89d9ef8da5b12b92db17e2279e4172616ad0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e521956e0f05a0f2c72e04978ade0bdeb3c2fed4": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e5b4bee92ed2127744cea681fa103521298e3b9a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e677dcfb1594690f49d11e137d97da5d4a1ecfa9": {
+      "kind": "restricted"
+    },
+    "e681f892cfa8ad0a7c2adfc1734f288dae36b9b1": {
+      "kind": "restricted"
+    },
+    "e7bd0d42286aea57c57fcf8619c97de321c1c436": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e80aec5b2fbcb3c2afab7cfc4394d731c14b9f87": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e82adce3905068d046d6e2c63ee087e4119f170c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "e8e7c4aa302ce611c7e55918347a272c7229134c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ea973e2f61de72a1af3e880977ad021cc53e80c6": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "eaa4a8a5a2be17fd81f6c8e37d95b2ff5e80ef06": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "eabe3008f6c0275929faa8b07d406e82717648cc": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "eb246475fd5a66b9bb56176f3a718984632dd98d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "eb4de2e245f21594ec20fff9e29b43979f037af1": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "eb51cad1a923386260765e1b7edd0da31d2fe6cf": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "eb79c35bd865477e525b18e56f35d56fbe0f7110": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "ec170ad92004bdbdab67fd639a3104a97722373d": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ec277f227970bbb972768657cb8e211c913d0f6a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ec53a72d0cbc6b94c0c99721dd5156942ba8dfcc": {
+      "kind": "unknown"
+    },
+    "ec66b3fc2d5a089f503c7cf8a4203602fb088d38": {
+      "kind": "restricted"
+    },
+    "ed064819ab537575d0cad902f7e5af4a3488b1d0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ed67368a2a79ed7be97b2a4852330cdac5b8b12a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ed700b3bf67b13902b412aa318e114df82a187ee": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ed767a2ae17eb1716737283f714af61566b4c8db": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "ed988155129c3910a94038534e029640a414324a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ee64825b74ec495ba7b3b4c273d183d902255d2a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ee6b68e13364ea1517383ff5bd9ec62fecddcd33": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ee871cb2e67079df83092fe26f6dc7592b26034a": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "eea9bdf00ad3969fddd301d76bfe75c8529373b2": {
+      "kind": "restricted"
+    },
+    "f05b9161b2639ba96de7f7306d3ad70664587ec4": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "f070c13ee00106e2944e2d5abecbf9820283f96b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f0d06f87f9b209d47c7f7963321ff71bab68c1e8": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f0f872a31d324a9a2cb10ebb6348f1779504912a": {
+      "kind": "restricted"
+    },
+    "f1dd2c09108dde1a5f56097cee8461b3ea834499": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7": {
+      "kind": "spdx",
+      "spdx": "GPL-3.0"
+    },
+    "f2a66aecc6d7ac94af618759e1f5cc01132e798c": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f2f439741a263d46773bd2cf7f120ce494b5c719": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f3208bc5a36db9a44b5bd09cc6425708f6c2cf0f": {
+      "kind": "restricted"
+    },
+    "f387b2e83868c2fee56ffd6b5b45b605121550a9": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f433b1a53f5b830a205fd2df78e2b34974656c7b": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "f461737043ac8cfa1323b8339a2a06edc56f468b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f49a4e16e68b128803cc2dcea614603632b04eac": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "f4bfc53d8d773d3b10d95c2d58a5773dd4e2f3aa": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f600c2721f07e19c9efbd52d9fe502a6e367c8d5": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f6db86c00f7ecfcd6fc1da02e85222dfa348b58b": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f6eca502b7f3fd6a3f0b024e4c98a3dcf5611cee": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f72c3e53be0426cfe5a26b6369918ac0d12a7bb5": {
+      "kind": "restricted"
+    },
+    "f769fc5582d3f8ee0f9eb4da5fbf95ac85834c17": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f7e724ad63e57f40dcce29b1fa493fa60c459b42": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f835fa0d678b80ccfe4a2afff2509221ece96276": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f869011e2b44f7f0d84d61808cf5d7c35a76dd22": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "f8c1c8271bf7465bb1b2eb5733570f1a756c8bc8": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "f91bbc8524d1ce8c164fe548ced8968e5d7d09d3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fa2fe218371ee47b741db9d0fa7cf17cddc03eb8": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fa40a92cb09fd30f2814ad900bb888c2d04a7a55": {
+      "kind": "restricted"
+    },
+    "fa72d5f7171f260ab7abe69ac38e423c76510928": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fac5e307b8e39501b20a1c84d06f842decf1bbb7": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fad4d887a681dd49233e5ed01ee2c7a1513089a0": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "faeff86b0a3a8ebf9cbc42e825a3f3b7034cd893": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fbe0a5006e55ab2f6982d61adc1689f17e024d85": {
+      "kind": "unknown"
+    },
+    "fc154171f64ab3300650d220794729c28933d255": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fcbf78b71afd74a08f80fa5d046bd7d474bd27de": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fd15eb4cebfc09530946603013f8faabf1b10fe8": {
+      "kind": "unknown"
+    },
+    "fd57f68790eb9919fc622902caf31f831f9c4e8f": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "fd8aad59b5c748c35a65437522790fd86e36aedb": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fe54e37f5cfc828f6a7771ed6ea268b5c91b48e3": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "fef98434d9dd1f2d6ff9d7699d3b1c4b649c8756": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ff02cfb405fb63db6ca73c0bfa4c08b6d2e9cb50": {
+      "kind": "spdx",
+      "spdx": "MIT"
+    },
+    "ff0c02aa79810c82096a3eaf04f0a667a7d6b7ae": {
+      "kind": "unknown"
+    },
+    "ff9ad4530f5716304e042cbac72cecd7c40f0e0e": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    }
+  }
+}

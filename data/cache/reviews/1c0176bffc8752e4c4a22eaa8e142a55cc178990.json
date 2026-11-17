@@ -1,0 +1,42 @@
+{
+  "fingerprint": "1c0176bffc8752e4c4a22eaa8e142a55cc178990",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:39:13.080Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Creates, edits and checks PowerPoint decks: pptxgenjs, XML editing, design rules and a required visual QA loop.",
+    "summary": "Guide to build and edit .pptx and .potx files: a pptxgenjs pitfall list (colors, shadows, charts, placeholders), structured decks with theme, layouts and sections, template editing by unpacking XML with helper scripts, deck flow advice, design rules (palettes, typography, what to avoid) and required content, file and visual QA with validation and rendered images.",
+    "strengths": [
+      "Pitfall list that prevents corrupt files and silent failures",
+      "Required QA: text check, schema validation and rendered images",
+      "Concrete design rules, including what not to do"
+    ],
+    "cautions": [
+      "Needs node with pptxgenjs, python-pptx, LibreOffice and poppler",
+      "Strong style opinions (no accent lines or color bars) that may not fit every brand",
+      "Licence text is in a separate file not read in this review"
+    ],
+    "keywords": [
+      "powerpoint",
+      "pptx",
+      "slide deck",
+      "pitch deck",
+      "pptxgenjs",
+      "presentation template",
+      "speaker notes",
+      "slide design",
+      "deck editing"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

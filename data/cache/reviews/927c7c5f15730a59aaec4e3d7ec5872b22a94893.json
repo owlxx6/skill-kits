@@ -1,0 +1,41 @@
+{
+  "fingerprint": "927c7c5f15730a59aaec4e3d7ec5872b22a94893",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:43:11.823Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Grows a wiki with a budget-capped research loop over web, arXiv and GitHub fetchers, with a kill switch.",
+    "summary": "Driver that pops a seed query, fetches sources through pluggable fetchers, extracts claims, dedupes them against the wiki index, writes or amends a page and queues follow-up seeds. It stops on a cost cap, page or depth cap, convergence or a stop file, and refuses non-local fetchers for private wikis.",
+    "strengths": [
+      "Several stop conditions, including a kill-switch file",
+      "Privacy guard for private wikis",
+      "Pluggable fetchers with a documented interface"
+    ],
+    "cautions": [
+      "Builds on other skills (wiki-builder, wiki-query) and a SQLite index",
+      "Runs unattended for long periods and spends model tokens",
+      "Convergence is a token-overlap heuristic; better dedupe is deferred"
+    ],
+    "keywords": [
+      "research loop",
+      "wiki",
+      "knowledge base",
+      "auto research",
+      "arxiv",
+      "github search",
+      "budget cap",
+      "seed queue"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

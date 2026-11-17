@@ -1,0 +1,41 @@
+{
+  "fingerprint": "4de0967edbf0cc292ab9a50e265ec347174a5261",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:47:21.326Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Profiles competitors in three research waves, then delivers battle cards, a pricing landscape and a feature matrix.",
+    "summary": "Short intake, a depth rating, then three waves: profiles and pricing, customer sentiment from reviews and forums, and go-to-market and growth signals. Findings are synthesized into a report, matrix, pricing landscape and one battle card per competitor, then checked by a verification pass. A progress file lets a later session resume.",
+    "strengths": [
+      "Claims are tagged data, estimate, assumption or opinion, and gaps are declared",
+      "Checkpoint with the user before synthesis",
+      "Honest fallback: without web search it marks everything knowledge-based"
+    ],
+    "cautions": [
+      "Long run: 15 to 45 minutes with many agents or sequential passes",
+      "Wave templates, synthesis and verification rules sit in eight reference files not read here",
+      "Written for startup founders; battle cards assume a sales use"
+    ],
+    "keywords": [
+      "competitive intelligence",
+      "battle cards",
+      "pricing landscape",
+      "feature matrix",
+      "review mining",
+      "competitor profiles",
+      "go-to-market",
+      "market research"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

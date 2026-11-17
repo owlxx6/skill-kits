@@ -303,6 +303,26 @@ export const LicenseStatsSchema = z.object({
 });
 export type LicenseStats = z.infer<typeof LicenseStatsSchema>;
 
+// Counts only, for the run information and the public summary: findings, paths and excerpts
+// stay in the admin-only safety cache. Optional in ExtractStats so older run information
+// still loads.
+export const SafetyStatsSchema = z.object({
+  // Skills downloaded and scanned in this run.
+  scanned: z.number(),
+  // Skills whose cached report was still valid.
+  reused: z.number(),
+  // Verdicts of the skills that need the scan (license not allowed, missing or unclear).
+  clear: z.number(),
+  review: z.number(),
+  block: z.number(),
+  // Skills that need the scan and have no valid report: a file could not be read, or the
+  // repository listing was truncated.
+  notScanned: z.number(),
+  // Skills left without a report in this run because a file could not be read.
+  failedDownloads: z.number(),
+});
+export type SafetyStats = z.infer<typeof SafetyStatsSchema>;
+
 export const ExtractStatsSchema = z.object({
   repos: z.number(),
   skills: z.number(),
@@ -311,6 +331,7 @@ export const ExtractStatsSchema = z.object({
   truncatedRepos: z.array(z.string()),
   failedRepos: z.array(z.object({ repo: z.string(), error: z.string() })),
   licenses: LicenseStatsSchema.optional(),
+  safety: SafetyStatsSchema.optional(),
 });
 export type ExtractStats = z.infer<typeof ExtractStatsSchema>;
 

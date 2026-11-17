@@ -14,6 +14,7 @@ export interface FakeRepo {
 
 const sha1 = (text: string): string => createHash("sha1").update(text).digest("hex");
 export const blobIdOf = (text: string): string => gitBlobId(new TextEncoder().encode(text));
+const byteLength = (text: string): number => new TextEncoder().encode(text).length;
 
 // In-memory GitHub. Blob ids are git blob ids of the contents and tree ids derive from them,
 // so editing a file in a test changes the fingerprint of its folder.
@@ -70,8 +71,8 @@ export class FakeGitHub implements GitHubClient {
     for (const [filePath, content] of files) {
       entries.push(
         linkPaths.has(filePath)
-          ? { path: filePath, type: "blob", sha: blobIdOf(content), mode: "120000" }
-          : { path: filePath, type: "blob", sha: blobIdOf(content), mode: "100644" },
+          ? { path: filePath, type: "blob", sha: blobIdOf(content), mode: "120000", size: byteLength(content) }
+          : { path: filePath, type: "blob", sha: blobIdOf(content), mode: "100644", size: byteLength(content) },
       );
       const parts = filePath.split("/");
       for (let depth = 1; depth < parts.length; depth += 1) {

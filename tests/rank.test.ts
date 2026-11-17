@@ -351,6 +351,88 @@ describe("buildCatalog", () => {
     expect(catalog.kits[0].proposals.skills).toEqual([]);
   });
 
+  // Folders of one repository whose SKILL.md is the same file: one skill, installed three times.
+  const copiesOf = (letter: string, count: number): SkillRecord[] =>
+    Array.from({ length: count }, (_, index) =>
+      makeSkill({
+        id: `acme/skills:copy${index}/${letter}`,
+        path: `copy${index}/${letter}`,
+        name: letter,
+        fingerprint: fp(letter),
+      }),
+    );
+
+  it("does not make a collection out of copies of one skill", () => {
+    const catalog = buildCatalog({
+      repos: [repo],
+      skills: copiesOf("a", 3),
+      reviews: new Map([[fp("a"), uniform(9)]]),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    // The three copies stay listed as skills, but they are one idea, not three.
+    expect(catalog.skills).toHaveLength(3);
+    expect(catalog.collections).toEqual([]);
+    expect(catalog.kits[0].proposals.collections).toEqual([]);
+    expect(catalog.kits[0].proposals.skills).toHaveLength(1);
+  });
+
+  it("counts a skill once toward a kit's collection score when it has copies", () => {
+    const catalog = buildCatalog({
+      repos: [repo],
+      skills: [...copiesOf("a", 3), skill("b"), skill("c")],
+      reviews: new Map([
+        [fp("a"), uniform(9)],
+        [fp("b"), uniform(7)],
+        [fp("c"), uniform(5)],
+      ]),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    const [collection] = catalog.collections;
+    // Three distinct skills: 9 and 7 reach the catalog, 5 does not. Two distinct kit skills are
+    // below the threshold of three, although four catalog entries carry the kit.
+    expect(collection.skillCount).toBe(5);
+    expect(collection.catalogSkillIds).toHaveLength(4);
+    expect(collection.kitScores).toEqual({});
+  });
+
+  it("scores a collection from distinct skills, not from the number of copies", () => {
+    const withCopies = buildCatalog({
+      repos: [repo],
+      skills: [...copiesOf("a", 3), skill("b"), skill("c")],
+      reviews: new Map([
+        [fp("a"), uniform(9)],
+        [fp("b"), uniform(8)],
+        [fp("c"), uniform(7)],
+      ]),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    const withoutCopies = buildCatalog({
+      repos: [repo],
+      skills: [skill("a"), skill("b"), skill("c")],
+      reviews: new Map([
+        [fp("a"), uniform(9)],
+        [fp("b"), uniform(8)],
+        [fp("c"), uniform(7)],
+      ]),
+      kits: testKits,
+      curation: emptyCuration,
+      config: testConfig,
+      now: NOW,
+    });
+    expect(withCopies.collections[0].kitScores).toEqual(withoutCopies.collections[0].kitScores);
+    expect(withCopies.collections[0].skillCount).toBe(5);
+    expect(withoutCopies.collections[0].skillCount).toBe(3);
+  });
+
   it("removes an approved skill whose repository is no longer listed", () => {
     const stray = makeSkill({
       id: "gone/repo:skills/z",

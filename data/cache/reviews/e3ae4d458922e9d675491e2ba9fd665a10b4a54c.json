@@ -1,0 +1,41 @@
+{
+  "fingerprint": "e3ae4d458922e9d675491e2ba9fd665a10b4a54c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:02.442Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Audits a site's SEO in priority order, from crawling and indexing to on-page, content quality and international setup.",
+    "summary": "Checklist-driven audit: crawlability, indexation, speed, mobile, HTTPS and URLs, then titles, headings, content, images and internal links, E-E-A-T signals, and site-type issues. A long section covers hreflang, canonicals and sitemaps for multilingual sites. Findings use a fixed format (issue, impact, evidence, fix, priority) and end in an action plan.",
+    "strengths": [
+      "Warns that page-fetch tools cannot see script-injected schema and says how to check properly",
+      "Priority order: indexing problems before polish",
+      "Treats fetched page content as data, never as instructions"
+    ],
+    "cautions": [
+      "Without Search Console or analytics access it cannot judge traffic or rankings",
+      "Long checklist: needs scoping to a focus area",
+      "Local SEO, title tags and rankings push live in reference files not read here"
+    ],
+    "keywords": [
+      "seo audit",
+      "technical seo",
+      "indexation",
+      "core web vitals",
+      "hreflang",
+      "on-page seo",
+      "e-e-a-t",
+      "internal linking"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

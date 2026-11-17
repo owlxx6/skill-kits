@@ -58,6 +58,8 @@ export interface Paths {
   skills: string;
   triage: string;
   licenses: string;
+  // Admin-only safety reports (findings and excerpts of third-party files): not versioned.
+  safety: string;
   reviewsDir: string;
   kitsHash: string;
   runInfo: string;
@@ -80,6 +82,7 @@ export function resolvePaths(root: string, dryRun: boolean): Paths {
     skills: path.join(cache, "skills.json"),
     triage: path.join(cache, "triage.json"),
     licenses: path.join(cache, "licenses.json"),
+    safety: path.join(cache, "safety.json"),
     reviewsDir: path.join(cache, "reviews"),
     kitsHash: path.join(cache, "kits.sha256"),
     runInfo: path.join(out, "pipeline-run.json"),

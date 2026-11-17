@@ -1,0 +1,41 @@
+{
+  "fingerprint": "11c1519d24f4f716620bed351faa5eb6e163b4d5",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:38.402Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Gets content cited and recommended in AI answers: visibility audit, extractable structure, authority, bot access and agent-readable files.",
+    "summary": "Explains how AI answer engines choose sources, separates Google's stated guidance from the other engines, and walks through an audit: test key prompts across assistants, compare citations, check extractability and crawler access. It then covers structure, authority, presence, machine-readable files such as llms.txt, and monitoring; sixteen references are routed by question.",
+    "strengths": [
+      "States Google's own position and treats other engines separately",
+      "Warns not to forecast from vendor percentages; AI answers are sampled repeatedly because they vary",
+      "Separates being cited from being recommended"
+    ],
+    "cautions": [
+      "Fast-moving field: many figures come from dated vendor studies",
+      "Sixteen reference files are not read here",
+      "Files like llms.txt or a pricing file have no confirmed ranking effect, as it admits"
+    ],
+    "keywords": [
+      "ai seo",
+      "answer engine optimization",
+      "generative engine optimization",
+      "ai citations",
+      "llms.txt",
+      "ai visibility",
+      "crawler access",
+      "brand mentions"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

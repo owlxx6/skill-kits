@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d60074be5426ffc74f3ad53916c713544b4014cd",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:02.442Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Writes and iterates ad copy for Google, Meta, LinkedIn and TikTok within platform limits, grounded in reviews and winning ads.",
+    "summary": "Four modes: generate from scratch, iterate from performance data, scaled static batches grounded in winning ads, reviews and comments, and a strategy loop that decides which ads to make. It lists character limits by platform, angle categories, hypotheses that can lose, an AI-tells blacklist, output formats and a review page for stakeholders.",
+    "strengths": [
+      "Refuses to generate ungrounded concepts when the input corpus is empty",
+      "Test hypotheses must name the metric, the comparison and the direction",
+      "Checks every line against platform character limits"
+    ],
+    "cautions": [
+      "Very wide: static templates, video pipelines and vendor tools in thirteen reference files, none read here",
+      "Contains a promotional block for the author's own paid marketing agent",
+      "Performance pulls rely on command-line tools outside this skill"
+    ],
+    "keywords": [
+      "ad creative",
+      "ad copy",
+      "google ads",
+      "meta ads",
+      "headline variations",
+      "creative testing",
+      "static ads",
+      "ad iteration"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

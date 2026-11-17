@@ -1,0 +1,41 @@
+{
+  "fingerprint": "33aa5b406b075f701b9f7176c0e45461da41a2fc",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:01:16.853Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Writes a 250-400 word cover letter from a resume and job description, with hook types, gap handling and a template.",
+    "summary": "Cover letter generator: structure and length, five opening hook types and what to avoid, body paragraph formulas for the match and for gaps, a closing, a full template, adjustments by industry and scenario (referral, over- or underqualified, career change), an output format and a quality checklist.",
+    "strengths": [
+      "Opening hook types with examples and a list of openings to avoid",
+      "Covers awkward cases: gaps, referral, overqualified, career change",
+      "Quality checklist to run before delivery"
+    ],
+    "cautions": [
+      "Instructions only: no scripts or reference files",
+      "Output format expects a match score from a job description analyzer that is not included",
+      "Example letters use invented metrics, with no rule against fabricating"
+    ],
+    "keywords": [
+      "cover letter",
+      "application letter",
+      "motivation letter",
+      "cover letter template",
+      "opening hook",
+      "job application",
+      "cover letter generator",
+      "gap handling"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -111,6 +111,9 @@ export function buildCatalog(input: RankInput): Catalog {
 
   const catalogSkills: CatalogSkill[] = [];
   const skillCountByRepo = new Map<string, number>();
+  // Copies of one folder inside a repository are one skill: the collection thresholds and the
+  // kit score count each fingerprint once, so three copies of one skill are not a collection.
+  const fingerprintsByRepo = new Map<string, Set<string>>();
   // Both keyed by lower-case repository name.
   const unpublishableByRepo = new Map<string, number>();
   const labelsByRepo = new Map<string, Set<string>>();
@@ -118,6 +121,9 @@ export function buildCatalog(input: RankInput): Catalog {
     const repo = repoByName.get(skill.repo);
     if (!repo) continue;
     skillCountByRepo.set(skill.repo, (skillCountByRepo.get(skill.repo) ?? 0) + 1);
+    const fingerprints = fingerprintsByRepo.get(skill.repo) ?? new Set<string>();
+    fingerprints.add(skill.fingerprint);
+    fingerprintsByRepo.set(skill.repo, fingerprints);
     const key = skill.repo.toLowerCase();
     // See the publication policy: an allowed license, or the safety scan's clearance.
     const license = skill.license;
@@ -162,7 +168,16 @@ export function buildCatalog(input: RankInput): Catalog {
   for (const repo of repos) {
     const total = skillCountByRepo.get(repo.fullName) ?? 0;
     const listed = catalogSkills.filter((skill) => skill.repo === repo.fullName);
-    if (total < config.collection.minSkills || listed.length === 0) continue;
+    const distinctTotal = fingerprintsByRepo.get(repo.fullName)?.size ?? 0;
+    if (distinctTotal < config.collection.minSkills || listed.length === 0) continue;
+    // One entry per content, best-scored copy first: kit scores and coverage count distinct skills.
+    const seenContent = new Set<string>();
+    const listedDistinct = listed.filter((skill) => {
+      const fingerprint = fingerprintById.get(skill.id) ?? skill.id;
+      if (seenContent.has(fingerprint)) return false;
+      seenContent.add(fingerprint);
+      return true;
+    });
     // Installing a repository installs all its skills: every one must be publishable, and
     // a truncated listing hides some of them.
     const key = repo.fullName.toLowerCase();
@@ -172,7 +187,7 @@ export function buildCatalog(input: RankInput): Catalog {
     const signal = signalByRepo.get(repo.fullName) ?? 0;
     const kitScores: Record<string, number> = {};
     for (const kit of kits) {
-      const scores = listed
+      const scores = listedDistinct
         .filter((skill) => skill.review.kits.includes(kit.id))
         .map((skill) => skill.reviewScore);
       if (scores.length >= config.collection.minKitSkills) {

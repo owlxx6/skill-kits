@@ -10,6 +10,11 @@
 - Independent desktop/mobile rendering remains unverified because the tool's preview server was unreachable. The owner accepted the presented design. Record later visual findings as follow-up work.
 - Curator-defined install ordering, broader kit refinements and remaining launch milestones are outstanding.
 - Public main remains cce38ff until a separately authorized production merge.
+- Sprint 2 license resolution (option B) and the public license display: accepted in chat on 2026-11-17. The owner keeps Codex's design as the current site.
+- Implementation: license work up to 0dc3b37 on claude/license-resolution (PR #1), site alignment 95f2d1d on codex/design-switchyard. integration/validated-sprints fast-forwarded to 95f2d1d.
+- Checks on 95f2d1d (Mac): typecheck, 596 tests, site build (37 pages), site:verify. The built site contains no security notes and no pending reasons.
+- Known limitation, accepted as a non-blocker: a restriction written on a copyright line next to a permissive text can be ignored by the resolver. Follow-up on the license branch.
+- PR #1 stays open: merging into main is the separate production decision.
 
 ## Other-machine work
 

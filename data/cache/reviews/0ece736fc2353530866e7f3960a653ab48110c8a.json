@@ -1,0 +1,41 @@
+{
+  "fingerprint": "0ece736fc2353530866e7f3960a653ab48110c8a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Converts .docx files to Markdown with a bundled script so they are read accurately, folders included.",
+    "summary": "Runs a bundled Python script (MarkItDown) to turn .docx into a Markdown file plus extracted images before the agent analyzes it, for single files or whole folders. Includes a setup guide, output rules (next to the source by default) and a troubleshooting table. Mixed folders call the sibling PDF and Excel skills.",
+    "strengths": [
+      "Clear output structure and default location rules",
+      "Troubleshooting table with exit codes",
+      "Extracts real images instead of placeholder data URIs"
+    ],
+    "cautions": [
+      "Only .docx: legacy .doc must be re-saved",
+      "Needs Python and the markitdown package installed",
+      "Insists on calling sibling skills for PDF and Excel in mixed folders"
+    ],
+    "keywords": [
+      "word to markdown",
+      "docx conversion",
+      "markitdown",
+      "document reading",
+      "batch conversion",
+      "summarize word document",
+      "extract from docx",
+      "markdown"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

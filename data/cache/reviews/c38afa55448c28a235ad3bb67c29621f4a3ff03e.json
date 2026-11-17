@@ -1,0 +1,41 @@
+{
+  "fingerprint": "c38afa55448c28a235ad3bb67c29621f4a3ff03e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:59:12.855Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 3,
+      "usefulness": 5
+    },
+    "why": "Turns social videos, transcripts and creator research into posts, threads, scripts, newsletters and calendars, via extracted content atoms.",
+    "summary": "Six steps: gather source URLs or transcripts, extract content atoms (hooks, stories, claims, frameworks, data, CTAs), pick output formats, rewrite for the user's voice, keep attribution notes and deliver drafts with variants. A markdown output layout lists sources, an atoms table and sections per format. Three pitfalls: plagiarism, one format for all platforms, losing the best hook.",
+    "strengths": [
+      "Content atoms table links each idea to its source and best format",
+      "Keeps attribution notes when ideas are inspired by a source",
+      "Warns against copying wording"
+    ],
+    "cautions": [
+      "Very short: no per-platform rules and no examples",
+      "Assumes sibling skills from the same collection for transcripts and outlier posts",
+      "Declares a vendor API key requirement without saying where it is used"
+    ],
+    "keywords": [
+      "content repurposing",
+      "transcripts",
+      "linkedin posts",
+      "x threads",
+      "short-form scripts",
+      "newsletter ideas",
+      "content atoms",
+      "social research"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

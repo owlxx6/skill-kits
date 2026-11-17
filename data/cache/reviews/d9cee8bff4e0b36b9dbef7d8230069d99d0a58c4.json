@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d9cee8bff4e0b36b9dbef7d8230069d99d0a58c4",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:59:12.855Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Catalogues AI-writing tells with before and after fixes for tone, claims, rhythm and formatting, plus a draft-audit-final loop.",
+    "summary": "A pattern library for editing prose: empty AI vocabulary, significance inflation, unsupported social proof, weasel attributions, stock openers, rhythm tricks, fabricated specifics, em dashes, bold overuse and filler. Each entry has the pattern, why it reads as AI, a before and an after. Rules forbid inventing facts and over-sanitizing; a closing checklist and loop apply it.",
+    "strengths": [
+      "Never adds a fact, name or number that is not in the source",
+      "\"What not to flag\" and \"signs of human writing\" sections prevent over-editing",
+      "Voice samples outrank the style rules"
+    ],
+    "cautions": [
+      "Cites rule numbers from a separate core file that is not included",
+      "Bans every em dash, a strong style choice that suits some voices poorly",
+      "For editing existing text, not for planning content"
+    ],
+    "keywords": [
+      "anti-ai writing",
+      "copy editing",
+      "ai writing tells",
+      "headlines",
+      "tone of voice",
+      "buzzwords",
+      "fabricated claims",
+      "prose cleanup"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

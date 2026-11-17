@@ -1,0 +1,42 @@
+{
+  "fingerprint": "6f0ff08c9576073ae5b43ab92014e9086d7c48df",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:39:48.359Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Drafts research grant proposals (KAKENHI, NSF, NSFC, ERC...) in checkpointed phases with an external model review.",
+    "summary": "Pipeline to turn research ideas into a funding application: literature positioning, aims with a claims-evidence matrix, narrative arc, timeline, section drafting in each agency's format, review by another model and revision. It waits for the user's confirmation at each checkpoint and keeps its state in a JSON file.",
+    "strengths": [
+      "Agency-specific sections, tone and review criteria",
+      "Waits for explicit confirmation at each checkpoint",
+      "Leaves budgets, credentials and unverified citations as placeholders instead of inventing them"
+    ],
+    "cautions": [
+      "Depends on sub-skills, shared references, helper scripts and several model servers that are not included",
+      "Sends the draft proposal to external reviewer models",
+      "Built for one research workflow: it is of little use without the surrounding skills"
+    ],
+    "keywords": [
+      "grant proposal",
+      "research funding",
+      "nsf",
+      "kakenhi",
+      "nsfc",
+      "erc",
+      "specific aims",
+      "funding application",
+      "research proposal"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

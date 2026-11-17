@@ -5,12 +5,20 @@ repos:
   - vercel-labs/agent-skills
   - mattpocock/skills
   - ComposioHQ/awesome-claude-skills
-  - jeremylongshore/claude-code-plugins-plus-skills
 topics:
   - agent-skills
   - claude-skills
   - claude-code-skills
 maxSearchPages: 2
 # Registries that copy thousands of other people's skills: slow to read, no original content.
+# The five after the first were added on 2026-11-17 by the owner's decision (2,000 to 9,500
+# skills each, which slowed the extraction to hours). Remove a line to read that repository again.
+# jeremylongshore/tons-of-skills-marketplace is the former jeremylongshore/claude-code-plugins-plus-skills:
+# its old name was nominated under repos until 2026-11-17, and GitHub's redirect brought it back.
 exclude:
   - majiayu000/claude-skill-registry
+  - sickn33/agentic-awesome-skills
+  - jeremylongshore/tons-of-skills-marketplace
+  - mohitagw15856/pm-claude-skills
+  - Klotzkette/claude-fuer-deutsches-recht
+  - a5c-ai/babysitter

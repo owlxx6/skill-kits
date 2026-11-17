@@ -1,0 +1,42 @@
+{
+  "fingerprint": "e889a8e59f79a6833e70341dac71e35c7a0f0b62",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring",
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Tears down competitors' paid ads from public ad libraries: hooks, formats, landing pages, gaps and counter-plays.",
+    "summary": "Collects ads from the Meta Ad Library and Google Ads Transparency Center through search and page fetches, clusters hooks and formats, analyzes the landing pages and message match, groups ads into campaigns, infers where spend goes, and ends with a report of creative gaps, vulnerabilities and proposed counter-plays.",
+    "strengths": [
+      "Uses ad longevity as a signal of what converts",
+      "Full report layout from coverage to counter-plays",
+      "No API key or paid service needed"
+    ],
+    "cautions": [
+      "Search results may expose few ads; the skill itself says scrapers are unreliable",
+      "Spend shares inferred from ad counts are rough estimates",
+      "Covers paid ads only, not organic or SEO work"
+    ],
+    "keywords": [
+      "competitor ads",
+      "ad intelligence",
+      "meta ad library",
+      "google ads transparency",
+      "creative analysis",
+      "landing page analysis",
+      "hook patterns",
+      "paid funnel"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

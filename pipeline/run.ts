@@ -7,7 +7,7 @@ import { runExtract } from "./extract";
 import { filterRepos } from "./filter";
 import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
-import { isPublishable, licenseCacheFile, NO_SAFETY_SCAN, readLicenseCache } from "./lib/license";
+import { isPublishable, licenseCacheFile, readLicenseCache } from "./lib/license";
 import type { LlmClient } from "./lib/llm";
 import {
   CatalogSchema,
@@ -27,6 +27,7 @@ import {
   type TriageCache,
   TriageCacheSchema,
 } from "./lib/schemas";
+import { readSafetyCache, safetyCacheFile, safetyCleared } from "./lib/skill-safety";
 import {
   type Paths,
   readJsonFile,
@@ -141,6 +142,12 @@ async function checkKitsHash(
   );
 }
 
+// The safety reports of the last extraction. Reports made by other rules are ignored, so
+// without a current report no skill is cleared.
+async function loadSafetyReports(paths: Paths): Promise<ReturnType<typeof readSafetyCache>> {
+  return readSafetyCache(await readJsonFile(paths.safety, z.unknown(), undefined));
+}
+
 async function updateRunInfo(file: string, patch: RunInfo): Promise<void> {
   const current = await readJsonFile(file, RunInfoSchema, {});
   await writeJsonFile(file, { ...current, ...patch });
@@ -180,6 +187,12 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     if (storedLicenses !== undefined && Object.keys(licenseCache).length === 0) {
       await writeJsonFile(paths.licenses, licenseCacheFile(licenseCache));
     }
+    // Same for the safety reports: a file made by other rules is replaced now.
+    const storedSafety = await readJsonFile(paths.safety, z.unknown(), undefined);
+    const safetyReports = readSafetyCache(storedSafety);
+    if (storedSafety !== undefined && Object.keys(safetyReports).length === 0) {
+      await writeJsonFile(paths.safety, safetyCacheFile(safetyReports));
+    }
     const { skills, stats } = await runExtract(
       deps.gh,
       repos,
@@ -189,12 +202,22 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         cache: licenseCache,
         save: (cache) => writeJsonFile(paths.licenses, licenseCacheFile(cache)),
         allowed: config.filter.allowedLicenses,
-        isSafetyCleared: NO_SAFETY_SCAN,
+        safety: {
+          cache: safetyReports,
+          save: (cache) => writeJsonFile(paths.safety, safetyCacheFile(cache)),
+        },
+        log: deps.log,
       },
     );
     await writeJsonFile(paths.skills, skills);
     await updateRunInfo(paths.runInfo, { extract: stats });
     deps.log(`${stats.skills} skills, ${stats.invalid} invalid, ${stats.failedRepos.length} repos failed`);
+    if (stats.safety) {
+      const { scanned, reused, clear, review, block, notScanned } = stats.safety;
+      deps.log(
+        `safety scan: ${scanned} scanned, ${reused} reused; ${clear} clear, ${review} to review, ${block} blocked, ${notScanned} not scanned`,
+      );
+    }
   },
 
   async review({ paths, config, kits, options, deps, startedAt }) {
@@ -206,9 +229,10 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     // Approved skills are re-reviewed first, even when triage no longer proposes a kit for them.
     const priorityIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
     // A skill that cannot be published (see the publication policy) is neither triaged nor
-    // reviewed. The safety scan is not integrated yet: no skill is cleared by it.
+    // reviewed. The safety scan of the last extraction decides for the skills that need it.
+    const isSafetyCleared = safetyCleared(await loadSafetyReports(paths));
     const isEligible = (skill: SkillRecord): boolean =>
-      isPublishable(skill, config.filter.allowedLicenses, NO_SAFETY_SCAN);
+      isPublishable(skill, config.filter.allowedLicenses, isSafetyCleared);
     const llm = deps.getLlm(config.review.model);
     const stats = emptyReviewStats();
     const clock = deps.clock ?? Date.now;
@@ -292,7 +316,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         config,
         now: deps.now,
         truncatedRepos,
-        isSafetyCleared: NO_SAFETY_SCAN,
+        isSafetyCleared: safetyCleared(await loadSafetyReports(paths)),
       }),
     );
     await writeJsonFile(paths.catalog, catalog);

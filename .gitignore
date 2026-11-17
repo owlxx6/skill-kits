@@ -9,7 +9,12 @@ pipeline-run.json
 data/cache/candidates.json
 data/cache/repos.json
 data/cache/skills.json
+# Safety reports quote third-party files and are for the owner only: never versioned, never public.
+data/cache/safety.json
 site/dist/
 site/.astro/
 # Private local curation inputs, scan reports and disposable test environments.
 .intake/
+
+# Session review packets and answers (docs/SESSION-REVIEWS.md): third-party text, local only.
+.session-reviews/

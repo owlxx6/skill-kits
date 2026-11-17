@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b6d57d88860875e0ddad72c23702552f43d2bf0e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:37.145Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 5
+    },
+    "why": "Turns text into LinkedIn posts using Unicode bold and italic, visual separators and four ready post patterns.",
+    "summary": "Explains that LinkedIn takes plain text only, so styled letters come from Unicode symbols mapped through a character table. It gives four post patterns (hook to call to action, listicle, story to lesson, resource share), formatting rules for hooks, short paragraphs, hashtags and length, and a short process from source text to a copy-paste post.",
+    "strengths": [
+      "Four patterns that can be filled in directly",
+      "Hook placed above the see-more cut",
+      "A character map reference keeps the conversion accurate"
+    ],
+    "cautions": [
+      "Does not mention that styled Unicode letters read poorly in screen readers and in text search",
+      "LinkedIn reach claims (no links in the body) are heuristics",
+      "Suggests repost-style calls to action"
+    ],
+    "keywords": [
+      "linkedin post",
+      "unicode formatting",
+      "post patterns",
+      "hooks",
+      "thought leadership",
+      "listicle",
+      "copy-paste",
+      "social formatting"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

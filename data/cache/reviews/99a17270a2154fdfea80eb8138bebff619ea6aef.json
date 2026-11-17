@@ -1,0 +1,41 @@
+{
+  "fingerprint": "99a17270a2154fdfea80eb8138bebff619ea6aef",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:43:11.823Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 5,
+      "usefulness": 8
+    },
+    "why": "Plans multi-source research, flags contradictions and gaps, and archives each cited brief for later search.",
+    "summary": "Seven-step research flow: frame the question and the decision it informs, plan sources (web search, URLs, browsable pages, memory, Notion, past archive), collect with dates and confidence, synthesize with a contradiction check, output a brief with citations and gaps, archive it, and offer to push it elsewhere.",
+    "strengths": [
+      "Contradictions and gaps are surfaced, not averaged away",
+      "Confidence level and source recency on every finding",
+      "Archives to a user folder outside the skill so upgrades keep it"
+    ],
+    "cautions": [
+      "Relies on other tools (last30days, agent-browser, Notion) that are not included",
+      "Instructions only: no scripts",
+      "Not for standing monitoring, which it leaves to another skill"
+    ],
+    "keywords": [
+      "deep research",
+      "multi-source research",
+      "research brief",
+      "citations",
+      "due diligence",
+      "competitor research",
+      "market research",
+      "research archive"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

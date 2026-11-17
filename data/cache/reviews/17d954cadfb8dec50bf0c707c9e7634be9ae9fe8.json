@@ -1,0 +1,41 @@
+{
+  "fingerprint": "17d954cadfb8dec50bf0c707c9e7634be9ae9fe8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 6,
+      "completeness": 3,
+      "usefulness": 6
+    },
+    "why": "Reviews docs against a writing handbook fetched from a Vercel URL, with terse file:line findings.",
+    "summary": "Fetches the latest writing guidelines from a raw GitHub URL before each review, reads the files the user names and reports findings in the terse file:line format defined by the fetched text. The skill itself contains no rules.",
+    "strengths": [
+      "Rules stay current because they are fetched each time",
+      "Terse file:line output suits editors and CI-style review",
+      "Asks which files to review when none are given"
+    ],
+    "cautions": [
+      "The rules are not in the skill: they come from a remote URL",
+      "Remote text becomes the agent's instructions and can change without notice",
+      "Useless offline or if the URL moves"
+    ],
+    "keywords": [
+      "writing guidelines",
+      "docs review",
+      "prose audit",
+      "style check",
+      "voice and tone",
+      "documentation quality",
+      "writing handbook",
+      "editorial review"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

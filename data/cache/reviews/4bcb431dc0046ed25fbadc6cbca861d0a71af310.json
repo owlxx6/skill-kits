@@ -1,0 +1,41 @@
+{
+  "fingerprint": "4bcb431dc0046ed25fbadc6cbca861d0a71af310",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:47:22.646Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Looks up papers, citations, open-access PDFs and records across 18 scholarly APIs, with the provenance to repeat each search.",
+    "summary": "Routes a request to the right scholarly databases, reads a per-database reference first, and makes bounded, rate-limited calls with curl and four helper scripts for pagination, full-text XML, arXiv and abstracts. It warns that these APIs fail with HTTP 200, counts before paging, and returns results with endpoints, parameters, access date and warnings.",
+    "strengths": [
+      "Lists the silent-failure traps of each API and checks the body, not the status",
+      "Count reconciliation for exhaustive searches; never presents metadata as full text",
+      "Keys are optional, never echoed, and only four named variables are read from a .env"
+    ],
+    "cautions": [
+      "Scholarly focus: PubMed, preprints and citation data, not business sources",
+      "Eighteen reference files and four scripts are described, not read here",
+      "Ends with a request to cite the library's own paper in outputs"
+    ],
+    "keywords": [
+      "paper lookup",
+      "scholarly apis",
+      "pubmed",
+      "arxiv",
+      "openalex",
+      "crossref",
+      "open access",
+      "citation graph"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

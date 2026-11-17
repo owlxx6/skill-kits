@@ -1,0 +1,41 @@
+{
+  "fingerprint": "7d9e0fb4ea50cfca1a7ef7f0c5b874697c43e908",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:47:22.646Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 5
+    },
+    "why": "Researches into a knowledge base: scan existing notes, agree a rubric, preserve sources verbatim, write a cited draft.",
+    "summary": "Eight gated steps: create task checkpoints, scan what the knowledge base already covers, agree a research rubric with the user, capture each source verbatim as it is fetched, analyze, write a draft article section by section, link it into the graph and validate. Findings stay provisional until a later step promotes them.",
+    "strengths": [
+      "Saves each source and each finding as it goes, so a crash loses nothing",
+      "Missing evidence is never invented: it asks the user to paste it",
+      "Checks existing coverage first and extends instead of duplicating"
+    ],
+    "cautions": [
+      "Built for one knowledge-base platform: needs its MCP server, tools and an ingest procedure kept in another file",
+      "Heavy ceremony for a small question",
+      "Promoting findings to final notes belongs to a separate skill"
+    ],
+    "keywords": [
+      "research workflow",
+      "knowledge base",
+      "source capture",
+      "research article",
+      "provisional findings",
+      "citations",
+      "rubric",
+      "evidence"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

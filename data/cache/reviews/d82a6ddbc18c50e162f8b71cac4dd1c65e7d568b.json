@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d82a6ddbc18c50e162f8b71cac4dd1c65e7d568b",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 5
+    },
+    "why": "Maps direct competitors, adjacent tools and workarounds into a feature matrix and a testable 'one percent better' bet.",
+    "summary": "Five steps: record what users do today, discover direct, adjacent and DIY competitors plus the do-nothing option, analyze segment and industry gaps, build a feature matrix, then state a 1% better hypothesis with evidence. Each competitor becomes a numbered intelligence entry, and a quality-gate checklist closes the work.",
+    "strengths": [
+      "Documents current user behaviour before looking at competitors",
+      "Counts workarounds and doing nothing as competition",
+      "Quality gates and an anti-pattern table"
+    ],
+    "cautions": [
+      "Built around one product-requirements framework: depends on earlier steps and on its CFD- and BR- numbering",
+      "Templates and research prompts are in files not read here",
+      "Less useful outside a PRD workflow"
+    ],
+    "keywords": [
+      "competitive analysis",
+      "market landscape",
+      "feature matrix",
+      "gap analysis",
+      "competitor discovery",
+      "positioning",
+      "alternatives",
+      "product requirements"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}
