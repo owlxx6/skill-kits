@@ -1,0 +1,38 @@
+{
+  "fingerprint": "ad69629f6f64c5ff0355703dd2f33f0585b76593",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Routes n8n work to task-specific skills and documents tool prerequisites and validation boundaries.",
+    "summary": "Useful entry point to the official n8n pack. Very broad and tool-version dependent; it recommends multiple companion skills and includes cloud gateway defaults that must not imply permission to spend.",
+    "strengths": [
+      "Clear discovery and credential boundaries",
+      "Distinguishes drafts from publication",
+      "Explains real side effects of tests"
+    ],
+    "cautions": [
+      "Requires matching MCP capabilities",
+      "Large always-on router adds context overhead",
+      "Gateway and telemetry defaults must respect owner preferences"
+    ],
+    "keywords": [
+      "n8n",
+      "router",
+      "mcp",
+      "workflows",
+      "credentials"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

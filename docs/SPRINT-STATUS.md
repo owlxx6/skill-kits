@@ -68,3 +68,13 @@ The local batch importer validates review/source fingerprints, downloads all sel
 Checks: typecheck, 841 tests, site build (64 pages), site:verify (37 skills). Actual Chromium desktop/mobile checks at 1440px/390px pass for four five-skill kits, homepage selection/install panels and Pandas directory search. Pandas runtime and live n8n execution remain unverified, stated as limitations rather than hidden or reported as successful.
 
 No package, lockfile, workflow or public schema changes. No accounts or production deployment. The separately announced integrated scheduled pipeline is still absent remotely; this batch uses its own explicit local entry point and existing contracts. Feature-branch work is ready for sprint review; do not advance the accepted baseline or main merely because the batch has been prepared. Other-machine fetch/import remains unverified.
+
+## Main synchronization and durable reviews — 2026-11-17
+
+At the owner's request, origin/main 8d48c35 (merged PRs 1 and 2) is merged into the feature branch. The three conflicts were resolved as directed: main's pipeline/lib/safety.ts and docs/SAFETY-SCAN.md, with both .intake/ and .session-reviews/ ignore entries retained. This supersedes the earlier note that the integrated pipeline was unavailable.
+
+The 18 selected reviews are committed by fingerprint under data/cache/reviews with model in-session-review and empty security fields. Public review content and original review dates are preserved. Sources now explicitly include cloudflare/skills, supabase/agent-skills, nextlevelbuilder/ui-ux-pro-max-skill, dbt-labs/dbt-agent-skills, n8n-io/skills and TerminalSkills/skills, without changing main's existing source/exclusion decisions.
+
+The integrated scanner and real rank/summary steps replayed against the pinned intake retain all 18 selections, five skills per kit. A committed regression checks durable cache coverage, sanitized fields and source nominations. Main, the accepted baseline and other working folders remain untouched. The feature PR is for sprint review only and must not be merged without that review.
+
+Post-merge verification: typecheck and 951 tests pass; site build produces 64 pages and site:verify passes for eight kits / 37 skills. The scanner and contract have no diff against origin/main 8d48c35. No paid model calls or production merge were performed.

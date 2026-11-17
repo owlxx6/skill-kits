@@ -1,0 +1,37 @@
+{
+  "fingerprint": "d79e2a5bb4df4a386c2adcdd9ab8709bba28c3f6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "A brief-led visual design process with explicit critique, typography, content and restrained interaction guidance.",
+    "summary": "Strong complement to a searchable UI reference: it starts with the subject and audience, develops tokens and layout, then critiques the result. Concrete quality principles, without a reusable implementation library.",
+    "strengths": [
+      "Brief takes precedence over aesthetic defaults",
+      "Includes responsive, focus and reduced-motion expectations",
+      "Connects interface copy to user actions"
+    ],
+    "cautions": [
+      "Subjective heuristics require visual judgment",
+      "No automated accessibility or browser verification supplied"
+    ],
+    "keywords": [
+      "frontend",
+      "design",
+      "typography",
+      "layout",
+      "critique"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

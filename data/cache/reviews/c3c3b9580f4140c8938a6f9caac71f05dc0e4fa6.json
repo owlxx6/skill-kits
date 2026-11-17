@@ -1,0 +1,38 @@
+{
+  "fingerprint": "c3c3b9580f4140c8938a6f9caac71f05dc0e4fa6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Focused loading, cleaning, grouping and validated joins with pandas 3 compatibility guidance.",
+    "summary": "Prepare tabular data with explicit types, validated joins, pandas 3 assignment and resampling patterns, and Parquet export. This community-maintained reference complements the analysis workflow; runtime verification remains incomplete.",
+    "strengths": [
+      "Explicit dtypes and validated joins",
+      "Version-aware assignment and resampling",
+      "States Parquet dependency"
+    ],
+    "cautions": [
+      "Requires compatible Python/pandas; Parquet needs pyarrow",
+      "Do not replace unknown amounts with zero without a business rule",
+      "Choose join cardinality for the actual data; runtime verification is incomplete"
+    ],
+    "keywords": [
+      "pandas",
+      "csv",
+      "cleaning",
+      "joins",
+      "parquet"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

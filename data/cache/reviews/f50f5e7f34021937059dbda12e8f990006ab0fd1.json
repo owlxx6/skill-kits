@@ -1,0 +1,39 @@
+{
+  "fingerprint": "f50f5e7f34021937059dbda12e8f990006ab0fd1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "web-app",
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "A measurement-led browser performance workflow with network, trace and source-code investigation.",
+    "summary": "Complements visual design and React patterns with measured loading and interaction evidence. Falls back honestly when trace tools are missing. A source or accessibility snapshot alone cannot measure contrast or field performance.",
+    "strengths": [
+      "Requires evidence before removing assets",
+      "Prioritizes user-visible impact",
+      "Handles absent trace tooling"
+    ],
+    "cautions": [
+      "Chrome DevTools MCP needed for full trace workflow",
+      "A single lab trace is not field Core Web Vitals",
+      "Verify thresholds and supported tools against current docs"
+    ],
+    "keywords": [
+      "performance",
+      "web vitals",
+      "network",
+      "traces",
+      "frontend"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

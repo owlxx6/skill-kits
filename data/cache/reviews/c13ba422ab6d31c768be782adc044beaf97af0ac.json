@@ -1,0 +1,38 @@
+{
+  "fingerprint": "c13ba422ab6d31c768be782adc044beaf97af0ac",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "Derives node parameters from live operation-specific schemas instead of guessing names and resource IDs.",
+    "summary": "Strong n8n workflow-building reference with credential, validation and saved-config checks. It depends on the corresponding n8n tools being available; it is not a standalone JSON generator for arbitrary installations.",
+    "strengths": [
+      "Operation-specific configuration sequence",
+      "Resolves real resource identifiers",
+      "Distinguishes schema checks from runtime tests"
+    ],
+    "cautions": [
+      "Requires matching live n8n MCP tools",
+      "No connected instance tested",
+      "Companion credential skill is outside this reviewed set"
+    ],
+    "keywords": [
+      "n8n",
+      "nodes",
+      "configuration",
+      "automation",
+      "workflows"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

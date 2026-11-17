@@ -1,0 +1,38 @@
+{
+  "fingerprint": "5096d0e53d8300270ffa5d5a302e5a3d6e4bd3fb",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 7,
+      "usefulness": 9
+    },
+    "why": "Builds explicit webhook errors and unattended failure handling, but blanket retries need idempotency limits.",
+    "summary": "Provides structured status responses, error branches and fallback alerts. The default retry advice covers all network nodes even though retries apply to every error, which can duplicate writes or sends after ambiguous failures.",
+    "strengths": [
+      "Separates caller errors and execution failures",
+      "Includes workflow-level fallback handling",
+      "Explains swallowed-error behavior"
+    ],
+    "cautions": [
+      "Apply retry only with idempotency and error classification",
+      "Alert payloads need redaction and absent-field handling",
+      "Version-specific settings require live verification"
+    ],
+    "keywords": [
+      "n8n",
+      "errors",
+      "retries",
+      "webhooks",
+      "monitoring"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

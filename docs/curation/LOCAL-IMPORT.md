@@ -1,5 +1,15 @@
 # Local reviewed-kit import
 
+## Synchronization after main 8d48c35
+
+The merged license and integrated safety/session-review pipeline is now included in this branch. The scanner and its contract are exactly the versions from main; both private work directories remain ignored. The original batch history below describes the earlier local import, not the current availability of the integrated pipeline.
+
+All 18 selected source fingerprints now have committed `in-session-review` records under `data/cache/reviews/`, with empty public `security` placeholders. Their original dates and the public review content are preserved. Six additional repositories are explicitly nominated in `data/sources.yaml`; the existing nominations and exclusions remain intact.
+
+An isolated replay with the integrated scanner and real `rank`/`summary` steps retains all 18 skills and all four five-skill kits. The safety report is local and ignored. The cache regression checks that committed records match the published reviews and every source is nominated. Changed upstream fingerprints still require a new review; persistence does not bypass freshness checks.
+
+The feature PR awaits sprint review. Do not merge it or advance the accepted integration baseline automatically.
+
 The owner requested completion of the local pipeline and addition of the proposed skills to the site on 2026-11-17. This authorizes this batch's curation and catalog update. It does not authorize a production merge or account work.
 
 The batch adds 18 distinct skills to four kits, five entries per kit. Shared skills appear in multiple kits. The previous 19 skills, six collections and unrelated kits are preserved exactly. No new whole-repository collection is approved. Suspended candidates are excluded.

@@ -1,0 +1,37 @@
+{
+  "fingerprint": "3116f3e62dbd02b44a598b1aa690d2a8938e8f89",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "A lightweight UI audit router with concrete interface checks retrieved from a separate upstream source.",
+    "summary": "Useful for source-level accessibility, focus, forms and interaction review. It downloads its actual rules dynamically, so the SKILL directory fingerprint alone does not bind the reviewed checklist. Not a WCAG certification.",
+    "strengths": [
+      "Concise findings linked to file lines",
+      "Covers practical interaction and focus mistakes"
+    ],
+    "cautions": [
+      "Record or pin the external checklist revision for reproducible reviews",
+      "Some brand and style rules are preferences, not accessibility requirements",
+      "No license detected for this skill in the extraction"
+    ],
+    "keywords": [
+      "ui",
+      "accessibility",
+      "focus",
+      "forms",
+      "audit"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

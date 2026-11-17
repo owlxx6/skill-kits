@@ -1,0 +1,38 @@
+{
+  "fingerprint": "5d6d1ab38226f83647522a2bd2acde19561c6a97",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Selects the dbt CLI and explicit resource scope, previews data and catches selector mistakes.",
+    "summary": "Practical CLI guide. A real local Core/DuckDB build and exact-total test passed; a misspelled selector correctly failed with warn-error enabled. This does not test Fusion or Cloud CLI compatibility.",
+    "strengths": [
+      "Explicit selection limits unintended work",
+      "Warn-error catches empty selections",
+      "Inspects execution artifacts"
+    ],
+    "cautions": [
+      "Prefer project instructions over blanket build defaults",
+      "Core/DuckDB only tested",
+      "Full-refresh and cleanup commands need task-specific judgment"
+    ],
+    "keywords": [
+      "dbt",
+      "cli",
+      "selectors",
+      "build",
+      "tests"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

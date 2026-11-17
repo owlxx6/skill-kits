@@ -1,0 +1,37 @@
+{
+  "fingerprint": "774f23e27e35cb0a89ede39156e7b079fbb84190",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "A reproducible investigation workflow that traces failures before proposing changes and adds regression evidence.",
+    "summary": "Four phases cover reproduction, comparisons, hypotheses and minimal fixes. Useful across stacks. Its mandatory sequencing can be heavyweight for small issues and should remain subordinate to project instructions.",
+    "strengths": [
+      "Explicit diagnostic phases",
+      "Multi-component tracing",
+      "Recognizes environmental causes"
+    ],
+    "cautions": [
+      "Rigid process wording may add friction",
+      "Supporting shell/TypeScript tools have not been executed"
+    ],
+    "keywords": [
+      "debugging",
+      "root cause",
+      "regression",
+      "diagnostics",
+      "testing"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

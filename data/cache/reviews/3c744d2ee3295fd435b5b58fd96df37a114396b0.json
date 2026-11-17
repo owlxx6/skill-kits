@@ -1,0 +1,38 @@
+{
+  "fingerprint": "3c744d2ee3295fd435b5b58fd96df37a114396b0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "Plans, validates, tests and hands off workflows while distinguishing schema validity from correct connections.",
+    "summary": "A coherent start-to-finish workflow guide with useful limits around pinning, credentials and publication. Detailed layout and tool-version prescriptions may drift. No connected n8n instance is available for runtime validation.",
+    "strengths": [
+      "Verifies connections after save",
+      "Explicit test and handoff stages",
+      "Documents side effects and placement limitations"
+    ],
+    "cautions": [
+      "Requires matching n8n tools and credentials",
+      "Some layout rules are pack preferences",
+      "Live n8n execution not verified"
+    ],
+    "keywords": [
+      "n8n",
+      "lifecycle",
+      "validation",
+      "testing",
+      "handoff"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

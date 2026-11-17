@@ -5,6 +5,13 @@ repos:
   - vercel-labs/agent-skills
   - mattpocock/skills
   - ComposioHQ/awesome-claude-skills
+  # Reviewed kit sources; explicit nominations survive low-star discovery thresholds.
+  - cloudflare/skills
+  - supabase/agent-skills
+  - nextlevelbuilder/ui-ux-pro-max-skill
+  - dbt-labs/dbt-agent-skills
+  - n8n-io/skills
+  - TerminalSkills/skills
 topics:
   - agent-skills
   - claude-skills
