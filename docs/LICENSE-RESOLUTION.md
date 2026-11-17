@@ -15,7 +15,7 @@ Owner decision (pull request #1): skills whose license is not allowed or not usa
 - A skill whose license was not re-read this run (`unread`), or that has no resolution yet, is not published in this run.
 - The catalog shows the SPDX id for any identified license, `No license` for a missing one and `Unclear license` for a custom or ambiguous one: never a permissive id without evidence. A license category (`permissive`, `copyleft`, `other`, `none`, `unclear`) lets the site explain the obligations.
 
-The safety scan is built on another branch and is not integrated yet. Until it is, it clears no skill: every skill that needs it stays out of the catalog, and an approved one stays pending with the reason `waiting for the safety scan`. The pipeline takes the scan as an injected function (`isSafetyCleared`, `NO_SAFETY_SCAN` by default in `pipeline/run.ts`), so today's catalog is unchanged.
+The safety scan (`docs/SAFETY-SCAN.md`) clears a skill when its report, made at the last extraction, has the verdict `clear`. The pipeline takes the scan as a function (`isSafetyCleared`; `NO_SAFETY_SCAN`, which clears nothing, is the default of the library functions and applies when no report exists). A skill that needs the scan and has no `clear` report stays out of the catalog, and an approved one stays pending with the reason `waiting for the safety scan`, whatever its verdict (`review`, `block`, or not scanned).
 
 ## Rules
 
@@ -168,5 +168,5 @@ Documented in the pull request after a run on the existing cache: outcomes per l
 - Low-star discovery: separate lanes (topic relevance, targeted searches, nominations) with review budgets, instead of one `minStars` bound.
 - Ranking: the 30% repository-signal share of the skill score favours popularity; replace with task evidence and reliability, keeping popularity as context.
 - Reviews truncated at `review.maxSkillChars` (24,000 characters) must be marked incomplete or chunked, not counted as full reviews.
-- Session reviews need a schema-validated import path into the cache and the summary.
+- Session reviews: an export and a schema-validated import now exist (`docs/SESSION-REVIEWS.md`). The reviews it imports are never truncated; the API path still is.
 - The 40,000-skill cache exists only on the Mac; nine CV reviews are provisional (listed in the pull request).

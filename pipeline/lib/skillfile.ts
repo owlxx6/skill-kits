@@ -7,6 +7,15 @@ export interface TreeEntry {
   sha: string;
   // Git file mode, when known: "120000" is a symbolic link.
   mode?: string;
+  // Size of a blob in bytes, when GitHub lists it.
+  size?: number;
+}
+
+// A file owned by a skill folder, with its path relative to that folder.
+export interface SkillFileEntry {
+  path: string;
+  sha: string;
+  size?: number;
 }
 
 export interface SkillFrontmatter {
@@ -138,6 +147,35 @@ export function findSkillLocations(entries: TreeEntry[]): SkillLocation[] {
       files: (filesByDir.get(dir) ?? []).sort(compareText).slice(0, MAX_LISTED_FILES),
     }))
     .sort((a, b) => compareText(a.dir, b.dir));
+}
+
+// Every file each skill folder owns, SKILL.md included, keyed by skill folder. Unlike
+// SkillLocation.files this list is not capped: the safety scan must see all of them.
+// Ownership follows the same rule as findSkillLocations.
+export function listSkillFiles(entries: TreeEntry[]): Map<string, SkillFileEntry[]> {
+  const skillFiles = new Map<string, TreeEntry>();
+  const others: TreeEntry[] = [];
+  for (const entry of entries) {
+    if (entry.type !== "blob") continue;
+    const segments = entry.path.split("/");
+    if (segments.includes("node_modules")) continue;
+    if (segments[segments.length - 1] === SKILL_FILE) skillFiles.set(segments.slice(0, -1).join("/"), entry);
+    else others.push(entry);
+  }
+  const skillDirs = new Map([...skillFiles].map(([dir, entry]) => [dir, entry.sha]));
+  const files = new Map<string, SkillFileEntry[]>();
+  const toFile = (entry: TreeEntry, dir: string): SkillFileEntry => ({
+    path: dir ? entry.path.slice(dir.length + 1) : entry.path,
+    sha: entry.sha,
+    ...(entry.size === undefined ? {} : { size: entry.size }),
+  });
+  for (const [dir, entry] of skillFiles) files.set(dir, [toFile(entry, dir)]);
+  for (const entry of others) {
+    const owner = owningSkillDir(entry.path, skillDirs);
+    if (owner !== null) files.get(owner)?.push(toFile(entry, owner));
+  }
+  for (const list of files.values()) list.sort((a, b) => compareText(a.path, b.path));
+  return files;
 }
 
 // The deepest skill folder above a file owns it, so a nested skill's files

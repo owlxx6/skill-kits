@@ -190,11 +190,13 @@ export function createGitHubClient(
         for (const item of data.tree) {
           if (!item.path || !item.sha) continue;
           if (item.type !== "blob" && item.type !== "tree") continue;
-          entries.push(
-            item.mode
-              ? { path: item.path, type: item.type, sha: item.sha, mode: item.mode }
-              : { path: item.path, type: item.type, sha: item.sha },
-          );
+          entries.push({
+            path: item.path,
+            type: item.type,
+            sha: item.sha,
+            ...(item.mode ? { mode: item.mode } : {}),
+            ...(item.type === "blob" && typeof item.size === "number" ? { size: item.size } : {}),
+          });
         }
         return { entries, truncated: data.truncated, sha: data.sha };
       } catch (error) {

@@ -87,6 +87,13 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
           `- Licenses: ${licenses.identifiedAllowed} identified and allowed, ${licenses.identifiedNotAllowed} identified but not allowed, ${licenses.custom} custom, ${licenses.ambiguous} ambiguous, ${licenses.missing} missing, ${licenses.notReRead} not re-read, ${licenses.waitingForSafetyScan} waiting for the safety scan, ${licenses.unresolved} unresolved, ${licenses.failedDownloads} failed license downloads`,
         );
       }
+      // Counts only: findings, paths and excerpts are for the owner and never leave the cache.
+      const safety = extract.safety;
+      if (safety) {
+        lines.push(
+          `- Safety scan: ${safety.scanned} scanned, ${safety.reused} reused, ${safety.clear} clear, ${safety.review} to review, ${safety.block} blocked, ${safety.notScanned} not scanned`,
+        );
+      }
     }
     if (review) {
       const perSkillIn = review.reviewed ? Math.round(review.reviewUsage.inputTokens / review.reviewed) : 0;

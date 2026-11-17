@@ -92,19 +92,80 @@ an instruction.
 Any change to a rule bumps `SAFETY_RULES_VERSION` and this file's "Rules version" line; a test keeps
 the two in step and checks that every rule id is listed here.
 
-## Intended integration
+## Integration in the pipeline
 
-Not wired yet: the pipeline schemas are changing on the license branch. After that lands:
+Code: `pipeline/lib/skill-safety.ts`, called by `pipeline/extract.ts` and `pipeline/run.ts`. Tests:
+`tests/skill-safety.test.ts` and `tests/pipeline.test.ts`.
 
-1. Extract: for each new or changed skill folder, download its text files with a per-file size
-   cap; pass binary or oversize files as `{ path, size }`. Cache the report by skill fingerprint
-   plus `SAFETY_RULES_VERSION`, so an unchanged skill is not rescanned and a rules change rescans
-   everything.
-2. Rank: exclude skills whose verdict is `block`.
-3. Review: for a `review` verdict, the review prompt receives the flagged files in full with the
-   findings as hints; the reviewer must read those files and say what it concluded. The owner sees
-   the findings in the admin view.
-4. Summary: counts per verdict only. No finding text, path or excerpt in any public output.
+### Which skills are scanned
+
+Only the skills whose license does not publish them alone (publication policy in
+`docs/LICENSE-RESOLUTION.md`): an identified license that is not allowed, a missing license, or an
+unclear one. A skill with an allowed license is not downloaded for the scan.
+
+### Extract step
+
+The scan runs for each repository right after its licenses are resolved, from the tree that was
+just listed (so the listing is not read twice):
+
+1. The files of each skill come from the tree: every file the skill folder owns, SKILL.md included
+   (`listSkillFiles`; unlike `SkillRecord.files` the list is not capped at 50). A nested skill's files
+   belong to the nested skill; a root skill owns everything not owned deeper.
+2. Files are downloaded from raw.githubusercontent.com (outside the API quota), six skills at a time.
+   The bytes must have the git blob id of the listing, or the scan of the skill is incomplete (the
+   branch moved). A NUL byte in the first 8,000 bytes marks a binary file, reported as unscanned.
+3. Limits per skill, in `DEFAULT_SAFETY_LIMITS`: 200 files, 1,000,000 bytes per file, 10,000,000 bytes in
+   all. Media files are never downloaded. A file left out by a limit is passed as `{ path, size }`,
+   which raises an `unscanned-file` warning: the skill gets a `review` verdict, never `clear`.
+4. A file that cannot be downloaded, or is not the listed blob, leaves the skill with **no report**
+   (the old one is dropped). It stays waiting and is tried again on the next run. A truncated
+   repository listing scans nothing and drops the repository's reports: skills past the cut are
+   unknown.
+
+### Cache: `data/cache/safety.json`
+
+`{ "rulesVersion": 2, "entries": { "<skill id>": { fingerprint, contentId, verdict, scannedFiles,
+skippedFiles, findings, infoFindings } } }`, sorted by skill id.
+
+- A report is reused while `contentId` is unchanged: a hash of the sorted list of path and git blob id
+  of the skill's files, plus the limits. It catches what the skill fingerprint misses (a root skill's
+  fingerprint only tracks its SKILL.md) and rescans when the limits change.
+- A file written by other rules (`rulesVersion` different from `SAFETY_RULES_VERSION`) is ignored and
+  replaced at once: every skill is scanned again. A rules change bumps the version, as before.
+- Reports of skills that are gone, or that no longer need the scan, are dropped at the end of each
+  extract.
+- Only `warn` and `block` findings are kept. `info` findings are counted.
+- The file is **not versioned** (`.gitignore`) and is never read by the site. The weekly workflow commits
+  `data/cache` with a plain `git add`, which skips ignored files: reports never reach the public
+  repository. The consequence is that a fresh checkout (a CI run) scans again.
+
+### Who reads the reports
+
+`safetyCleared(cache)` builds the `isSafetyCleared` function of the publication policy. It returns
+true only for a report of the skill's current fingerprint with the verdict `clear`. A `review` or
+`block` verdict, a missing report or a stale one does not clear a skill. Triage, review selection
+and rank use it (the review and rank steps read the file written by the last extract). Without a
+current report, no skill is cleared, as before the integration.
+
+`review` is not cleared on purpose: for a skill without a usable license, a warning is a reason to
+have the owner look first. Letting `review` pass would be a one-line change in `safetyCleared`; it is
+an owner decision.
+
+### Not done yet
+
+- A `block` verdict excludes a skill from the catalog only when the scan decides (the middle row of
+  the publication policy). A skill with an allowed license is not scanned, so a `block` verdict does
+  not apply to it; its inclusion still depends on the owner's approval in `data/curation.yaml`.
+- The review prompt does not receive the findings yet (see the follow-ups in
+  `docs/LICENSE-RESOLUTION.md`), and there is no admin view of the reports.
+
+### Public output
+
+Counts only. `pipeline-run.json` (not versioned) holds `extract.safety`: `scanned`, `reused`,
+`clear`, `review`, `block`, `notScanned`, `failedDownloads`. The pull request summary shows one line
+with the same counts. No finding text, path or excerpt appears in `catalog.json`, the summary or the
+run information. A pending approved skill carries the reason `waiting for the safety scan`, whatever
+its verdict.
 
 ## Known limits
 

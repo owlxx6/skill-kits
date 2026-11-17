@@ -392,6 +392,12 @@ function extensionOf(path: string): string {
   return dot > 0 ? name.slice(dot + 1).toLowerCase() : "";
 }
 
+// Plain media (images, fonts, audio, video, PDF): never downloaded for the scan, and a
+// metadata-only entry for one raises no finding.
+export function isMediaPath(path: string): boolean {
+  return MEDIA_EXTENSIONS.has(extensionOf(path));
+}
+
 // ---------------------------------------------------------------------------------------
 // Text helpers
 
