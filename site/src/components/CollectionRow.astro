@@ -22,7 +22,7 @@ const { collection } = Astro.props;
   {collection.description && <p class="collection-why">{collection.description}</p>}
   <div class="badges">
     <span class="badge"><Icon name="scale" size={14} />{collectionLicenseLabel(collection)}</span>
-    <ReviewStatus humanReviewed={collection.humanReviewed} />
+    <ReviewStatus />
   </div>
   <p class="muted small" data-install-scope>{collectionInstallScope(collection)}</p>
   <CopyCommand command={collectionInstallCommand(collection.id)} label={`Copy install command for ${collection.id}`} />

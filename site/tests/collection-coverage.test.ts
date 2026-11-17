@@ -21,8 +21,7 @@ describe("collection coverage and installation scope", () => {
   });
 
   it("uses neutral attribution for a review not performed by a person", () => {
-    expect(reviewLabel(false)).toBe("Session reviewed");
-    expect(reviewLabel(true)).toBe("Reviewed by a human");
+    expect(reviewLabel()).toBe("Session reviewed");
   });
 
   it("preserves public coverage in a serialized index without exporting private notes", () => {

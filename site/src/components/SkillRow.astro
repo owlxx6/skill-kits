@@ -32,7 +32,7 @@ const href = skillHref(skill.id);
   <p class="skill-why">{skill.review.why}</p>
   <div class="badges">
     <LicenseDetails skill={skill} />
-    <ReviewStatus humanReviewed={skill.humanReviewed} />
+    <ReviewStatus />
   </div>
   <div class="skill-actions">
     <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} />

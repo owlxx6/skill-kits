@@ -66,8 +66,8 @@ export function collectionInstallScope(collection: Pick<CatalogCollection, "cata
     : "Installs every skill in this repository.";
 }
 
-export function reviewLabel(humanReviewed: boolean): string {
-  return humanReviewed ? "Reviewed by a human" : "Session reviewed";
+export function reviewLabel(): string {
+  return "Session reviewed";
 }
 
 export interface KitView {

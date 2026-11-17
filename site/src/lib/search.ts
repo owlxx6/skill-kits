@@ -33,7 +33,7 @@ export function searchDocuments(catalog: Catalog): SearchDocument[] {
     license: skill.license,
     href: skillHref(skill.id),
     why: skill.review.why,
-    reviewStatus: reviewLabel(skill.humanReviewed),
+    reviewStatus: reviewLabel(),
   }));
   const collections: SearchDocument[] = catalog.collections.map((collection) => ({
     id: `collection:${collection.id}`,
@@ -46,7 +46,7 @@ export function searchDocuments(catalog: Catalog): SearchDocument[] {
     why: collection.description ?? "",
     coverage: collectionCoverageLabel(collection),
     installScope: collectionInstallScope(collection),
-    reviewStatus: reviewLabel(collection.humanReviewed),
+    reviewStatus: reviewLabel(),
   }));
   return [...skills, ...collections];
 }
