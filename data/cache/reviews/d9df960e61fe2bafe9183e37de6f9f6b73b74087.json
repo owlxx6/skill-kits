@@ -1,0 +1,42 @@
+{
+  "fingerprint": "d9df960e61fe2bafe9183e37de6f9f6b73b74087",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 6,
+      "usefulness": 8
+    },
+    "why": "Three-stage workflow to co-author docs, specs and proposals, ending with a test by a fresh reader.",
+    "summary": "Guides the user through context gathering, section-by-section drafting (questions, brainstorm, curate, gap check, draft, refine) and reader testing with a fresh model that has no context. Edits are surgical (never reprint the whole document) and the user keeps the final read-through.",
+    "strengths": [
+      "Reader testing with a fresh model catches blind spots",
+      "Clear per-section loop with numbered options to keep or cut",
+      "Surgical edits only, and the user owns the final review"
+    ],
+    "cautions": [
+      "Instructions only: no document templates",
+      "Long interactive process, slow for a short document",
+      "Relies on connectors or sub-agents when they exist"
+    ],
+    "keywords": [
+      "documentation",
+      "doc co-authoring",
+      "technical spec",
+      "proposal",
+      "decision doc",
+      "rfc",
+      "writing workflow",
+      "reader testing",
+      "prd"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

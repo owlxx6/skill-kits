@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b1043e0a3ba72a0216c0ce6b8c3351a34e40add6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T09:59:18.333Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 5,
+      "usefulness": 8
+    },
+    "why": "Turns a job description and a background into a tailored, ATS-aware resume with gap analysis and cover letter hooks.",
+    "summary": "Step-by-step flow to tailor a resume to a job posting: gather the background, extract and rank the requirements, map experience, structure each section, optimize for ATS, then add gap analysis, interview tips and cover letter hooks. One full worked example.",
+    "strengths": [
+      "Complete ordered workflow from job analysis to iteration",
+      "Tells the agent never to fabricate experience",
+      "Special cases: career changers, graduates, executives, creative roles"
+    ],
+    "cautions": [
+      "Instructions only: no scripts or reference files",
+      "The worked example uses invented sample data",
+      "Some advice is US-specific (no references, one page)"
+    ],
+    "keywords": [
+      "tailored resume",
+      "resume tailoring",
+      "job description analysis",
+      "ats keywords",
+      "resume generator",
+      "gap analysis",
+      "cover letter hooks",
+      "career change resume"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "fingerprint": "ff7f37394819e5fa311324f953e3c0053a12309d",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "Reads, merges, splits, creates, OCRs and fills PDFs with pypdf, pdfplumber, reportlab and command-line tools.",
+    "summary": "Cheat sheet for PDF work in Python and on the command line: extract text and tables, merge, split, rotate, watermark, password protection, OCR of scans, creating PDFs with reportlab (with a warning about subscript glyphs). Forms and advanced topics are in two companion files and several scripts.",
+    "strengths": [
+      "Covers the everyday PDF tasks with working code",
+      "Warns about the reportlab subscript glyph trap",
+      "Quick-reference table maps each task to a tool"
+    ],
+    "cautions": [
+      "Tool by tool recipes; little help choosing a document structure",
+      "Needs several Python packages plus poppler and qpdf",
+      "Form filling and advanced usage live in files not read in this review"
+    ],
+    "keywords": [
+      "pdf",
+      "merge pdf",
+      "split pdf",
+      "extract tables",
+      "ocr",
+      "pdf forms",
+      "watermark",
+      "reportlab",
+      "pypdf"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

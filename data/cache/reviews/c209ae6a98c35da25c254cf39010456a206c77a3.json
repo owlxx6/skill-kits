@@ -1,0 +1,41 @@
+{
+  "fingerprint": "c209ae6a98c35da25c254cf39010456a206c77a3",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:47:22.646Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 8,
+      "usefulness": 5
+    },
+    "why": "Runs parallel browser sub-agents, one tab each, to build a cited Markdown and JSON report with a citation check.",
+    "summary": "Splits a query into three to seven sub-questions, starts an isolated headless browser session, dispatches one sub-agent per sub-question, merges and deduplicates the findings, and renders a report with numbered sources. A drilldown mode adds a second wave. A check fails the run if any prose lacks a citation. It then closes tabs and the session.",
+    "strengths": [
+      "Citation check fails the run when a sentence has no source",
+      "Uses a separate profile and socket so the user's own browser session is never touched",
+      "Cleanup rules keep pre-existing tabs and the user's session intact"
+    ],
+    "cautions": [
+      "Needs the openbrowser-ai command-line tool to be installed",
+      "Evidence is thin: a sub-agent keeps the page sentence that shares the most words with the question",
+      "Long procedure made of many shell blocks, and it scrapes search result pages"
+    ],
+    "keywords": [
+      "deep research",
+      "browser agents",
+      "parallel research",
+      "cited report",
+      "web research",
+      "drilldown",
+      "citation check",
+      "headless browser"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

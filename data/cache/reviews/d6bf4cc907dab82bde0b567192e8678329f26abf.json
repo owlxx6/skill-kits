@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d6bf4cc907dab82bde0b567192e8678329f26abf",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:02.442Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Plans what to publish: pillars, topic clusters, a scored idea list and a calendar built around search and sharing.",
+    "summary": "Gathers business and customer context, sorts content into searchable and shareable, builds three to five pillars with clusters, maps keywords to buyer stage and mines ideas from keyword exports, call transcripts, surveys, forums and competitors. Ideas are scored on weighted factors, split 60/30/10 across the calendar, and each piece gets a distribution plan.",
+    "strengths": [
+      "Information-gain gate: no piece unless it adds something the top results lack",
+      "Transparent scoring of ideas with weights",
+      "Distribution built in at creation time, not added afterwards"
+    ],
+    "cautions": [
+      "Backlink figures come from a single vendor study, which it labels directional",
+      "Keyword volumes need the user's exports or other tools",
+      "Writing the pieces, SEO audits and social posts are handed to sibling skills"
+    ],
+    "keywords": [
+      "content strategy",
+      "topic clusters",
+      "editorial calendar",
+      "content pillars",
+      "keyword research",
+      "content prioritization",
+      "distribution",
+      "search intent"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

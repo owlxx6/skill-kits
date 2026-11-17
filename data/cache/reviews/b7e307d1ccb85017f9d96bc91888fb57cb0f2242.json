@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b7e307d1ccb85017f9d96bc91888fb57cb0f2242",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:43.807Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Writes platform-native posts and threads with hooks, a content calendar, a repurposing plan and a daily engagement routine.",
+    "summary": "Collects goals, audience, voice and resources, then gives a platform quick reference, content pillars, hook formulas, a blog-to-social repurposing system, a weekly calendar, engagement routines, metrics and tips for when the user is stuck. Every output starts with the hook and carries confidence tags. Proactive triggers flag copy-pasting one post everywhere.",
+    "strengths": [
+      "Hook first: no body copy without one",
+      "Flags unsustainable posting frequency and too much promotion",
+      "Adapts length and tone per platform instead of one generic post"
+    ],
+    "cautions": [
+      "Platform frequencies and growth tips are generic rules of thumb",
+      "Covers much the same ground as other social skills, with less depth",
+      "Three reference files are not read here"
+    ],
+    "keywords": [
+      "social media posts",
+      "linkedin",
+      "twitter threads",
+      "instagram",
+      "hooks",
+      "content calendar",
+      "repurposing",
+      "engagement"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

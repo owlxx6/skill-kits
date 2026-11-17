@@ -1,0 +1,42 @@
+{
+  "fingerprint": "da78914616542c1eee53e42f2f2726b464c3a5fc",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:00.067Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 6,
+      "completeness": 4,
+      "usefulness": 7
+    },
+    "why": "Routes a full job-search agent: offer evaluation, tailored CVs, portal scans and tracking; needs its own repository.",
+    "summary": "Router skill for a job-search agent with about 45 modes: offer evaluation, CV and cover letter generation, ATS check, portal scan, application tracker, interview prep. It only routes: the modes, scripts and AGENTS.md live in the project repository, and the skill says not to improvise them.",
+    "strengths": [
+      "Very broad coverage of the job search, from offer to interview",
+      "Refuses to improvise a mode without the full repository",
+      "Treats job posting text as untrusted data"
+    ],
+    "cautions": [
+      "Unusable alone: needs the whole project installed (npx init or a plugin)",
+      "Dense 28,000-character router with long path-resolution rules",
+      "Large surface (portal scan, browser automation) to inspect before use"
+    ],
+    "keywords": [
+      "job search",
+      "job search agent",
+      "cv generator",
+      "offer evaluation",
+      "ats check",
+      "application tracker",
+      "interview prep",
+      "portal scan",
+      "cover letter"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

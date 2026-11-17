@@ -1,0 +1,41 @@
+{
+  "fingerprint": "2586430c234b74b12f9705c40c87fc72f4447eb7",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:43.807Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Takes a blog post from research and brief through draft to an SEO pass and scripted quality gates.",
+    "summary": "Three modes: research the competing pieces and write a brief, draft with an outline and section rules, then optimize with four bundled scripts for SEO, readability, brand voice and publish gates. It covers meta tags, internal links and a pre-publish checklist, and warns early about thin content, cannibalization and intent mismatch.",
+    "strengths": [
+      "Pushes back on vague topics instead of guessing the angle",
+      "Rule: no \"studies show\" without the actual source",
+      "Failing gates block publishing until fixed"
+    ],
+    "cautions": [
+      "Gate thresholds (readability 70, keyword 3 to 5 times) are mechanical heuristics",
+      "References and the brief template are not read here",
+      "No promotion or distribution step"
+    ],
+    "keywords": [
+      "blog writing",
+      "content brief",
+      "seo optimization",
+      "article drafting",
+      "quality gates",
+      "readability",
+      "meta tags",
+      "internal links"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

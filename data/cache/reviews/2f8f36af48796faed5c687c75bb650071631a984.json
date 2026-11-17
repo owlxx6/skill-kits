@@ -1,0 +1,40 @@
+{
+  "fingerprint": "2f8f36af48796faed5c687c75bb650071631a984",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:43:11.823Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 3,
+      "usefulness": 5
+    },
+    "why": "Hands a question to a background agent that cites primary sources into a Markdown note in the repository.",
+    "summary": "A very short skill: start a background agent with a fresh context to investigate a question against primary sources (official docs, source code, specs, first-party APIs), write the findings with a source for each claim to one Markdown file, and save it where the repository already keeps such notes.",
+    "strengths": [
+      "Insists on primary sources and following each claim back to its owner",
+      "Saves the result in the repository, matching its conventions"
+    ],
+    "cautions": [
+      "Very short: no method to plan, verify or handle conflicting sources",
+      "Assumes the runtime can start a background agent",
+      "Aimed at developer documentation and API facts"
+    ],
+    "keywords": [
+      "research",
+      "primary sources",
+      "background agent",
+      "documentation research",
+      "citations",
+      "markdown notes",
+      "fact gathering",
+      "api docs"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

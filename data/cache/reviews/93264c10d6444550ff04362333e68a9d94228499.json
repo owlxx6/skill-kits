@@ -1,0 +1,40 @@
+{
+  "fingerprint": "93264c10d6444550ff04362333e68a9d94228499",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:39:48.359Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 7,
+      "completeness": 4,
+      "usefulness": 4
+    },
+    "why": "Orchestrates an ML paper pipeline from narrative report to compiled PDF, with external model review and audit gates.",
+    "summary": "Chains plan, figures, LaTeX writing, compilation and a two-round improvement loop. It negotiates an acceptance contract with an external reviewer model before writing, and adds optional proof, claim and citation audits plus a submission gate. It relies on many sub-skills, helper scripts and model servers that are not included.",
+    "strengths": [
+      "An acceptance contract is negotiated before any writing starts",
+      "Audits compare numbers with raw result files and citations with their sources",
+      "Keeps the PDF of every round for comparison"
+    ],
+    "cautions": [
+      "Cannot run alone: depends on about a dozen sub-skills, shared references and MCP servers",
+      "Runs autonomously between phases by default, for 45 to 90 minutes",
+      "Sends the paper, results and prompts to external reviewer models"
+    ],
+    "keywords": [
+      "paper writing",
+      "latex",
+      "research paper",
+      "claim audit",
+      "citation audit",
+      "ai research pipeline",
+      "paper plan",
+      "improvement loop",
+      "academic writing"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

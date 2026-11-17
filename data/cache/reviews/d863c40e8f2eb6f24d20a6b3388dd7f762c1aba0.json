@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d863c40e8f2eb6f24d20a6b3388dd7f762c1aba0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:43:11.823Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "Researches social discussion so every claim points to the inspected material, with duplicates counted once and gaps reported.",
+    "summary": "Method for read-only research on public or user-supplied social material: set the protocol first, treat search results as discovery-only, record each inspected part as an evidence record, group reposts, attribute comments, build a claim table with locators, report counts and access gaps. It can also audit an existing report.",
+    "strengths": [
+      "A discovery-only record never supports a claim about uninspected content",
+      "Reposts and cross-posts count once as support",
+      "Access gaps are reported: an empty search is not proof of absence"
+    ],
+    "cautions": [
+      "Process-heavy for a quick scan",
+      "No collection tooling: it assumes the agent can browse or has exports",
+      "The three reference files are described, not read here"
+    ],
+    "keywords": [
+      "social research",
+      "evidence record",
+      "claim table",
+      "social media analysis",
+      "report audit",
+      "source attribution",
+      "sentiment research",
+      "research methodology"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

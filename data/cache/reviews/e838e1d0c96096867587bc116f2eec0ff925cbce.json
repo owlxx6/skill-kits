@@ -1,0 +1,41 @@
+{
+  "fingerprint": "e838e1d0c96096867587bc116f2eec0ff925cbce",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:47:21.326Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 6
+    },
+    "why": "Finds papers in OpenAlex and PubMed, turns DOIs into clean BibTeX and validates reference lists before submission.",
+    "summary": "Five phases: search several scholarly databases, extract metadata from DOIs, PMIDs, arXiv IDs or URLs, enrich missing fields from publisher records without inventing any, format and deduplicate BibTeX, then validate completeness, venue rules and DOIs. Seven scripts cover each step, and extracted metadata is treated as untrusted input.",
+    "strengths": [
+      "Never invents volume, pages or DOI: unavailable fields are logged",
+      "Warns that metadata can carry shell syntax and tells the agent how to pass it safely",
+      "Lists which credential goes to which service"
+    ],
+    "cautions": [
+      "Centred on BibTeX and scientific writing; less useful for business research",
+      "Google Scholar scraping is described as often blocked",
+      "Ends with a request to cite the library's own paper in outputs"
+    ],
+    "keywords": [
+      "citation management",
+      "bibtex",
+      "doi",
+      "pubmed",
+      "openalex",
+      "metadata extraction",
+      "reference validation",
+      "scholarly search"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

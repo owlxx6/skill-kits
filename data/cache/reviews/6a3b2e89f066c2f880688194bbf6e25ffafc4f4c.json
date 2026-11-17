@@ -1,0 +1,41 @@
+{
+  "fingerprint": "6a3b2e89f066c2f880688194bbf6e25ffafc4f4c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:00.067Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Scores a resume against a job description with a script, then rewrites weak bullets and drafts cover letter hooks.",
+    "summary": "Three workflows: a keyword match score and gap list from a Python script, CAR bullet rewrites with quantification, and cover letter hooks from matched keywords. Two reference guides and a resume template are provided; inputs are plain text files.",
+    "strengths": [
+      "Match score with kept, missing and resume-only keyword lists",
+      "States that the score is keyword overlap, not a real ATS",
+      "Asks only for the inputs that matter"
+    ],
+    "cautions": [
+      "License line reads MIT + Commons Clause, which restricts selling",
+      "Plain-text inputs only: no PDF or DOCX parsing",
+      "The script and references are described, not read in this review"
+    ],
+    "keywords": [
+      "resume tailor",
+      "keyword match",
+      "ats keywords",
+      "resume matcher",
+      "bullet rewrite",
+      "car pattern",
+      "cover letter hooks",
+      "job description"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

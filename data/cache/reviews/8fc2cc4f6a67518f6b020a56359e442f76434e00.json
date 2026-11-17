@@ -1,0 +1,42 @@
+{
+  "fingerprint": "8fc2cc4f6a67518f6b020a56359e442f76434e00",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:02:24.986Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Runs a job-search pipeline: records, stages, follow-up clock, weekly review and drafted messages the user sends.",
+    "summary": "Treats each opportunity as a record with a stage, real dates, the exact resume sent and a next action. Covers intake with scam checks, stage mapping, a follow-up clock, a weekly review with funnel stats, message drafts (referral, thank-you, follow-up, withdrawal) and offer handling. Works with a Markdown or CSV tracker, or with Reactive Resume tools.",
+    "strengths": [
+      "Never applies or sends: it drafts and logs, the user acts",
+      "Scam and ghost-posting checks at intake",
+      "Honest funnel numbers: counts below 30 applications, furthest stage reached"
+    ],
+    "cautions": [
+      "Very long (50,000 characters) with six reference files",
+      "Timing rules and benchmarks rely on US vendor data",
+      "The tool section needs Reactive Resume; otherwise a plain CSV tracker"
+    ],
+    "keywords": [
+      "job search tracker",
+      "application tracking",
+      "follow-up",
+      "weekly review",
+      "funnel stats",
+      "thank you note",
+      "referral message",
+      "job search pipeline",
+      "offer deadline"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

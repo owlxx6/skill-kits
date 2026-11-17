@@ -1,0 +1,41 @@
+{
+  "fingerprint": "7a826887a7fd753de47f11f89334e3eed97e1fc2",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:43:11.823Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 7
+    },
+    "why": "Builds a sourced literature review from Firecrawl's paper index: search, related papers and in-paper checks.",
+    "summary": "Uses Firecrawl Research tools to search paper abstracts, expand from seed papers (similar, citers, references), fetch metadata and verify a specific claim inside a paper, with web search as fallback. It explains what the index covers (mostly biomedical literature plus arXiv) and returns a literature review outline.",
+    "strengths": [
+      "Says exactly what the paper index covers and what it does not",
+      "Expands to the whole paper family, not just the first hit",
+      "Verifies load-bearing claims inside the paper body"
+    ],
+    "cautions": [
+      "Needs a Firecrawl API key and its research tools",
+      "Coverage is mostly biomedical and arXiv, thinner elsewhere",
+      "Instructions only: no scripts"
+    ],
+    "keywords": [
+      "literature review",
+      "research papers",
+      "pubmed",
+      "arxiv",
+      "paper search",
+      "citation graph",
+      "systematic review",
+      "scholarly sources"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

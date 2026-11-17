@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ce67db32ee2e54205d86420a0a9a3137dff0dc6e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:56.783Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 6,
+      "usefulness": 8
+    },
+    "why": "Writes a lean, decision-ready PRD with an 8-section template, a 6-part value proposition and marked assumptions.",
+    "summary": "Creates a one-to-two page product requirements document: summary, contacts, background, objective with key results, market segments, value propositions (who, why, what before, how, what after, alternatives), solution and release. It asks up to three questions first, cites research, and can also review an existing PRD.",
+    "strengths": [
+      "Lean by default and asks before drafting when the problem or metric is missing",
+      "Does not invent: unknowns go to a marked assumptions section",
+      "Review mode returns the gaps first, then what can be cut"
+    ],
+    "cautions": [
+      "Product management format only",
+      "Instructions only: no template file",
+      "Further reading points to the author's own newsletter"
+    ],
+    "keywords": [
+      "prd",
+      "product requirements",
+      "product spec",
+      "value proposition",
+      "jobs to be done",
+      "feature spec",
+      "product management",
+      "requirements document"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

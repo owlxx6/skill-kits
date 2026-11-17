@@ -1,0 +1,41 @@
+{
+  "fingerprint": "53a8cbad3a4ad20c6a74019051fac84e11443124",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:40.907Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 5,
+      "usefulness": 8
+    },
+    "why": "Proofreads a resume or cover letter in five passes without changing the person's facts or voice.",
+    "summary": "Final editorial pass for resumes, CVs and cover letters: facts, clarity, consistency, voice and a last comparison. It returns the clean text plus a short before/after/reason list and questions for factual conflicts. A one-line request gets a one-line edit.",
+    "strengths": [
+      "Five clear passes with a fact-preservation check first",
+      "Removes inflated wording without inventing numbers",
+      "Reports honestly what a text-only review cannot verify (layout, ATS)"
+    ],
+    "cautions": [
+      "Instructions only: no checklist file",
+      "Text only unless local tools can inspect a PDF or DOCX",
+      "Does not match the resume to a job"
+    ],
+    "keywords": [
+      "resume proofreading",
+      "cv editing",
+      "cover letter proofread",
+      "grammar check",
+      "resume consistency",
+      "editorial pass",
+      "resume wording",
+      "fact preservation"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "fingerprint": "461faa59b6e54e94661864fe334d6ba3522bc568",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:01:45.974Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Decides what belongs on a resume by country, industry and situation, with evidence tags and an audit report.",
+    "summary": "Advises what to include, cut and order on a resume. Ground rules (never invent, employer instructions first), a four-test keep rule, tables for sections, length, countries and situations, myth corrections, and a report format with evidence tags. Optional Reactive Resume tool path to copy, patch and verify with consent.",
+    "strengths": [
+      "Each recommendation carries an evidence tag: official, study, survey or convention",
+      "Country and situation tables with defaults and caveats",
+      "Identity signals such as photo or birth date stay the user's decision"
+    ],
+    "cautions": [
+      "Very long (43,000 characters); depth sits in six reference files",
+      "Law and platform facts are dated 2026 and need checking when it matters",
+      "Hands off to sibling skills that may not be installed"
+    ],
+    "keywords": [
+      "resume content",
+      "resume audit",
+      "resume length",
+      "cv by country",
+      "personal details",
+      "resume sections",
+      "career gap",
+      "gpa rule",
+      "resume myths"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

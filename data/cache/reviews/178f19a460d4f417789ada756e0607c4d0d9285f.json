@@ -1,0 +1,41 @@
+{
+  "fingerprint": "178f19a460d4f417789ada756e0607c4d0d9285f",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:40.907Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Writes teaching, school leadership and instructional design resumes with credentials and learner privacy kept accurate.",
+    "summary": "Resume writing for teachers, student teachers, educational leaders, instructional designers and workplace trainers. A table lists the evidence to ask for per target. It keeps credential status, assessment evidence and completion rates distinct, and bars learner names and records.",
+    "strengths": [
+      "Separates completion, satisfaction, assessment gains and job performance",
+      "Credential status kept exact: active, pending, expired",
+      "Learner privacy rules and a worked example without invented outcomes"
+    ],
+    "cautions": [
+      "Instructions only: no template",
+      "Narrow audience: education roles",
+      "Refers to other skills (career-change-resume, academic-cv) that may not be installed"
+    ],
+    "keywords": [
+      "educator resume",
+      "teacher resume",
+      "instructional design",
+      "learning and development",
+      "school leadership",
+      "curriculum",
+      "corporate training",
+      "teaching cv"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

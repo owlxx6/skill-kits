@@ -1,0 +1,39 @@
+{
+  "fingerprint": "1153fb65683b884bcb1a02a48a75cd4c6ed91a3b",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:01:16.853Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 2
+    },
+    "why": "Recruiter-side CLI guide: create and publish LinkedIn job postings and read applicants. Not for job seekers.",
+    "summary": "Documents the Curviate CLI commands to draft, price, publish and close LinkedIn job postings and to read applicants and their resumes, with traps (subscription gate, stale read-back), a safe draft-then-publish flow and exit codes. It serves the hiring side, not someone building a resume.",
+    "strengths": [
+      "Careful about what is proven versus never live-fired",
+      "Draft-first flow with --preview before every write",
+      "Exit codes table to branch on"
+    ],
+    "cautions": [
+      "Hiring-side tool: does not help a resume or career kit",
+      "Needs a global npm install and an API key; promoted publishes spend real money",
+      "Reads applicants' contact details and resumes"
+    ],
+    "keywords": [
+      "linkedin jobs",
+      "job posting",
+      "recruiting",
+      "curviate cli",
+      "applicants",
+      "hiring",
+      "publish job",
+      "linkedin automation"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "e9d17903caad4dccafd1b3c3299c7abf057ed381",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:43.807Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Plans drip, nurture and onboarding email sequences, with triggers, timing, exits and a scripted quality score.",
+    "summary": "Asks for sequence type, audience and goal, then produces a sequence overview, a block per email (timing, subject, preview, body, CTA, conditions) and a metrics plan. A bundled Python analyzer scores pacing, subject variety, CTA consistency and exit coverage, and anything under 70 is fixed. Proactive triggers cover low conversion and weak clicks.",
+    "strengths": [
+      "Entry trigger and exit conditions are required for every sequence",
+      "Ready-to-send drafts with three subject-line alternatives",
+      "Diagnoses click problems in the body and CTA before blaming subject lines"
+    ],
+    "cautions": [
+      "The core principles section is only a pointer to a playbook file not read here",
+      "Analyzer scores are heuristic",
+      "Email platforms are listed without setup help"
+    ],
+    "keywords": [
+      "email sequence",
+      "drip campaign",
+      "nurture",
+      "onboarding emails",
+      "re-engagement",
+      "email automation",
+      "subject lines",
+      "sequence analyzer"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f301520ce109195f6445f9085502634767724f54",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:00.067Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 6,
+      "usefulness": 8
+    },
+    "why": "Five-phase workflow: JD keyword matrix, STAR rewrites with metrics, ATS scorecard and a rewritten resume.",
+    "summary": "SOP to optimize a resume for a job description: baseline and JD extraction, keyword match matrix with coverage scores, STAR rewriting with quantification prompts, an ATS compatibility scorecard and a final rewritten resume. Includes interaction modes and a quality checklist.",
+    "strengths": [
+      "Explicit phases, each with a defined output",
+      "Strong honesty rules: no fabricated data, ranges allowed",
+      "Modes for a single phase or a quick diagnostic"
+    ],
+    "cautions": [
+      "Instructions only: scores are estimated by the model, no script",
+      "Benchmarks (80% coverage, ATS scores) are heuristics",
+      "Single-job tailoring: no cover letter step"
+    ],
+    "keywords": [
+      "cv tailor",
+      "resume optimization",
+      "jd keyword match",
+      "star method",
+      "ats compatibility",
+      "quantified bullets",
+      "resume rewrite",
+      "keyword coverage"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

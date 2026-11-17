@@ -1,0 +1,41 @@
+{
+  "fingerprint": "16ca146b9c0fb438500c8ed31255b543a9c2bee8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:56.783Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Guide to blameless postmortems with a 5 Whys template, a quick template and a meeting facilitation plan.",
+    "summary": "Explains blameless culture, when to write a postmortem, a one-week timeline, a 5 Whys template with evidence per step, a short template for minor incidents, a 60-minute meeting structure with facilitation tips, anti-patterns and do and don't lists. The full template library is in one reference file.",
+    "strengths": [
+      "Blame-focused versus blameless comparison table",
+      "Quick postmortem template for minor incidents",
+      "Facilitation plan with timings"
+    ],
+    "cautions": [
+      "The full template library is in a reference file not read here",
+      "Templates are numbered from 2: the first one is out of view",
+      "Overlaps with the other post-mortem skill in this batch"
+    ],
+    "keywords": [
+      "postmortem",
+      "incident review",
+      "blameless",
+      "5 whys",
+      "root cause",
+      "action items",
+      "facilitation",
+      "incident response"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

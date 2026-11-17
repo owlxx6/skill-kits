@@ -1,0 +1,41 @@
+{
+  "fingerprint": "94ed1edf4f53c20cbc40f2ecc6f2228bcd66382f",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:02.442Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Writes or rewrites page copy after diagnosing the input, with a claims-need-evidence rule and a list of AI writing tells to avoid.",
+    "summary": "Diagnoses whether the input is a blank brief, a draft with a real voice or a point edit, and changes only what that calls for. Drafts unit by unit (headline, subhead, CTA, sections), runs each line through three tests (picturable, provable, not copyable by a competitor), and declines unsupported claims while naming the evidence that would unlock them.",
+    "strengths": [
+      "Leave-it-alone test: changes with no reason are reverted",
+      "Missing proof is flagged as a need, never invented",
+      "Matches the user's own vocabulary and writing sample"
+    ],
+    "cautions": [
+      "Page copy only: emails, ads and line edits are left to other skills",
+      "Many steps assume a product-marketing context file exists",
+      "Three reference files (frameworks, AI tells, transitions) are not read here"
+    ],
+    "keywords": [
+      "copywriting",
+      "landing page copy",
+      "headlines",
+      "cta",
+      "voice matching",
+      "conversion copy",
+      "ai writing tells",
+      "page structure"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

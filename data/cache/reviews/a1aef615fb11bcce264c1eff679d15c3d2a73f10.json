@@ -1,0 +1,40 @@
+{
+  "fingerprint": "a1aef615fb11bcce264c1eff679d15c3d2a73f10",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 5,
+      "completeness": 3,
+      "usefulness": 4
+    },
+    "why": "Lists Google Slides API methods for the gws CLI; auth and safety rules sit in a separate shared skill.",
+    "summary": "Generated reference for the gws slides command: presentations batchUpdate, create, get and pages, with a pointer to inspect methods through gws schema. It does not describe how to build a deck, and defers authentication and security rules to another skill.",
+    "strengths": [
+      "Shows how to discover methods and parameters with gws schema",
+      "Notes that a failed batchUpdate request applies nothing"
+    ],
+    "cautions": [
+      "Needs the gws CLI and Google authentication from a shared skill not included here",
+      "API listing only: no workflow for designing slides",
+      "Auto-generated, so it adds little to the CLI's own help"
+    ],
+    "keywords": [
+      "google slides",
+      "presentations",
+      "gws cli",
+      "slides api",
+      "batch update",
+      "google workspace",
+      "slide deck",
+      "cli reference"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

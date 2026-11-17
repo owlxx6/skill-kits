@@ -1,0 +1,41 @@
+{
+  "fingerprint": "e01ebc91353e9104e415f052408f3ef73e0dd295",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:56.783Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Builds Marp slide decks with seven themes, ready templates and best-practice references.",
+    "summary": "Creates Markdown slide decks for Marp with seven themes (default, minimal, colorful, dark, gradient, tech, business), a quick theme picker, templates with embedded CSS, image layout patterns, a quality checklist and a rule set for vague 'make it look good' requests.",
+    "strengths": [
+      "Seven templates with the CSS already embedded",
+      "Theme selection rules by audience and content",
+      "Quality checklist: bullets per slide, short titles, whitespace"
+    ],
+    "cautions": [
+      "Some rules are tuned for Japanese (titles of 5-7 characters)",
+      "Saves to 'the project output directory', an unresolved placeholder",
+      "The 22 asset and reference files are described, not read in this review"
+    ],
+    "keywords": [
+      "marp",
+      "slides",
+      "presentation",
+      "slide deck",
+      "marp themes",
+      "markdown slides",
+      "lecture slides",
+      "slide template"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

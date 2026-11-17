@@ -1,7 +1,7 @@
 {
   "fingerprint": "d45876a97aa672705d69b231c4789837e85927a6",
   "model": "in-session-review",
-  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "reviewedAt": "2026-11-17T09:59:18.333Z",
   "review": {
     "kits": [
       "resume-career"
@@ -11,25 +11,27 @@
       "completeness": 6,
       "usefulness": 7
     },
-    "why": "Gives an agent concrete structure and wording rules for software, PM and data resumes.",
-    "summary": "Guides optimization of resumes for technical roles: section order, skills section layout, project and GitHub links, impact-oriented bullets and ATS-friendly formatting for tech recruiters.",
+    "why": "Tailors software, data, DevOps and PM resumes with a bullet formula, skills layout and an output template.",
+    "summary": "Guide to optimize technical resumes: section order, how to organize the skills section, a bullet formula with scale metrics, role-specific examples (SWE, data, DevOps, PM), projects, education paths and GitHub tips, plus an output template.",
     "strengths": [
-      "Tech-specific structure and contact section",
-      "Concrete bullet and skills examples",
-      "Clear trigger conditions"
+      "Bullet formula with weak versus strong examples",
+      "Role-specific examples for SWE, data, DevOps and PM",
+      "Defines an output format for the optimization"
     ],
     "cautions": [
-      "Guidance only, no scripts or templates",
-      "Generic in places; no stop condition"
+      "Instructions only: no scripts, no step that matches a job offer",
+      "US-style conventions (GPA, no photo, GitHub required)",
+      "Does not forbid inventing the metrics it asks for"
     ],
     "keywords": [
       "tech resume",
       "software engineer resume",
       "developer cv",
-      "ats",
-      "pm resume",
-      "data scientist",
-      "resume optimization",
+      "ats keywords",
+      "technical skills section",
+      "resume bullets",
+      "devops resume",
+      "product manager resume",
       "github portfolio"
     ],
     "security": {

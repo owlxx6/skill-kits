@@ -1,0 +1,41 @@
+{
+  "fingerprint": "3e67c2f275a05573f7bcab6859f7ec60f0187757",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 7
+    },
+    "why": "Converts Word, slides, sheets, RTF, EPUB and text PDFs to Markdown locally, with safe handling of file paths.",
+    "summary": "Uses the anydoc CLI inside the agent container to convert an attached document to Markdown. It shows how to quote untrusted file paths safely, prefers writing to a file, treats document content as data, and lists limits (no OCR, lossy spreadsheets, flattened nested tables).",
+    "strengths": [
+      "Shell-safe path quoting with a worked example",
+      "Local conversion by default; no upload without authorization",
+      "Documents are treated as untrusted data"
+    ],
+    "cautions": [
+      "Tied to a container layout (/workspace paths) and the anydoc CLI",
+      "No OCR for scanned PDFs",
+      "Spreadsheet formatting and nested tables are lossy"
+    ],
+    "keywords": [
+      "document to markdown",
+      "anydoc",
+      "docx conversion",
+      "pdf text extraction",
+      "epub conversion",
+      "attachment handling",
+      "local conversion",
+      "rtf"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

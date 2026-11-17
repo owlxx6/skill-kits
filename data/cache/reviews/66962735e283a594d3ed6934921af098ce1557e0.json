@@ -1,0 +1,41 @@
+{
+  "fingerprint": "66962735e283a594d3ed6934921af098ce1557e0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:40.907Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 7
+    },
+    "why": "Writes a LinkedIn headline, About and experience from verified facts, consistent with the resume and safe to publish.",
+    "summary": "Drafts LinkedIn headline, About, experience, featured items and skills from the user's verified career facts. It asks what may be public, keeps titles and dates consistent with the resume, uses current field limits only when verified, and makes no promise about ranking or visibility.",
+    "strengths": [
+      "Checks what can be disclosed publicly before writing",
+      "Distinguishes a target role from a title actually held",
+      "Returns copy-ready text plus a consistency and privacy checklist"
+    ],
+    "cautions": [
+      "Instructions only: no scoring script or rubric",
+      "Draft text only: no LinkedIn access or publishing",
+      "Field limits must be checked by the user"
+    ],
+    "keywords": [
+      "linkedin",
+      "linkedin headline",
+      "about section",
+      "profile writing",
+      "public profile",
+      "career positioning",
+      "resume consistency",
+      "linkedin experience"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8d04d3aacfe0052a4d3ee842da06e72199d32178",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:40.907Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 5,
+      "usefulness": 8
+    },
+    "why": "Interviews the user to build a bank of real, evidenced achievements before any resume writing.",
+    "summary": "Asks two or three questions at a time to recover what the user actually did, then fills one card per achievement (context, action, evidence, outcome, measurement, disclosure, relevance, open questions). Unknown numbers stay unknown and nothing is borrowed from industry averages.",
+    "strengths": [
+      "Fills the gap before resume writing: people who cannot recall their wins",
+      "Honest handling of metrics, including percentage versus percentage points",
+      "Does not demand confidential uploads; redacted aggregates are enough"
+    ],
+    "cautions": [
+      "Instructions only: no template file for the cards",
+      "Describes saving facts to a Reactive Resume account through a named tool",
+      "Stops at the evidence bank; resume writing is left to other skills"
+    ],
+    "keywords": [
+      "accomplishments",
+      "achievement bank",
+      "career evidence",
+      "resume preparation",
+      "quantify achievements",
+      "interview questions",
+      "career knowledge",
+      "performance notes"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

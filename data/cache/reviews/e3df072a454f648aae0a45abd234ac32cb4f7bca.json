@@ -1,0 +1,41 @@
+{
+  "fingerprint": "e3df072a454f648aae0a45abd234ac32cb4f7bca",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:59:12.855Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Clarifies brand messaging with the seven-part StoryBrand framework and scores copy against it out of ten.",
+    "summary": "Walks through seven elements: a character with one desire, a problem at three levels, a guide with empathy and authority, a plan, a call to action, stakes and success. Each has principle, rationale, applications and copy patterns. It adds a one-liner formula with a repeat-after-one-hearing test, a seven-row diagnostic score and a table of common mistakes.",
+    "strengths": [
+      "Scores any copy and states the changes needed to reach the top score",
+      "Concrete copy patterns and examples for every element",
+      "Ethical rule: a button must not call a paid action free"
+    ],
+    "cautions": [
+      "Presents one framework as the whole method",
+      "Six reference files (brand script, sequences, wireframe, one-liners) are not read here",
+      "Ends with an affiliate-tagged book link and an author bio"
+    ],
+    "keywords": [
+      "brand messaging",
+      "storybrand",
+      "customer as hero",
+      "one-liner",
+      "brand script",
+      "website copy",
+      "call to action",
+      "messaging diagnostic"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

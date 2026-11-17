@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f824ecd50fe44c7e3f94a2d5dfd50c5066e2fcae",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:38.402Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Runs a full blog workflow from one command: write, rewrite, score, brief, audit, repurpose and translate, with gated delivery.",
+    "summary": "An orchestrator that routes about thirty commands to sub-skills and five agents: writing, rewriting, briefs, calendars, SEO and schema checks, topic clusters, AI-citation audits, repurposing, multilingual publishing and content-decay detection. A five-gate delivery contract with a 100-point score blocks a draft until it passes, with at most three repair loops.",
+    "strengths": [
+      "Draft is delivered only after the gates pass; fabricated statistics are not tolerated",
+      "Project files and fetched pages are treated as untrusted data and loaded through a fencing helper",
+      "Says its readiness score does not prove rankings or citations"
+    ],
+    "cautions": [
+      "Needs thirty-odd sub-skills, agents, scripts and twenty-two references that are not in this file",
+      "Heavy for a single post",
+      "Routing table and rules dominate: the real writing method lives in the sub-skills"
+    ],
+    "keywords": [
+      "blog engine",
+      "blog writing",
+      "content brief",
+      "seo check",
+      "topic clusters",
+      "repurposing",
+      "multilingual blog",
+      "quality scoring"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

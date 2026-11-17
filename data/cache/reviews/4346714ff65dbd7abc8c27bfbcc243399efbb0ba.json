@@ -1,0 +1,41 @@
+{
+  "fingerprint": "4346714ff65dbd7abc8c27bfbcc243399efbb0ba",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Turns papers, articles and reports into structured briefs, compares sources and extracts citations in five styles.",
+    "summary": "Three workflows for documents the user already has: a single-source summary picked by source type (paper, article, report, documentation), a multi-source comparison matrix with consensus, contested points and gaps, and citation extraction formatted in APA, IEEE, Chicago, Harvard or MLA. Adds a four-dimension source quality rating and a verification checklist.",
+    "strengths": [
+      "Verification loop: every finding anchored to a location, missing metadata marked, never invented",
+      "Source quality rated on credibility, evidence, recency and objectivity",
+      "States clearly that it digests supplied documents and does not search"
+    ],
+    "cautions": [
+      "Does not find sources: discovery is left to other skills",
+      "Citation extraction relies on regular expressions and misses some formats",
+      "The two scripts and two reference files are described, not read here"
+    ],
+    "keywords": [
+      "research summary",
+      "source comparison",
+      "citation extraction",
+      "literature digest",
+      "research brief",
+      "source quality",
+      "apa citations",
+      "document summarizing"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

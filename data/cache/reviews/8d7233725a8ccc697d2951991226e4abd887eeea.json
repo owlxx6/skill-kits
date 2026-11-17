@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8d7233725a8ccc697d2951991226e4abd887eeea",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:38.402Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 3,
+      "usefulness": 5
+    },
+    "why": "Outlines how to build paid-ad concepts and copy decks from a validated brand profile, keeping facts apart from hypotheses.",
+    "summary": "Seven-step outline: load the validated brand profile, objective, audience, offer and proof; separate facts, approved claims and hypotheses; flag cold-start Meta accounts; generate materially distinct concepts with insight, promise, proof, hook, CTA and test; check copy against platform spec files; return a versioned brief and copy deck.",
+    "strengths": [
+      "Concepts must be strategically distinct, not cosmetic rewrites",
+      "Never invents testimonials, scarcity, prices or outcomes",
+      "States that human review is needed before launch"
+    ],
+    "cautions": [
+      "Only an outline: no templates, examples or output format",
+      "Depends on a brand profile, audit evidence and platform spec files from the rest of its suite",
+      "Meta cold-start rules point to another skill not included"
+    ],
+    "keywords": [
+      "ad concepts",
+      "campaign brief",
+      "ad copy",
+      "creative brief",
+      "paid ads",
+      "messaging",
+      "copy deck",
+      "platform specs"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

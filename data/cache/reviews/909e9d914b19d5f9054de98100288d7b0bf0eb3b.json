@@ -1,0 +1,41 @@
+{
+  "fingerprint": "909e9d914b19d5f9054de98100288d7b0bf0eb3b",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:38:47.216Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Drafts contracts, proposals, SOWs and NDAs with US, EU, UK and DACH clause notes and ready templates.",
+    "summary": "Asks for the document type, jurisdiction, engagement and parties, then fills a template: fixed-price development contract, monthly retainer, SaaS partnership and a GDPR data processing addendum, with jurisdiction notes and a pandoc conversion to docx. It states it is not legal advice.",
+    "strengths": [
+      "Ready templates with bracketed placeholders and a REQUIRED flag for missing data",
+      "Jurisdiction notes (work for hire, written form clauses, GDPR)",
+      "Says plainly it is not legal advice"
+    ],
+    "cautions": [
+      "The selector lists NDA and SOW templates that are not in the skill",
+      "Clauses blend several jurisdictions: a lawyer should review them",
+      "Instructions only: no template files"
+    ],
+    "keywords": [
+      "contract",
+      "proposal",
+      "sow",
+      "nda",
+      "msa",
+      "freelance contract",
+      "gdpr addendum",
+      "legal templates"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

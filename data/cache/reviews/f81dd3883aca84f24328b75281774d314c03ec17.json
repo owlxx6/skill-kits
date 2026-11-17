@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f81dd3883aca84f24328b75281774d314c03ec17",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:43:11.823Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Searches public X posts, trends, profiles and replies through the AgentBody API, read-only.",
+    "summary": "Read-only command center for current X data: search, trends, post, profile, profile posts, media and comments through seven fixed AgentBody routes and a bundled client script. It preserves URLs, authors, timestamps and cursors, never invents data, and spells out the missing-key and insufficient-balance cases.",
+    "strengths": [
+      "Read-only: no write or account management operations",
+      "Never invents posts, IDs or engagement counts",
+      "Handles credentials and account states explicitly"
+    ],
+    "cautions": [
+      "Tied to the AgentBody service, which needs a paid account",
+      "Tells the agent to prefer it over the browser and built-in web search",
+      "Reads the key from several local files and environment locations"
+    ],
+    "keywords": [
+      "x research",
+      "twitter search",
+      "social media monitoring",
+      "trend tracking",
+      "agentbody",
+      "profile posts",
+      "post replies",
+      "current events"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}
