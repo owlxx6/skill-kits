@@ -1,0 +1,9 @@
+---
+import Icon from "./Icon.astro";
+import { reviewLabel } from "../lib/catalog";
+interface Props { humanReviewed: boolean; }
+const { humanReviewed } = Astro.props;
+---
+<span class:list={["badge", { accent: humanReviewed }]}>
+  <Icon name={humanReviewed ? "badge-check" : "file-text"} size={14} />{reviewLabel(humanReviewed)}
+</span>

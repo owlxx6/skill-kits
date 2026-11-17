@@ -1,7 +1,8 @@
 ---
 import CopyCommand from "./CopyCommand.astro";
 import Icon from "./Icon.astro";
-import { type CatalogCollection, collectionHref, collectionLicenseLabel, collectionInstallCommand, formatCount } from "../lib/catalog";
+import ReviewStatus from "./ReviewStatus.astro";
+import { type CatalogCollection, collectionHref, collectionLicenseLabel, collectionInstallCommand, collectionCoverageLabel, collectionInstallScope, formatCount } from "../lib/catalog";
 
 interface Props {
   collection: CatalogCollection;
@@ -13,7 +14,7 @@ const { collection } = Astro.props;
   <div class="collection-head">
     <h3><a href={collectionHref(collection.id)}>{collection.id}</a></h3>
     <p class="meta">
-      <span><Icon name="puzzle" size={14} />{collection.skillCount} skills</span>
+      <span data-collection-coverage><Icon name="puzzle" size={14} />{collectionCoverageLabel(collection)}</span>
       <span><Icon name="star" size={14} />{formatCount(collection.stars)}<span class="visually-hidden"> stars</span></span>
       <span><Icon name="git-fork" size={14} />{formatCount(collection.forks)}<span class="visually-hidden"> forks</span></span>
     </p>
@@ -21,14 +22,15 @@ const { collection } = Astro.props;
   {collection.description && <p class="collection-why">{collection.description}</p>}
   <div class="badges">
     <span class="badge"><Icon name="scale" size={14} />{collectionLicenseLabel(collection)}</span>
-    {collection.humanReviewed && <span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span>}
+    <ReviewStatus humanReviewed={collection.humanReviewed} />
   </div>
+  <p class="muted small" data-install-scope>{collectionInstallScope(collection)}</p>
   <CopyCommand command={collectionInstallCommand(collection.id)} label={`Copy install command for ${collection.id}`} />
 </li>
 
 <style>
   .collection-card {
-    display: grid; gap: var(--space-3);
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3);
     border-color: var(--accent-border); border-left: 4px solid var(--accent);
     background: linear-gradient(135deg, var(--accent-soft), var(--surface) 65%);
   }

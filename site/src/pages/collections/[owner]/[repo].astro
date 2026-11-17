@@ -4,7 +4,8 @@ import Breadcrumbs from "../../../components/Breadcrumbs.astro";
 import CopyCommand from "../../../components/CopyCommand.astro";
 import Icon from "../../../components/Icon.astro";
 import SkillRow from "../../../components/SkillRow.astro";
-import { collectionInstallCommand, collectionLicenseLabel, collectionSlug, formatCount, kitsOfCollection, kitsOfSkill, loadCatalog } from "../../../lib/catalog";
+import ReviewStatus from "../../../components/ReviewStatus.astro";
+import { collectionInstallCommand, collectionCoverageLabel, collectionInstallScope, collectionLicenseLabel, collectionSlug, formatCount, kitsOfCollection, kitsOfSkill, loadCatalog } from "../../../lib/catalog";
 import { kitIcon } from "../../../lib/icons";
 
 export function getStaticPaths() {
@@ -44,8 +45,8 @@ const crumbs = [
             <a href={`https://github.com/${repoId}`}><Icon name="external-link" size={14} />Repository on GitHub</a>
           </p>
         )}
-        {collection?.humanReviewed && (
-          <div class="badges"><span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span></div>
+        {collection && (
+          <div class="badges"><ReviewStatus humanReviewed={collection.humanReviewed} /></div>
         )}
       </div>
     </header>
@@ -59,11 +60,12 @@ const crumbs = [
     <section class="card install" aria-labelledby="install-title">
       <h2 id="install-title"><Icon name="terminal" size={18} />Install {collection ? "the collection" : "the repository"}</h2>
       <CopyCommand command={collectionInstallCommand(repoId)} />
-      <p class="muted small">
+      <p class="muted small" data-collection-coverage>
         {collection
-          ? `${collection.skillCount} skills in this repository; ${skills.length} listed here after review.`
+          ? collectionCoverageLabel(collection)
           : `${skills.length} skill${skills.length === 1 ? "" : "s"} from this repository listed here after review.`}
       </p>
+      <p class="muted small" data-install-scope>{collection ? collectionInstallScope(collection) : "Installs every skill in this repository, not only the skills listed here."}</p>
     </section>
 
     {kits.length > 0 && (
