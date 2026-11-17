@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8a6749d52e36f64bafb3500dfab65fbf8b006a34",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:24:08.732Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Turns a real project or achievement into a portfolio case study that shows the user's role, decisions and evidence.",
+    "summary": "Gathers audience, role, collaborators, problem, constraints, decisions and results, and classifies the work honestly (shipped, internal, prototype, coursework, personal). The narrative runs overview, problem, decisions, work, results and reflection, with emphasis adapted to design, product, engineering, data, marketing or writing. It asks what is cleared for public use before naming anything.",
+    "strengths": [
+      "An unshipped redesign is never presented as commercial impact",
+      "No fake quotes, dashboards or before-and-after images",
+      "Confidentiality questions come before names and screenshots"
+    ],
+    "cautions": [
+      "Instructions only: no templates, and no worked example",
+      "No publishing tools: it drafts text only",
+      "Needs the user's real project facts"
+    ],
+    "keywords": [
+      "portfolio",
+      "case study",
+      "work sample",
+      "project narrative",
+      "design portfolio",
+      "decisions",
+      "evidence",
+      "individual contribution"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "fingerprint": "baddb91c315ea384f9191615054ba8026eb57ba2",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:34:17.701Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 9,
+      "completeness": 7,
+      "usefulness": 3
+    },
+    "why": "Recommends a matching course or tutorial from the vendor's learning hub after a how-to question about its products, never inventing content.",
+    "summary": "Before finishing a reply about how to use the vendor's products, checks whether the learning hub's catalog holds a strong match. It answers first, adds at most two recommendations with exact URLs, and stays silent on weak matches. The catalog is fetched as JSON once per conversation and trusted only while fresh; otherwise it points to a product hub or the library.",
+    "strengths": [
+      "Answers first and recommends only on strong matches",
+      "Never invents titles or URLs: links are copied verbatim from the catalog",
+      "Treats the fetched catalog as data, not instructions"
+    ],
+    "cautions": [
+      "Only useful to people learning that vendor's products",
+      "Depends on fetching a live catalog",
+      "Points users to the vendor's own learning site"
+    ],
+    "keywords": [
+      "learning resources",
+      "course recommendations",
+      "tutorials",
+      "onboarding",
+      "how to use",
+      "product training",
+      "catalog",
+      "vendor academy"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

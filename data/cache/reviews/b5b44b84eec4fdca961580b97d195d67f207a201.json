@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b5b44b84eec4fdca961580b97d195d67f207a201",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:22:46.480Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Writes a resume for a career change or return to work, mapping transferable evidence without relabeling past jobs.",
+    "summary": "Establishes the target profession, prior work and completed transition steps, builds a table from target requirement to prior action, transferable capability and limit, then writes a bridge headline and summary, selected projects and a dated history. It covers military-to-civilian wording and returners, and keeps unearned titles out of the resume.",
+    "strengths": [
+      "Never lists the target title as a job already held",
+      "Keeps projects, coursework and volunteering labeled as such",
+      "Worked example with the exact line to avoid"
+    ],
+    "cautions": [
+      "Instructions only: no layout or template files",
+      "Depends on facts the user can supply about the transition",
+      "Promises neither interviews nor an ATS score, by design"
+    ],
+    "keywords": [
+      "career change",
+      "resume",
+      "transferable skills",
+      "military to civilian",
+      "return to work",
+      "career pivot",
+      "bridge summary",
+      "resume writing"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

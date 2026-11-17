@@ -1,0 +1,42 @@
+{
+  "fingerprint": "aad9fca510bd437479fdd5f55cbd70247f7b5780",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:35:03.521Z",
+  "review": {
+    "kits": [
+      "docs-reports",
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Creates and edits spreadsheets with openpyxl and pandas, requires live formulas and a recalculation check for errors.",
+    "summary": "Picks an approach per task, then sets rules for every output: professional font, zero formula errors, formulas rather than hardcoded results, documented assumptions and an existing file's conventions respected. A mandatory recalculation script reports errors as JSON. It lists functions that survive verification, many library gotchas and financial-model color and number conventions.",
+    "strengths": [
+      "States that a clean recalculation proves formulas evaluate, not that they are right",
+      "Long list of openpyxl traps, such as destructive data-only saves and lost macros",
+      "Financial model conventions for inputs, links and number formats"
+    ],
+    "cautions": [
+      "Bundled recalculation script and validators are not read here",
+      "Needs LibreOffice for recalculation",
+      "Bans newer Excel functions that its runtime cannot evaluate"
+    ],
+    "keywords": [
+      "spreadsheet",
+      "xlsx",
+      "openpyxl",
+      "pandas",
+      "excel formulas",
+      "recalculation",
+      "financial model",
+      "csv cleanup"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

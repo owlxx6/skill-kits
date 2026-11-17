@@ -1,0 +1,39 @@
+{
+  "fingerprint": "c61d2f7bb6334b68a6936ad3f41ebfc7cb76fe2a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:35:03.521Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 5
+    },
+    "why": "Makes Slack-ready animated GIFs with Pillow: size limits, a GIF builder, a validator, easing functions and animation recipes.",
+    "summary": "States Slack's size, frame rate and color limits, then shows a workflow: build frames with Pillow drawing primitives, assemble them with a GIF builder, optimize for emoji and check the result with a validator. It adds easing functions, frame helpers and recipes for shake, pulse, bounce, spin, fade, slide, zoom and particle bursts.",
+    "strengths": [
+      "Slack's dimensions, frame rate and color limits are stated up front",
+      "A validator checks that the GIF is Slack-ready",
+      "Recipes for the common motions"
+    ],
+    "cautions": [
+      "Narrow use: animated GIFs for one chat app",
+      "The utility modules in core/ are not read here",
+      "No pre-made graphics: everything is drawn from primitives"
+    ],
+    "keywords": [
+      "animated gif",
+      "slack emoji",
+      "pillow",
+      "animation",
+      "easing functions",
+      "gif optimization",
+      "frame generation",
+      "validation"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

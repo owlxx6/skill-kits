@@ -1,0 +1,41 @@
+{
+  "fingerprint": "18e0c22c277fa79559c2fe904b4b671a7f8ffd93",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:40:42.369Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Plans creator and ambassador partnerships: vetting, deal structure and usage rights, briefs, disclosure rules, measurement and a run-of-show checklist.",
+    "summary": "Maps a spectrum from paid posts to unpaid advocates, then covers finding and vetting creators by audience fit, personal outreach, compensation models and negotiable terms, and a firm disclosure section. It adds briefs that guide without scripting, an attribution plan set up before launch, an ambassador program design and references for UGC, paid-ads creators, newsletters and Telegram.",
+    "strengths": [
+      "Vets audience fit and engagement, not follower count",
+      "Securing ad usage rights is named as the highest-return clause",
+      "Compliance section holds the brand responsible for creator disclosure"
+    ],
+    "cautions": [
+      "Price ranges are negotiation anchors only, as it says",
+      "Disclosure rules differ by country and category: legal review for regulated cases",
+      "Four reference files are not read here"
+    ],
+    "keywords": [
+      "influencer marketing",
+      "creator partnerships",
+      "ugc",
+      "ambassador program",
+      "ftc disclosure",
+      "usage rights",
+      "creator briefs",
+      "sponsorship roi"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

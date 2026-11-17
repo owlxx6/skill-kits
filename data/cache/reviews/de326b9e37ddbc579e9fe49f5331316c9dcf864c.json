@@ -1,0 +1,41 @@
+{
+  "fingerprint": "de326b9e37ddbc579e9fe49f5331316c9dcf864c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:59.067Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Plans website structure: page hierarchy, navigation, URL patterns and internal linking, drawn as text trees and Mermaid diagrams.",
+    "summary": "Collects context, gives starting structures by site type, and covers hierarchy depth, header and footer navigation rules, URL principles and common mistakes, breadcrumbs and internal linking with hub-and-spoke and a link audit. Deliverables are an ASCII tree, a Mermaid sitemap, a URL map table, a navigation spec and a linking plan.",
+    "strengths": [
+      "Concrete rules: four to seven nav items, lowercase hyphenated URLs, no orphan pages",
+      "Always asks which URLs need redirects when restructuring",
+      "Outputs a structure and a sitemap diagram you can hand to a team"
+    ],
+    "cautions": [
+      "The three-click rule and links-per-word figures are rules of thumb",
+      "Platform and migration advice is in a file not read here",
+      "Does not cover XML sitemaps"
+    ],
+    "keywords": [
+      "site architecture",
+      "information architecture",
+      "navigation",
+      "url structure",
+      "internal linking",
+      "sitemap",
+      "breadcrumbs",
+      "site restructure"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

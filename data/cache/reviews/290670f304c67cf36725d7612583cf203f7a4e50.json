@@ -1,0 +1,39 @@
+{
+  "fingerprint": "290670f304c67cf36725d7612583cf203f7a4e50",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:34:17.701Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 6
+    },
+    "why": "Appends two or three specific follow-up questions after a substantive answer, to help the user check facts, reasoning and missing context.",
+    "summary": "After advice, estimates, drafted plans, data interpretation or factual claims the user may act on, it adds a short closing list of questions, each tied to something specific in the answer. It is used at most once per conversation and skipped for simple lookups, creative writing, code, requests to verify or review, and material the user supplied.",
+    "strengths": [
+      "Detailed when-not-to rules that avoid nagging",
+      "Exact lead-in line and output format",
+      "Questions must point at concrete figures or assumptions"
+    ],
+    "cautions": [
+      "Adds text to answers, which some users will find noise",
+      "The once-per-conversation limit means later answers get none",
+      "Built on one vendor's AI fluency framework"
+    ],
+    "keywords": [
+      "critical thinking",
+      "follow-up questions",
+      "answer verification",
+      "discernment",
+      "ai fluency",
+      "assumptions",
+      "fact checking",
+      "user guidance"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

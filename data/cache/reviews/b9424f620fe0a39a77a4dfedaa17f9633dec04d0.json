@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b9424f620fe0a39a77a4dfedaa17f9633dec04d0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Decides when an n8n workflow really needs a Code node instead of an expression or Edit Fields, and shows the patterns that justify one.",
+    "summary": "Treats the Code node as a last resort with a decision order: expression, then arrow function in Edit Fields, then Code. It shows expression replacements for common code, names the valid cases (multi-source aggregation, libraries), warns to use the native Crypto and XML nodes, and explains run-once-for-all-items mode. Pattern and tree details are in three references.",
+    "strengths": [
+      "Concrete wrong-versus-right examples for crypto and XML",
+      "Simple quick tests for whether code is needed",
+      "Defaults to JavaScript unless the user asks for Python"
+    ],
+    "cautions": [
+      "Performance figures are anecdotal, as it says",
+      "Only useful for n8n",
+      "Reference files are not read here"
+    ],
+    "keywords": [
+      "n8n code node",
+      "javascript",
+      "expressions",
+      "edit fields",
+      "data transformation",
+      "crypto node",
+      "xml node",
+      "workflow design"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "963d96466e37fdd14931a2e23f932b15e0fb188c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:23:25.089Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Writes first-job, student and graduate resumes from education, projects and part-time work without manufacturing experience.",
+    "summary": "Collects the target role, education status and one or two relevant activities, then decides whether to lead with education, projects or experience. It keeps degrees, dates and GPA exactly as given, treats part-time work with the same care as professional roles, labels coursework and independent projects accurately and lists only skills supported by practice.",
+    "strengths": [
+      "No inflated titles: retail work is not renamed to fit a sales posting",
+      "Coursework, placements and personal projects labeled accurately",
+      "Skips a filler summary and says layout is unverified until exported"
+    ],
+    "cautions": [
+      "Instructions only: no templates or scripts",
+      "Quality depends on the facts the student can provide",
+      "Suggested projects are future work, not resume content"
+    ],
+    "keywords": [
+      "entry level resume",
+      "student resume",
+      "graduate resume",
+      "internship",
+      "first job",
+      "projects",
+      "education section",
+      "resume writing"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

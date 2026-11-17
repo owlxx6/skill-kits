@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8e7817b0fb40dbfadcfabd5580d2fafd72cddf74",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Migrates a Cloudflare Sandbox app from the stable package to the 1.0 preview with ordered steps, hard rules and a replacement map.",
+    "summary": "Five steps: review rules and the replacement map, audit the code, clarify with the user, upgrade package, image and code, then validate. Hard rules cover matching package and image lines, immediate container rollout because the two control protocols are incompatible, exec now meaning started not finished, no implicit shell and no stdin on handles. A table maps old calls to new ones.",
+    "strengths": [
+      "Hard rules name the breaking behavior changes",
+      "Stops for a user decision before cutover",
+      "Replacement table for the old API"
+    ],
+    "cautions": [
+      "Only useful for apps on the preview line move",
+      "Later map rows were not read in full",
+      "Preview API may change"
+    ],
+    "keywords": [
+      "cloudflare sandbox",
+      "migration",
+      "sdk preview",
+      "containers",
+      "exec api",
+      "terminals",
+      "workers",
+      "upgrade"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

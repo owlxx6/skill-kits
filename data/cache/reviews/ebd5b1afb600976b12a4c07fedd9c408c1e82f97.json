@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ebd5b1afb600976b12a4c07fedd9c408c1e82f97",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:46:29.445Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Finds out what someone really wants before building: a useful first message, approaches to choose from, a short approved design, then a plan.",
+    "summary": "Starts by asking what is actually known about the request. A clear small task is done at once; otherwise it reads existing context, then sends a first message that restates the goal, flags surprises and asks one open question about why. It requires choosing an approach, writing a short design and getting approval before the planning skill. A visual companion and a spike option exist.",
+    "strengths": [
+      "Reads the project first and never asks what the context already answers",
+      "Offers to skip the conversation when the user did not ask for one",
+      "Ends in an approved design before any implementation"
+    ],
+    "cautions": [
+      "Process-heavy: extra rounds for small changes",
+      "Written for the surrounding skill set, which it names",
+      "Later sections and bundled scripts are not read here"
+    ],
+    "keywords": [
+      "brainstorming",
+      "requirements",
+      "design doc",
+      "planning",
+      "clarifying questions",
+      "approaches",
+      "software design",
+      "workflow"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

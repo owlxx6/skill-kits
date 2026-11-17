@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8b4c6a51914e2111ab6f4f00cb81778652aa241d",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:47:20.622Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "React Native and Expo performance and UI rules, ranked by impact: lists, animation, navigation, UI patterns, state, rendering and monorepos.",
+    "summary": "A rule library of over forty files with a priority table. List performance is critical (virtualize, memoize items, stable callbacks, avoid inline objects), then animation (animate only transform and opacity), navigation with native navigators, UI patterns, state, rendering, monorepo dependency rules and configuration. The main file lists each rule with a one-line summary.",
+    "strengths": [
+      "List performance rules come first, where mobile apps usually suffer",
+      "One-line summary for each of the many rules",
+      "Includes monorepo and font configuration advice"
+    ],
+    "cautions": [
+      "Individual rule files are not read here",
+      "Specific to React Native and Expo",
+      "Library recommendations may date"
+    ],
+    "keywords": [
+      "react native",
+      "expo",
+      "mobile performance",
+      "list performance",
+      "reanimated",
+      "native navigation",
+      "monorepo",
+      "ui patterns"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

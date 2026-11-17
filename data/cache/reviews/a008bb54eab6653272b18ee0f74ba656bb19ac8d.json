@@ -1,0 +1,41 @@
+{
+  "fingerprint": "a008bb54eab6653272b18ee0f74ba656bb19ac8d",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Runs and troubleshoots Wrangler in projects that have a Wrangler config: inspect first, retrieve current docs, apply careful config and deploy changes.",
+    "summary": "Use only when a Wrangler config exists and the newer CLI is not in use. It inspects the project version and scripts, finds the real config source, establishes account, environment and resource before changes, and retrieves the specific docs page needed. Guidance covers environments, dashboard drift, local versus remote bindings, least-privilege tokens and previews.",
+    "strengths": [
+      "Does not silently upgrade Wrangler to match current docs",
+      "Warns that deploys can overwrite dashboard variables and routes",
+      "Narrow-scope API tokens, never pasted into chat"
+    ],
+    "cautions": [
+      "Large table of documentation links that will move",
+      "Commands change production resources",
+      "Cloudflare-specific"
+    ],
+    "keywords": [
+      "wrangler",
+      "cloudflare workers",
+      "deployment",
+      "environments",
+      "secrets",
+      "previews",
+      "bindings",
+      "api tokens"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

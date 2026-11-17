@@ -1,0 +1,41 @@
+{
+  "fingerprint": "83d3948ee037cc84b07f07b71aaa89b446f20424",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:42:25.458Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Creates and maintains the shared product marketing context file (positioning, audience, voice, proof) that other marketing skills read first.",
+    "summary": "Checks for an existing context file, offers to draft it from the codebase or interview the user, and captures fourteen sections from product, audience and competitors to customer language, brand voice, proof, goals and optional paid-ads limits. It versions each change with a changelog and keeps a Learnings table of tested lessons.",
+    "strengths": [
+      "Pushes for verbatim customer language over polished descriptions",
+      "Version and changelog give a paper trail for a file many skills depend on",
+      "Rules for what earns a Learnings entry and when to retire it"
+    ],
+    "cautions": [
+      "Auto-draft from a codebase gives only a first version that needs correcting",
+      "Works best when every other skill in the set is used",
+      "Brand voice extraction steps are in a file not read here"
+    ],
+    "keywords": [
+      "product marketing",
+      "positioning",
+      "ideal customer",
+      "brand voice",
+      "customer language",
+      "competitive landscape",
+      "messaging",
+      "context document"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

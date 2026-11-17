@@ -1,0 +1,41 @@
+{
+  "fingerprint": "39bc74f8478884e520df4b7dff4712c22d5245bd",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:22:46.480Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Drafts job-application short answers and selection-criteria responses from the user's own evidence, within word limits.",
+    "summary": "Reads the question, limits, target role and the user's evidence, picks an approach for the question type (why this role, an achievement, a criterion, years of experience, tools, availability, work authorization, salary), drafts the answer and counts it against the limit. It returns question, answer and count, then the open questions. It never submits a form.",
+    "strengths": [
+      "Refuses to invent passion, round up years or infer legal eligibility",
+      "Stops when the application forbids AI help and says what it can still do",
+      "Worked example of a truthful answer to a years-of-experience field"
+    ],
+    "cautions": [
+      "Instructions only: no templates or scripts",
+      "Sensitive fields (disability, identity, declarations) are left to the user",
+      "Quality depends on the evidence the user supplies"
+    ],
+    "keywords": [
+      "job application",
+      "application answers",
+      "selection criteria",
+      "supporting statement",
+      "resume evidence",
+      "word limit",
+      "truthful writing",
+      "hiring forms"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

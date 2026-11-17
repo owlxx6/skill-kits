@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f9df5c473fe4c26afdb9777cb2f811c11375ea1a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:59.067Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Adds, fixes and validates JSON-LD schema markup, and first checks whether Google still supports the rich result wanted; FAQ and HowTo are retired.",
+    "summary": "Lists common types with required properties, gives JSON-LD and graph patterns, and notes that valid Schema.org markup does not make a page eligible for a Google feature. It names retired features (FAQ rich results, HowTo, sitelinks search box), then covers validation tools, common errors and an implementation checklist.",
+    "strengths": [
+      "Separates Schema.org validity from Google feature eligibility",
+      "Warns against adding markup just to get a retired appearance",
+      "Checklist ties markup to visible page content"
+    ],
+    "cautions": [
+      "Google's supported-feature list changes, so dates in it will age",
+      "Full JSON-LD examples are in a file not read here",
+      "Does not edit a site itself"
+    ],
+    "keywords": [
+      "schema markup",
+      "json-ld",
+      "structured data",
+      "rich results",
+      "seo",
+      "product schema",
+      "breadcrumbs",
+      "validation"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

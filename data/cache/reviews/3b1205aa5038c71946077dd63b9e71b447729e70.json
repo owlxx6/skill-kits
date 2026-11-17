@@ -1,0 +1,41 @@
+{
+  "fingerprint": "3b1205aa5038c71946077dd63b9e71b447729e70",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:45:20.555Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Wraps up finished work: run the full tests, detect the git setup, present three integration options and clean up only what it created.",
+    "summary": "Verifies the full test suite first and stops on failures. It detects whether it is in a normal repo, a named-branch worktree or a detached HEAD, confirms the base branch, then presents a fixed menu: merge locally, push and open a pull request, or keep as is. Discarding work only happens on explicit request. Cleanup of a worktree depends on who created it.",
+    "strengths": [
+      "Tests must pass before any option is offered",
+      "Confirms the base branch before merging",
+      "Fixed menu and no discard unless explicitly asked"
+    ],
+    "cautions": [
+      "Assumes git and a project test command",
+      "Later steps for pull requests and cleanup were not read in full",
+      "Merge and push choices change shared history"
+    ],
+    "keywords": [
+      "git branches",
+      "pull requests",
+      "merge",
+      "worktrees",
+      "test verification",
+      "cleanup",
+      "development workflow",
+      "integration"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

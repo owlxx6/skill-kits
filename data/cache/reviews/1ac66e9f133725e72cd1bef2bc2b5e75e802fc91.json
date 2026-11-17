@@ -1,0 +1,41 @@
+{
+  "fingerprint": "1ac66e9f133725e72cd1bef2bc2b5e75e802fc91",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Implements and troubleshoots Cloudflare Email Sending and Email Routing: prerequisites, binding setup, REST use, receiving mail and deliverability.",
+    "summary": "Tells the agent to trust current docs over its memory, then checks prerequisites (domain onboarded, send binding configured, mail parser installed). A table routes to sending from a Worker, from an agent, from an external app by REST, from a coding agent, receiving mail and improving deliverability. It lists common mistakes such as a missing binding or unverified domain.",
+    "strengths": [
+      "Prerequisite checks before writing any email code",
+      "Prefers the Workers binding, which needs no API key",
+      "Common mistakes table with fixes"
+    ],
+    "cautions": [
+      "Product is new and changing",
+      "Enabling a domain changes the user's account",
+      "Six reference files are not read here"
+    ],
+    "keywords": [
+      "cloudflare email",
+      "email sending",
+      "email routing",
+      "workers binding",
+      "transactional email",
+      "deliverability",
+      "wrangler",
+      "rest api"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

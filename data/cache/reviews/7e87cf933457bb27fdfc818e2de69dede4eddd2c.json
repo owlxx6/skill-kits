@@ -1,0 +1,41 @@
+{
+  "fingerprint": "7e87cf933457bb27fdfc818e2de69dede4eddd2c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T15:07:46.999Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Builds design token systems (primitive, semantic, component), component specs, Tailwind integration and strategic slides, with generator and validator scripts.",
+    "summary": "Explains a three-layer token architecture with a short example, then points to references for primitive, semantic and component tokens, states and variants, component specs and Tailwind integration. Quick start commands generate tokens from a config and validate usage in a source folder. Slide generation uses searchable strategy, layout, color and copy data files.",
+    "strengths": [
+      "Three-layer token model with an example",
+      "Validator checks that code actually uses the tokens",
+      "Slide strategy data is searchable and token-aware"
+    ],
+    "cautions": [
+      "Seven references, many data files and scripts are not read here",
+      "Needs Node and Python for the helpers",
+      "Slide generation depends on bundled data"
+    ],
+    "keywords": [
+      "design tokens",
+      "design system",
+      "css variables",
+      "component specs",
+      "tailwind",
+      "token validation",
+      "slides",
+      "spacing scale"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

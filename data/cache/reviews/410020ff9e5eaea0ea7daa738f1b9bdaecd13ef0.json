@@ -1,0 +1,41 @@
+{
+  "fingerprint": "410020ff9e5eaea0ea7daa738f1b9bdaecd13ef0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:42:25.458Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Designs popups, slide-ins and banners: trigger choice, copy, frequency caps, mobile and accessibility rules, and what to test.",
+    "summary": "Compares triggers (time, scroll, exit intent, click, behavior) and popup types, then gives design, sizing, close-button and mobile rules, copy formulas, frequency capping, targeting, consent and accessibility notes, and search-engine interstitial guidance. It adds metrics with benchmarks, strategies by site type and many test ideas.",
+    "strengths": [
+      "Respect rules: visible close, frequency caps, no guilt-trip decline text",
+      "Covers consent, keyboard access and intrusive-interstitial risk",
+      "Strategies by site type: e-commerce, B2B software, media, lead generation"
+    ],
+    "cautions": [
+      "Conversion benchmarks vary widely by audience",
+      "Suggests countdown timer tests: only for real deadlines",
+      "Gives no code or tool setup"
+    ],
+    "keywords": [
+      "popups",
+      "exit intent",
+      "email capture",
+      "slide-in",
+      "announcement banner",
+      "frequency capping",
+      "lead capture",
+      "conversion"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

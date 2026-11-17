@@ -1,0 +1,39 @@
+{
+  "fingerprint": "b5e658a06f43e7bbcce3c56e63a144328e15891d",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:44:23.021Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 5
+    },
+    "why": "Maintainer skill for checking published skills against third-party scanners and fixing findings by root cause.",
+    "summary": "Explains how to read the three security audits shown for each published skill, how to reach detailed findings, and common finding types with remediation: credential handling, untrusted external content, unverifiable installs and data exposure. Findings are grouped by root cause, fixed once, then validated. It includes a reusable untrusted-content section.",
+    "strengths": [
+      "Remediate by root cause, not skill by skill",
+      "Reusable text block for handling external content safely",
+      "Clear remediation for each common finding type"
+    ],
+    "cautions": [
+      "Internal to one publisher's workflow: little use to other readers",
+      "Depends on a third-party scoring site's page layout",
+      "Not a scanner itself"
+    ],
+    "keywords": [
+      "skill audit",
+      "security findings",
+      "prompt injection",
+      "credential handling",
+      "remediation",
+      "skill quality",
+      "supply chain",
+      "validation"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

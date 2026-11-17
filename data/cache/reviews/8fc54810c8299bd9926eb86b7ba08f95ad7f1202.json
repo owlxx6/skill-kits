@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8fc54810c8299bd9926eb86b7ba08f95ad7f1202",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Uses Cloudflare's cf CLI: install and sign in, search commands, preview with dry runs, deploy Workers and manage DNS, D1, KV and R2.",
+    "summary": "Describes the beta cf CLI for the whole Cloudflare API and Workers projects. It says to search for commands, inspect the schema and preview with a dry run before running anything unverified, gives install and sign-in steps including headless login and an API token for CI, and explains when to use Wrangler instead. A docs table covers migration and agent safety rules.",
+    "strengths": [
+      "Search, inspect, dry-run workflow for a very large command surface",
+      "Handles SSH and CI sign-in cases",
+      "Clear rule for choosing between cf and Wrangler"
+    ],
+    "cautions": [
+      "Tool is in beta, so commands can change",
+      "Commands can create and delete real resources",
+      "Later sections were not read in full"
+    ],
+    "keywords": [
+      "cloudflare cli",
+      "cf",
+      "wrangler",
+      "workers deploy",
+      "dns",
+      "d1",
+      "kv",
+      "api tokens"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

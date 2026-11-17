@@ -1,0 +1,41 @@
+{
+  "fingerprint": "6975cc75e604ba8287b494d884b461e8f594bfeb",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:36:48.130Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 6
+    },
+    "why": "Designs cancel flows, save offers, exit surveys and failed-payment recovery to cut voluntary and involuntary churn.",
+    "summary": "Separates voluntary from involuntary churn, then covers a cancel flow (trigger, survey, reason-matched save offer, confirmation, post-cancel), proactive retention with risk signals and a health score with coverage rules, a dunning stack with retry timing by decline type and emails, plus benchmarks, metrics and test ideas.",
+    "strengths": [
+      "Save offers are matched to the stated cancel reason",
+      "No dark patterns: keeps continue-cancelling visible and names click-to-cancel rules",
+      "Health score rules treat missing signals as unavailable, not zero"
+    ],
+    "cautions": [
+      "Aimed at subscription software",
+      "Benchmarks and thresholds are rules of thumb",
+      "Two reference files are not read here"
+    ],
+    "keywords": [
+      "churn prevention",
+      "cancel flow",
+      "save offers",
+      "dunning",
+      "failed payments",
+      "exit survey",
+      "retention",
+      "health score"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

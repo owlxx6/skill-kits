@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ecf7f8e92d97bdd283028f644924439d5b2d0b53",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:59.067Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Plans SMS, MMS and WhatsApp marketing: when texting beats email, consent and carrier rules, number types, sequences, copy limits and metrics.",
+    "summary": "Opens with compliance: US consent, quiet hours, STOP and HELP, carrier registration, plus EU, UK and Canada notes. It compares SMS with email, covers WhatsApp windows and templates, number types, per-send cost, message length and segments, sequences such as abandoned cart and win-back, platform picks and metrics, and ends with a compliance footer.",
+    "strengths": [
+      "Compliance comes first and blockers are flagged before strategy",
+      "Practical copy limits: segments, encoding and cost per message",
+      "Clear use-case table for when SMS or email fits better"
+    ],
+    "cautions": [
+      "Law and carrier rules vary by country and change: legal review needed",
+      "Cost, pricing and benchmark figures date quickly",
+      "Four reference files are not read here"
+    ],
+    "keywords": [
+      "sms marketing",
+      "whatsapp marketing",
+      "tcpa",
+      "a2p 10dlc",
+      "abandoned cart",
+      "text message campaigns",
+      "opt-in consent",
+      "win-back"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

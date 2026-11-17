@@ -1,0 +1,41 @@
+{
+  "fingerprint": "4b081365daf90b5513f091748a9252f94a187207",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:21.133Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Creates sales collateral reps will use: decks, one-pagers, objection docs, battle cards, win-loss analysis, demo scripts, proposals and playbooks.",
+    "summary": "Principles: involve reps, tailor to the situation, stay scannable, tie to outcomes and write only claims reps can defend. It then gives structures for decks, one-pagers, objection docs, a live-deal objection method, battle cards, win-loss coding with counts, ROI calculators, demo scripts, case study briefs, proposals and persona cards.",
+    "strengths": [
+      "Claims reps can defend: evidence for why we win and honest notes on where we lose",
+      "Live-deal objection method gives one answer the rep can say as written",
+      "Win-loss method reports counts with sample sizes and includes wins"
+    ],
+    "cautions": [
+      "B2B sales focus",
+      "Battle cards need verified, dated competitor facts that someone must maintain",
+      "Six reference files with scripts and templates are not read here"
+    ],
+    "keywords": [
+      "sales enablement",
+      "battle cards",
+      "objection handling",
+      "sales decks",
+      "win-loss analysis",
+      "demo scripts",
+      "one-pagers",
+      "proposals"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

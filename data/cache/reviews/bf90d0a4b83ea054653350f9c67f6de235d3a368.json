@@ -1,0 +1,42 @@
+{
+  "fingerprint": "bf90d0a4b83ea054653350f9c67f6de235d3a368",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:47:20.622Z",
+  "review": {
+    "kits": [
+      "web-app",
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "React composition patterns that scale: avoid boolean prop sprawl with compound components, lifted state, explicit variants and React 19 changes.",
+    "summary": "A prioritized rule set for flexible components: architecture rules (no boolean props, compound components with shared context), state rules (provider owns the implementation, generic context interface, lift state), pattern rules (explicit variants, children over render props) and React 19 API changes. It says when to apply them and links one file per rule.",
+    "strengths": [
+      "Rules are ranked by impact with a quick reference",
+      "Targets a common real problem: components with many boolean props",
+      "Covers React 19 changes such as dropping forwardRef"
+    ],
+    "cautions": [
+      "Rule files and examples are not read here",
+      "React-only",
+      "Opinionated: compound components suit libraries more than one-off screens"
+    ],
+    "keywords": [
+      "react",
+      "composition patterns",
+      "compound components",
+      "component architecture",
+      "context providers",
+      "render props",
+      "react 19",
+      "component libraries"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "346f96080018b14eb96cf5904ac414210ced23b9",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Profiles CPU and memory in deployed Cloudflare Workers and Durable Objects, reads the profile and proposes the smallest fix.",
+    "summary": "Identify the symptom, confirm the account, Worker, environment and version with the user, choose CPU or heap profiling, capture a profile with the cf CLI and read the resulting pprof file for hotspots. It maps hotspots to source, suggests source maps when names are generated code, proposes the smallest supported change and returns a short evidence-based report.",
+    "strengths": [
+      "Confirms the target before capturing from production",
+      "Findings must cite file, function, location and metric units",
+      "Smallest actionable change with a way to check it"
+    ],
+    "cautions": [
+      "Short and relies on the production profiling guide",
+      "Needs account access and the cf CLI",
+      "Analysis tooling is left to the user"
+    ],
+    "keywords": [
+      "cloudflare workers",
+      "profiling",
+      "cpu usage",
+      "memory",
+      "durable objects",
+      "pprof",
+      "performance",
+      "optimization"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

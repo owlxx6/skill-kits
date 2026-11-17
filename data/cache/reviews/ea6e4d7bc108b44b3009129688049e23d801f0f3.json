@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ea6e4d7bc108b44b3009129688049e23d801f0f3",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:34:17.701Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Guides building MCP servers in TypeScript or Python in four phases: research, implementation, testing and evaluations.",
+    "summary": "Phase one studies the protocol and picks stack and tools; phase two builds shared infrastructure and tools with typed schemas and safety annotations; phase three builds and tests with the MCP inspector; phase four writes ten read-only evaluation questions with verified answers in an XML file. It covers both TypeScript SDK versions and points to language guides and scripts.",
+    "strengths": [
+      "Evaluation phase with realistic read-only questions and verifiable answers",
+      "Clear advice on tool naming, errors and pagination",
+      "Handles the SDK v1 to v2 split"
+    ],
+    "cautions": [
+      "Fetches protocol and SDK docs from the web at run time",
+      "Language guides and two scripts are not read here",
+      "Needs a Node or Python toolchain"
+    ],
+    "keywords": [
+      "mcp server",
+      "model context protocol",
+      "tool design",
+      "typescript sdk",
+      "python fastmcp",
+      "evaluations",
+      "api integration",
+      "mcp inspector"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

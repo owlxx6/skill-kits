@@ -1,0 +1,41 @@
+{
+  "fingerprint": "618b3bfe286b12fb47da1c8ffddb0bea56fd1be2",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:24:58.616Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Builds a complete resume as importable JSON for the open-source resume builder, with content and layout rules.",
+    "summary": "Gathers contact details and section content without inventing facts, asks for template and page preferences, then outputs importable JSON with valid ids, HTML descriptions and structured dates. It checks the JSON against the installation's current schema or marks validation as pending, and adds content rules for bullets, length, order and personal data.",
+    "strengths": [
+      "Never invents facts and asks one question at a time",
+      "Validation is labeled pending when the current schema is unavailable",
+      "Clear list of JSON requirements: ids, HTML, dates, colors, links"
+    ],
+    "cautions": [
+      "Tied to one resume builder's schema and templates",
+      "Application tracking steps apply only when its tools are connected",
+      "AI helper tools send the resume and posting to the user's AI provider, so it must ask first"
+    ],
+    "keywords": [
+      "resume json",
+      "resume builder",
+      "schema validation",
+      "resume import",
+      "resume templates",
+      "resume layout",
+      "open source resume",
+      "resume writing"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

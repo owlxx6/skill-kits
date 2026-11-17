@@ -1,0 +1,41 @@
+{
+  "fingerprint": "9f5565017c4cecc4067c0dd60567655e87a30ca6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Sets up, repairs or migrates Cloudflare Turnstile bot protection end to end: widget, frontend snippets, server-side verification and validation.",
+    "summary": "A confirmed multi-step wizard: check authentication and scan the codebase, create the widget, embed it at chosen points for the user's framework, wire server-side verification in the existing backend, then validate. Scripts hold the deterministic API logic and the agent orchestrates and edits code. It has a separate flow when a widget already exists and framework references.",
+    "strengths": [
+      "Confirms before every irreversible step",
+      "Strict credential rules: no unapproved executables for credential-bearing commands",
+      "Ends with a real validation pass before reporting success"
+    ],
+    "cautions": [
+      "Needs a Cloudflare account and API access",
+      "Bundled shell scripts and framework references are not read here",
+      "Long interactive flow"
+    ],
+    "keywords": [
+      "cloudflare turnstile",
+      "bot protection",
+      "captcha alternative",
+      "siteverify",
+      "form protection",
+      "frontend",
+      "backend",
+      "validation"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

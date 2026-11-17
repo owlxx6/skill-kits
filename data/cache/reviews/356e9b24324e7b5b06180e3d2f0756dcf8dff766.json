@@ -1,0 +1,41 @@
+{
+  "fingerprint": "356e9b24324e7b5b06180e3d2f0756dcf8dff766",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Designs automated email sequences (welcome, nurture, onboarding, win-back) with timing, subject lines, copy rules and a no-AI-tells check.",
+    "summary": "Asks for trigger, audience and goal, then sets length and timing by sequence type and gives a day-by-day outline for each. It lists lifecycle email categories, copy structure and tone, length targets and CTA rules, and bans stock phrases and fake reply subject lines. Output is a sequence overview, each email in full and a metrics plan.",
+    "strengths": [
+      "One email, one job, one main call to action",
+      "Specific email-specific tells to avoid, such as fake Re: subjects",
+      "Reads prior learnings so tested angles are not proposed again"
+    ],
+    "cautions": [
+      "Timing and length figures are rules of thumb",
+      "Templates and lifecycle audit are in files not read here",
+      "Does not cover sending infrastructure or deliverability"
+    ],
+    "keywords": [
+      "email sequences",
+      "welcome emails",
+      "lead nurture",
+      "win-back",
+      "onboarding emails",
+      "subject lines",
+      "email automation",
+      "lifecycle email"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

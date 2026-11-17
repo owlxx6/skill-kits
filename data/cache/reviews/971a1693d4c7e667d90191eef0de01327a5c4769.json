@@ -1,0 +1,41 @@
+{
+  "fingerprint": "971a1693d4c7e667d90191eef0de01327a5c4769",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Edits existing marketing copy in seven focused passes, with a point-edit mode and a check that removes common AI-sounding patterns.",
+    "summary": "Picks an edit mode first (rebuild, restore a voice, or a point edit that touches only one line). Full edits run seven sweeps: clarity, voice, so what, prove it, specificity, emotion, zero risk, looping back after each. It adds an expert panel score, quick word and sentence checks and an AI-tell table with fixes.",
+    "strengths": [
+      "Point-edit mode keeps small requests small",
+      "AI-tell check names patterns and how to fix them from the facts",
+      "Each sweep has a process and a loop-back rule"
+    ],
+    "cautions": [
+      "Seven sweeps plus a panel is heavy for short copy",
+      "Written for English marketing copy",
+      "Checklist and refresh guides are in files not read here"
+    ],
+    "keywords": [
+      "copy editing",
+      "proofreading",
+      "marketing copy",
+      "editing sweeps",
+      "plain english",
+      "ai writing tells",
+      "content refresh",
+      "conversion copy"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

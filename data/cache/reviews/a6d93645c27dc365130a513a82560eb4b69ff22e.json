@@ -1,0 +1,41 @@
+{
+  "fingerprint": "a6d93645c27dc365130a513a82560eb4b69ff22e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:42:25.458Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Sets pricing and packaging: first price, value metric, tiers, research methods, price increases with a staged rollout, and a pricing-page teardown.",
+    "summary": "Starts with picking a first price you can learn from (about $10, $100 or $1,000 a month), then covers value metrics, good-better-best tiers, willingness-to-pay methods, signs it is time to raise prices and a staged rollout for existing customers. A pricing-page teardown scores clarity for human buyers and readability for AI agents.",
+    "strengths": [
+      "Treats the first price as a bet to learn from, with a warning about ultra-low prices",
+      "Staged price-increase plan: test on new customers, then 5 to 10% of existing ones",
+      "Honest about the limits of survey methods such as Van Westendorp"
+    ],
+    "cautions": [
+      "Aimed at software subscriptions",
+      "Thresholds such as 40% conversion or 3% churn are rules of thumb",
+      "Models, tiers, research and teardown guides are in files not read here"
+    ],
+    "keywords": [
+      "pricing strategy",
+      "saas pricing",
+      "value metric",
+      "pricing tiers",
+      "willingness to pay",
+      "price increase",
+      "pricing page",
+      "packaging"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "3affd871a4ef55aa5ed04d2c37d9a00f4a23729e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 6
+    },
+    "why": "Turns an n8n workflow into a tool a coding agent can call, to fill gaps in the n8n tools or expose any task, with a protocol that asks the user first.",
+    "summary": "Describes two cases: wrapping n8n API capabilities the tools lack, and exposing a general workflow as an agent tool. The protocol is to ask first, search for an existing wrapper, build a stateless read-only utility where possible, and offer to add an entry to the agent's context file. It explains discovery and invocation and lists anti-patterns.",
+    "strengths": [
+      "Asks before creating anything on the user's instance",
+      "Return IDs and names, never credential values",
+      "Wrappers that delete or archive need a dry-run mode"
+    ],
+    "cautions": [
+      "List of missing capabilities is marked temporary and will age",
+      "Narrow audience: needs n8n and its REST API",
+      "No bundled examples"
+    ],
+    "keywords": [
+      "n8n mcp",
+      "agent tools",
+      "workflow as tool",
+      "rest api",
+      "execute workflow trigger",
+      "automation",
+      "tool discovery",
+      "capability gaps"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

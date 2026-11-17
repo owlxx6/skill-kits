@@ -2368,6 +2368,14 @@
     "ff9ad4530f5716304e042cbac72cecd7c40f0e0e": {
       "kind": "spdx",
       "spdx": "Apache-2.0"
+    },
+    "2431d32e10834a523e42a214c96a08e202126011": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
+    },
+    "c87e50b21d7195576cfda86509960d9f80a1d3bd": {
+      "kind": "spdx",
+      "spdx": "Apache-2.0"
     }
   }
 }

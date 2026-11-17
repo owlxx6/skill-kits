@@ -1,0 +1,39 @@
+{
+  "fingerprint": "55ec81e0b6e4c26906b03c763270ee7367f2d612",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Designs, configures, troubleshoots and reviews Cloudflare One Zero Trust deployments, including how scripts and agents authenticate to Access-protected apps.",
+    "summary": "A workflow: classify the request, gather context, retrieve current docs, inspect existing resources before changing anything, and propose a change set with validation and rollback, staged to a pilot when risky. A section explains using Access service tokens for non-browser clients, with careful secret handling and warnings about sending credentials only to the intended host.",
+    "strengths": [
+      "Inspect before changing, with rollback and pilot staging",
+      "Careful secret rules: never paste, log or forward service tokens",
+      "Explains why an Allow policy is not a Service Auth policy"
+    ],
+    "cautions": [
+      "Specialist network security knowledge needed",
+      "Most detail comes from live docs and the account, not the skill",
+      "Later assessment prompts were not read in full"
+    ],
+    "keywords": [
+      "cloudflare one",
+      "zero trust",
+      "access",
+      "service tokens",
+      "gateway",
+      "warp",
+      "sase",
+      "network security"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

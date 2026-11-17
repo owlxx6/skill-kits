@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d6a4d7ccb05288d44da0cfc27ce13976bdf44df9",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Builds, debugs and reviews Cloudflare Durable Objects for persistent state and coordination, with rules, testing and Workers references.",
+    "summary": "Tells the agent to retrieve current docs, lists when to use Durable Objects (coordination, strong consistency, per-entity storage, persistent connections, scheduled work) and when not to, and points to rule, testing and Workers reference files covering storage, concurrency, RPC and alarms. It names key APIs to search for.",
+    "strengths": [
+      "Clear table of good fits and non-fits",
+      "Names the core API calls to look up",
+      "Includes testing with the Vitest integration"
+    ],
+    "cautions": [
+      "Short body; the rules are in files not read here",
+      "Cloudflare-specific",
+      "API details change, so live docs are needed"
+    ],
+    "keywords": [
+      "durable objects",
+      "cloudflare workers",
+      "websockets",
+      "coordination",
+      "sqlite storage",
+      "alarms",
+      "rpc",
+      "state"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

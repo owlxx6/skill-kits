@@ -1,0 +1,42 @@
+{
+  "fingerprint": "b188a6085ae5f953b8ab2ade331ee604ab5468ea",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:21.133Z",
+  "review": {
+    "kits": [
+      "marketing-content",
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Reconstructs how a company grew from public evidence: dated moves against traffic, funnel and hiring signals, gap table and plays routed to other skills.",
+    "summary": "Runs nine stages: build a traffic and moves log, read the funnel, go inside the product with approval, collect team statements, hidden signals, content patterns, test what moved the curve, compare with the user's data and list plays. Findings are labeled observed, inferred or not found, and a bundled script does the arithmetic. Over thirty industry packs add context.",
+    "strengths": [
+      "Honest about causality: timing is a lead, and clusters of moves get credit, not one move",
+      "Pauses between stages and keeps a spending cap",
+      "Monthly watch mode reports only what changed"
+    ],
+    "cautions": [
+      "Heavy: many data sources, some paid, plus a bundled script and over forty reference files not read here",
+      "Signing up or buying as the user can breach a target's terms: it asks first",
+      "Traffic figures are third-party estimates"
+    ],
+    "keywords": [
+      "competitor teardown",
+      "growth analysis",
+      "traffic estimates",
+      "funnel analysis",
+      "competitor monitoring",
+      "timeline",
+      "gap analysis",
+      "job posts"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

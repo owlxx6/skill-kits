@@ -1,0 +1,41 @@
+{
+  "fingerprint": "070e7ce6ff422e4376fbf2ef418dc3fe7a14560b",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Builds AI steps inside n8n workflows: AI Agent node, classifier, extractor, chains, tools, memory, structured output, human review and media generation.",
+    "summary": "Explains when to use the AI Agent node, a basic chain or a purpose-built node, the sub-node pattern (model, memory, tools, parser) and triggers. It covers binary limits at the agent boundary, system prompt versus tool descriptions, four tool types, human review of risky tools, structured output with auto-fix and memory choices, then an anti-pattern table.",
+    "strengths": [
+      "Decision guidance picks the lightest node that does the job",
+      "Human review shows the real tool parameters, not a paraphrase",
+      "Warns about the bot reply loop on chat triggers"
+    ],
+    "cautions": [
+      "Node names and versions change with n8n releases",
+      "Eight reference files and three example workflows are not read here",
+      "RAG advice is deliberately thin"
+    ],
+    "keywords": [
+      "n8n",
+      "ai agent node",
+      "langchain",
+      "structured output",
+      "human review",
+      "tool calling",
+      "text classifier",
+      "chat bots"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "a4cb0b69aaefeab540947a7f1642bdaad810e37a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:46:29.445Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "Requires fresh verification evidence before any claim that work is done, fixed or passing, with a gate function and a table of what counts.",
+    "summary": "Iron law: no completion claims without fresh verification evidence. The gate is identify the proving command, run it in full, read the output and exit code, verify, and only then claim. A table lists what each claim needs and what is not enough, red flags such as should, probably and early satisfaction, and a rationalization table. It includes not trusting agent success reports without a diff.",
+    "strengths": [
+      "Maps each claim type to the evidence it requires",
+      "Treats subagent success reports as unverified until the diff is checked",
+      "Short enough to apply every time"
+    ],
+    "cautions": [
+      "Strict wording: some claims may be cheap to skip verifying",
+      "Later sections were not read in full",
+      "Needs runnable checks in the project"
+    ],
+    "keywords": [
+      "verification",
+      "evidence",
+      "test results",
+      "completion claims",
+      "quality gate",
+      "definition of done",
+      "agent honesty",
+      "software workflow"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

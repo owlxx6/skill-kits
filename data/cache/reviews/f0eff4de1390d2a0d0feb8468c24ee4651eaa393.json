@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f0eff4de1390d2a0d0feb8468c24ee4651eaa393",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:24:58.616Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Writes project, program and PMO resumes that keep baselines, replans and budgets separate.",
+    "summary": "Distinguishes a project, a program and a portfolio, then asks about scope, deliverables, schedule, budget, dependencies and the user's decision rights. Bullets pair scale with delivery against the applicable plan, keep authorized budget, actual spend and forecast apart, describe risk tradeoffs concretely and keep certification status exact.",
+    "strengths": [
+      "Never claims on time and under budget by hiding a changed scope or date",
+      "Facilitating ceremonies is not presented as improved delivery",
+      "Worked example with the claim to avoid"
+    ],
+    "cautions": [
+      "Instructions only: no templates or scripts",
+      "Narrow audience: delivery and PMO roles",
+      "Product discovery work is left to the product-manager skill"
+    ],
+    "keywords": [
+      "project manager resume",
+      "program manager",
+      "pmo",
+      "delivery lead",
+      "schedule and budget",
+      "risk management",
+      "certifications",
+      "resume writing"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

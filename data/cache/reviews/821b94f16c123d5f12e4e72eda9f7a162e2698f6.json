@@ -1,0 +1,41 @@
+{
+  "fingerprint": "821b94f16c123d5f12e4e72eda9f7a162e2698f6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:35:03.521Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Builds multi-component React artifacts with Tailwind and shadcn/ui and bundles them into one self-contained HTML file.",
+    "summary": "Initializes a React, TypeScript, Vite, Tailwind and shadcn/ui project with a script, lets the agent develop it, then bundles everything with Parcel into a single inlined HTML file to share as an artifact. Testing is optional and done after presenting. Design guidance warns against centered layouts, purple gradients and uniform rounded corners.",
+    "strengths": [
+      "One script sets up the full project with forty-plus components",
+      "A bundle script inlines everything into a single HTML file",
+      "Explicit guidance against generic AI layouts"
+    ],
+    "cautions": [
+      "Aimed at artifacts in one vendor's chat apps",
+      "Installs packages through npm at run time",
+      "The shell scripts and the bundled component archive are not read here"
+    ],
+    "keywords": [
+      "react artifacts",
+      "shadcn/ui",
+      "tailwind css",
+      "vite",
+      "parcel bundle",
+      "single html file",
+      "frontend scaffolding",
+      "design guidelines"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

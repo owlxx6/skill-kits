@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8bb75e7487b992269a3d6a3dafc4710c1591fd50",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T15:07:46.999Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Designs banners for social, ads, website heroes and print in HTML and CSS, with several art directions, safe zones and PNG export.",
+    "summary": "Gathers purpose, size, content, brand and style, researches references if browsing is allowed, picks two or three art directions, then builds each banner at exact dimensions in HTML and CSS with safe-zone, two-typeface and contrast rules. Visuals come from supplied assets, CSS or an optional image tool, with no text in generated images. It exports PNGs and checks size and crop.",
+    "strengths": [
+      "Self-contained: falls back to CSS visuals when no tools are available",
+      "Concrete rules: safe zone, two typefaces, 4.5:1 contrast, single call to action",
+      "Says PNG export is pending rather than naming a tool that is not installed"
+    ],
+    "cautions": [
+      "Sizes and styles depend on a bundled reference not read here",
+      "Banner design only: not video or full websites",
+      "Image generation needs a separately provided capability"
+    ],
+    "keywords": [
+      "banner design",
+      "social media graphics",
+      "ad banners",
+      "website hero",
+      "html css",
+      "safe zones",
+      "art direction",
+      "png export"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

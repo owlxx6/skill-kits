@@ -1,0 +1,41 @@
+{
+  "fingerprint": "1da6d86ef39cbdbb9be887c7bb178222262996f1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Builds, migrates and deploys framework apps (Astro, SvelteKit, React Router, Nuxt, Hono, SPAs) on Cloudflare Workers without Pages templates for new work.",
+    "summary": "Inspect the repository first, preserve the framework choice, then pick a path for a new project, an existing one with Wrangler config or one with none. A table gives the Workers setup and the framework's own agent guidance for each framework. It limits changes to adapter, runtime and deployment configuration, then checks and builds locally before deploying.",
+    "strengths": [
+      "Inspects before changing and keeps the user's framework",
+      "Table of per-framework Workers guides and official agent guidance",
+      "Verifies locally before any deployment"
+    ],
+    "cautions": [
+      "Links out to many external guides that change",
+      "Mixed CLI guidance: cf for some projects, Wrangler for others",
+      "Cloudflare-specific"
+    ],
+    "keywords": [
+      "cloudflare workers",
+      "astro",
+      "sveltekit",
+      "react router",
+      "nuxt",
+      "hono",
+      "static assets",
+      "framework deployment"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

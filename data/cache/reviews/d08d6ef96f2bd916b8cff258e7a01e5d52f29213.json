@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d08d6ef96f2bd916b8cff258e7a01e5d52f29213",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T15:07:46.999Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 4,
+      "usefulness": 5
+    },
+    "why": "Routes a request for an HTML presentation with Chart.js to a create guide and four reference files on layouts, copy formulas and strategies.",
+    "summary": "A short router: it lists when to use it (marketing decks, data slides, copy-led slides), one create subcommand and a table of references for layout patterns, an HTML template, copywriting formulas and slide strategies. It parses the first argument and loads the matching reference. The substance sits in files not read here.",
+    "strengths": [
+      "Clear routing and subcommand model",
+      "Points to layout, template and copywriting references",
+      "Mentions Chart.js for data slides"
+    ],
+    "cautions": [
+      "Almost no guidance in the skill file itself",
+      "Depends on the sibling design skills for scripts and tokens",
+      "References were not read here"
+    ],
+    "keywords": [
+      "html presentations",
+      "slides",
+      "chart.js",
+      "pitch decks",
+      "layout patterns",
+      "copywriting formulas",
+      "slide design",
+      "marketing decks"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

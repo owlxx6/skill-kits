@@ -1,0 +1,41 @@
+{
+  "fingerprint": "95095faaee2ea943e85a5d1d562fde06841e835e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:34:17.701Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 6,
+      "completeness": 7,
+      "usefulness": 5
+    },
+    "why": "Creates single-page posters and art in PNG or PDF from a written design philosophy, using bundled open fonts.",
+    "summary": "Two steps: write a short design philosophy, then express it as one museum-style PNG or PDF with minimal text, a limited palette and fonts from a bundled folder of open-licensed typefaces. A final pass refines what exists instead of adding elements. A multi-page option makes a series from the same philosophy.",
+    "strengths": [
+      "Bundled fonts come with their license files",
+      "Refinement step says to polish rather than add graphics",
+      "Hard rule that nothing overlaps or leaves the canvas"
+    ],
+    "cautions": [
+      "Repeats master-level craftsmanship slogans",
+      "Output is abstract art with sparse text, a poor fit for informational posters",
+      "Tells the agent to download extra fonts if needed"
+    ],
+    "keywords": [
+      "poster design",
+      "visual art",
+      "design philosophy",
+      "png",
+      "pdf",
+      "typography",
+      "composition",
+      "canvas"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

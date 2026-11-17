@@ -1,0 +1,41 @@
+{
+  "fingerprint": "3a8438d91d9340747ffd985fdbcfe7238d6e1e57",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:45:20.555Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Executes an implementation plan inline, task by task, with test-first steps, a decision ledger and one fresh review of the whole branch at the end.",
+    "summary": "For when the user chose inline execution or no subagent tool exists. It follows the plan exactly, proves each step with a test seen failing then passing, records every deviation as a ruling in a ledger, and does not pause between tasks. Only four things stop it: irreversible actions, security-sensitive actions, side effects outside the worktree, and a plan so broken every path is a guess.",
+    "strengths": [
+      "Ledger of rulings makes decisions recoverable after a context loss",
+      "Clear short list of when it must stop and ask",
+      "Honest about what inline execution gives up versus per-task review"
+    ],
+    "cautions": [
+      "Depends on a plan written by its companion skill",
+      "Long plans give the last tasks the least attention, as it admits",
+      "Bundled scripts and the rest of the process are not read here"
+    ],
+    "keywords": [
+      "executing plans",
+      "tdd",
+      "implementation",
+      "ledger",
+      "inline execution",
+      "code review",
+      "git worktree",
+      "software workflow"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b5e154fc3ec7a6a0b1e710eebacc2168620cc428",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:45:20.555Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Handles code review feedback with verification and reasoned pushback instead of automatic agreement or blind implementation.",
+    "summary": "A response pattern: read all feedback, restate it, verify against the codebase, evaluate, respond technically, implement one item at a time with tests. It bans performative replies, says to stop and ask when any item is unclear, treats a partner's feedback as trusted but external reviewers' as checkable, and includes a YAGNI check for suggestions to implement properly.",
+    "strengths": [
+      "Do not implement anything until every unclear item is clarified",
+      "Different handling for the owner's feedback and for external reviewers",
+      "YAGNI check: search for real usage before adding polish"
+    ],
+    "cautions": [
+      "Bans some phrases by name, which reflects one author's style",
+      "Later sections were not read in full",
+      "Assumes access to the codebase being reviewed"
+    ],
+    "keywords": [
+      "code review",
+      "feedback",
+      "verification",
+      "pushback",
+      "yagni",
+      "technical rigor",
+      "pull requests",
+      "collaboration"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

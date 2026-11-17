@@ -1,0 +1,41 @@
+{
+  "fingerprint": "c17a787898e9606bdb07ab6e69c650c2387e0fb4",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Builds, debugs and reviews Cloudflare Agents SDK apps, pointing to current docs by topic and twenty reference notes instead of relying on memory.",
+    "summary": "Tells the agent to retrieve current documentation rather than trust its training, with a large table mapping topics (state, routing, scheduling, workflows, chat agents, MCP client and server, email, human approval, durable execution, retries, voice, browser tools) to doc pages. It lists SDK capabilities and offers twenty reference files for patterns and pitfalls.",
+    "strengths": [
+      "Prefer retrieval over pre-training for a fast-changing SDK",
+      "Topic-to-docs table is easy to navigate",
+      "Covers approval, retries and durable execution, not only basics"
+    ],
+    "cautions": [
+      "Mostly an index of links: value depends on the docs staying available",
+      "Several features are marked experimental",
+      "Reference files were not read here"
+    ],
+    "keywords": [
+      "cloudflare agents sdk",
+      "durable objects",
+      "mcp server",
+      "chat agents",
+      "scheduling",
+      "workflows",
+      "human in the loop",
+      "websockets"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

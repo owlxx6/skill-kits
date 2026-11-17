@@ -1,0 +1,39 @@
+{
+  "fingerprint": "0b7efd35beb5519190f48d16f44e1f1b5ddf6d85",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:22:46.480Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 2
+    },
+    "why": "Fills missing translations of the resume app across web and mobile languages with parallel workers and strict checks.",
+    "summary": "Maintainer workflow: record the git state, extract strings, inventory missing entries per language, give each worker whole language files, seed mobile after web, then run a list of gates (sync check, strict compile, locale diff, lint). Changes are left uncommitted and the report says whether a native speaker reviewed the wording.",
+    "strengths": [
+      "Preserves existing translations and unrelated work",
+      "Checks placeholders and plural forms, not just compilation",
+      "States that technical completeness is not linguistic quality"
+    ],
+    "cautions": [
+      "Only for contributors working in the app's own checkout: of no use to someone writing a resume",
+      "Runs many package commands and spawns parallel workers",
+      "Depends on repository files and scripts that are not in the skill"
+    ],
+    "keywords": [
+      "translations",
+      "localization",
+      "lingui",
+      "maintainer workflow",
+      "parallel workers",
+      "catalog check",
+      "i18n",
+      "locale files"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

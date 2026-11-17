@@ -1,0 +1,41 @@
+{
+  "fingerprint": "5799b5596a4468f8203a332f8f0357bb1d5a3d74",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Plans listings in startup, SaaS, AI and agent directories: readiness check, tiers, positioning variants, tracker, launch-day plan and backlink verification.",
+    "summary": "Starts with a nine-question readiness check and rules to build destination pages first, then groups directories into thirteen tiers with a submission order. It covers a listing kit, a Product Hunt plan, a review-collection protocol, how to verify an actual backlink, KPIs and an agent workflow that stops at logins, bot checks and payments.",
+    "strengths": [
+      "Safety gate: checks each target is live and asks for approval before each submission",
+      "Positioning varies by directory type instead of one pasted description",
+      "Honest on weak targets such as badge-swap indie launch sites"
+    ],
+    "cautions": [
+      "Many statistics and conversion figures are unsourced",
+      "Directory lists date quickly; five reference files are not read here",
+      "Outreach and review incentives need care under each site's rules"
+    ],
+    "keywords": [
+      "directory submissions",
+      "product hunt",
+      "backlinks",
+      "saas directories",
+      "mcp registry",
+      "g2 reviews",
+      "launch plan",
+      "submission tracker"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

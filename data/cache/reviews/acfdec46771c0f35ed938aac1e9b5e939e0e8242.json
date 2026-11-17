@@ -1,0 +1,41 @@
+{
+  "fingerprint": "acfdec46771c0f35ed938aac1e9b5e939e0e8242",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 5
+    },
+    "why": "Builds and troubleshoots Cloudflare K2 streams, durable logs for decoupling event producers and consumers, by pointing to current docs by task.",
+    "summary": "Describes K2 as a durable log and tells the agent to retrieve current docs before giving setup, code, limits or pricing. A table maps tasks (create a stream, concepts, configuration, produce, consume, limits) to doc pages and what to check. It points to the Basin skill for SQL delivery and to Queues for task processing.",
+    "strengths": [
+      "Docs are the source of truth, including for limits and pricing",
+      "Says to state when availability or pricing is not yet published",
+      "Clear hand-offs to related products"
+    ],
+    "cautions": [
+      "Thin: mostly a link table, and the product may still be in preview",
+      "References an unmerged docs change",
+      "Narrow audience"
+    ],
+    "keywords": [
+      "cloudflare k2",
+      "durable log",
+      "event streams",
+      "producers consumers",
+      "subscriptions",
+      "retention",
+      "workers",
+      "messaging"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

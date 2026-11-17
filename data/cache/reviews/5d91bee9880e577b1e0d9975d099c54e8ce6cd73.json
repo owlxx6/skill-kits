@@ -1,0 +1,41 @@
+{
+  "fingerprint": "5d91bee9880e577b1e0d9975d099c54e8ce6cd73",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:24:58.616Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "Writes or rewrites a complete resume as copy-ready text from the user's facts, with a working ledger and open questions.",
+    "summary": "Establishes the brief, builds a ledger of employers, official titles, dates and credentials with the source of each claim, turns contradictions into questions, then drafts sections in reverse chronology with a supported headline and a short summary. It returns the resume, the material edits and the unresolved questions, and does not claim layout checks it did not run.",
+    "strengths": [
+      "Contradictions become questions, never a silently chosen version",
+      "A desired senior title is never turned into a title already held",
+      "A missing metric is not filled from an example or a job ad"
+    ],
+    "cautions": [
+      "Instructions only: no templates or scripts",
+      "Page count and PDF parsing stay unverified unless the exported file is inspected",
+      "Specialized cases are handed to sibling skills"
+    ],
+    "keywords": [
+      "resume writer",
+      "resume draft",
+      "resume headline",
+      "resume summary",
+      "work history",
+      "resume rewrite",
+      "chronology",
+      "copy-ready"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

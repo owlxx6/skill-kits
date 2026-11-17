@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8e4a92fde358a17432728bcffbda10c3f0115b03",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Draws a dbt model's lineage as a Mermaid diagram, using lineage tools, the manifest or code parsing in that order.",
+    "summary": "Finds the model name, then fetches lineage by the first available method: local lineage tool, platform lineage tool, manifest file (skipped if over 10 MB) or direct code parsing. It generates a left-to-right graph colored by resource type with a legend and notes limits when a fallback was used. Parsed content is treated as untrusted.",
+    "strengths": [
+      "Clear fallback order from most to least accurate",
+      "Color scheme by resource type with a required legend",
+      "Extracts only expected fields and ignores instruction-like text"
+    ],
+    "cautions": [
+      "Four method guides are in files not read here",
+      "Large projects can make the diagram unwieldy",
+      "Needs a dbt project or its manifest"
+    ],
+    "keywords": [
+      "dbt lineage",
+      "mermaid",
+      "dag diagram",
+      "manifest json",
+      "data lineage",
+      "dbt models",
+      "documentation",
+      "visualization"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

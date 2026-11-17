@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d4aa8e9b65f11fb57fc553530be846bc283c018c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Gets a Cloudflare Workers app to a working local request: connect bindings, secrets and initial data, then verify real behavior.",
+    "summary": "Inspects the project first, keeps the user's framework and tools, and connects only the resources the app needs, noting how Wrangler and cf provision differently. It covers data migrations with explicit local or remote flags, sorting secrets by consumer, generating types, and verifying a real route and state change. Unverified parts must be reported, not claimed.",
+    "strengths": [
+      "Verifies a real request and state change, not just that a server started",
+      "Explicit local versus remote flags for data migrations",
+      "Keeps secret files out of Git and reports what remains unverified"
+    ],
+    "cautions": [
+      "Cloudflare-specific and assumes the project already exists",
+      "Remote bindings can reach real resources during local dev",
+      "Relies on current docs for syntax"
+    ],
+    "keywords": [
+      "cloudflare workers",
+      "bindings",
+      "secrets",
+      "local development",
+      "d1 migrations",
+      "wrangler",
+      "app setup",
+      "verification"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

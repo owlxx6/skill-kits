@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ae14505c8bdb15a608815398e747e220588f2070",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:21.133Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Earns press and podcast coverage: story angles, pitch quality bar, press page, newsjacking, inbound requests and crisis response templates.",
+    "summary": "Treats PR as a multiplier for distribution, with four modes (reactive, proactive, inbound, owned). It gives a seven-point pitch checklist, a press page and media kit list, measurement beyond ad-value equivalents, and a crisis section with severity tiers and a first-60-minutes checklist. Detailed playbooks and templates are in eight reference files.",
+    "strengths": [
+      "Pitch checklist ends with: if any answer is no, don't send",
+      "Crisis section starts with facts, one spokesperson and a holding statement, and calls in legal early",
+      "Says plainly that press rarely drives direct conversions"
+    ],
+    "cautions": [
+      "Written for software companies",
+      "Eight reference files hold the pitching and crisis detail and are not read here",
+      "Journalist research needs live browsing"
+    ],
+    "keywords": [
+      "public relations",
+      "press pitches",
+      "newsjacking",
+      "media kit",
+      "crisis communications",
+      "podcast guest",
+      "earned media",
+      "press releases"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

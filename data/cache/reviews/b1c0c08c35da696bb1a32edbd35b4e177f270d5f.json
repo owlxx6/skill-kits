@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b1c0c08c35da696bb1a32edbd35b4e177f270d5f",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Builds and troubleshoots Cloudflare Basin data workflows: pipelines into Iceberg tables in R2, catalog management and SQL queries.",
+    "summary": "Explains the rebrand of older product names and a table choosing between Basin Pipelines, Catalog and SQL, with the typical flow from events to tables to queries. It points to guides for each, notes proposed command names and the SQL auth token variable, and says to check the installed Wrangler version because the migration is ongoing.",
+    "strengths": [
+      "Maps old product names to new ones",
+      "Clear choice table with a typical end-to-end flow",
+      "Tells the agent to check current docs for limits and pricing"
+    ],
+    "cautions": [
+      "Mid-rename: commands and URLs may be in flux, and it references an unmerged docs change",
+      "Short body: the detail is in sixteen reference files not read here",
+      "Narrow audience"
+    ],
+    "keywords": [
+      "cloudflare basin",
+      "iceberg",
+      "r2",
+      "streaming pipelines",
+      "sql queries",
+      "data catalog",
+      "wrangler",
+      "analytics"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

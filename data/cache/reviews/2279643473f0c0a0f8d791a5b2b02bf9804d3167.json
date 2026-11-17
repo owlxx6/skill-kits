@@ -1,0 +1,41 @@
+{
+  "fingerprint": "2279643473f0c0a0f8d791a5b2b02bf9804d3167",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T15:07:46.999Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Builds accessible interfaces with shadcn/ui, Tailwind CSS and canvas-based visual designs, from setup to dark mode and theming.",
+    "summary": "Describes a stack of shadcn/ui components on Radix primitives, Tailwind utility styling and a canvas layer for posters and visual compositions, with a bundled set of fonts. A quick start runs the shadcn init and add commands. It lists when to use it, from accessible dialogs and forms to dark mode and responsive layouts, and links the shadcn and Tailwind docs.",
+    "strengths": [
+      "Clear stack description with copy-paste component model",
+      "Covers accessibility, dark mode and responsive layout",
+      "Bundles open-license fonts for canvas designs"
+    ],
+    "cautions": [
+      "Later sections and canvas guides were not read in full",
+      "Quick start runs package commands in the user's project",
+      "React-oriented"
+    ],
+    "keywords": [
+      "shadcn ui",
+      "tailwind css",
+      "radix ui",
+      "accessible components",
+      "dark mode",
+      "responsive layout",
+      "canvas design",
+      "design systems"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

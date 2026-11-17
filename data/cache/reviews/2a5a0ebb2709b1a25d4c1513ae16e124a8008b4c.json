@@ -1,0 +1,41 @@
+{
+  "fingerprint": "2a5a0ebb2709b1a25d4c1513ae16e124a8008b4c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T15:07:46.999Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Unified design skill: brand, tokens, UI styling, AI logo and icon generation, identity mockups, slides, banners and social images, routed by task.",
+    "summary": "A router over sub-skills (brand, design system, UI styling) and built-in areas for logos, corporate identity mockups, presentations, banners, social photos and icons. Logo and icon work uses bundled Python scripts that search style, color and industry data and call several image-generation services. It sets rules such as white-background logos, asking before a preview and fixing failing scripts.",
+    "strengths": [
+      "Routing table sends each task to the right guide",
+      "Searchable style, color and industry data for logos and mockups",
+      "Supports several image providers, not just one"
+    ],
+    "cautions": [
+      "Large: dozens of data, script and reference files are not read here",
+      "Image generation needs the user's API keys and paid services",
+      "AI-generated logos need human review for originality"
+    ],
+    "keywords": [
+      "design skill",
+      "logo generation",
+      "brand identity",
+      "corporate identity",
+      "icons",
+      "slides",
+      "banners",
+      "image generation"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

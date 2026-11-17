@@ -1,0 +1,42 @@
+{
+  "fingerprint": "523da4b0c36e7e79fcbf9e81e748e374efa3a6c1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:35:32.496Z",
+  "review": {
+    "kits": [
+      "web-app",
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Reference for building apps on the vendor's model API: surfaces, models, SDK patterns, caching, agents, migration and cost subcommands.",
+    "summary": "Routes a request to the right surface (single call, workflow, agent, managed agents), detects the project language and points to per-language guides. It carries current model ids, quick references for thinking, caching, streaming, tools and cloud providers, an API-drift table, and subcommands for migration, prompt audit, SDK upgrade, cost optimization, evals and hill-climbing.",
+    "strengths": [
+      "Warns that remembered API shapes are stale and gives a drift table",
+      "Refuses to guess SDK usage: code must come from the bundled files or live docs",
+      "Costly subcommands ask for scope and approval first"
+    ],
+    "cautions": [
+      "Huge: about 105,000 characters and fifty-odd bundled files, most not read here",
+      "Only for the vendor's own SDK, and it refuses to put those calls into non-vendor code",
+      "Very broad trigger text that fires on any mention of the vendor or of LLM tasks"
+    ],
+    "keywords": [
+      "claude api",
+      "anthropic sdk",
+      "model migration",
+      "prompt caching",
+      "tool use",
+      "managed agents",
+      "cost optimization",
+      "evals"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

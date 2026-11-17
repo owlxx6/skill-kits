@@ -1,0 +1,41 @@
+{
+  "fingerprint": "9ec0d4a11e188ca3f296d8b7e2944ac5b1bb153f",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:50:11.226Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Builds Cloudflare Sandbox apps on the 1.0 preview: a gate on the package line, a contract of non-negotiable behaviors and a map to current docs.",
+    "summary": "First checks that the dependency and image are on the preview line and hands off to the stable or migration skill otherwise. The contract: exec takes an argv list and returns a handle when the process starts, no implicit shell or stdin, local wait timeouts do not kill the process, ids belong to the current container, and secrets stay in the Worker.",
+    "strengths": [
+      "Gate prevents mixing preview and stable APIs",
+      "Contract lists easy-to-miss behaviors such as wait timeouts not killing processes",
+      "Credentials stay in the Worker, not the sandbox"
+    ],
+    "cautions": [
+      "Preview API: expect changes",
+      "Quick reference and examples are not read here",
+      "Cloudflare-specific"
+    ],
+    "keywords": [
+      "cloudflare sandbox",
+      "containers",
+      "process handles",
+      "terminals",
+      "workers",
+      "sdk preview",
+      "sandboxing",
+      "code execution"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

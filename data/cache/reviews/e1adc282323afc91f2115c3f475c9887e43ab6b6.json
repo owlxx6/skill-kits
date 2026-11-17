@@ -1,0 +1,42 @@
+{
+  "fingerprint": "e1adc282323afc91f2115c3f475c9887e43ab6b6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation",
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Designs and uses n8n's built-in Data Tables: schemas, operations, dedup and lookups, with the quirks that cause silent NULL columns.",
+    "summary": "Explains system columns, primitive-only types with a suffix for stored objects, camelCase naming and relational design without foreign keys. It compares insert, upsert, update, get and delete, gives patterns for dedup, lookup tables and audit trails, and a verification checklist. Anti-patterns include writing system columns and using Data Tables for critical data.",
+    "strengths": [
+      "Says when Remove Duplicates is the better choice",
+      "Verification steps catch silent NULL columns",
+      "Clear limit: not a system of record or for millions of rows"
+    ],
+    "cautions": [
+      "Includes temporary workaround notes for a UI quirk",
+      "Three reference files are not read here",
+      "Only for n8n"
+    ],
+    "keywords": [
+      "n8n data tables",
+      "schema design",
+      "deduplication",
+      "upsert",
+      "lookup tables",
+      "idempotency",
+      "persistent state",
+      "workflow"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

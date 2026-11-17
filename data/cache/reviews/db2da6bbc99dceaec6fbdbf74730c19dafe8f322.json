@@ -1,0 +1,41 @@
+{
+  "fingerprint": "db2da6bbc99dceaec6fbdbf74730c19dafe8f322",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Triages errors when moving a dbt project to dbt v2: run the autofix tool first, then sort what remains into fixable, guided, needs input or blocked.",
+    "summary": "A strict procedure: optionally run a connection check, run or confirm the autofix tool and review its changes, then classify remaining errors before any manual edits. It defines the repro command, always adds strict static analysis at least once, and says some issues can only be fixed by v2 updates. Category details are in three reference files.",
+    "strengths": [
+      "Hard ordering rules with a recovery step if one is skipped",
+      "Honest that some errors are not fixable in the project",
+      "Warns that plain compile can hide column errors strict mode finds"
+    ],
+    "cautions": [
+      "Specific to the dbt v2 migration and will date",
+      "Three reference files are not read here",
+      "Runs project commands and edits files"
+    ],
+    "keywords": [
+      "dbt v2",
+      "migration",
+      "dbt autofix",
+      "error triage",
+      "static analysis",
+      "dbt compile",
+      "classification",
+      "upgrade"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

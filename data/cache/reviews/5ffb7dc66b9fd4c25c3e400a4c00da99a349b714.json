@@ -1,0 +1,41 @@
+{
+  "fingerprint": "5ffb7dc66b9fd4c25c3e400a4c00da99a349b714",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:35:03.521Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Tests local web apps with Playwright scripts, a server helper and a reconnaissance-then-action pattern in headless mode.",
+    "summary": "Gives a decision tree for static versus dynamic apps, a helper that starts one or several dev servers around a script, and a pattern of waiting for network idle, inspecting the rendered page, picking selectors and then acting. Examples cover element discovery, static HTML and console logging. It tells the agent to run the helper with help first and treat it as a black box.",
+    "strengths": [
+      "Decision tree for static pages versus running servers",
+      "Waits for network idle before inspecting dynamic pages",
+      "Helper manages backend and frontend servers together"
+    ],
+    "cautions": [
+      "Needs Python and Playwright",
+      "Tells the agent not to read the helper's source first",
+      "Local apps only"
+    ],
+    "keywords": [
+      "web app testing",
+      "playwright",
+      "ui debugging",
+      "screenshots",
+      "console logs",
+      "dev server",
+      "browser automation",
+      "selectors"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "a3ee8f85003eea261128fa45db5699237483ec46",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Moves a dbt project from one data platform to another (for example Snowflake to Databricks) by fixing compile errors and proving results with unit tests.",
+    "summary": "Uses real-time compilation errors to drive dialect fixes. Seven steps: verify the compiler, baseline the source, generate unit tests on every leaf model on the source platform, switch the target, fix errors until compile is clean with zero warnings, run unit tests on the target, then document changes. Free compile is the main iteration gate; runs and tests cost warehouse time.",
+    "strengths": [
+      "Success criteria are measurable: zero errors and warnings, tests pass, models run",
+      "Golden-data unit tests before migrating prove data correctness",
+      "Cost-aware: compile first, run only when clean"
+    ],
+    "cautions": [
+      "Requires the dbt Fusion engine and access to both platforms",
+      "Three reference files are not read here",
+      "Later steps and gotchas were not read in full"
+    ],
+    "keywords": [
+      "dbt migration",
+      "warehouse migration",
+      "snowflake",
+      "databricks",
+      "sql dialects",
+      "unit tests",
+      "dbt fusion",
+      "data platform"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

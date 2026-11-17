@@ -1,0 +1,41 @@
+{
+  "fingerprint": "78bbc57a7ef3b348cdaa29d50e63377440927df2",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:42:25.458Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Designs in-app paywalls and upgrade screens: when to ask, trigger types, screen components, frequency rules and dark patterns to avoid.",
+    "summary": "Covers trigger points (feature gates, usage limits, trial expiry, time-based prompts), the parts of a paywall screen with three text templates, timing and frequency rules, and the path from paywall to payment. It lists tests and metrics, flags dark patterns such as hidden close buttons and fake countdowns, and links a guide for mobile subscription apps.",
+    "strengths": [
+      "Value before the ask, and a clear way to continue free",
+      "Ready text templates for feature lock, limit and trial expiry",
+      "Explicit list of dark patterns and conversion killers"
+    ],
+    "cautions": [
+      "Short on numbers and benchmarks",
+      "Mobile store rules and experiments are in files not read here",
+      "Does not choose prices or tiers"
+    ],
+    "keywords": [
+      "paywall",
+      "upgrade screen",
+      "feature gate",
+      "trial expiration",
+      "freemium",
+      "usage limits",
+      "mobile subscriptions",
+      "dark patterns"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

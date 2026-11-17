@@ -1,0 +1,41 @@
+{
+  "fingerprint": "218c25e182aade7a1ecce3bfb142cdde93d4bcc0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:23:25.089Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Writes product, UX, research and visual design resumes that tie craft to decisions, with honest portfolio and accessibility claims.",
+    "summary": "Asks which design discipline and level the user targets, what they owned and what can be shared, then gives evidence prompts for product, research, interface, service and visual work. Bullets lead with the problem, contribution and outcome; usability results keep their sample and context; accessibility work is stated within its defined scope.",
+    "strengths": [
+      "Never adds personas, tests or workshops that did not happen",
+      "Keeps small-sample and prototype context on usability results",
+      "States accessibility work precisely, not as full conformance"
+    ],
+    "cautions": [
+      "Instructions only: no templates or scripts",
+      "The longer project story is left to another skill",
+      "Narrow audience: design roles"
+    ],
+    "keywords": [
+      "designer resume",
+      "ux resume",
+      "ui design",
+      "user research",
+      "portfolio",
+      "accessibility claims",
+      "usability testing",
+      "design systems"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

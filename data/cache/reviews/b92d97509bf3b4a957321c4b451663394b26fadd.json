@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b92d97509bf3b4a957321c4b451663394b26fadd",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:21.133Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Builds verified, scored prospect lists across four motions (SaaS, B2B, local, demand-signal) with qualification evidence and compliance guardrails.",
+    "summary": "Picks a branch, then runs five phases: define the ICP, discover candidates, qualify each with evidence and a confidence level, score Hot to Skip, and output a lead sheet with top targets. Eight compliance rules ban bulk scraping, bypassing logins and unprovenanced data. Emails are verified before use and each contact keeps its source and date.",
+    "strengths": [
+      "Every qualification needs a source link and an honest confidence level",
+      "Compliance rules come first: no scraping at scale, no sensitive-trait targeting",
+      "Hot needs a real buying signal, not just a fit"
+    ],
+    "cautions": [
+      "Works best with paid data tools; browser-only research is slower",
+      "Privacy and consent law depends on country: legal review for regulated outreach",
+      "Eleven reference files are not read here"
+    ],
+    "keywords": [
+      "prospecting",
+      "lead lists",
+      "icp",
+      "buying signals",
+      "email verification",
+      "account research",
+      "outbound sales",
+      "lead scoring"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

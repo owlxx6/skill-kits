@@ -1,0 +1,41 @@
+{
+  "fingerprint": "279c8760375cb6a47a4a8a312b652b0745c6d776",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:47:20.622Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Uses the Vercel CLI with an access token instead of interactive login: find the token, keep it out of command arguments, then deploy and manage settings.",
+    "summary": "Step one locates the token: environment variable, a .env file under the same or a different name, or ask the user. Once exported, the CLI reads it natively, and the skill says never to pass it as a command-line flag because it would appear in history and process lists. Later steps cover deploying and environment variables.",
+    "strengths": [
+      "Explains why tokens must not be passed as arguments",
+      "Ordered search for the token before asking the user",
+      "Tells the user where to create a token"
+    ],
+    "cautions": [
+      "Searches .env files for tokens, which the user should expect",
+      "Later steps were not read in full",
+      "Vercel-specific"
+    ],
+    "keywords": [
+      "vercel cli",
+      "access tokens",
+      "authentication",
+      "environment variables",
+      "deployment",
+      "ci",
+      "secrets",
+      "devops"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

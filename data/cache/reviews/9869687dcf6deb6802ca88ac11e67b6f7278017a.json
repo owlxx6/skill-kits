@@ -1,0 +1,41 @@
+{
+  "fingerprint": "9869687dcf6deb6802ca88ac11e67b6f7278017a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:34:17.701Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Routes internal communications such as status reports, 3P updates, newsletters and FAQs to a matching guideline file.",
+    "summary": "Identifies the communication type, then loads the matching guideline from an examples folder (3P updates, company newsletter, FAQ answers, general comms) and follows its format, tone and content gathering. If nothing matches it asks for the desired format. The skill itself is a short router; the guidance sits in the example files.",
+    "strengths": [
+      "Clear routing by communication type",
+      "Covers weekly updates, newsletters, FAQs and incident reports",
+      "Asks for clarification when no format fits"
+    ],
+    "cautions": [
+      "Four example files hold the real guidance and are not read here",
+      "Written for one company's formats, so it needs adapting",
+      "No templates in the main file"
+    ],
+    "keywords": [
+      "internal communications",
+      "status report",
+      "3p updates",
+      "company newsletter",
+      "faq answers",
+      "leadership update",
+      "incident report",
+      "project update"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

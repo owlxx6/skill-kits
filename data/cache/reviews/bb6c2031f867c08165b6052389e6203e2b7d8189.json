@@ -1,0 +1,41 @@
+{
+  "fingerprint": "bb6c2031f867c08165b6052389e6203e2b7d8189",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:40:42.369Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Chooses how to make marketing images (generate, design tool, screenshot) and covers sizes, prompting, optimization and social preview images.",
+    "summary": "Compares AI image models, design tools, screenshots with overlays and stock photos, with a decision tree on text, consistency, editing and cost. It gives a prompt formula, workflows for blog heroes, social graphics, product mockups and banners with size tables, an optimization checklist with conversion commands, preview-image tags and a list of common mistakes.",
+    "strengths": [
+      "Warns against AI-generated product screenshots because models invent interfaces",
+      "Platform size tables for social, banners and store listings",
+      "Practical optimization checklist: format, resize, compress, lazy load"
+    ],
+    "cautions": [
+      "Model names, prices and retirement dates change quickly",
+      "Prompting detail per model is in a file not read here",
+      "Does not generate images itself"
+    ],
+    "keywords": [
+      "marketing images",
+      "ai image generation",
+      "social graphics",
+      "og images",
+      "blog hero images",
+      "image optimization",
+      "banners",
+      "product mockups"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

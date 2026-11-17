@@ -1,0 +1,41 @@
+{
+  "fingerprint": "6681de825f02298be8650c632bbe0ebe88648868",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 6
+    },
+    "why": "Builds Cloudflare Workers called by Gateway Forward policies: the middleware entrypoint, context, continuation rules and validation.",
+    "summary": "Explains the required named middleware class and handler signature, how to use Gateway context and identity safely, and that the continuation may be called at most once and always targets the original destination. It notes Gateway behavior and limits (first matching policy, decryption needed, WebSockets bypass, fail closed) and a validation checklist including response status and streaming rules.",
+    "strengths": [
+      "Precise contract: a default fetch handler alone does not work",
+      "Treats Gateway-provided identity as trusted and client headers as not",
+      "Validation steps test the real policy path"
+    ],
+    "cautions": [
+      "Very niche: needs Cloudflare One Gateway",
+      "Depends on current docs for payloads and limits",
+      "Short skill"
+    ],
+    "keywords": [
+      "cloudflare gateway",
+      "workers",
+      "http policies",
+      "middleware",
+      "zero trust",
+      "forward action",
+      "identity",
+      "traffic inspection"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "fingerprint": "1dc8bd3584b80568edae7da16382363e24ecf0f0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:34:17.701Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 6,
+      "completeness": 3,
+      "usefulness": 3
+    },
+    "why": "Lists one company's brand colors and fonts to apply to documents and slides.",
+    "summary": "Gives hex values for dark, light, gray and three accent colors, names heading and body fonts with fallbacks, and describes how text and shapes should be styled. It mentions applying colors through a slide library but contains no script or template that does it.",
+    "strengths": [
+      "Exact color values and font fallbacks"
+    ],
+    "cautions": [
+      "Only useful for that one company's identity",
+      "Describes behaviors such as smart font application with no code or files to carry them out",
+      "No guidance for other brands"
+    ],
+    "keywords": [
+      "brand guidelines",
+      "brand colors",
+      "typography",
+      "visual identity",
+      "slide styling",
+      "color palette",
+      "fonts",
+      "corporate identity"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

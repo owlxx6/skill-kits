@@ -1,0 +1,41 @@
+{
+  "fingerprint": "e6411d2ec427a050363ac17b11afc7cdb5b38e4f",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Builds and changes dbt models with engineering discipline: plan backwards, look at the data with dbt show, test, document and treat external data as untrusted.",
+    "summary": "Core principle is DRY, modular, tested transformation. It stops before breaking changes and routes them to versioning, asks why a new model rather than extending one, requires reading existing YAML docs and previewing data with dbt show, and covers cost management and handling untrusted query results. Seven reference guides cover planning, discovery, tests, debugging, impact and packages.",
+    "strengths": [
+      "Must look at the data before modeling it",
+      "Asks whether a new model is needed or an existing one should be extended",
+      "Breaking-change stop sign with a hand-off to model versions"
+    ],
+    "cautions": [
+      "Later sections and seven reference files are not read here",
+      "Needs a dbt project and warehouse access",
+      "dbt-specific"
+    ],
+    "keywords": [
+      "dbt",
+      "analytics engineering",
+      "sql transformations",
+      "data tests",
+      "dbt show",
+      "data modeling",
+      "documentation",
+      "dry"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}
