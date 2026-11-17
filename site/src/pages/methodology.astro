@@ -12,12 +12,17 @@ const steps: { title: string; icon: IconName; text: string }[] = [
   {
     title: "Found and filtered",
     icon: "search",
-    text: `We read public GitHub repositories tagged with agent-skill topics, plus a list we maintain. A repository stays only if it has a permissive license (${filter.allowedLicenses.join(", ")}), at least ${filter.minStars} stars, is not archived, and was updated in the last ${filter.maxDaysSinceLastCommit} days.`,
+    text: "We read public GitHub repositories tagged with agent-skill topics, plus explicit nominations. Repositories must not be archived and must be active within " + filter.maxDaysSinceLastCommit + " days. Topic searches currently use a " + filter.minStars + "-star discovery threshold. Explicitly nominated repositories have no minimum star count: low usage does not disqualify them.",
   },
   {
     title: "Read and reviewed",
     icon: "file-text",
-    text: "An AI reviewer reads each candidate SKILL.md and scores it from 0 to 10 on clarity (does an agent know what to do and when to stop), completeness (examples, scripts and references provided) and usefulness for the kit. It also flags security concerns: a notice when a skill runs commands, calls the network or handles credentials, and an exclusion when it hides behavior or asks an agent to bypass safeguards.",
+    text: "An AI reviewer reads each candidate SKILL.md and scores it from 0 to 10 on clarity (does an agent know what to do and when to stop), completeness (examples, scripts and references provided) and usefulness for the kit.",
+  },
+  {
+    title: "License shown per skill",
+    icon: "scale",
+    text: 'Each skill’s license is resolved from its files and metadata, applicable parent folders and repository evidence. A repository can contain several licenses. Missing licenses are shown as "No license", and unresolved evidence as "Unclear license". Mixed collections list the included licenses. Check the source terms for your intended use.',
   },
   {
     title: "Ranked",
@@ -38,7 +43,7 @@ const steps: { title: string; icon: IconName; text: string }[] = [
       <span class="icon-tile large"><Icon name="list-checks" size={28} /></span>
       <div class="page-head-text">
         <h1>How we pick</h1>
-        <p class="lead muted">Every skill on this site went through the same four steps. Nothing enters a kit without a human approving it.</p>
+        <p class="lead muted">Explore how candidates become catalog entries and curated kits. A maintainer approves every entry added to a kit.</p>
       </div>
     </header>
 
@@ -57,8 +62,8 @@ const steps: { title: string; icon: IconName; text: string }[] = [
     <aside class="callout info" aria-labelledby="limits-title">
       <Icon name="info" size={22} />
       <div>
-        <h2 id="limits-title">What this does not mean</h2>
-        <p>Skills are reviewed, not tested. Read a skill before you install it, especially one with a security notice.</p>
+        <h2 id="limits-title">Before installing</h2>
+        <p>The catalog records reviews of skill instructions. A review score does not demonstrate successful execution of every task. Read the source, prerequisites and license before installing.</p>
       </div>
     </aside>
   </div>

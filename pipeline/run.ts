@@ -7,6 +7,7 @@ import { runExtract } from "./extract";
 import { filterRepos } from "./filter";
 import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
+import { isPublishable, licenseCacheFile, NO_SAFETY_SCAN, readLicenseCache } from "./lib/license";
 import type { LlmClient } from "./lib/llm";
 import {
   CatalogSchema,
@@ -20,6 +21,7 @@ import {
   ReviewRecordSchema,
   type RunInfo,
   RunInfoSchema,
+  type SkillRecord,
   SkillRecordSchema,
   SourcesSchema,
   type TriageCache,
@@ -154,22 +156,41 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
 
   async filter({ paths, config, deps }) {
     const candidates = await readJsonFile(paths.candidates, z.array(z.string()), []);
+    // Repositories listed in sources.yaml are nominations: minStars does not apply to them.
+    const sources = await readYamlFile(paths.sources, SourcesSchema);
     const { repos, filtered, renamed } = await filterRepos(
       deps.gh,
       candidates,
       config.filter,
       deps.now,
+      new Set(sources.repos),
     );
     await writeJsonFile(paths.repos, repos);
     await updateRunInfo(paths.runInfo, { filtered, renamed });
     deps.log(`${repos.length} repos kept, ${filtered.length} excluded`);
   },
 
-  async extract({ paths, deps }) {
+  async extract({ paths, config, deps }) {
     const repos = await readJsonFile(paths.repos, z.array(RepoMetaSchema), []);
     const previous = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
-    const { skills, stats } = await runExtract(deps.gh, repos, previous, (progress) =>
-      writeJsonFile(paths.skills, progress),
+    // Entries identified by other rules (or written before rules versions) are dropped.
+    const storedLicenses = await readJsonFile(paths.licenses, z.unknown(), undefined);
+    const licenseCache = readLicenseCache(storedLicenses);
+    // A discarded file is replaced now, so a stale one never stays on disk.
+    if (storedLicenses !== undefined && Object.keys(licenseCache).length === 0) {
+      await writeJsonFile(paths.licenses, licenseCacheFile(licenseCache));
+    }
+    const { skills, stats } = await runExtract(
+      deps.gh,
+      repos,
+      previous,
+      (progress) => writeJsonFile(paths.skills, progress),
+      {
+        cache: licenseCache,
+        save: (cache) => writeJsonFile(paths.licenses, licenseCacheFile(cache)),
+        allowed: config.filter.allowedLicenses,
+        isSafetyCleared: NO_SAFETY_SCAN,
+      },
     );
     await writeJsonFile(paths.skills, skills);
     await updateRunInfo(paths.runInfo, { extract: stats });
@@ -184,6 +205,10 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const curation = await readYamlFile(paths.curation, CurationSchema);
     // Approved skills are re-reviewed first, even when triage no longer proposes a kit for them.
     const priorityIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
+    // A skill that cannot be published (see the publication policy) is neither triaged nor
+    // reviewed. The safety scan is not integrated yet: no skill is cleared by it.
+    const isEligible = (skill: SkillRecord): boolean =>
+      isPublishable(skill, config.filter.allowedLicenses, NO_SAFETY_SCAN);
     const llm = deps.getLlm(config.review.model);
     const stats = emptyReviewStats();
     const clock = deps.clock ?? Date.now;
@@ -194,7 +219,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     try {
       const nextTriage = await runTriage(
         llm,
-        skills,
+        skills.filter(isEligible),
         triage,
         kits,
         config.review.triageBatchSize,
@@ -208,7 +233,15 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
       const max = options.dryRun
         ? Math.min(config.review.maxReviewsPerRun, DRY_RUN_MAX_REVIEWS)
         : config.review.maxReviewsPerRun;
-      const { selected, deferred } = selectForReview(skills, nextTriage, reviewed, repos, max, priorityIds);
+      const { selected, deferred } = selectForReview(
+        skills,
+        nextTriage,
+        reviewed,
+        repos,
+        max,
+        priorityIds,
+        isEligible,
+      );
       stats.deferred = deferred;
 
       await runReviews(
@@ -246,8 +279,21 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const skills = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
     const reviews = await loadReviews(paths.reviewsDir);
     const curation = await readYamlFile(paths.curation, CurationSchema);
+    // Repositories listed only in part at the last extraction get no collection.
+    const runInfo = await readJsonFile(paths.runInfo, RunInfoSchema, {});
+    const truncatedRepos = runInfo.extract?.truncatedRepos ?? [];
     const catalog = CatalogSchema.parse(
-      buildCatalog({ repos, skills, reviews, kits, curation, config, now: deps.now }),
+      buildCatalog({
+        repos,
+        skills,
+        reviews,
+        kits,
+        curation,
+        config,
+        now: deps.now,
+        truncatedRepos,
+        isSafetyCleared: NO_SAFETY_SCAN,
+      }),
     );
     await writeJsonFile(paths.catalog, catalog);
     deps.log(`catalog: ${catalog.skills.length} skills, ${catalog.collections.length} collections`);

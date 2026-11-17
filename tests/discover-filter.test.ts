@@ -56,16 +56,28 @@ describe("checkRepo", () => {
 
   it.each([
     [{ archived: true }, "archived"],
-    [{ license: null }, "license none not allowed"],
-    [{ license: "GPL-3.0" }, "license GPL-3.0 not allowed"],
     [{ stars: 49 }, "stars 49 < 50"],
     [{ pushedAt: "2026-01-01T00:00:00Z" }, "last push 314 days ago (limit 180)"],
     [{ pushedAt: "" }, "no valid push date"],
     [{ pushedAt: "2026-11-05" }, "no valid push date"],
-    [{ license: "NOASSERTION" }, "license NOASSERTION not allowed"],
-    [{ license: "mit" }, "license mit not allowed"],
   ])("rejects %j", (overrides, reason) => {
     expect(checkRepo(makeRepo(overrides), filter, NOW)).toEqual({ ok: false, reason });
+  });
+
+  // Licenses are resolved per skill after extraction, not per repository.
+  it.each([null, "GPL-3.0", "NOASSERTION", "mit"])("does not reject a repository for its license %j", (license) => {
+    expect(checkRepo(makeRepo({ license }), filter, NOW)).toEqual({ ok: true });
+  });
+
+  it("does not reject a nominated repository for its stars", () => {
+    expect(checkRepo(makeRepo({ stars: 0 }), filter, NOW, true)).toEqual({ ok: true });
+  });
+
+  it.each([
+    [{ archived: true }, "archived"],
+    [{ pushedAt: "2026-01-01T00:00:00Z" }, "last push 314 days ago (limit 180)"],
+  ])("still rejects a nominated repository %j", (overrides, reason) => {
+    expect(checkRepo(makeRepo({ stars: 3, ...overrides }), filter, NOW, true)).toEqual({ ok: false, reason });
   });
 });
 
@@ -96,6 +108,32 @@ describe("filterRepos", () => {
       { fullName: "ghost/deleted", reason: "not found" },
       { fullName: "old/archived", reason: "archived" },
     ]);
+  });
+
+  it("keeps a nominated low-star repository and rejects a low-star topic result", async () => {
+    const gh = new FakeGitHub([
+      { meta: makeRepo({ fullName: "small/nominated", stars: 4 }), files: {} },
+      { meta: makeRepo({ fullName: "small/topic", stars: 4 }), files: {} },
+    ]);
+    const result = await filterRepos(
+      gh,
+      ["small/nominated", "small/topic"],
+      filter,
+      NOW,
+      new Set(["Small/Nominated"]),
+    );
+    expect(result.repos.map((repo) => repo.fullName)).toEqual(["small/nominated"]);
+    expect(result.filtered).toEqual([{ fullName: "small/topic", reason: "stars 4 < 50" }]);
+  });
+
+  it("keeps a repository whose GitHub license is missing or not allowed", async () => {
+    const gh = new FakeGitHub([
+      { meta: makeRepo({ fullName: "no/license", license: null }), files: {} },
+      { meta: makeRepo({ fullName: "gpl/repo", license: "GPL-3.0" }), files: {} },
+    ]);
+    const result = await filterRepos(gh, ["no/license", "gpl/repo"], filter, NOW);
+    expect(result.repos.map((repo) => repo.fullName)).toEqual(["gpl/repo", "no/license"]);
+    expect(result.filtered).toEqual([]);
   });
 
   it("names the candidate when getRepo throws", async () => {

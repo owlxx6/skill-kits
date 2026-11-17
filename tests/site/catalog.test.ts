@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { Catalog } from "../../pipeline/lib/schemas";
 import {
   collectionInstallCommand,
+  collectionLicenseLabel,
   collectionSlug,
   kitView,
   licenseOptions,
@@ -119,5 +120,14 @@ describe("sortSkills and licenseOptions", () => {
     expect(sorted.map((entry) => entry.reviewScore)).toEqual([9, 8, 7]);
     expect(sortSkills(catalog.skills, "curated")).toEqual(catalog.skills);
     expect(licenseOptions(catalog.skills)).toEqual(["Apache-2.0", "MIT"]);
+  });
+});
+
+describe("collection license display", () => {
+  it("keeps legacy labels and shows all supplied mixed-license labels", () => {
+    expect(collectionLicenseLabel({ license: "MIT" })).toBe("MIT");
+    expect(collectionLicenseLabel({ license: "Mixed" })).toBe("Mixed");
+    expect(collectionLicenseLabel({ license: "Mixed", licenses: ["GPL-3.0", "No license"] }))
+      .toBe("Mixed (GPL-3.0, No license)");
   });
 });

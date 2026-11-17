@@ -86,7 +86,7 @@ const plural = (count: number, word: string) => `${count} ${word}${count === 1 ?
             <ul class="card-list" id="skill-list">{view.skills.map((skill) => <SkillRow skill={skill} />)}</ul>
             <div id="no-match" hidden>
               <EmptyState icon="search-x" title="No skill uses that license" headingLevel={3}>
-                <p>Choose another license, or show every permissive license again.</p>
+                <p>Choose another license, or show every license again.</p>
               </EmptyState>
             </div>
           </section>

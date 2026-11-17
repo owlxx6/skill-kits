@@ -1,6 +1,6 @@
 import MiniSearch, { type Options } from "minisearch";
 import type { Catalog } from "../../../pipeline/lib/schemas";
-import { collectionHref, skillHref } from "./catalog";
+import { collectionHref, collectionLicenseLabel, skillHref } from "./catalog";
 
 export interface SearchDocument {
   id: string;
@@ -37,7 +37,7 @@ export function searchDocuments(catalog: Catalog): SearchDocument[] {
     title: collection.id,
     text: collection.description ?? "",
     keywords: "",
-    license: collection.license,
+    license: collectionLicenseLabel(collection),
     href: collectionHref(collection.id),
     why: collection.description ?? "",
   }));

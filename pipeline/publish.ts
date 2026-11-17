@@ -80,6 +80,13 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
       lines.push(
         `- Extract: ${extract.repos} repos read, ${extract.skills} skills, ${extract.invalid} invalid SKILL.md files, ${extract.failedDownloads} failed downloads`,
       );
+      // Absent from run information written before license resolution.
+      const licenses = extract.licenses;
+      if (licenses) {
+        lines.push(
+          `- Licenses: ${licenses.identifiedAllowed} identified and allowed, ${licenses.identifiedNotAllowed} identified but not allowed, ${licenses.custom} custom, ${licenses.ambiguous} ambiguous, ${licenses.missing} missing, ${licenses.notReRead} not re-read, ${licenses.waitingForSafetyScan} waiting for the safety scan, ${licenses.unresolved} unresolved, ${licenses.failedDownloads} failed license downloads`,
+        );
+      }
     }
     if (review) {
       const perSkillIn = review.reviewed ? Math.round(review.reviewUsage.inputTokens / review.reviewed) : 0;
@@ -127,8 +134,16 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
       lines.push(...capped(kit.removed.map((entry) => `- \`${entry.id}\` - ${entry.reason}`)), "");
     }
     if (kit.pending.length > 0) {
-      lines.push("**Approved entries awaiting re-review (hidden until reviewed):**", "");
-      lines.push(...capped(kit.pending.map((id) => `- \`${id}\``)), "");
+      lines.push("**Approved entries pending (hidden until ready):**", "");
+      lines.push(
+        ...capped(
+          kit.pending.map((id) => {
+            const reason = kit.pendingReasons?.[id];
+            return reason ? `- \`${id}\` - ${inlineText(reason)}` : `- \`${id}\``;
+          }),
+        ),
+        "",
+      );
     }
     if (kit.proposals.collections.length > 0) {
       lines.push("**Collection candidates:**", "");

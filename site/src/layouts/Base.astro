@@ -25,6 +25,10 @@ const nav = [
     <meta name="description" content={description} />
     <meta name="theme-color" content="#ffffff" />
     <script is:inline>
+      try {
+        const theme = localStorage.getItem("skill-kits-theme");
+        if (theme === "night") document.documentElement.dataset.theme = "night";
+      } catch { /* Storage can be unavailable in private contexts. */ }
       // Motion is opt-in: entrance animations only hide content once this class is set,
       // so the page stays complete without JavaScript or with reduced motion.
       if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -45,6 +49,11 @@ const nav = [
         <nav class="site-nav" aria-label="Main">
           {nav.map((item) => <a href={item.href} aria-current={item.current}>{item.label}</a>)}
         </nav>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Night Shift" title="Night Shift" aria-pressed="false" hidden>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <circle cx="12" cy="12" r="8.5" /><path d="M12 3.5a8.5 8.5 0 0 1 0 17Z" fill="currentColor" stroke="none" />
+          </svg>
+        </button>
       </div>
     </header>
     <main id="main" tabindex="-1">
@@ -65,6 +74,28 @@ const nav = [
 </html>
 
 <script>
+  const themeToggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+  if (themeToggle) {
+    const syncTheme = () => {
+      themeToggle.setAttribute("aria-pressed", String(document.documentElement.dataset.theme === "night"));
+      const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+      if (meta) meta.content = document.documentElement.dataset.theme === "night" ? "#141414" : "#ffffff";
+    };
+    syncTheme();
+    themeToggle.hidden = false;
+    themeToggle.addEventListener("click", () => {
+      const theme = document.documentElement.dataset.theme === "night" ? "day" : "night";
+      document.documentElement.dataset.theme = theme;
+      try { localStorage.setItem("skill-kits-theme", theme); } catch { /* The toggle still works without persistence. */ }
+      syncTheme();
+    });
+    window.addEventListener("storage", (event) => {
+      if (event.key === "skill-kits-theme" || event.key === null) {
+        document.documentElement.dataset.theme = event.newValue === "night" ? "night" : "day";
+        syncTheme();
+      }
+    });
+  }
   // "/" focuses the page's search box, as on most developer sites; ignored while typing.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;

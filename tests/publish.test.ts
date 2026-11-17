@@ -111,9 +111,30 @@ describe("buildSummary", () => {
     expect(text).not.toContain("[docs](");
   });
 
-  it("lists approved entries awaiting re-review", () => {
-    expect(summary).toContain("**Approved entries awaiting re-review (hidden until reviewed):**");
-    expect(summary).toContain("- `acme/skills:skills/c`");
+  it("lists pending approved entries, without a reason when the catalog gives none", () => {
+    expect(summary).toContain("**Approved entries pending (hidden until ready):**\n\n- `acme/skills:skills/c`\n");
+  });
+
+  it("gives the reason of each pending approved entry", () => {
+    const withReasons = buildSummary(
+      {
+        ...catalog,
+        kits: [
+          {
+            ...catalog.kits[0],
+            pending: ["acme/skills:skills/c", "acme/skills:skills/d"],
+            pendingReasons: {
+              "acme/skills:skills/c": "awaiting re-review",
+              "acme/skills:skills/d": "waiting for the safety scan",
+            },
+          },
+        ],
+      },
+      runInfo,
+    );
+    expect(withReasons).toContain(
+      "- `acme/skills:skills/c` - awaiting re-review\n- `acme/skills:skills/d` - waiting for the safety scan\n",
+    );
   });
 
   it("neutralizes mentions, backticks and line breaks coming from the model", () => {
@@ -123,6 +144,32 @@ describe("buildSummary", () => {
 
   it("reports extraction counts", () => {
     expect(summary).toContain("2 invalid SKILL.md files, 3 failed downloads");
+  });
+
+  it("reports license outcomes on one line of the Run section", () => {
+    const extract = runInfo.extract as NonNullable<RunInfo["extract"]>;
+    const withLicenses = buildSummary(catalog, {
+      extract: {
+        ...extract,
+        licenses: {
+          identifiedAllowed: 30,
+          identifiedNotAllowed: 2,
+          custom: 3,
+          ambiguous: 4,
+          missing: 1,
+          notReRead: 2,
+          waitingForSafetyScan: 7,
+          unresolved: 0,
+          failedDownloads: 1,
+        },
+      },
+    });
+    const run = withLicenses.slice(withLicenses.indexOf("## Run"));
+    expect(run).toContain(
+      "- Licenses: 30 identified and allowed, 2 identified but not allowed, 3 custom, 4 ambiguous, 1 missing, 2 not re-read, 7 waiting for the safety scan, 0 unresolved, 1 failed license downloads\n",
+    );
+    // Run information written before license resolution has no license line.
+    expect(summary).not.toContain("- Licenses:");
   });
 
   it("reports token use per reviewed skill, failures and filtered repos", () => {

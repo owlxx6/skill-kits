@@ -384,3 +384,40 @@ a.chip:hover, button.chip:hover { background: var(--ink); border-color: var(--in
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* Night Shift keeps every route on the same persisted palette. */
+:root[data-theme="night"] {
+  color-scheme: dark;
+  --bg: #141414;
+  --surface: #191919;
+  --surface-subtle: #1d1d1d;
+  --surface-muted: #252525;
+  --border: #404040;
+  --border-strong: #555555;
+  --border-control: #8a8a8a;
+  --heading: #ffffff;
+  --text: #eeeeee;
+  --text-muted: #bcbcbc;
+  --accent: #dc2626;
+  --accent-hover: #b91c1c;
+  --accent-text: #ff7777;
+  --accent-soft: #361a1a;
+  --accent-border: #854343;
+  --link: #ff7777;
+  --link-hover: #ffaaaa;
+  --ring: #ff7777;
+}
+.theme-toggle {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 44px; height: 44px; border: 1px solid var(--border-control);
+  border-radius: 50%; background: var(--surface); color: var(--heading); cursor: pointer;
+}
+.theme-toggle:hover { background: var(--surface-muted); }
+.site-nav { margin-left: auto; }
+[hidden] { display: none !important; }
+@media(max-width:479px) {
+  .site-header .container { gap: .5rem; }
+  .site-header .brand { font-size: 1.1rem; gap: .4rem; }
+  .site-nav { gap: 0; margin-right: 0; }
+  .site-nav a { padding-inline: .4rem; font-size: .75rem; }
+}

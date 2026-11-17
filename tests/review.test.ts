@@ -252,6 +252,35 @@ describe("selectForReview, priority ids", () => {
   });
 });
 
+describe("selectForReview, license eligibility", () => {
+  const repos = [
+    makeRepo({ fullName: "tiny/repo", stars: 10 }),
+    makeRepo({ fullName: "big/repo", stars: 9000 }),
+  ];
+  const eligibleIds = new Set(["tiny/repo:ok", "tiny/repo:x"]);
+  const isEligible = (skill: { id: string }): boolean => eligibleIds.has(skill.id);
+
+  it("skips ineligible skills, priority ids included", () => {
+    const skills = [
+      makeSkill({ id: "tiny/repo:ok", repo: "tiny/repo", fingerprint: fp("a") }),
+      makeSkill({ id: "big/repo:no", repo: "big/repo", fingerprint: fp("b") }),
+      makeSkill({ id: "big/repo:approved", repo: "big/repo", fingerprint: fp("c") }),
+    ];
+    const triage = { [fp("a")]: ["web-app"], [fp("b")]: ["web-app"], [fp("c")]: ["web-app"] };
+    const result = selectForReview(skills, triage, new Set(), repos, 5, new Set(["big/repo:approved"]), isEligible);
+    expect(result).toEqual({ selected: [skills[0]], deferred: 0 });
+  });
+
+  it("selects an eligible copy when the copy of the most starred repository is not eligible", () => {
+    const skills = [
+      makeSkill({ id: "big/repo:x", repo: "big/repo", fingerprint: fp("x") }),
+      makeSkill({ id: "tiny/repo:x", repo: "tiny/repo", fingerprint: fp("x") }),
+    ];
+    const result = selectForReview(skills, { [fp("x")]: ["web-app"] }, new Set(), repos, 5, new Set(), isEligible);
+    expect(result.selected.map((skill) => skill.id)).toEqual(["tiny/repo:x"]);
+  });
+});
+
 describe("selectForReview, copies and unlisted repositories", () => {
   it("keeps the copy of the most starred repository", () => {
     const repos = [
