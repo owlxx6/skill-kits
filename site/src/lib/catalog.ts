@@ -56,6 +56,20 @@ export function collectionInstallCommand(id: string): string {
   return `npx skills add ${id}`;
 }
 
+export function collectionCoverageLabel(collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount">): string {
+  return `${collection.catalogSkillIds.length} of ${collection.skillCount} skills listed`;
+}
+
+export function collectionInstallScope(collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount">): string {
+  return collection.catalogSkillIds.length < collection.skillCount
+    ? "Installs every skill in this repository, not only the skills listed here."
+    : "Installs every skill in this repository.";
+}
+
+export function reviewLabel(humanReviewed: boolean): string {
+  return humanReviewed ? "Reviewed by a human" : "Session reviewed";
+}
+
 export interface KitView {
   kit: CatalogKit;
   collections: CatalogCollection[];

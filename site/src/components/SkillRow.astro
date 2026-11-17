@@ -2,6 +2,7 @@
 import CopyCommand from "./CopyCommand.astro";
 import Icon from "./Icon.astro";
 import LicenseDetails from "./LicenseDetails.astro";
+import ReviewStatus from "./ReviewStatus.astro";
 import { type CatalogSkill, collectionHref, formatCount, skillHref, skillInstallCommand } from "../lib/catalog";
 
 interface Props {
@@ -31,7 +32,7 @@ const href = skillHref(skill.id);
   <p class="skill-why">{skill.review.why}</p>
   <div class="badges">
     <LicenseDetails skill={skill} />
-    {skill.humanReviewed && <span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span>}
+    <ReviewStatus humanReviewed={skill.humanReviewed} />
   </div>
   <div class="skill-actions">
     <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} />

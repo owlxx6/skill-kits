@@ -115,7 +115,7 @@ const filters = [
     for (const [key, node] of Object.entries(states)) node.hidden = key !== name;
   };
 
-  const renderHit = (hit: { kind: Kind; title: string; href: string; license: string; why: string }) => {
+  const renderHit = (hit: { kind: Kind; title: string; href: string; license: string; why: string; coverage: string; installScope: string; reviewStatus: string }) => {
     const item = element("li", "card is-clickable result");
     const head = element("div", "result-head");
     const type = element("span", hit.kind === "skill" ? "badge accent" : "badge");
@@ -123,6 +123,7 @@ const filters = [
     const license = element("span", "badge");
     license.append(icon("icon-license"), hit.license);
     head.append(type, license);
+    if (hit.reviewStatus) head.append(element("span", "badge", hit.reviewStatus));
     const title = element("h2", "result-title");
     const link = element("a", "card-link", hit.title);
     link.href = hit.href;
@@ -130,6 +131,8 @@ const filters = [
     const body = element("div", "result-body");
     body.append(title);
     if (hit.why) body.append(element("p", "result-why", hit.why));
+    if (hit.coverage) body.append(element("p", "result-coverage", hit.coverage));
+    if (hit.installScope) body.append(element("p", "result-why", hit.installScope));
     item.append(head, body, icon("icon-arrow"));
     return item;
   };
@@ -172,6 +175,9 @@ const filters = [
       href: String(hit.href),
       license: String(hit.license),
       why: String(hit.why ?? ""),
+      coverage: String(hit.coverage ?? ""),
+      installScope: String(hit.installScope ?? ""),
+      reviewStatus: String(hit.reviewStatus ?? ""),
     }));
     const counts = { all: hits.length, skill: 0, collection: 0 };
     for (const hit of hits) counts[hit.kind] += 1;
@@ -228,6 +234,7 @@ const filters = [
   #search-results :global(.result-body) { display: grid; gap: var(--space-1); min-width: 0; }
   #search-results :global(.result-title) { font-size: var(--text-lg); overflow-wrap: anywhere; }
   #search-results :global(.result-why) { color: var(--text-muted); font-size: var(--text-sm); }
+  #search-results :global(.result-coverage) { font-size: var(--text-sm); font-weight: 600; }
   #search-results :global(.result-arrow) { color: var(--text-muted); transition: color var(--base) var(--ease), transform var(--base) var(--ease); }
   #search-results :global(.result:hover .result-arrow) { color: var(--accent); transform: translateX(4px); }
 </style>

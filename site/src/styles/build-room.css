@@ -34,6 +34,11 @@
 .project-collections{margin:1rem 0;font-size:.85rem}
 .project-collections summary{cursor:pointer;min-height:44px;padding:.6rem 0}
 .collection-install{padding:.5rem 0;display:grid;gap:.5rem}
+.collection-install>a{overflow-wrap:anywhere}
+.build-collections{padding-top:2.5rem}
+.collection-directory{margin-top:1rem}
+.collection-directory>summary{cursor:pointer;min-height:44px;padding:.75rem 0;font-weight:600}
+.collection-directory>.card-list{margin-top:1rem}
 .project-link{display:inline-flex;gap:.4rem;align-items:center;font-size:.9rem;min-height:44px;margin-top:.5rem;font-weight:600}
 .project-empty{padding:2rem 0 1rem}
 .project-empty>svg{color:var(--text-muted);margin-bottom:1rem}

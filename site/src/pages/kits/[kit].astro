@@ -32,7 +32,7 @@ const plural = (count: number, word: string) => `${count} ${word}${count === 1 ?
           ) : (
             <>
               <span><Icon name="layers" size={14} />{plural(view.collections.length, "collection")}</span>
-              <span><Icon name="puzzle" size={14} />{plural(view.skills.length, "skill")}</span>
+              <span><Icon name="puzzle" size={14} />{view.skills.length} individually selected skills</span>
             </>
           )}
           <span><Icon name="clock" size={14} />Reviewed {catalog.generatedAt.slice(0, 10)}</span>
@@ -57,7 +57,7 @@ const plural = (count: number, word: string) => `${count} ${word}${count === 1 ?
           <section class="section" aria-labelledby="collections-title">
             <div class="section-head">
               <h2 id="collections-title">Start with a collection</h2>
-              <p>Installs a whole repository of skills at once.</p>
+              <p>Each command installs every skill in its repository. Coverage shows how many are listed in this catalog.</p>
             </div>
             <ul class="card-list">{view.collections.map((collection) => <CollectionRow collection={collection} />)}</ul>
           </section>
