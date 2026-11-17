@@ -1,0 +1,41 @@
+{
+  "fingerprint": "29bd502ddaf6bd4092e7830202d9ac81d17d7038",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:36:48.130Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Plans, audits and fixes paid ads on Google, Meta and LinkedIn with platform playbooks and strict rules about missing data.",
+    "summary": "Gathers goals, offer, audience and current state, then routes by intent to reference playbooks: payback math, B2B paid, Meta decisions, LinkedIn, Google Search, ABM, RSA output, audits. It covers structure, budgets, retargeting, landing-page alignment, brand versus non-brand and a weekly check ending in HOLD, FIX, TEST or INVESTIGATE, with unavailable inputs labeled MISSING.",
+    "strengths": [
+      "Unknown is not failing: only verified items are scored",
+      "No fixed kill rules: a CPA spike is a question, not a verdict",
+      "Drafts changes to live accounts first and applies them only with approval"
+    ],
+    "cautions": [
+      "Most thresholds live in seventeen reference files not read here",
+      "Some retargeting and scaling claims rest on one practitioner's frameworks without sources",
+      "Assumes an agent connected to ad accounts for the live-account parts"
+    ],
+    "keywords": [
+      "paid ads",
+      "google ads",
+      "meta ads",
+      "linkedin ads",
+      "ad audit",
+      "retargeting",
+      "budget allocation",
+      "payback period"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

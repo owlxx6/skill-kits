@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f7556e639d2bad9f68dfd01d7424a17b7f822deb",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:40:42.369Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Earns backlinks and third-party mentions safely: confirms links are the bottleneck, picks tactics by effort, qualifies prospects and avoids link spam.",
+    "summary": "Starts by checking whether links, not the page, explain a ranking gap using a page-level comparison. It then chooses linkable assets and ranks tactics by effort and quality, qualifies prospects, drafts outreach for approval, and sets spam-policy rules: no bought ranking links, sponsored or nofollow where paid. It also covers anchors, pace and measuring links and AI mentions.",
+    "strengths": [
+      "Checks the page itself before spending on outreach",
+      "Targets pages that answer engines already cite, linked or not",
+      "Drafts outreach for approval and does not send on the user's behalf"
+    ],
+    "cautions": [
+      "Policy details such as dates will age",
+      "Backlink data needs a paid SEO tool for the full gap analysis",
+      "Playbooks and risk policy are in files not read here"
+    ],
+    "keywords": [
+      "link building",
+      "backlinks",
+      "unlinked mentions",
+      "link gap",
+      "guest posts",
+      "digital pr",
+      "seo outreach",
+      "ai citations"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

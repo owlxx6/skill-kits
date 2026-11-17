@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f389fc73ee996a9f90b25ceeead663521f2c4998",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Audits dbt documentation coverage and drafts missing model and column descriptions in the project's own style, one folder at a time, for human review.",
+    "summary": "Runs a coverage audit from the parsed manifest, then drafts descriptions that copy the project's conventions: layout, description style, column depth and test placement. It works folder by folder, leaves every change for review and never commits or pushes. A greenfield fallback uses grain-first descriptions.",
+    "strengths": [
+      "Mirrors existing house style instead of imposing a template",
+      "Audit needs no warehouse connection",
+      "Never commits or pushes"
+    ],
+    "cautions": [
+      "Later workflow steps were not read here",
+      "Drafted descriptions still need a person who knows the data",
+      "Only counts columns declared in YAML"
+    ],
+    "keywords": [
+      "dbt documentation",
+      "coverage audit",
+      "yaml descriptions",
+      "manifest json",
+      "model docs",
+      "data catalog",
+      "analytics engineering",
+      "backfill"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

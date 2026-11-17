@@ -1,0 +1,41 @@
+{
+  "fingerprint": "2e30270e8f7db0a9eb0ffb173622c84af22b1ed1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:59.067Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Chooses how to make marketing video (code, AI generation, avatars, editing) and covers prompts, workflows for demos and clips, and repeatable pipelines.",
+    "summary": "Compares four approaches: programmatic video with HTML or React frameworks, AI generation models, AI avatars and editing tools. It gives prompt basics, workflows for demos, explainers, batch clips and per-account videos, an agent-driven pipeline, common mistakes and a tool table. Prompting, demo recording and code-rendered film guides are in other files.",
+    "strengths": [
+      "Picks the approach by team skills and source material, not by hype",
+      "Warns that AI models cannot reliably render readable text",
+      "Per-account video workflow with a QA step and consent for cloned voices"
+    ],
+    "cautions": [
+      "Model names, limits and prices change faster than the skill",
+      "Four reference files are not read here",
+      "Needs paid tools and API keys for most approaches"
+    ],
+    "keywords": [
+      "marketing video",
+      "programmatic video",
+      "remotion",
+      "ai video generation",
+      "ai avatars",
+      "product demo video",
+      "video repurposing",
+      "batch video"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

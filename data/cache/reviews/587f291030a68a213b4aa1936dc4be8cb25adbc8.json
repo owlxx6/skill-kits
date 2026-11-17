@@ -1,0 +1,41 @@
+{
+  "fingerprint": "587f291030a68a213b4aa1936dc4be8cb25adbc8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T15:07:46.999Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Manages brand voice, visual identity and assets, and syncs a brand guidelines file into design tokens with bundled scripts.",
+    "summary": "Covers voice and messaging frameworks, visual identity, color and typography specs, logo rules, asset organization and consistency checks. Scripts inject brand context, validate assets, extract colors and sync a guidelines file to token files, stopping if existing token files or theme variables are detected unless forced. An update subcommand and eleven reference files go deeper.",
+    "strengths": [
+      "Sync stops before overwriting existing tokens or theme variables",
+      "One source of truth: the guidelines file feeds tokens and CSS variables",
+      "Templates and checklists for approval and consistency"
+    ],
+    "cautions": [
+      "Eleven reference files and five scripts are not read here",
+      "Needs Node to run the helpers",
+      "Targets teams that keep brand rules in files"
+    ],
+    "keywords": [
+      "brand identity",
+      "brand guidelines",
+      "design tokens",
+      "voice and tone",
+      "asset validation",
+      "color palette",
+      "typography",
+      "style guide"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

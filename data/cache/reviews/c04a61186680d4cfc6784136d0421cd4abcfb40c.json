@@ -1,0 +1,41 @@
+{
+  "fingerprint": "c04a61186680d4cfc6784136d0421cd4abcfb40c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:47:20.622Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Executes a plan with a fresh implementer subagent per task, a task review after each, and one broad review of the whole branch at the end.",
+    "summary": "Dispatches a fresh implementer subagent per task, then a spec and quality review, with one broad review at the end. It runs without pausing between tasks, records conflicts as ledgered rulings and stops only for destructive or security-sensitive actions, outside side effects such as pushing, or a broken plan. Reference files cover batching, fix loops and resuming.",
+    "strengths": [
+      "Fresh context per task limits context pollution",
+      "Two-stage review: spec compliance then code quality",
+      "Honest cost comparison with inline execution"
+    ],
+    "cautions": [
+      "Costs a fresh context per task and per review",
+      "Needs a harness with subagents and the companion planning skill",
+      "Scripts and eight reference files are not read here"
+    ],
+    "keywords": [
+      "subagent driven development",
+      "implementation plans",
+      "task review",
+      "ledger",
+      "fresh context",
+      "code quality",
+      "agent workflow",
+      "git"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

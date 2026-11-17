@@ -1,0 +1,38 @@
+{
+  "fingerprint": "b490379f71eee822cf207605ce4fceaff6e10330",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Concrete shared-element, route and state animation patterns with reduced-motion and version requirements.",
+    "summary": "Adds purposeful dynamic UI patterns rather than decorative motion. Primary instructions and CSS recipes were read fully; current React documentation confirms the API and reduced-motion requirement. React/Next runtime examples were not executed.",
+    "strengths": [
+      "Distinguishes spatial navigation from lateral changes",
+      "Covers named elements and transition conflicts",
+      "Includes reduced-motion CSS"
+    ],
+    "cautions": [
+      "React-specific; not an Astro-native implementation",
+      "Confirm installed React/Next and browser compatibility",
+      "Avoid implementing every possible animation when the brief needs less"
+    ],
+    "keywords": [
+      "react",
+      "animation",
+      "view transitions",
+      "motion",
+      "accessibility"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

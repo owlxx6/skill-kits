@@ -1,0 +1,41 @@
+{
+  "fingerprint": "0901aa3667db7a6e5cc40b213327290bf6556373",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Audits a deployed Vercel project for cost and speed using real metrics first, deterministic gates and ranked, cited recommendations.",
+    "summary": "Collects Vercel metrics, usage, configuration and code scan results into a signals file, investigates only metric-backed candidates and writes a ranked report. Rules: metrics first, read only files a candidate names, cite only a versioned docs library. It lists supported frameworks and prerequisites and says never to type tokens into commands.",
+    "strengths": [
+      "Recommendations start from production signals, not repo-wide guesses",
+      "Unsupported frameworks stop and ask before auditing",
+      "Invalid or version-mismatched citations are stripped"
+    ],
+    "cautions": [
+      "Large: dozens of bundled scripts that are not read here",
+      "Needs an authenticated CLI, a linked project and a paid observability plan for route metrics",
+      "Limited to a few frameworks"
+    ],
+    "keywords": [
+      "vercel",
+      "cost optimization",
+      "performance",
+      "next.js",
+      "caching",
+      "core web vitals",
+      "function invocations",
+      "audit"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

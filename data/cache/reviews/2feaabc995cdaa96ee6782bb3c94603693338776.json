@@ -1,0 +1,41 @@
+{
+  "fingerprint": "2feaabc995cdaa96ee6782bb3c94603693338776",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Keeps secrets out of n8n workflows: use credentials, bind existing ones by ID, and handle a token pasted in chat as leaked.",
+    "summary": "Three rules: secrets go through the credential system, list credentials then bind by ID, and credential creation is the user's job. It gives a decision tree for authentication, what to do when a user pastes a secret (do not use it, bind or ask for a credential, tell them to rotate it) and an anti-pattern table. Four references cover the system and custom auth.",
+    "strengths": [
+      "Tells the agent to treat any pasted secret as compromised",
+      "Always names the exact credential type for the user to create",
+      "Warns about the silent wrong binding when several credentials match"
+    ],
+    "cautions": [
+      "Specific to n8n and its tools",
+      "Four reference files are not read here",
+      "Cannot create credentials itself, by design"
+    ],
+    "keywords": [
+      "n8n credentials",
+      "api keys",
+      "oauth",
+      "secrets",
+      "bearer token",
+      "http request auth",
+      "security",
+      "workflow"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

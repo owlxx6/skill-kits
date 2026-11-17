@@ -1,0 +1,41 @@
+{
+  "fingerprint": "e29af782c357094dcdd063792b7ed7ae354620a6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Builds and maintains Cloudflare Sandbox apps on the stable package: a package gate, the exec and session contract and a map to the main docs.",
+    "summary": "Checks the dependency and image are stable and redirects preview apps to the other skills. The contract: exec takes a command string and resolves when the command finishes with buffered output, long-running work uses the process and stream APIs, sessions can keep directory and environment, prefer RPC transport, keep live credentials in the Worker and do not apply preview calls.",
+    "strengths": [
+      "Same gate pattern prevents mixing package lines",
+      "Clear difference between the stable and preview exec models",
+      "Says existing apps can stay on stable and no port is forced"
+    ],
+    "cautions": [
+      "Stable line may change when 1.0 lands",
+      "Depends on installed types and live docs",
+      "Cloudflare-specific"
+    ],
+    "keywords": [
+      "cloudflare sandbox",
+      "containers",
+      "exec",
+      "sessions",
+      "workers",
+      "rpc transport",
+      "sandboxing",
+      "code execution"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

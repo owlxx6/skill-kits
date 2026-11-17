@@ -1,0 +1,38 @@
+{
+  "fingerprint": "dfb34789accab3b5ca1c9d27235ea1e2fa1a96df",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Routes business questions through defined metrics, compiled SQL, model discovery and local artifacts.",
+    "summary": "Adds an analyst workflow distinct from model development: verify metrics and dimensions, then use progressively lower-level fallbacks. Custom SQL still requires grain and join checks, access controls and a query budget.",
+    "strengths": [
+      "Clear separation from building models",
+      "Useful fallback without live database access",
+      "Grounds questions in existing business models"
+    ],
+    "cautions": [
+      "Requires dbt artifacts or matching MCP tools",
+      "Compiled SQL edits can change metric meaning or duplicate rows",
+      "No live warehouse execution in this review"
+    ],
+    "keywords": [
+      "dbt",
+      "metrics",
+      "analytics",
+      "business questions",
+      "sql"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

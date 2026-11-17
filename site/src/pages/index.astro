@@ -3,7 +3,9 @@ import Base from "../layouts/Base.astro";
 import CopyCommand from "../components/CopyCommand.astro";
 import Icon from "../components/Icon.astro";
 import LicenseDetails from "../components/LicenseDetails.astro";
-import { collectionHref, collectionLicenseLabel, collectionInstallCommand, kitView, loadCatalog, skillHref, skillInstallCommand } from "../lib/catalog";
+import CollectionRow from "../components/CollectionRow.astro";
+import ReviewStatus from "../components/ReviewStatus.astro";
+import { collectionHref, collectionCoverageLabel, collectionInstallScope, collectionLicenseLabel, collectionInstallCommand, kitView, loadCatalog, skillHref, skillInstallCommand } from "../lib/catalog";
 import "../styles/build-room.css";
 const catalog = loadCatalog();
 const views = catalog.kits.map((kit) => kitView(catalog, kit.id)!);
@@ -30,19 +32,23 @@ const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u0
     <ul class="project-parts">{view.skills.map((skill,i) => <li><a href={skillHref(skill.id)}>{skill.name.replace(/-/g," ")}</a><button type="button" class="part-install" data-install={i} aria-controls={"install-"+view.kit.id+"-"+i} aria-label={"Show install command for "+skill.name} hidden>Install <Icon name="arrow-right" size={14}/></button></li>)}</ul>
     {view.skills.map((skill,i) => <div class="project-install" id={"install-"+view.kit.id+"-"+i} data-install-panel={i}><span class="install-label">Install {skill.name}</span><CopyCommand command={skillInstallCommand(skill)} label={"Copy install command for "+skill.name}/><a href={skillHref(skill.id)} class="install-details">Read prerequisites and review <Icon name="arrow-right" size={14}/></a></div>)}
    </>}
-   {view.collections.length>0 && <details class="project-collections"><summary>Included {view.collections.length===1 ? "collection" : "collections"}</summary>{view.collections.map((collection)=><div class="collection-install"><a href={collectionHref(collection.id)}>{collection.id}</a><span class="muted small">{collectionLicenseLabel(collection)}</span><CopyCommand command={collectionInstallCommand(collection.id)}/></div>)}</details>}
+   {view.collections.length>0 && <details class="project-collections"><summary>{view.collections.length} whole-repository {view.collections.length===1 ? "collection" : "collections"}</summary>{view.collections.map((collection)=><div class="collection-install"><a href={collectionHref(collection.id)}>{collection.id}</a><span class="muted small" data-collection-coverage>{collectionCoverageLabel(collection)}</span><div class="badges"><span class="muted small">{collectionLicenseLabel(collection)}</span><ReviewStatus/></div><p class="muted small" data-install-scope>{collectionInstallScope(collection)}</p><CopyCommand command={collectionInstallCommand(collection.id)} label={"Copy install command for "+collection.id}/></div>)}</details>}
    <a class="project-link" href={"/kits/"+view.kit.id+"/"}>Explore the full kit <Icon name="arrow-right" size={16}/></a>
   </>}
  </section>)}
  </div><p class="visually-hidden" role="status" data-project-status></p>
 </div>
+<section class="build-collections" aria-labelledby="collections-directory-title">
+ <div class="directory-heading"><div><h2 id="collections-directory-title">Install a collection.</h2><p>Each command installs every skill in its repository. Listed coverage can be smaller.</p></div></div>
+ <details class="collection-directory"><summary>Browse all {catalog.collections.length} collections</summary><ul class="card-list">{catalog.collections.map((collection)=><CollectionRow collection={collection}/>)}</ul></details>
+</section>
 <section class="build-directory" id="directory" aria-labelledby="directory-title">
  <div class="directory-heading"><div><h2 id="directory-title">Find a specific skill.</h2><p>Search by task, name or publisher.</p></div>
  <form class="directory-search" action="/search/" method="get" role="search"><label for="build-search" class="visually-hidden">Search skills by task, name or publisher</label><Icon name="search" size={20}/><input id="build-search" name="q" type="search" placeholder="Search skills…" autocomplete="off" data-search-shortcut/><button type="submit" aria-label="Open full search results" title="Open full search results"><Icon name="arrow-right" size={20}/></button></form></div>
  <p class="directory-count" data-directory-count role="status">{catalog.skills.length} skills</p>
  <ul class="build-results">{catalog.skills.map((skill)=><li data-directory-item data-search-text={normalize(skill.name+" "+skill.description+" "+skill.repo+" "+skill.review.keywords.join(" "))}>
   <div class="directory-name"><h3><a href={skillHref(skill.id)}>{skill.name.replace(/-/g," ")}</a></h3><a class="directory-repo" href={collectionHref(skill.repo)}>{skill.repo}</a></div>
-  <div class="directory-description"><p>{skill.review.why || skill.description}</p><LicenseDetails skill={skill} /><span> · Catalog review {skill.reviewScore.toFixed(1)}/10</span></div>
+  <div class="directory-description"><p>{skill.review.why || skill.description}</p><div class="badges"><LicenseDetails skill={skill} /><ReviewStatus/></div><span>Catalog review {skill.reviewScore.toFixed(1)}/10</span></div>
   <a class="directory-open" href={skillHref(skill.id)} aria-label={"View "+skill.name}><Icon name="arrow-right" size={20}/></a>
  </li>)}</ul>
  <p class="directory-empty" hidden data-directory-empty>No matches. Try a broader task or <button type="button" data-clear-search>clear the search</button>.</p>

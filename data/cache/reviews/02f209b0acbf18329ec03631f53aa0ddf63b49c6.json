@@ -1,0 +1,41 @@
+{
+  "fingerprint": "02f209b0acbf18329ec03631f53aa0ddf63b49c6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Helps launch and grow an online community: playbooks by goal, platform choice, health metrics and an ambassador program.",
+    "summary": "Starts from the community's identity and a flywheel, then gives playbooks for launching from zero, growing an existing group, running an advocate program and community-led support. It compares platforms, lists weekly health metrics with warning signs, and offers deliverables such as a channel plan, welcome journey and ritual calendar.",
+    "strengths": [
+      "Launch playbook is concrete: recruit founders, seed posts, reply to everyone",
+      "Platform table lists the main drawback of each option",
+      "Warning signs make a health audit actionable"
+    ],
+    "cautions": [
+      "Thresholds such as DAU/MAU above 20% are rules of thumb",
+      "Community model details are in a file not read here",
+      "Little on moderation or conflict handling"
+    ],
+    "keywords": [
+      "community building",
+      "discord",
+      "slack community",
+      "brand ambassadors",
+      "community metrics",
+      "member onboarding",
+      "community-led growth",
+      "engagement rituals"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

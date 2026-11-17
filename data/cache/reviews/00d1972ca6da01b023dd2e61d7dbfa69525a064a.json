@@ -1,0 +1,41 @@
+{
+  "fingerprint": "00d1972ca6da01b023dd2e61d7dbfa69525a064a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:23:25.089Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Writes accounting, audit, FP&A, treasury and banking resumes with exact currency, basis, deal status and credential wording.",
+    "summary": "Asks for target role, level and jurisdiction, then gives evidence prompts per track. It keeps currency, period and basis clear, separates a modeled saving from a realized one, distinguishes announced, signed and closed deals, describes controls without guaranteeing compliance and keeps credential status exact. It gives no investment or licensing advice.",
+    "strengths": [
+      "Separates analysis, recommendation, plan and realized result",
+      "Credential status exact: exam passed is not licensed",
+      "Confidential matters handled with approved aggregates"
+    ],
+    "cautions": [
+      "Instructions only: no templates or scripts",
+      "Narrow audience: finance roles",
+      "Regulated designation wording may need checking with the issuing body"
+    ],
+    "keywords": [
+      "finance resume",
+      "accounting resume",
+      "fp&a",
+      "audit",
+      "treasury",
+      "banking",
+      "credentials",
+      "resume writing"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

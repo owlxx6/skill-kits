@@ -1,0 +1,41 @@
+{
+  "fingerprint": "5b8664c9d0bd8e52ced311b758292e15b107c182",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Handles breaking dbt model changes and multi-project dbt Mesh work: model versions, contracts, access, groups and cross-project references.",
+    "summary": "Core principle: upstream data comes through ref, not source, and cross-project references need the project name. It starts with orientation steps (read the dependencies file, understand how upstream data arrives, disambiguate similar names, check existing patterns, know what is referenceable) and covers judging blast radius, versioning and contracts, with four reference guides.",
+    "strengths": [
+      "Judges whether a change is breaking and who it affects before editing",
+      "Clear table of which access levels can be referenced across projects",
+      "Works for single-project versioning too"
+    ],
+    "cautions": [
+      "Later sections and four reference files are not read here",
+      "Needs a modern dbt version for cross-project references",
+      "dbt-specific"
+    ],
+    "keywords": [
+      "dbt mesh",
+      "model versions",
+      "model contracts",
+      "cross-project ref",
+      "access modifiers",
+      "breaking changes",
+      "deprecation",
+      "multi-project"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "fingerprint": "0cb85d29651b1d4a4d557925a2c3b84ee65d836a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:42:25.458Z",
+  "review": {
+    "kits": [
+      "marketing-content",
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Designs recurring marketing jobs an agent runs on a schedule, each with a stop condition, saved state and human approval before spending or publishing.",
+    "summary": "Defines nine parts of a loop (cadence, acts-when, purpose, skills, body, self-check, state, stop, output), a rule to match cadence to how fast the signal changes, and when not to loop. It points to a catalog of sixty loops, operator guides for SEO and outbound, guardrails and a template, and shows how to schedule with cron or agent features.",
+    "strengths": [
+      "Separates how often a loop looks from when it acts",
+      "Saved state and a stop condition are mandatory, which prevents repeat alerts and runaway spend",
+      "Auto-drafting is allowed but publishing or spending needs a human checkpoint"
+    ],
+    "cautions": [
+      "Large: the catalog and guides are in eight files not read here",
+      "Needs a scheduler and connected tools to run",
+      "Sparse traffic makes weekly loops measure noise, as it warns"
+    ],
+    "keywords": [
+      "marketing automation",
+      "recurring tasks",
+      "agent loops",
+      "seo monitoring",
+      "churn watch",
+      "scheduling",
+      "guardrails",
+      "weekly review"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

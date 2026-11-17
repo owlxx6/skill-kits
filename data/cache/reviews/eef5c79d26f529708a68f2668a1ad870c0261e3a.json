@@ -1,0 +1,41 @@
+{
+  "fingerprint": "eef5c79d26f529708a68f2668a1ad870c0261e3a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:36:48.130Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Plans and reads A/B tests: hypothesis, sample size, metrics, peeking rules and result interpretation, plus an ongoing experiment program.",
+    "summary": "Starts from a structured hypothesis, one change per test and a pre-set sample size, with a quick sample-size table and metric roles (primary, secondary, guardrail). It covers variant design, traffic allocation, a launch checklist, the peeking problem and careful p-value and interval wording, then an ICE-scored backlog and an experiment playbook.",
+    "strengths": [
+      "Careful statistical wording that follows the American Statistical Association's statement",
+      "Advice for opt-in elements: analyze the exposed group, not all visitors",
+      "Playbook template and cadence for continuous experimentation"
+    ],
+    "cautions": [
+      "Detailed sample-size tables and test templates are in files not read here",
+      "Needs enough traffic: low-traffic sites get little from it",
+      "No testing tool is included"
+    ],
+    "keywords": [
+      "ab testing",
+      "experiment design",
+      "sample size",
+      "statistical significance",
+      "hypothesis",
+      "ice scoring",
+      "experiment backlog",
+      "conversion experiments"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

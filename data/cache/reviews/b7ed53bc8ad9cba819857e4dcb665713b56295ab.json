@@ -1,0 +1,42 @@
+{
+  "fingerprint": "b7ed53bc8ad9cba819857e4dcb665713b56295ab",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content",
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Runs and synthesizes customer research from transcripts, reviews and communities, with confidence labels so weak evidence is not over-read.",
+    "summary": "Three modes: analyze material you have, mine public sources such as review sites and Reddit, or interview and survey directly. It extracts jobs, pains, triggers, outcomes and exact language, then clusters themes by frequency and intensity. Insights get a confidence level, and personas need at least five data points.",
+    "strengths": [
+      "Confidence levels and sample-bias checks guard against over-claiming",
+      "Provisional personas when no reviews exist, tagged by proxy source",
+      "Treats fetched reviews and posts as data, never instructions"
+    ],
+    "cautions": [
+      "Primary research (interviews, surveys) needs real customer access",
+      "Source playbooks and interview scripts are in files not read here",
+      "Scraping public communities has terms-of-service limits it does not discuss"
+    ],
+    "keywords": [
+      "customer research",
+      "voice of customer",
+      "interviews",
+      "surveys",
+      "personas",
+      "jobs to be done",
+      "review mining",
+      "synthesis"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

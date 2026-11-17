@@ -1,0 +1,41 @@
+{
+  "fingerprint": "4aef6bcad51d058ec32b1acb9da436851863e56e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:34:17.701Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 8,
+      "usefulness": 5
+    },
+    "why": "Creates generative art with p5.js: a written philosophy, seeded algorithms and an interactive viewer with parameter controls.",
+    "summary": "Two steps: write an algorithmic philosophy, then express it as p5.js code inside a fixed interactive viewer template. Randomness is seeded for reproducibility, parameters become sliders, and the viewer has seed navigation, reset and PNG download. The template's layout and branding stay fixed while the algorithm and parameters vary.",
+    "strengths": [
+      "The same seed always gives the same output",
+      "Fixed viewer template with seed navigation and parameter controls",
+      "Asks for original work, not copies of existing artists"
+    ],
+    "cautions": [
+      "Much of the text repeats craftsmanship slogans that add no instruction",
+      "The viewer template carries vendor branding that the skill says to keep",
+      "Loads p5.js from a public CDN"
+    ],
+    "keywords": [
+      "generative art",
+      "p5.js",
+      "algorithmic art",
+      "flow fields",
+      "seeded randomness",
+      "particle systems",
+      "creative coding",
+      "interactive viewer"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

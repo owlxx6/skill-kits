@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b51f0a1aa876178f91a57dc2a56e4a53899d4013",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:22:46.480Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Writes or edits a cover letter from the user's real experience and a target role, with no invented admiration or facts.",
+    "summary": "Checks whether the posting forbids AI help, then uses the posting, the resume and any requirement table to draft: the role and a supported connection, one or two evidence paragraphs, an optional disclosure of a gap or transition, and a natural close. Default length is 150 to 300 words. It returns the letter, the unresolved facts and the evidence used.",
+    "strengths": [
+      "No invented referral, product use or company story",
+      "Keeps metrics and titles consistent with the resume",
+      "Respects employer rules on AI-assisted statements"
+    ],
+    "cautions": [
+      "Instructions only: no letter templates",
+      "Saving to a resume account needs compatible tools and the user's approval",
+      "Length default is an editorial rule of thumb, not a hiring rule"
+    ],
+    "keywords": [
+      "cover letter",
+      "application email",
+      "job application",
+      "truthful writing",
+      "career change letter",
+      "word count",
+      "evidence",
+      "hiring"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

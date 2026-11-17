@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b884518bf590d7e6c030ced59b69038966de9055",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:40:42.369Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Plans a product or feature launch with owned, rented and borrowed channels, a readiness gate, five phases, a Product Hunt plan and checklists.",
+    "summary": "Sorts channels into owned, rented and borrowed, then applies a readiness gate (simple, lovable, complete) before five phases from internal launch to full launch. It adds a Product Hunt plan with two case studies, post-launch work, a matrix for how much to announce each update, and pre-launch, launch-day and post-launch checklists.",
+    "strengths": [
+      "Readiness gate names two opposite failures: never shipping and endless scope",
+      "Matrix sizes the announcement to the update",
+      "Turns merged changes into release notes through a reference"
+    ],
+    "cautions": [
+      "Case-study figures are brief and unsourced",
+      "Aimed at software products",
+      "Site QA and shipped-changes guides are in files not read here"
+    ],
+    "keywords": [
+      "product launch",
+      "go-to-market",
+      "product hunt",
+      "waitlist",
+      "early access",
+      "launch checklist",
+      "release notes",
+      "feature announcement"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

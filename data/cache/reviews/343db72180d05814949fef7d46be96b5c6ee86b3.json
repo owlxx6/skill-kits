@@ -1,0 +1,38 @@
+{
+  "fingerprint": "343db72180d05814949fef7d46be96b5c6ee86b3",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Prioritized React and Next.js rules for avoiding waterfalls, reducing bundles and checking server actions.",
+    "summary": "A task-routed reference with 70 rules, examples and explicit impact priorities. Strong for React/Next.js performance reviews; applicability and benchmark claims need checking against the actual stack.",
+    "strengths": [
+      "Priorities distinguish high-impact work",
+      "Detailed positive and negative examples",
+      "Includes authorization checks in server actions"
+    ],
+    "cautions": [
+      "React/Next.js specific",
+      "Performance figures are illustrative, not measured on your app",
+      "Avoid mechanically applying micro-optimizations"
+    ],
+    "keywords": [
+      "react",
+      "nextjs",
+      "performance",
+      "waterfalls",
+      "bundles"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

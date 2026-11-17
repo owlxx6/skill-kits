@@ -1,0 +1,41 @@
+{
+  "fingerprint": "5b28d0ccb755e2244acda64dc07d78c48b7000bd",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:41:31.682Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 6
+    },
+    "why": "Simulates a board of twelve well-known marketers on a decision, maps where they disagree and ends with a recommendation and handoffs.",
+    "summary": "Seats one, three to five, or all twelve advisors by question type, always with a designated dissenter. Each take applies that advisor's documented frameworks, then a disagreement map names the trade-off and the evidence that would settle it. A chair's summary gives next steps. Grounding rules ban invented quotes and require a simulation label.",
+    "strengths": [
+      "Disagreement map shows real trade-offs instead of one blended answer",
+      "Strict grounding rules: no fabricated quotes or opinions about the user's company",
+      "Seating table pairs each question type with natural dissenters"
+    ],
+    "cautions": [
+      "Persona simulation: useful as a thinking aid, not expert advice",
+      "Full council output is long",
+      "Twelve advisor files are not read here"
+    ],
+    "keywords": [
+      "marketing advisors",
+      "persona simulation",
+      "positioning",
+      "brand strategy",
+      "direct response",
+      "marketing decisions",
+      "disagreement map",
+      "strategy review"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

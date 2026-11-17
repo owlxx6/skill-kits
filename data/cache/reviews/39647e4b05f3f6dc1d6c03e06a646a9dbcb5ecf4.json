@@ -1,0 +1,41 @@
+{
+  "fingerprint": "39647e4b05f3f6dc1d6c03e06a646a9dbcb5ecf4",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Builds reusable n8n sub-workflows: search before building, typed inputs, stateless versus stateful design, tagging, middleware and fire-and-forget patterns.",
+    "summary": "Treats sub-workflows as functions with a typed trigger and a clean return. It sets rules to search first and define inputs below, a decision tree for when to extract, the difference between stateless and deliberately stateful sub-workflows, and patterns for async audit logging and middleware such as token checks. Naming and pattern details are in two references.",
+    "strengths": [
+      "Warns against accidental state, such as a pure-looking workflow that writes a log",
+      "Node groups are suggested when the only goal is a tidier canvas",
+      "Tag-based discovery convention"
+    ],
+    "cautions": [
+      "Later sections and two reference files are not read here",
+      "Requires n8n tag search features of recent versions",
+      "Only for n8n"
+    ],
+    "keywords": [
+      "n8n sub-workflows",
+      "reuse",
+      "execute workflow trigger",
+      "modular workflows",
+      "middleware",
+      "tags",
+      "audit logging",
+      "workflow design"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

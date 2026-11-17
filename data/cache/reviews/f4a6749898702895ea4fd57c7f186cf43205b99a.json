@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f4a6749898702895ea4fd57c7f186cf43205b99a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:45:20.555Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Requests a code review from a fresh subagent with precise context: when to ask, how to fill the template and how to act on the findings.",
+    "summary": "Lists when review is mandatory (after each task, after a major feature, before merging) or optional. The steps are to get base and head commit ids, dispatch a reviewer subagent with a filled template, then fix critical and important issues, note minor ones and push back with evidence when the reviewer is wrong. It includes rationalizations to avoid and red flags.",
+    "strengths": [
+      "Reviewer gets crafted context, never the whole session history",
+      "Clear severity handling: critical now, important before proceeding",
+      "Short table of excuses for skipping review"
+    ],
+    "cautions": [
+      "Needs a harness that can dispatch subagents",
+      "The reviewer template is in a file not read here",
+      "Short and process-oriented"
+    ],
+    "keywords": [
+      "code review",
+      "subagents",
+      "git diff",
+      "quality gate",
+      "review template",
+      "pull requests",
+      "severity",
+      "development workflow"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

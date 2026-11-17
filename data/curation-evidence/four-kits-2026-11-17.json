@@ -1,0 +1,164 @@
+[
+  {
+    "id": "TerminalSkills/skills:skills/data-analysis",
+    "commit": "42289059901710441bfa8081c08c3a9f36b93f9c",
+    "fingerprint": "911027ae2dfc34e1673ad357817818a4074f574d",
+    "sourceUrl": "https://github.com/TerminalSkills/skills/tree/42289059901710441bfa8081c08c3a9f36b93f9c/skills/data-analysis",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "TerminalSkills/skills:skills/pandas",
+    "commit": "42289059901710441bfa8081c08c3a9f36b93f9c",
+    "fingerprint": "c3c3b9580f4140c8938a6f9caac71f05dc0e4fa6",
+    "sourceUrl": "https://github.com/TerminalSkills/skills/tree/42289059901710441bfa8081c08c3a9f36b93f9c/skills/pandas",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "anthropics/skills:skills/frontend-design",
+    "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+    "fingerprint": "d79e2a5bb4df4a386c2adcdd9ab8709bba28c3f6",
+    "sourceUrl": "https://github.com/anthropics/skills/tree/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/frontend-design",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "cloudflare/skills:skills/web-perf",
+    "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+    "fingerprint": "f50f5e7f34021937059dbda12e8f990006ab0fd1",
+    "sourceUrl": "https://github.com/cloudflare/skills/tree/cbf893b954222276bf1af57e5f23379231e0efb9/skills/web-perf",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "cloudflare/skills:skills/workers-best-practices",
+    "commit": "cbf893b954222276bf1af57e5f23379231e0efb9",
+    "fingerprint": "82b367b39fd2b7fe77bd2859bd09b3cff80907c9",
+    "sourceUrl": "https://github.com/cloudflare/skills/tree/cbf893b954222276bf1af57e5f23379231e0efb9/skills/workers-best-practices",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "dbt-labs/dbt-agent-skills:skills/dbt/skills/answering-natural-language-questions-with-dbt",
+    "commit": "b8facde20b7a92c40ce3e6b86b71c4b92aa44040",
+    "fingerprint": "dfb34789accab3b5ca1c9d27235ea1e2fa1a96df",
+    "sourceUrl": "https://github.com/dbt-labs/dbt-agent-skills/tree/b8facde20b7a92c40ce3e6b86b71c4b92aa44040/skills/dbt/skills/answering-natural-language-questions-with-dbt",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "dbt-labs/dbt-agent-skills:skills/dbt/skills/running-dbt-commands",
+    "commit": "b8facde20b7a92c40ce3e6b86b71c4b92aa44040",
+    "fingerprint": "5d6d1ab38226f83647522a2bd2acde19561c6a97",
+    "sourceUrl": "https://github.com/dbt-labs/dbt-agent-skills/tree/b8facde20b7a92c40ce3e6b86b71c4b92aa44040/skills/dbt/skills/running-dbt-commands",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "n8n-io/skills:skills/n8n-binary-and-data-official",
+    "commit": "626f50fdf2934116eea2c5469339e03d2d524e83",
+    "fingerprint": "7b48c50f28da9c83775fa7cf5d219674c7cb83db",
+    "sourceUrl": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/n8n-binary-and-data-official",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "n8n-io/skills:skills/n8n-error-handling-official",
+    "commit": "626f50fdf2934116eea2c5469339e03d2d524e83",
+    "fingerprint": "5096d0e53d8300270ffa5d5a302e5a3d6e4bd3fb",
+    "sourceUrl": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/n8n-error-handling-official",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "n8n-io/skills:skills/n8n-node-configuration-official",
+    "commit": "626f50fdf2934116eea2c5469339e03d2d524e83",
+    "fingerprint": "c13ba422ab6d31c768be782adc044beaf97af0ac",
+    "sourceUrl": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/n8n-node-configuration-official",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "n8n-io/skills:skills/n8n-workflow-lifecycle-official",
+    "commit": "626f50fdf2934116eea2c5469339e03d2d524e83",
+    "fingerprint": "3c744d2ee3295fd435b5b58fd96df37a114396b0",
+    "sourceUrl": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/n8n-workflow-lifecycle-official",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "n8n-io/skills:skills/using-n8n-skills-official",
+    "commit": "626f50fdf2934116eea2c5469339e03d2d524e83",
+    "fingerprint": "ad69629f6f64c5ff0355703dd2f33f0585b76593",
+    "sourceUrl": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/using-n8n-skills-official",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "nextlevelbuilder/ui-ux-pro-max-skill:.claude/skills/ui-ux-pro-max",
+    "commit": "e59ff376a41f7ca47b7541ad5c116495cbade3ee",
+    "fingerprint": "b6f08c13f95a4854694f41113e0b4935c741deb1",
+    "sourceUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/e59ff376a41f7ca47b7541ad5c116495cbade3ee/.claude/skills/ui-ux-pro-max",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "obra/superpowers:skills/systematic-debugging",
+    "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+    "fingerprint": "774f23e27e35cb0a89ede39156e7b079fbb84190",
+    "sourceUrl": "https://github.com/obra/superpowers/tree/22f0b463e7a5e579904dd6211a520321035526f7/skills/systematic-debugging",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "supabase/agent-skills:skills/supabase-postgres-best-practices",
+    "commit": "c9be0e931b7930f7d02126d04774d904c381e7d7",
+    "fingerprint": "27bde25111c4cd5e6f803fc9db5fbffe27bb26cf",
+    "sourceUrl": "https://github.com/supabase/agent-skills/tree/c9be0e931b7930f7d02126d04774d904c381e7d7/skills/supabase-postgres-best-practices",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "vercel-labs/agent-skills:skills/react-best-practices",
+    "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+    "fingerprint": "343db72180d05814949fef7d46be96b5c6ee86b3",
+    "sourceUrl": "https://github.com/vercel-labs/agent-skills/tree/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills/react-best-practices",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "vercel-labs/agent-skills:skills/react-view-transitions",
+    "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+    "fingerprint": "b490379f71eee822cf207605ce4fceaff6e10330",
+    "sourceUrl": "https://github.com/vercel-labs/agent-skills/tree/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills/react-view-transitions",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  },
+  {
+    "id": "vercel-labs/agent-skills:skills/web-design-guidelines",
+    "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+    "fingerprint": "3116f3e62dbd02b44a598b1aa690d2a8938e8f89",
+    "sourceUrl": "https://github.com/vercel-labs/agent-skills/tree/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills/web-design-guidelines",
+    "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+    "reviewMethod": "AI session review; owner authorized inclusion",
+    "ownerReadSource": false
+  }
+]

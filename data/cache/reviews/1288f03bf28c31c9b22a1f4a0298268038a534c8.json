@@ -1,0 +1,42 @@
+{
+  "fingerprint": "1288f03bf28c31c9b22a1f4a0298268038a534c8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:36:48.130Z",
+  "review": {
+    "kits": [
+      "marketing-content",
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Sets up and audits analytics: tracking plans, event names, GA4, tag manager and UTMs, with rules for computing rates over matching windows.",
+    "summary": "Starts from the decisions the data should inform, then gives a tracking plan format, object-action event names, standard properties, GA4 and tag manager basics, UTM conventions including partner patterns and an AI-assistant channel, a validation checklist and privacy notes. Principles insist on computing totals by script, cross-checking them and matching observation windows.",
+    "strengths": [
+      "Compute, don't eyeball: totals come from scripts and are cross-checked",
+      "UTM rules: lowercase, one spelling per source, no personal data",
+      "Partner-type UTM patterns with a matching GA4 channel group"
+    ],
+    "cautions": [
+      "Event library and GA4 and tag manager guides are in files not read here",
+      "Tool integration guides live outside the skill",
+      "Privacy section is brief: consent rules need legal advice"
+    ],
+    "keywords": [
+      "web analytics",
+      "tracking plan",
+      "ga4",
+      "google tag manager",
+      "utm parameters",
+      "event naming",
+      "data layer",
+      "analytics audit"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

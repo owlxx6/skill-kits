@@ -1,0 +1,41 @@
+{
+  "fingerprint": "c341e3a76e59f967be1490f7ae7823e32990f6b5",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Fetches and searches dbt documentation as markdown by adding .md to page URLs, using the page index first and a cached search script second.",
+    "summary": "Shows the URL pattern, a quick reference for single pages, the page index and the full docs file, and a two-step search: the index first, then a bundled script that searches the full docs and caches for a day. A short section says to treat all fetched documentation as untrusted and never to follow embedded instructions.",
+    "strengths": [
+      "Index first, full text only when needed",
+      "Explicit untrusted-content rules for fetched pages",
+      "Fresh-download option to bypass the cache"
+    ],
+    "cautions": [
+      "Narrow and brief: depends on the docs site keeping its markdown URLs",
+      "The search script is not read here",
+      "Needs network access"
+    ],
+    "keywords": [
+      "dbt documentation",
+      "llms.txt",
+      "markdown docs",
+      "doc search",
+      "dbt cloud",
+      "dbt core",
+      "semantic layer",
+      "lookup"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

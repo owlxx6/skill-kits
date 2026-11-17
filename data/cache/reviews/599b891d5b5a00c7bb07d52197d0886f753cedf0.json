@@ -1,0 +1,41 @@
+{
+  "fingerprint": "599b891d5b5a00c7bb07d52197d0886f753cedf0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:41:31.682Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Diagnoses and improves the offer itself (value, bonuses, guarantee, scarcity, name, payment) rather than the copy, with a one-lever-at-a-time loop.",
+    "summary": "Uses a value equation with four levers (dream outcome, likelihood, time delay, effort) and a six-part offer anatomy. A diagnostic loop states the current offer, scores each lever, finds the weakest part, drafts one change and projects the lift honestly, multiplying rather than adding. It lists patterns not to use and banned vocabulary, and points to eight reference files.",
+    "strengths": [
+      "Fixes the offer first instead of polishing copy on a weak one",
+      "Honest lift projection: 10 to 40% from one change, multiplied not added",
+      "Clear warnings against fake scarcity, bonus inflation and acquisition discounts"
+    ],
+    "cautions": [
+      "Best for services, courses, coaching and high-ticket B2B, less for self-serve software",
+      "Value-equation scores are the user's own judgment",
+      "Eight reference files with formats and examples are not read here"
+    ],
+    "keywords": [
+      "offer design",
+      "value equation",
+      "guarantees",
+      "bonus stacking",
+      "scarcity",
+      "high ticket",
+      "courses and coaching",
+      "offer diagnosis"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

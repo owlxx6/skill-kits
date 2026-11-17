@@ -1,0 +1,41 @@
+{
+  "fingerprint": "b38ec4af3fb5998f0a6a108ff90a1d97c17331a8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Writes dbt unit tests that mock upstream inputs and check expected rows, with when to test, formats, special cases and warehouse type notes.",
+    "summary": "Explains what unit tests are and when they are worth writing (complex logic, past bugs, refactors, critical models), the model, given and expect structure, how to pick the data format and how to mock only the columns needed. It warns that upstream models must exist and shows building them empty. Thirteen references cover edge cases and warehouse types.",
+    "strengths": [
+      "Clear when to test and when not to",
+      "Advises sanitizing sample data to remove personal information",
+      "Special-case guides for incremental, ephemeral and versioned models"
+    ],
+    "cautions": [
+      "Later sections and thirteen reference files are not read here",
+      "Needs a dbt project and warehouse access",
+      "dbt-specific"
+    ],
+    "keywords": [
+      "dbt unit tests",
+      "test driven development",
+      "mock inputs",
+      "yaml tests",
+      "incremental models",
+      "data quality",
+      "dbt show",
+      "analytics engineering"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

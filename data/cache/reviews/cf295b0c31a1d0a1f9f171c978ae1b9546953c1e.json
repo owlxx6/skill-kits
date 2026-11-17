@@ -1,0 +1,41 @@
+{
+  "fingerprint": "cf295b0c31a1d0a1f9f171c978ae1b9546953c1e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Builds and publishes first-class n8n Agents through the agent tools: when to choose one over a workflow, the build sequence, approvals and debugging.",
+    "summary": "Starts with a decision table (agent, workflow or AI Agent node), then five non-negotiables: send a memory block, never publish without approval, publish what the agent calls, gate risky tools, one change per call. It gives an eight-step build sequence, current limits, instruction-writing advice and an anti-pattern table. Twelve reference files hold the details.",
+    "strengths": [
+      "Clear rule for choosing agent, workflow or AI Agent node",
+      "Publishing and channel connection always need the user's explicit yes",
+      "Anti-pattern table lists silent failures such as unpublished sub-agents"
+    ],
+    "cautions": [
+      "Needs an n8n instance with Agents enabled; some parts are marked temporary because the feature is changing",
+      "Twelve reference files are not read here",
+      "Test calls run real tools, so side effects can happen"
+    ],
+    "keywords": [
+      "n8n agents",
+      "ai agents",
+      "mcp tools",
+      "agent approvals",
+      "sub-agents",
+      "agent memory",
+      "channels",
+      "workflow automation"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

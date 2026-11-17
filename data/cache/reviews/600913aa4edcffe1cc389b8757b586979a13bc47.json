@@ -1,0 +1,41 @@
+{
+  "fingerprint": "600913aa4edcffe1cc389b8757b586979a13bc47",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Helps choose Cloudflare products for an app, API, agent, storage or security need, and decide whether an error is a configuration or origin problem.",
+    "summary": "Starts from the user's goal, recommends a small coherent set of products and routes to product skills or bundled references. It says which CLI to use (cf by default, Wrangler where a project already uses it), recommends Workers with static assets for new sites, and has a long need-to-product table. It also covers Cloudflare error pages and 52x or 1xxx codes.",
+    "strengths": [
+      "Surfaces products the user may not know to ask for",
+      "Explains the deciding requirement when two products could fit",
+      "One CLI per project rule avoids mixed configuration"
+    ],
+    "cautions": [
+      "Broad overview: depth is in many reference files and other skills, not read here",
+      "Product names and recommendations change quickly",
+      "Recommends only one vendor's products"
+    ],
+    "keywords": [
+      "cloudflare",
+      "workers",
+      "product selection",
+      "architecture",
+      "durable objects",
+      "r2",
+      "d1",
+      "error codes"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

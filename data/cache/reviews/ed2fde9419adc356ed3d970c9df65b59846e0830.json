@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ed2fde9419adc356ed3d970c9df65b59846e0830",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:21.133Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Designs referral, affiliate and review programs: virality fit, share mechanisms, incentives, metrics, launch checklist and sample emails.",
+    "summary": "Starts by asking whether virality can be built into the product, then separates customer referral from affiliate programs. It covers the referral loop (trigger, share, convert, reward), single, double and tiered rewards, optimization and fixes, metrics, a launch checklist and email sequences, with affiliate, review and viral-mechanism guides in separate files.",
+    "strengths": [
+      "Warns not to force virality on products that do not suit it",
+      "Rewards at the aha moment or a milestone, not at signup",
+      "Includes fraud rules and terms in the launch checklist"
+    ],
+    "cautions": [
+      "Figures on higher lifetime value and lower churn of referred customers are quoted without sources",
+      "Seven reference files with sizing and platform rules are not read here",
+      "Incentive and review rules differ by platform and country"
+    ],
+    "keywords": [
+      "referral program",
+      "affiliate program",
+      "word of mouth",
+      "viral loops",
+      "incentives",
+      "review campaigns",
+      "commissions",
+      "customer advocacy"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

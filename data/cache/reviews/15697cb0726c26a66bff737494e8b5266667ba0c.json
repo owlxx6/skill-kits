@@ -1,0 +1,42 @@
+{
+  "fingerprint": "15697cb0726c26a66bff737494e8b5266667ba0c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:45:20.555Z",
+  "review": {
+    "kits": [
+      "web-app",
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Runs one subagent per independent problem, each with a focused brief and no inherited history, then reviews and integrates the results.",
+    "summary": "Use when there are several unrelated failures or subsystems with no shared state. The steps are to group problems by domain, give each agent a specific scope, goal, constraints and expected output, dispatch all in one response so they run concurrently, then read each summary, check for conflicts and run the full tests. A decision diagram says when not to use it.",
+    "strengths": [
+      "Clear test for independence before splitting work",
+      "Agents get only the context they need, which keeps the coordinator's context free",
+      "Always verifies fixes do not conflict and runs the full suite"
+    ],
+    "cautions": [
+      "Needs a harness with parallel subagents",
+      "Examples are test-failure focused",
+      "No handling of failed or timed-out agents"
+    ],
+    "keywords": [
+      "parallel agents",
+      "subagents",
+      "task delegation",
+      "debugging",
+      "concurrency",
+      "agent prompts",
+      "test failures",
+      "coordination"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

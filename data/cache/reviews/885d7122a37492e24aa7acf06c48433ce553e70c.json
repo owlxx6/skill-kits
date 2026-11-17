@@ -1,0 +1,41 @@
+{
+  "fingerprint": "885d7122a37492e24aa7acf06c48433ce553e70c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:41:31.682Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Builds a 12-month marketing plan organized by acquisition, activation, retention, referral and revenue, fitted to the client's budget, team and funding stage.",
+    "summary": "Runs three phases: research and intake, section-by-section review, then compile. The plan has thirteen sections, from executive summary and current-state scoring to a 90-day roadmap, ops stack, idea bank and measurement. It adds a problem size and frequency gate, budget methods, growth-stage framing and a list of what every plan must customize.",
+    "strengths": [
+      "Forces numbers: exact budget, unit economics, team and current channels",
+      "Resumable, with progress saved and finalized plans never overwritten silently",
+      "Unknown inputs become named open decisions, not guesses"
+    ],
+    "cautions": [
+      "Long output (8,000 to 12,000 words) and many reference files, not read here",
+      "Written like a fractional consultant's engagement: heavy for a small team",
+      "Budget tiers by funding stage are anchors, not facts"
+    ],
+    "keywords": [
+      "marketing plan",
+      "go-to-market",
+      "aarrr",
+      "fractional cmo",
+      "marketing budget",
+      "90 day roadmap",
+      "market sizing",
+      "growth strategy"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

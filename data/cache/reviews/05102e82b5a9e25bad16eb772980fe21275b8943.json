@@ -1,0 +1,41 @@
+{
+  "fingerprint": "05102e82b5a9e25bad16eb772980fe21275b8943",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:42:25.458Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Plans SEO pages built at scale from templates and data, with twelve playbooks, uniqueness rules, indexation strategy and thin-content checks.",
+    "summary": "Sets principles (unique value per page, proprietary data, subfolders, intent match), lists twelve playbooks with a chooser, then walks through pattern research, data needs, template design, hub-and-spoke linking, indexation and platform choice. It adds a pre-launch checklist, post-launch monitoring and common mistakes.",
+    "strengths": [
+      "Data defensibility ranking: proprietary first, public data weakest",
+      "Strong warnings against thin pages, doorway pages and over-generation",
+      "Playbook chooser maps what you have to the page pattern"
+    ],
+    "cautions": [
+      "Does not generate or publish pages itself",
+      "Playbook and platform guides are in files not read here",
+      "Search-engine policy and volume data change over time"
+    ],
+    "keywords": [
+      "programmatic seo",
+      "template pages",
+      "seo at scale",
+      "thin content",
+      "internal linking",
+      "indexation",
+      "location pages",
+      "comparison pages"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

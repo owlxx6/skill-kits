@@ -1,0 +1,38 @@
+{
+  "fingerprint": "27bde25111c4cd5e6f803fc9db5fbffe27bb26cf",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "web-app",
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "Prioritized Postgres query, schema, pooling and row-policy guidance with focused SQL references.",
+    "summary": "A database reference that applies beyond Supabase. It covers indexes, connections, schema design and tenant isolation, with SQL examples. Broad performance claims are not substitutes for workload measurements.",
+    "strengths": [
+      "Useful without a Supabase account",
+      "Focused SQL reference files",
+      "Includes tenant access patterns"
+    ],
+    "cautions": [
+      "Requires Postgres expertise and workload-specific EXPLAIN checks",
+      "Illustrative RLS examples depend on a trusted role/session setup"
+    ],
+    "keywords": [
+      "postgres",
+      "sql",
+      "indexes",
+      "schema",
+      "database"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

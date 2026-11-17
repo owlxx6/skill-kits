@@ -1,0 +1,34 @@
+{
+  "fingerprint": "a38aa7fa73fd2835b9ce77a60274f7dc62d015a6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:35:03.521Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 5,
+      "completeness": 1,
+      "usefulness": 1
+    },
+    "why": "Empty skill template with placeholder text and no instructions.",
+    "summary": "Frontmatter with a placeholder name and description, and one heading telling the author to insert instructions. It contains no guidance of its own.",
+    "strengths": [
+      "Shows the minimal frontmatter a skill needs"
+    ],
+    "cautions": [
+      "No instructions at all",
+      "The placeholder description would never match a request",
+      "Only useful as a starting file"
+    ],
+    "keywords": [
+      "skill template",
+      "placeholder",
+      "skill authoring",
+      "starter file",
+      "skill frontmatter"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

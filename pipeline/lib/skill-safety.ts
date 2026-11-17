@@ -13,6 +13,7 @@ import {
 import { isMediaPath, SAFETY_RULES_VERSION, type SafetyInputFile, scanSkillFiles } from "./safety";
 import type { RepoMeta, SafetyStats, SkillRecord } from "./schemas";
 import { listSkillFiles, type SkillFileEntry, type TreeEntry } from "./skillfile";
+import { readYamlFile } from "./store";
 import { compareText } from "./text";
 
 // Wires the static scanner (pipeline/lib/safety.ts, docs/SAFETY-SCAN.md) into the extract
@@ -76,14 +77,57 @@ export function safetyCacheFile(cache: SafetyCache): SafetyCacheFile {
   };
 }
 
-// A skill is cleared only by a scan of its current fingerprint that found no signal at all
-// beyond information. A `review` verdict (warnings, or files that could not be scanned) is not
-// cleared: it needs a human look first. A skill without an entry is not cleared. The function
-// reads the cache when called, so it sees entries added while the extract step runs.
-export function safetyCleared(cache: SafetyCache): SafetyCleared {
+// The owner's decision about one skill whose scan verdict is `review`: its findings were read
+// and judged harmless (documentation that names a tool, a data file that cannot be scanned).
+// It binds to the exact content that was read: the skill fingerprint and the scan's contentId.
+// A change to either makes the decision stale, and the skill waits for a new look. A `block`
+// verdict is never overridden. The file is versioned and public, so it holds no finding text:
+// the reports stay admin-only.
+export const ScanOverrideSchema = z.object({
+  id: z.string().min(1),
+  fingerprint: gitObjectId,
+  contentId: z.string().regex(/^[0-9a-f]{64}$/),
+  reviewedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "expected a YYYY-MM-DD date"),
+  // A short neutral category, not a quote from the reviewed files.
+  basis: z.string().min(1).max(120),
+});
+export type ScanOverride = z.infer<typeof ScanOverrideSchema>;
+
+export const ScanOverridesFileSchema = z
+  .object({ overrides: z.array(ScanOverrideSchema) })
+  .refine(
+    (file) => new Set(file.overrides.map((entry) => entry.id)).size === file.overrides.length,
+    "a skill is listed twice",
+  );
+
+// data/scan-overrides.yaml. No file is no override.
+export async function readScanOverrides(file: string): Promise<ScanOverride[]> {
+  try {
+    return (await readYamlFile(file, ScanOverridesFileSchema)).overrides;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+// A skill is cleared by a scan of its current fingerprint that found no signal at all beyond
+// information. A `review` verdict (warnings, or files that could not be scanned) is not cleared
+// unless the owner's decision for the same fingerprint and scanned content says so. A `block`
+// verdict, a skill without an entry and a stale entry are never cleared. The function reads the
+// cache when called, so it sees entries added while the extract step runs.
+export function safetyCleared(cache: SafetyCache, overrides: readonly ScanOverride[] = []): SafetyCleared {
+  const overrideById = new Map(overrides.map((entry) => [entry.id, entry]));
   return (skill) => {
     const entry = Object.hasOwn(cache, skill.id) ? cache[skill.id] : undefined;
-    return entry !== undefined && entry.fingerprint === skill.fingerprint && entry.verdict === "clear";
+    if (entry === undefined || entry.fingerprint !== skill.fingerprint) return false;
+    if (entry.verdict === "clear") return true;
+    if (entry.verdict !== "review") return false;
+    const decision = overrideById.get(skill.id);
+    return (
+      decision !== undefined &&
+      decision.fingerprint === skill.fingerprint &&
+      decision.contentId === entry.contentId
+    );
   };
 }
 

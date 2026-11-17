@@ -1,0 +1,41 @@
+{
+  "fingerprint": "0860d1ba29ed7d512e0f489203492d39bca82057",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:40:42.369Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Plans lead magnets: what to offer by buyer stage, how much to gate, landing page and delivery, promotion and the metrics to track.",
+    "summary": "Sets five principles (specific problem, buyer stage, high perceived value, path to product, easy to consume), compares eleven formats by effort, and maps formats to awareness, consideration and decision stages. It covers gating levels and form fields, a landing page structure, delivery and thank-you pages, promotion channels, metrics, test ideas and an output template.",
+    "strengths": [
+      "Gating guidance ties form fields to conversion cost",
+      "Matches the offer to the buyer stage with examples",
+      "Includes a thank-you page plan, often overlooked"
+    ],
+    "cautions": [
+      "Conversion benchmarks vary widely by audience",
+      "Benchmarks and an optional content-to-skill guide are in files not read here",
+      "No templates for the magnet itself"
+    ],
+    "keywords": [
+      "lead magnets",
+      "gated content",
+      "email capture",
+      "content upgrades",
+      "landing pages",
+      "buyer stage",
+      "checklists",
+      "lead generation"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

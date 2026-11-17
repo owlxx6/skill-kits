@@ -1,0 +1,38 @@
+{
+  "fingerprint": "7b48c50f28da9c83775fa7cf5d219674c7cb83db",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Explains file flow and storage references across JSON-only agent-tool boundaries.",
+    "summary": "Useful niche capability for uploaded files and generated artifacts: staged storage, synchronization, keys and lifecycle. References include platform-specific differences and signed URL guidance. Real storage and chat-surface integrations remain untested.",
+    "strengths": [
+      "Covers inbound and outbound files",
+      "Calls out multi-file duplicate execution",
+      "Includes retention and private storage choices"
+    ],
+    "cautions": [
+      "Requires storage and credential setup",
+      "Validate platform-specific file events and rendering",
+      "Timeout and node behavior must match installed version"
+    ],
+    "keywords": [
+      "n8n",
+      "files",
+      "binary",
+      "storage",
+      "agent tools"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -13,6 +13,8 @@ data/cache/skills.json
 data/cache/safety.json
 site/dist/
 site/.astro/
+# Private local curation inputs, scan reports and disposable test environments.
+.intake/
 
 # Session review packets and answers (docs/SESSION-REVIEWS.md): third-party text, local only.
 .session-reviews/

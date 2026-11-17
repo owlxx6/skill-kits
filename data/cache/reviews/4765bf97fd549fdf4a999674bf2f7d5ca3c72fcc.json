@@ -1,0 +1,41 @@
+{
+  "fingerprint": "4765bf97fd549fdf4a999674bf2f7d5ca3c72fcc",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:24:08.732Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Builds a full interview prep pack from the user's real experience: story bank, cited company brief, predicted questions and a debrief.",
+    "summary": "Picks a depth from the time left (triage under three hours up to a multi-day plan), reads what the round scores, chooses a competency framework, mines a story bank with probe layers, writes a dated, cited company brief from public sources, predicts questions per round and drafts opener, why-us, weakness and salary answers. It adds questions to ask, a logistics checklist and a debrief.",
+    "strengths": [
+      "Missing results stay marked as needing a number; ranges are never upgraded to point figures",
+      "Declines invented stories and covert live help, with a one-line honest alternative",
+      "Every company fact is cited and dated, and old facts are flagged"
+    ],
+    "cautions": [
+      "Very long, and seven reference files are not read here",
+      "Sibling skills for mock interviews, offers and tracking are optional, so the light versions are inside",
+      "A section on saving to the vendor's resume app applies only when it is connected"
+    ],
+    "keywords": [
+      "interview prep",
+      "story bank",
+      "star stories",
+      "company research",
+      "behavioral interview",
+      "salary answers",
+      "interview debrief",
+      "likely questions"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

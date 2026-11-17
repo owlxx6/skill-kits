@@ -1,0 +1,41 @@
+{
+  "fingerprint": "0107e76b5a48cf26133f3643ebf168acc75c22d2",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Answers questions about a dbt v2 project's own metadata with SQL over the information schema instead of grepping YAML or parsing the manifest.",
+    "summary": "Explains two routes: dbt show for one-off queries and DuckDB on exported files for many queries. It lists prerequisites, rules that prevent wrong answers (literal view calls, default row limit, disabled rows, package filtering), column gotchas, what is populated when, common queries and how to turn a query into a build check.",
+    "strengths": [
+      "Rules table explains silent errors such as the default limit of 10 rows",
+      "Warns that a misrouted query goes to the warehouse and overwrites run results",
+      "Route comparison with freshness and speed trade-offs"
+    ],
+    "cautions": [
+      "dbt v2 only; falls back to the manifest on older versions",
+      "One column reference file is not read here",
+      "Later sections were not read in full"
+    ],
+    "keywords": [
+      "dbt information schema",
+      "project metadata",
+      "duckdb",
+      "dbt show",
+      "lineage",
+      "test coverage",
+      "model timing",
+      "dbt check"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

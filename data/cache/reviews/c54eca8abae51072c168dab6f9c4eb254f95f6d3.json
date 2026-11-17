@@ -1,0 +1,42 @@
+{
+  "fingerprint": "c54eca8abae51072c168dab6f9c4eb254f95f6d3",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:21.133Z",
+  "review": {
+    "kits": [
+      "marketing-content",
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Designs revenue operations: lifecycle stages, MQL and SQL definitions, lead scoring, routing, handoff SLAs, pipeline stages, CRM automation and metrics.",
+    "summary": "Sets principles (one source of truth, define before automate, measure every handoff), then lifecycle stages with owners and an MQL rule needing both fit and engagement, a scoring model with negative scoring and a held-out test, routing methods, pipeline stage hygiene, CRM automations, deal desk tiers, data hygiene and a metrics dashboard.",
+    "strengths": [
+      "MQL needs fit and engagement, with a response SLA for each handoff",
+      "Scoring model is tested on a later holdout, not just tuned to past data",
+      "Output is standalone documents ready to implement"
+    ],
+    "cautions": [
+      "Speed-to-lead and benchmark figures are quoted without full sources",
+      "Aimed at B2B software with a CRM",
+      "Playbooks and templates are in five files not read here"
+    ],
+    "keywords": [
+      "revenue operations",
+      "lead scoring",
+      "lead routing",
+      "mql sql",
+      "crm automation",
+      "pipeline stages",
+      "deal desk",
+      "sales marketing alignment"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

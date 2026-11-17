@@ -1,0 +1,42 @@
+{
+  "fingerprint": "29777c654e3bce1d1aabd04a05fd4ba1bc01d5e8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content",
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Sets up, audits and fixes conversion tracking to ad and analytics platforms, firing on confirmed success and proving a test conversion arrived.",
+    "summary": "Separates lead-generation from ecommerce conversions, then runs a setup or audit flow from three facts: what counts, where it lands, what runs it. Includes success-signal snippets for form and booking tools, importable tag manager recipes, a symptom table, verdict rules for mismatched numbers and a rule to diagnose before changing anything.",
+    "strengths": [
+      "Every finding says how it is known: observed, reported or inferred",
+      "Diagnosis comes before any change, and live accounts need a named target",
+      "Compares browser-side and server-side options on the real trade-offs"
+    ],
+    "cautions": [
+      "Large: needs a tag manager workspace and platform access to finish",
+      "Dated platform deadlines it cites will age",
+      "Marks one commercial tool as a partner and discloses it"
+    ],
+    "keywords": [
+      "conversion tracking",
+      "google tag manager",
+      "meta pixel",
+      "conversions api",
+      "enhanced conversions",
+      "ga4",
+      "offline conversions",
+      "tracking audit"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "0e4a08c138b6f57cb560ec14b3d96df1873f8bdc",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Explains dbt State, the server-backed way to skip or clone nodes instead of rebuilding, with configs, billing basics and fixes for unexpected rebuilds.",
+    "summary": "Starts with a misconceptions table (not the same as the state selector, works beyond one engine, not free, what data it sends). It explains the skip, clone or build decision, why models rebuild including volatile SQL, a configuration table, usage billing by daily active tables and tuning tips such as lag tolerance per environment.",
+    "strengths": [
+      "Corrects common confusion with the state selector and deferral",
+      "States plainly what is sent to the vendor and that it is a paid product",
+      "Clear config table with defaults"
+    ],
+    "cautions": [
+      "Covers a vendor product that needs an account and bills by usage",
+      "Later optimization sections were not read in full",
+      "No reference files"
+    ],
+    "keywords": [
+      "dbt state",
+      "model reuse",
+      "cloning",
+      "lag tolerance",
+      "volatile sql",
+      "rebuilds",
+      "ci cost",
+      "state aware orchestration"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

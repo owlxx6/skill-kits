@@ -27,7 +27,7 @@ import {
   type TriageCache,
   TriageCacheSchema,
 } from "./lib/schemas";
-import { readSafetyCache, safetyCacheFile, safetyCleared } from "./lib/skill-safety";
+import { readSafetyCache, readScanOverrides, safetyCacheFile, safetyCleared } from "./lib/skill-safety";
 import {
   type Paths,
   readJsonFile,
@@ -205,6 +205,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         safety: {
           cache: safetyReports,
           save: (cache) => writeJsonFile(paths.safety, safetyCacheFile(cache)),
+          overrides: await readScanOverrides(paths.scanOverrides),
         },
         log: deps.log,
       },
@@ -230,7 +231,10 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     const priorityIds = new Set(Object.values(curation).flatMap((entry) => entry.approved));
     // A skill that cannot be published (see the publication policy) is neither triaged nor
     // reviewed. The safety scan of the last extraction decides for the skills that need it.
-    const isSafetyCleared = safetyCleared(await loadSafetyReports(paths));
+    const isSafetyCleared = safetyCleared(
+      await loadSafetyReports(paths),
+      await readScanOverrides(paths.scanOverrides),
+    );
     const isEligible = (skill: SkillRecord): boolean =>
       isPublishable(skill, config.filter.allowedLicenses, isSafetyCleared);
     const llm = deps.getLlm(config.review.model);
@@ -316,7 +320,10 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         config,
         now: deps.now,
         truncatedRepos,
-        isSafetyCleared: safetyCleared(await loadSafetyReports(paths)),
+        isSafetyCleared: safetyCleared(
+          await loadSafetyReports(paths),
+          await readScanOverrides(paths.scanOverrides),
+        ),
       }),
     );
     await writeJsonFile(paths.catalog, catalog);

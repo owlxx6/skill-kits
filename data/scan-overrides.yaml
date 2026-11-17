@@ -1,0 +1,18 @@
+# The owner's decisions about skills whose safety scan verdict is `review`.
+#
+# A `review` verdict is not cleared by itself. An entry here clears it when the owner (or a
+# reader the owner authorized) has read every finding and judged it harmless. Each entry binds to
+# the exact content that was read: if the skill's fingerprint or its scanned files change, the
+# entry no longer applies and the skill waits for a new look. A `block` verdict is never cleared
+# here. Keep `basis` to a short category: the findings themselves stay in the private reports.
+overrides:
+  - id: davila7/claude-code-templates:cli-tool/components/skills/workflow-automation/n8n/n8n-workflow-patterns
+    fingerprint: 07388edb1860998c2afce2b257b14f74d1c28f12
+    contentId: 8b6b3f70a9ac333133d51b95378b7e9843e985b906a81b359ba3505e21f6239a
+    reviewedAt: 2026-11-17
+    basis: documentation names a testing service
+  - id: nextlevelbuilder/ui-ux-pro-max-skill:.claude/skills/ui-styling
+    fingerprint: 2279643473f0c0a0f8d791a5b2b02bf9804d3167
+    contentId: 3374a74c08d63e22d7155a4402619f6ab9980c14192adbed7949420c531b4c07
+    reviewedAt: 2026-11-17
+    basis: data file that cannot be scanned

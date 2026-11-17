@@ -1,0 +1,41 @@
+{
+  "fingerprint": "40cf3b3b2d723a490b84103d6a58f71045ad26db",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Diagnoses failed dbt platform jobs from run logs, the admin API, git history and data checks, never editing a failing test just to pass.",
+    "summary": "Opens with an iron rule: do not change a test to make it pass without understanding why it fails, plus a table of rationalizations that mean stop. A workflow gathers run information through admin tools or user-supplied logs, classifies the error type, checks recent changes or the data, then fixes with a branch, a test and a pull request or writes up findings.",
+    "strengths": [
+      "Rationalization table stops rushed fixes under pressure",
+      "Classifies infrastructure, code and data failures separately",
+      "Ends with a findings document when no root cause is found"
+    ],
+    "cautions": [
+      "For platform job failures, not local development errors",
+      "Needs admin API tools or exported logs",
+      "Investigation template is in a file not read here"
+    ],
+    "keywords": [
+      "dbt job failures",
+      "troubleshooting",
+      "run logs",
+      "admin api",
+      "root cause",
+      "flaky tests",
+      "git history",
+      "dbt cloud"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

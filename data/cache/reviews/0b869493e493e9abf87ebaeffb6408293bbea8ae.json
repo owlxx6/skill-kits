@@ -1,0 +1,41 @@
+{
+  "fingerprint": "0b869493e493e9abf87ebaeffb6408293bbea8ae",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Builds, migrates and deploys Next.js apps on Cloudflare Workers with vinext, which is preferred over OpenNext for new projects.",
+    "summary": "States the default (vinext, not OpenNext, for new projects) and why: Next.js APIs on Vite with native Workers integration and incremental migration. It tells the agent to install the upstream vinext skills if missing and follow them, with separate paths for a new project and an existing Next.js project, and warns not to assume full Next.js parity.",
+    "strengths": [
+      "Clear default and a reason for it",
+      "Preserves existing OpenNext setups during unrelated work",
+      "Warns that compatibility must be checked for required features"
+    ],
+    "cautions": [
+      "Mostly delegates to upstream skills it tells the agent to install",
+      "Depends on a young project",
+      "Short"
+    ],
+    "keywords": [
+      "next.js",
+      "cloudflare workers",
+      "vinext",
+      "opennext",
+      "migration",
+      "vite",
+      "react server components",
+      "deployment"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

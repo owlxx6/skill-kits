@@ -1,0 +1,41 @@
+{
+  "fingerprint": "db57118bed208efa8af263dce5c80a91b11a10ae",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:24:58.616Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Turns resume duties into truthful impact bullets by asking for real evidence, keeping estimates and never inventing numbers.",
+    "summary": "Chooses a pace (one bullet, fast path, full mining), triages bullets, mines achievements with questions, sizes each result and checks source, credit, other causes and confidentiality. Each fact is tagged stated, estimate, document, calculated or inferred, and an inferred one never reaches a bullet. Drafts use four forms and a lint; resume edits need approval.",
+    "strengths": [
+      "A derived number needs the user's yes, and placeholders block delivery",
+      "Defensibility test: could the user explain the figure in an interview",
+      "Myths table debunks common resume statistics"
+    ],
+    "cautions": [
+      "Very long, and six reference files are not read here",
+      "Questions come first, so it is slower than a plain rewrite by design",
+      "The patching section applies only when the builder's tools are connected"
+    ],
+    "keywords": [
+      "resume bullets",
+      "impact bullets",
+      "achievements",
+      "quantify results",
+      "resume experience",
+      "xyz format",
+      "fact ledger",
+      "resume editing"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

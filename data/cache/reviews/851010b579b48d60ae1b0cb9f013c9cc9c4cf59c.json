@@ -1,0 +1,41 @@
+{
+  "fingerprint": "851010b579b48d60ae1b0cb9f013c9cc9c4cf59c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:23:25.089Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Writes customer success, onboarding, implementation and support resumes, separating retention metrics and ownership claims.",
+    "summary": "Asks whether the target is adoption, onboarding, implementation, renewals or support, and what scope and authority the user had. It gives evidence prompts per type, keeps revenue retention, churn and renewal rates separate with their period and definition, and avoids claiming renewals the user only supported. A worked example shows the claim to avoid.",
+    "strengths": [
+      "Metric definitions and periods are confirmed before comparing figures",
+      "Does not claim ownership of work the user only supported",
+      "Pairs speed with quality evidence for support roles"
+    ],
+    "cautions": [
+      "Instructions only: no templates or scripts",
+      "Narrow audience: customer-facing roles",
+      "Depends on metrics the user can supply"
+    ],
+    "keywords": [
+      "customer success resume",
+      "onboarding",
+      "implementation",
+      "support resume",
+      "retention metrics",
+      "csat",
+      "renewals",
+      "resume writing"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

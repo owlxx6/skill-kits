@@ -1,0 +1,41 @@
+{
+  "fingerprint": "cef67362bcace9d7e652db8a6561d26db82dfbba",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Diagnoses broken n8n workflows in order of likelihood: parameters, stale assumptions, wiring, stripped upstream data, lost item context, logic, bugs.",
+    "summary": "Lists seven likely causes with a cheap check for each, then an eight-step walkthrough: confirm the symptom, read the execution, re-fetch the workflow and node types, test with pinned data, read the n8n source, suspect version drift and report. Its one rule is to believe the user and say I don't know yet rather than invent a cause.",
+    "strengths": [
+      "Ordered checks from cheap to deep",
+      "Calls out the silent null from a node that replaced the data",
+      "Explicitly prefers I don't know yet to a fabricated cause"
+    ],
+    "cautions": [
+      "Needs n8n tools to fetch executions and workflows",
+      "Later steps and two reference files are not read here",
+      "Contains temporary notes about missing instance tools"
+    ],
+    "keywords": [
+      "n8n debugging",
+      "workflow errors",
+      "execution data",
+      "pinned data",
+      "expressions",
+      "node parameters",
+      "troubleshooting",
+      "version drift"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

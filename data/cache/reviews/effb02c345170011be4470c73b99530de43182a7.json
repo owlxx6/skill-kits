@@ -1,0 +1,41 @@
+{
+  "fingerprint": "effb02c345170011be4470c73b99530de43182a7",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:45:20.555Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 6
+    },
+    "why": "Investigates a session that went wrong by reading transcripts, citing evidence for every finding, and optionally preparing a scrubbed bug-report bundle.",
+    "summary": "Steps: pin down the problem, locate session files, run seven analyst subagents in parallel, write a report where every finding cites a file and line, then optionally search and create a GitHub issue after approval, export a scrubbed bundle on request, and compare similar sessions. Hard rules: read-only on sessions, context safety, and exact paths for subagents.",
+    "strengths": [
+      "No citation, no finding: every number comes from the transcript",
+      "Never builds a bundle or opens an issue without being asked and approved",
+      "Scrub then audit loop with a warning that redaction can miss things"
+    ],
+    "cautions": [
+      "Meant for users of one skill collection and its harnesses",
+      "Nineteen prompt, reference and template files are not read here",
+      "Transcripts may contain private data"
+    ],
+    "keywords": [
+      "session diagnosis",
+      "transcript analysis",
+      "bug report",
+      "cost and time",
+      "plan adherence",
+      "redaction",
+      "github issues",
+      "subagents"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

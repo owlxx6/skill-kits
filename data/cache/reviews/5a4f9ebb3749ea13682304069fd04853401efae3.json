@@ -1,0 +1,41 @@
+{
+  "fingerprint": "5a4f9ebb3749ea13682304069fd04853401efae3",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Creates and audits 'alternative' and 'X vs Y' pages, with page formats, fair-claim rules and a claim-by-claim check of existing competitive content.",
+    "summary": "Defines four page formats with section order and target keywords, essential sections, a centralized competitor data file and a research process. Its evidence rules say not observed is not absent, claims carry dates, and facts stay apart from motives. An audit marks each claim current, changed, unverifiable or overclaimed.",
+    "strengths": [
+      "Evidence rules protect against false public claims about another company",
+      "Refuses to guess the competitor and asks first",
+      "Audit output gives replacement wording, public pages first"
+    ],
+    "cautions": [
+      "Verifying claims needs live access to competitor sites",
+      "Templates and data structure are in files not read here",
+      "SEO advice is general"
+    ],
+    "keywords": [
+      "competitor pages",
+      "alternatives pages",
+      "vs pages",
+      "comparison pages",
+      "competitive claims",
+      "competitor research",
+      "seo",
+      "claim audit"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

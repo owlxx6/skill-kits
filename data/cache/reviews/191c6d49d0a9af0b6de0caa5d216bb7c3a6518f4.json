@@ -1,0 +1,41 @@
+{
+  "fingerprint": "191c6d49d0a9af0b6de0caa5d216bb7c3a6518f4",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Writes reliable n8n expressions: reference data by node name, avoid pointless Set nodes, use Luxon for dates, and format long expressions with comments.",
+    "summary": "Its core rule is to reference data with the node name instead of the current item, with a no-op anchor where branches converge. It names the Set-node antipattern and when a Set earns its place, then shows single-field transforms and array method chains, with advice to indent and comment multi-step expressions. Date handling uses Luxon rather than a date node.",
+    "strengths": [
+      "Explains the silent breakage of current-item references after refactors",
+      "Quick test for whether a Set node is needed",
+      "Examples of commented multi-line expressions for non-coders"
+    ],
+    "cautions": [
+      "Only the first part was read here; later sections are not covered",
+      "Specific to n8n",
+      "Single file with no references"
+    ],
+    "keywords": [
+      "n8n expressions",
+      "node references",
+      "luxon dates",
+      "set node",
+      "array methods",
+      "data mapping",
+      "workflow design",
+      "expression errors"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

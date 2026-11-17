@@ -1,0 +1,41 @@
+{
+  "fingerprint": "0a9812630ba2159c9f87202a315748cb58c96213",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:36:48.130Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 6
+    },
+    "why": "Audits an App Store or Google Play listing, scores six dimensions and returns a prioritized action plan with exact text changes.",
+    "summary": "Fetches the listing and takes a screenshot for visuals, classifies brand maturity (dominant, established, challenger), scores title, description, visuals, ratings, freshness and conversion signals out of 100, optionally compares competitors and writes a report with quick wins, keyword suggestions and character counts. It lists indexing rules for each store.",
+    "strengths": [
+      "Brand maturity tiers avoid penalizing deliberate choices of large apps",
+      "Treats fetched listings and reviews as untrusted data",
+      "Every recommendation must be specific, with character counts"
+    ],
+    "cautions": [
+      "Cannot see search volume or rankings without paid tools, as it says",
+      "Store pages render on the client, so fetched data can be incomplete",
+      "Scoring criteria and platform specs are in files not read here"
+    ],
+    "keywords": [
+      "app store optimization",
+      "aso audit",
+      "google play listing",
+      "app keywords",
+      "screenshots",
+      "app ratings",
+      "competitor listings",
+      "app conversion"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

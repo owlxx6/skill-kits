@@ -1,0 +1,39 @@
+{
+  "fingerprint": "3cf9a8db32597ba3e24b584a3d696f4e11c7d7b6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:35:03.521Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 7,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Guides creating and improving skills: interview, draft, test prompts against a baseline, review in a viewer, iterate, then tune the description.",
+    "summary": "Captures intent through an interview, writes the skill file, saves test prompts, runs each with and without the skill in parallel, grades assertions, aggregates a benchmark and opens a review viewer for the user's feedback before iterating. A separate loop optimizes the skill description on train and held-out queries, and packaging produces an installable file.",
+    "strengths": [
+      "Baseline comparison runs in the same turn as the skill run",
+      "Explains the why instead of heavy MUSTs and keeps prompts lean",
+      "Adapts the workflow for code, chat and cowork environments"
+    ],
+    "cautions": [
+      "Long and tied to the vendor's tooling: subagents, its command-line tool and a file-presenting tool",
+      "Runs many scripts and background processes that are not read here",
+      "Some informal asides and repeated emphasis"
+    ],
+    "keywords": [
+      "skill creation",
+      "skill evals",
+      "benchmarking",
+      "description optimization",
+      "skill packaging",
+      "iteration loop",
+      "subagents",
+      "skill authoring"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

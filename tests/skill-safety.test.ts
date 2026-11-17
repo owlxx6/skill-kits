@@ -1,3 +1,6 @@
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { extractRepo } from "../pipeline/extract";
 import { SAFETY_RULES_VERSION } from "../pipeline/lib/safety";
@@ -5,8 +8,11 @@ import type { SkillRecord } from "../pipeline/lib/schemas";
 import {
   type SafetyCache,
   type SafetyEntry,
+  type ScanOverride,
+  ScanOverridesFileSchema,
   needsSafetyScan,
   readSafetyCache,
+  readScanOverrides,
   safetyCacheFile,
   safetyCleared,
   summarizeSafety,
@@ -155,6 +161,86 @@ describe("safetyCleared", () => {
 
   it("does not mistake an inherited property for a report", () => {
     expect(safetyCleared({})({ ...skill, id: "constructor" })).toBe(false);
+  });
+
+  describe("with the owner's decisions", () => {
+    const decision = (patch: Partial<ScanOverride> = {}): ScanOverride => ({
+      id: skill.id,
+      fingerprint: skill.fingerprint,
+      contentId: "b".repeat(64),
+      reviewedAt: "2026-11-17",
+      basis: "documentation only",
+      ...patch,
+    });
+
+    it("clears a review verdict the owner read, for the same fingerprint and scanned content", () => {
+      const cache = { [skill.id]: entry({ verdict: "review" }) };
+      expect(safetyCleared(cache, [decision()])(skill)).toBe(true);
+    });
+
+    it("does not clear once the content or the fingerprint changed since the decision", () => {
+      const cache = { [skill.id]: entry({ verdict: "review" }) };
+      expect(safetyCleared(cache, [decision({ contentId: "c".repeat(64) })])(skill)).toBe(false);
+      expect(safetyCleared(cache, [decision({ fingerprint: "c".repeat(40) })])(skill)).toBe(false);
+      const moved = { ...skill, fingerprint: "c".repeat(40) } as SkillRecord;
+      expect(safetyCleared({ [skill.id]: entry({ verdict: "review", fingerprint: moved.fingerprint }) }, [decision()])(moved)).toBe(false);
+    });
+
+    it("never overrides a block verdict", () => {
+      expect(safetyCleared({ [skill.id]: entry({ verdict: "block" }) }, [decision()])(skill)).toBe(false);
+    });
+
+    it("needs a report: a decision alone clears nothing", () => {
+      expect(safetyCleared({}, [decision()])(skill)).toBe(false);
+    });
+
+    it("applies only to the skill it names", () => {
+      const other = { ...skill, id: "acme/skills:b" } as SkillRecord;
+      const cache = { [other.id]: entry({ verdict: "review" }) };
+      expect(safetyCleared(cache, [decision()])(other)).toBe(false);
+    });
+
+    it("changes nothing for a clear verdict", () => {
+      expect(safetyCleared({ [skill.id]: entry({}) }, [decision({ contentId: "c".repeat(64) })])(skill)).toBe(true);
+    });
+  });
+});
+
+describe("the owner's scan decisions file", () => {
+  const valid = {
+    id: "acme/skills:a",
+    fingerprint: "a".repeat(40),
+    contentId: "b".repeat(64),
+    reviewedAt: "2026-11-17",
+    basis: "documentation only",
+  };
+
+  it("accepts a list of decisions and rejects a skill listed twice", () => {
+    expect(ScanOverridesFileSchema.parse({ overrides: [valid] }).overrides).toHaveLength(1);
+    expect(() => ScanOverridesFileSchema.parse({ overrides: [valid, valid] })).toThrow(/listed twice/);
+  });
+
+  it.each([
+    ["a date that is not a day", { reviewedAt: "last week" }],
+    ["a short content id", { contentId: "abc" }],
+    ["a long basis", { basis: "x".repeat(121) }],
+    ["no basis", { basis: "" }],
+  ])("rejects %s", (_label, patch) => {
+    expect(() => ScanOverridesFileSchema.parse({ overrides: [{ ...valid, ...patch }] })).toThrow();
+  });
+
+  it("reads a file, and no file is no decision", async () => {
+    const dir = await mkdtemp(path.join(tmpdir(), "scan-overrides-"));
+    try {
+      expect(await readScanOverrides(path.join(dir, "missing.yaml"))).toEqual([]);
+      const file = path.join(dir, "scan-overrides.yaml");
+      await writeFile(file, `overrides:\n  - id: ${valid.id}\n    fingerprint: ${valid.fingerprint}\n    contentId: ${valid.contentId}\n    reviewedAt: 2026-11-17\n    basis: ${valid.basis}\n`);
+      expect(await readScanOverrides(file)).toEqual([valid]);
+      await writeFile(file, "overrides: nope\n");
+      await expect(readScanOverrides(file)).rejects.toThrow(/invalid/);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 });
 

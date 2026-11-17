@@ -1,0 +1,38 @@
+{
+  "fingerprint": "911027ae2dfc34e1673ad357817818a4074f574d",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "A complete CSV exploration outline covering schema, missing values, summaries, time series and charts.",
+    "summary": "Explore CSV and spreadsheet data, report missing values, summarize patterns and create charts with pandas. Requires a compatible Python environment. Instructions were reviewed; runtime verification remains incomplete.",
+    "strengths": [
+      "Covers data quality before interpretation",
+      "Uses current month-end aliases",
+      "Includes non-interactive plotting guidance"
+    ],
+    "cautions": [
+      "Requires Python 3.11+, pandas 3.x, matplotlib and seaborn",
+      "Exploratory correlations do not establish causation",
+      "Choose missing-value and sampling policies for the actual dataset; runtime verification is incomplete"
+    ],
+    "keywords": [
+      "csv",
+      "pandas",
+      "analysis",
+      "statistics",
+      "charts"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

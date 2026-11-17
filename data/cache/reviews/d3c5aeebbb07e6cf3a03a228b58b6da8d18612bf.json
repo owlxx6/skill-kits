@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d3c5aeebbb07e6cf3a03a228b58b6da8d18612bf",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:41:31.682Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Explains about seventy mental models and cognitive biases with a marketing application for each, from anchoring and social proof to pricing psychology.",
+    "summary": "Groups models into thinking tools, buyer psychology, persuasion, pricing psychology, design and delivery, and growth. Each entry has a short definition and a concrete application. A quick reference table maps common problems (low conversion, price objections, churn) to the models that fit, and five questions steer the choice.",
+    "strengths": [
+      "Every model has a concrete marketing application",
+      "Problem-to-model quick reference table",
+      "Repeatedly reminds the user to apply tactics only when genuine"
+    ],
+    "cautions": [
+      "Some popular figures (loss aversion twice as strong, seven touchpoints) are heuristics, not firm findings",
+      "A few tactics, such as decoys and door-in-the-face, can mislead if used carelessly",
+      "No sources or tests are cited"
+    ],
+    "keywords": [
+      "marketing psychology",
+      "cognitive biases",
+      "mental models",
+      "persuasion",
+      "pricing psychology",
+      "anchoring",
+      "social proof",
+      "behavior design"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

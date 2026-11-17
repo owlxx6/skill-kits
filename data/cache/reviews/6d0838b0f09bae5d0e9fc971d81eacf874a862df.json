@@ -1,0 +1,41 @@
+{
+  "fingerprint": "6d0838b0f09bae5d0e9fc971d81eacf874a862df",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "Reviews a page or form for conversion problems and returns quick wins, high-impact changes, test ideas and copy alternatives.",
+    "summary": "Asks for page type, goal and traffic source, then checks seven areas in order of impact: value proposition, headline, calls to action, hierarchy, trust signals, objections and friction. Output is quick wins, bigger changes, test ideas and copy options. Page-type notes and two references (form fixes, experiment ideas) go deeper.",
+    "strengths": [
+      "Ordered by impact, so the highest-value fixes come first",
+      "Message match with the traffic source is checked",
+      "Hands off test design to a dedicated skill"
+    ],
+    "cautions": [
+      "Best practices, not tested on the user's own data",
+      "Form and experiment detail is in files not read here",
+      "No heatmap or analytics is read unless the user provides it"
+    ],
+    "keywords": [
+      "conversion rate optimization",
+      "landing page",
+      "headline",
+      "calls to action",
+      "trust signals",
+      "form optimization",
+      "page audit",
+      "experiment ideas"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

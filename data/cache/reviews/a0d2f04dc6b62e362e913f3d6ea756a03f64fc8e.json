@@ -1,0 +1,42 @@
+{
+  "fingerprint": "a0d2f04dc6b62e362e913f3d6ea756a03f64fc8e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:36:48.130Z",
+  "review": {
+    "kits": [
+      "marketing-content",
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Explains attribution models and measurement approaches and how to reconcile conflicting numbers from ad platforms, analytics and CRM.",
+    "summary": "Two tracks. Interpretation: models and how each misleads, multi-touch versus mix modeling versus incrementality, self-reported attribution, reconciling sources and blind spots such as direct and dark social. Build: identity merge, stitching on third-party domains, guardrails and CRM sync. It ends with a readout template and a rule never to sum conversions across platforms.",
+    "strengths": [
+      "Counts real conversions once against a single source of truth",
+      "Shows each model next to how it misleads",
+      "Anonymity guard: fails closed so personal ids never reach third-party URLs"
+    ],
+    "cautions": [
+      "The build track needs engineering work and specific tools",
+      "Four reference files hold the model math and playbooks and are not read here",
+      "Platform minimums it quotes can change"
+    ],
+    "keywords": [
+      "marketing attribution",
+      "multi-touch",
+      "marketing mix modeling",
+      "incrementality",
+      "self-reported attribution",
+      "dark social",
+      "first-party tracking",
+      "channel credit"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

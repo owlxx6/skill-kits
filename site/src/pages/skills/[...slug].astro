@@ -4,6 +4,7 @@ import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CopyCommand from "../../components/CopyCommand.astro";
 import Icon from "../../components/Icon.astro";
 import LicenseDetails from "../../components/LicenseDetails.astro";
+import ReviewStatus from "../../components/ReviewStatus.astro";
 import { collectionHref, formatCount, kitsOfSkill, loadCatalog, skillInstallCommand, skillSlug } from "../../lib/catalog";
 import { kitIcon } from "../../lib/icons";
 
@@ -43,11 +44,7 @@ const percent = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
         </p>
         <div class="badges">
           <LicenseDetails skill={skill} />
-          {skill.humanReviewed ? (
-            <span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span>
-          ) : (
-            <span class="badge"><Icon name="bot" size={14} />AI-reviewed</span>
-          )}
+          <ReviewStatus />
         </div>
       </div>
     </header>

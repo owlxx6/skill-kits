@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d2b8357b922667a091bfe967840abf5ae84ce99c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:46:29.445Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Sets up an isolated git workspace for feature work: detect an existing one, ask consent, prefer native tools, fall back to manual worktrees.",
+    "summary": "Step 0 checks whether the session is already in a linked worktree, with a guard against submodules. If not, it asks consent before creating one. Step 1 prefers the platform's native worktree tool and only then falls back to git worktree with directory selection rules. Its principle is to detect isolation first and never fight the harness.",
+    "strengths": [
+      "Submodule guard avoids a common false detection",
+      "Asks consent and honors a declared preference",
+      "Prefers native harness tools to avoid phantom state"
+    ],
+    "cautions": [
+      "Git-specific",
+      "Later setup and cleanup steps were not read in full",
+      "Adds a consent question for small tasks"
+    ],
+    "keywords": [
+      "git worktrees",
+      "isolated workspace",
+      "feature branches",
+      "development workflow",
+      "submodules",
+      "native tools",
+      "branch safety",
+      "setup"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

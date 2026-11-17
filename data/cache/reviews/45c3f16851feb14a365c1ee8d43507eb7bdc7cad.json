@@ -1,0 +1,41 @@
+{
+  "fingerprint": "45c3f16851feb14a365c1ee8d43507eb7bdc7cad",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:41:51.836Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Explains n8n looping: when default per-item runs are enough, when to run once, when to use Loop Over Items, and how to paginate.",
+    "summary": "Maps three meanings of loop to three mechanisms, with the input array as the loop. Its non-negotiable is the run-once setting for aggregate nodes, which otherwise repeat for every item. It gives a decision tree, common surprises (duplicate summaries, double webhook replies, repeated model calls) and four scenarios, most of which need no loop node at all.",
+    "strengths": [
+      "Corrects the common mistake of adding Loop Over Items just to wait",
+      "Run-once setting explained with a counter-case",
+      "Prefers built-in pagination to hand-built page loops"
+    ],
+    "cautions": [
+      "Later scenarios and two reference files are not read here",
+      "Setting names depend on n8n versions",
+      "Only for n8n"
+    ],
+    "keywords": [
+      "n8n loops",
+      "loop over items",
+      "execute once",
+      "pagination",
+      "batching",
+      "rate limiting",
+      "iteration",
+      "workflow"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

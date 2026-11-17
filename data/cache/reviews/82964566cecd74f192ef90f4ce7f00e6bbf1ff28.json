@@ -1,0 +1,41 @@
+{
+  "fingerprint": "82964566cecd74f192ef90f4ce7f00e6bbf1ff28",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:42:25.458Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Improves first-run onboarding and activation: aha moment, minimum path to value, checklists, empty states, stalled-user recovery and measurement.",
+    "summary": "Defines a minimum path to value, then covers the first thirty seconds, checklists of three to seven items, empty states, guided tours and coordinated emails. It gives a cohort method for finding the aha moment that separates early actions from later retention, plus stalled-user recovery, a metrics list and an audit format.",
+    "strengths": [
+      "Aha-moment method avoids common errors: immature cohorts and leaking the outcome into the predictor",
+      "Notes that correlation alone does not prove forcing an action causes retention",
+      "Ten-part toolkit with advice to use the fewest parts that reach value"
+    ],
+    "cautions": [
+      "Some figures, such as the checklist completion lift, are quoted without a source",
+      "Needs product analytics to find the aha moment",
+      "Activation models and path-to-value guides are in files not read here"
+    ],
+    "keywords": [
+      "user onboarding",
+      "activation",
+      "aha moment",
+      "time to value",
+      "onboarding checklist",
+      "empty states",
+      "product-led growth",
+      "retention"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "91febbe132f53e7c8abf7b1010f5c2f93227311e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Generates the configuration for the dbt MCP server, resolves authentication and validates the connection for AI tools like Claude Code, Cursor and VS Code.",
+    "summary": "Asks local or remote server, which client, the use case and which tool groups to enable, with defaults shown. It lists prerequisites and how to find paths and credentials, then gives configuration templates and a credential-security section that prefers environment variable references and warns never to echo tokens. Environment variables and troubleshooting are in three references.",
+    "strengths": [
+      "Decision flow compares local and remote servers plainly",
+      "Disables the SQL and code generation tools by default",
+      "Credential security rules: no literal tokens, rotate, minimal permission"
+    ],
+    "cautions": [
+      "Needs dbt platform credentials for remote use, which can consume credits",
+      "Templates and troubleshooting are partly in files not read here",
+      "Client config formats change"
+    ],
+    "keywords": [
+      "dbt mcp server",
+      "mcp configuration",
+      "authentication",
+      "claude code",
+      "cursor",
+      "environment variables",
+      "dbt platform",
+      "setup"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

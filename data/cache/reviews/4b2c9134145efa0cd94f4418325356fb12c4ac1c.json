@@ -1,0 +1,39 @@
+{
+  "fingerprint": "4b2c9134145efa0cd94f4418325356fb12c4ac1c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:22:46.480Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 1
+    },
+    "why": "Releases a new version of the resume app: version bump, changelog, pull request, tag and GitHub release.",
+    "summary": "One pipeline: scope the release from the last tag, run translations first if needed, bump the root version, write the changelog entry in a fixed house style, run checks, open a pull request, tag the merged commit and create the release, then update a hosting package. It asks for an explicit yes before merging, tagging or publishing.",
+    "strengths": [
+      "Shows exactly what will run and waits for a yes before publishing",
+      "The changelog entry and the release body are the same text",
+      "Table of common mistakes about versions and dates"
+    ],
+    "cautions": [
+      "Maintainer-only: needs the app's repository, runbooks and accounts",
+      "Tells the agent to leave any mention of AI out of titles, bodies and commits",
+      "Not relevant to resumes or job search"
+    ],
+    "keywords": [
+      "release process",
+      "changelog",
+      "version bump",
+      "github release",
+      "maintainer workflow",
+      "pull request",
+      "tagging",
+      "release notes"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

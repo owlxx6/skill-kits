@@ -1,0 +1,41 @@
+{
+  "fingerprint": "772d5a08126c09869c642416c824cfdeeb4104b3",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:47:20.622Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Deploys a project to Vercel as a preview by default, choosing git push or the CLI after checking link, remote and login state.",
+    "summary": "Always deploys a preview unless production is requested. It first checks the git remote, Vercel link files, login and available teams, asks which team when there are several, and avoids commands that would silently link an unlinked folder. A linked project with a git remote deploys by git push, but only after explicit approval.",
+    "strengths": [
+      "Preview by default, production only on request",
+      "Never pushes without explicit approval",
+      "Warns which commands cause silent linking side effects"
+    ],
+    "cautions": [
+      "Later methods and edge cases were not read in full",
+      "Vercel-specific",
+      "Needs the CLI and an account"
+    ],
+    "keywords": [
+      "vercel",
+      "deployment",
+      "preview deployments",
+      "vercel cli",
+      "git push",
+      "teams",
+      "hosting",
+      "web apps"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

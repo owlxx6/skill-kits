@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ddc6486719103677724473c7d50141a5fdffd510",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:43:59.067Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Improves signup and trial-start flows: which fields to cut, single versus multi-step, social login, trust, mobile, verification and measurement.",
+    "summary": "Applies four principles (minimize fields, show value first, reduce effort, remove uncertainty), then goes field by field for email, password, name, social login, phone and company. It compares single and multi-step forms, covers trust, errors, mobile and post-submit verification, metrics, audit output, common flow patterns and a long list of tests.",
+    "strengths": [
+      "Field-by-field advice on what to keep, defer or infer",
+      "Specific password and error-handling practices",
+      "Audit output ranks fixes as quick wins, bigger changes and tests"
+    ],
+    "cautions": [
+      "Advice is general: real drop-off data should decide",
+      "No benchmark figures",
+      "Aimed at software products with accounts"
+    ],
+    "keywords": [
+      "signup flow",
+      "registration",
+      "free trial",
+      "form fields",
+      "social login",
+      "email verification",
+      "mobile forms",
+      "conversion"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

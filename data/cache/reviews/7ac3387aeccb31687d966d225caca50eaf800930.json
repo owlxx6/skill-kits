@@ -1,0 +1,41 @@
+{
+  "fingerprint": "7ac3387aeccb31687d966d225caca50eaf800930",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Plans, sponsors, speaks at or attends events, focusing on choosing events well, booking meetings and following up within two days.",
+    "summary": "Establishes role and goal, then covers portfolio selection (owned, trade show, community), a before, during and after arc, hosting formats, an attending plan and turning recordings into content. It measures qualified meetings and pipeline rather than scans, and lists common mistakes. Deeper files cover webinars, speaking and sponsorship return.",
+    "strengths": [
+      "Most value is in selection and follow-up, not the day itself",
+      "Vanity versus decisive metrics tiers",
+      "Zero-budget attending tactics such as side dinners"
+    ],
+    "cautions": [
+      "Response-rate and benchmark figures are directional",
+      "Four reference files are not read here",
+      "Written for B2B software teams"
+    ],
+    "keywords": [
+      "event marketing",
+      "webinars",
+      "conferences",
+      "sponsorship roi",
+      "speaking",
+      "booth",
+      "event follow-up",
+      "pipeline"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

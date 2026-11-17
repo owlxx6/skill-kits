@@ -1,0 +1,41 @@
+{
+  "fingerprint": "c2f70bc4d8b424041bbc299be49a5b1ac24651de",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:40:42.369Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Evaluates and plans free calculators, graders and generators as a marketing channel, with an eight-factor scorecard and an MVP scope.",
+    "summary": "Gives principles for a good marketing tool (solves a real problem, adjacent to the product, simple, worth the cost), a table of tool types, an ideation and validation method, gating options and lead-capture practice, SEO and link angles, a build-versus-no-code choice, and a 1 to 5 scorecard over eight factors. It ends with common pitfalls.",
+    "strengths": [
+      "Scorecard with clear bands turns a vague idea into a go or no-go",
+      "Names pitfalls: over-building, no path to the product, upkeep and security debt",
+      "MVP scope says what to skip first"
+    ],
+    "cautions": [
+      "Does not build the tool, only plans and scores it",
+      "Benchmarks and sourced case studies are in files not read here",
+      "Scorecard weights are equal, which may not fit every business"
+    ],
+    "keywords": [
+      "free tools",
+      "calculators",
+      "lead generation",
+      "engineering as marketing",
+      "tool ideation",
+      "mvp scope",
+      "link earning",
+      "lead capture"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

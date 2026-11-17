@@ -1,0 +1,41 @@
+{
+  "fingerprint": "88a471ae82504a8acfb060d268e5a3eb859ed0a0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:43:50.830Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Creates and edits dbt Semantic Layer parts (semantic models, entities, dimensions, metrics, time spine) in the latest or legacy YAML spec.",
+    "summary": "First detects which spec the project uses and whether the dbt version supports it, offering an upgrade path for older versions. It then routes to a latest-spec or legacy-spec guide and shows a minimal example of each. Metric types include simple, derived, cumulative, ratio and conversion, with a time spine and best-practices guide.",
+    "strengths": [
+      "Detects the existing spec and version before writing YAML",
+      "Minimal worked example for each spec",
+      "Treats upgrading as optional, not forced"
+    ],
+    "cautions": [
+      "Four reference files hold the full spec and are not read here",
+      "Spec versions will change with dbt releases",
+      "dbt-specific"
+    ],
+    "keywords": [
+      "dbt semantic layer",
+      "metricflow",
+      "metrics",
+      "semantic models",
+      "dimensions",
+      "entities",
+      "time spine",
+      "yaml spec"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

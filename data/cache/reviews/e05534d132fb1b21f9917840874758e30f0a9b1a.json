@@ -1,0 +1,42 @@
+{
+  "fingerprint": "e05534d132fb1b21f9917840874758e30f0a9b1a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:35:03.521Z",
+  "review": {
+    "kits": [
+      "docs-reports",
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Applies one of ten ready color and font themes to slides, documents or HTML pages, or builds a new theme on request.",
+    "summary": "Shows a visual showcase of ten themes, asks which one to use and waits for an explicit choice, then reads that theme's file and applies its colors and fonts consistently with attention to contrast. If none fits it generates a new theme with a descriptive name, shows it for review and applies it.",
+    "strengths": [
+      "Waits for the user's explicit theme choice before styling",
+      "Each theme is a file with a palette and font pairing",
+      "Checks contrast and readability"
+    ],
+    "cautions": [
+      "The ten theme files and the showcase PDF are not read here",
+      "Colors and fonts only: no layout or component styling",
+      "Written mainly with slide decks in mind"
+    ],
+    "keywords": [
+      "themes",
+      "color palette",
+      "font pairing",
+      "slide styling",
+      "visual identity",
+      "document styling",
+      "html pages",
+      "design system"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

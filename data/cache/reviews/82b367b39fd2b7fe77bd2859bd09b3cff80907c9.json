@@ -1,0 +1,37 @@
+{
+  "fingerprint": "82b367b39fd2b7fe77bd2859bd09b3cff80907c9",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:23:37.625379+00:00",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Checks Workers runtime, binding, compatibility and observability choices against project settings and current docs.",
+    "summary": "Strong platform-specific review checklist with separated configuration, runtime and API references. It explicitly prioritizes current evidence and installed compatibility settings over generic advice.",
+    "strengths": [
+      "Version-aware guidance",
+      "Specific anti-pattern consequences",
+      "Preserves project scope and existing choices"
+    ],
+    "cautions": [
+      "Cloudflare-specific alternative, not a requirement for every web app",
+      "Verify current platform settings and observability cost before changes"
+    ],
+    "keywords": [
+      "cloudflare",
+      "workers",
+      "runtime",
+      "bindings",
+      "deployment"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

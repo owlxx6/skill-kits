@@ -1,0 +1,41 @@
+{
+  "fingerprint": "847144cf0824095922c0d4875648b9fa74877e1a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:46:29.445Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Enforces test-first development: no production code without a failing test, then minimal code, then refactor, with rationalizations to resist.",
+    "summary": "States an iron law and the red, green, refactor cycle with a diagram: write a failing test, verify it fails for the right reason, write minimal code, verify all green, clean up. Code written before the test must be deleted. It lists when to use it, the few exceptions to ask about, and a companion guide on writing good tests.",
+    "strengths": [
+      "Verify the test fails correctly before implementing",
+      "Names common rationalizations for skipping tests",
+      "Short and strict: easy for an agent to follow"
+    ],
+    "cautions": [
+      "Deleting pre-written code is strict and may not suit every team",
+      "Examples are mostly language-neutral",
+      "The test-writing guide is in a file not read here"
+    ],
+    "keywords": [
+      "tdd",
+      "test driven development",
+      "red green refactor",
+      "unit tests",
+      "bug fixes",
+      "refactoring",
+      "testing discipline",
+      "software quality"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

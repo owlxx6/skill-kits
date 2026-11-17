@@ -1,0 +1,41 @@
+{
+  "fingerprint": "9477d2f5b7b1c95b2bda5e1cf5baf57f00dd7a79",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T13:39:47.912Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Finds co-marketing partners and plans joint campaigns: partner scoring, campaign formats, outreach template and a simple agreement outline.",
+    "summary": "Scores potential partners on audience fit, size, brand, engagement, reciprocity and ease, lists where to find them, and sorts five partnership types. It then gives campaign formats by effort, brainstorming prompts, a cold outreach template, a lead-split agreement outline, success metrics and a checklist.",
+    "strengths": [
+      "Clear scoring grid for choosing partners",
+      "Agreement outline covers lead ownership, promotion and metrics sharing",
+      "Routes affiliate and referral mechanics to the right sibling skill"
+    ],
+    "cautions": [
+      "Headline figures about large partner programs are not sourced",
+      "Outreach template is generic",
+      "Taxonomy details sit in a file not read here"
+    ],
+    "keywords": [
+      "co-marketing",
+      "partnerships",
+      "joint campaigns",
+      "partner scoring",
+      "joint webinar",
+      "cross-promotion",
+      "integration partners",
+      "lead sharing"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

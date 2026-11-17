@@ -1,0 +1,41 @@
+{
+  "fingerprint": "67f8d95d40b832dc8c6f30ccc2d5de94b2b84936",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:49:47.946Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Runs and debugs Cloudflare Workers locally with the dev server and Local Explorer, and routes production debugging to Workers observability.",
+    "summary": "A table covers running locally with the project's own dev command, inspecting and seeding local binding data with Local Explorer, debugging local requests with captured traces and logs before adding logging, and debugging deployed Workers with observability tools. It explains using the Explorer's API schema and warns that bindings marked remote reach real resources.",
+    "strengths": [
+      "Check traces before adding logging",
+      "Warns about remote bindings during local testing",
+      "Works whether or not the project uses Wrangler"
+    ],
+    "cautions": [
+      "Needs a recent dev tooling version for the Explorer",
+      "Production debugging depends on connected Cloudflare tools",
+      "Short"
+    ],
+    "keywords": [
+      "cloudflare workers",
+      "local development",
+      "local explorer",
+      "traces",
+      "debugging",
+      "bindings",
+      "observability",
+      "dev server"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

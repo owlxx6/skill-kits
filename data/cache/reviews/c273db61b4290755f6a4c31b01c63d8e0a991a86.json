@@ -1,0 +1,39 @@
+{
+  "fingerprint": "c273db61b4290755f6a4c31b01c63d8e0a991a86",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T14:48:38.568Z",
+  "review": {
+    "kits": [],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 6
+    },
+    "why": "Plans migrations from existing VPN, web gateway or SASE products to Cloudflare One, with policy mapping, parity gaps and staged rollout.",
+    "summary": "Seven steps: identify the source stack, request structured exports, build an inventory, produce a mapping plan with confidence and manual decisions, create dependencies first, stage with disabled or audit-mode rules and pilots, and account for every source rule as migrated or explicitly not migrated. It lists exports to request and mapping traps for Zscaler and Palo Alto sources.",
+    "strengths": [
+      "Every source rule must map to an object or a not-migrated row with security impact",
+      "Staged by default: audit mode and pilot groups",
+      "Source-specific traps such as warn actions with no direct equivalent"
+    ],
+    "cautions": [
+      "Niche: for enterprise network migrations",
+      "Vendor export formats and product features change",
+      "Later traps were not read in full"
+    ],
+    "keywords": [
+      "vpn migration",
+      "sase",
+      "zscaler",
+      "palo alto",
+      "policy mapping",
+      "cloudflare one",
+      "rollout",
+      "network security"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}
