@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ebdcd69465dc4732fb9d5973807558bb12ed19b1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:40.907Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Writes academic CVs that keep publication status, authorship order, funding and teaching roles exact.",
+    "summary": "Builds or updates academic CVs for research, postdoc, faculty and teaching posts. A table lists the distinctions to preserve (degrees, appointments, publication status, author order, grants, teaching, mentoring, service) and the skill forbids invented DOIs, citation counts or acceptances.",
+    "strengths": [
+      "Precise table of the distinctions an academic record must keep",
+      "Never invents bibliographic details; unchecked items are marked unverified",
+      "Explicit consent rules for students and referees"
+    ],
+    "cautions": [
+      "Instructions only: no templates or scripts",
+      "Narrow audience: academic appointments, not industry resumes",
+      "Mentions optional checks and saves through an account; the code for that is not included"
+    ],
+    "keywords": [
+      "academic cv",
+      "curriculum vitae",
+      "publications list",
+      "postdoc application",
+      "faculty application",
+      "grant funding",
+      "teaching statement",
+      "research cv"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

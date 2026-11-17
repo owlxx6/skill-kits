@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d508ec54bda898c0b850cfee89c1db4622121b43",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:38:47.216Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Writes Markdown documents and Mermaid diagrams from templates, with 23 diagram guides and render checks.",
+    "summary": "Optional house style for Markdown documentation with Mermaid structural diagrams: nine document templates (ADR, status report, how-to, research paper...), a picker for 23 diagram types with a guide each, style guides, accessibility metadata, and a rule to render in the real destination and keep a text alternative.",
+    "strengths": [
+      "Nine document templates, including decision record and status report",
+      "Diagram type picker with a copy-paste guide per type",
+      "Insists on testing the render in the real destination and keeping a text alternative"
+    ],
+    "cautions": [
+      "House rules are opinionated (one emoji per H2, one H1)",
+      "Scientific framing: quantitative charts need other tools",
+      "37 bundled files; the guides and templates are described, not read here"
+    ],
+    "keywords": [
+      "markdown",
+      "mermaid",
+      "diagrams",
+      "documentation templates",
+      "readme",
+      "status report",
+      "decision record",
+      "diagram accessibility"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "fingerprint": "bf2dbeef74336e72b7f2ae320cf941bdbe7ae159",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:56.783Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 5,
+      "completeness": 3,
+      "usefulness": 4
+    },
+    "why": "Entry card for an HTML weekly-report deck; the real authoring rules sit in a master skill not included.",
+    "summary": "Short entry point to a weekly-report slide template: copy the template files, fix the parent-relative asset paths (copy or inline them), pick a theme, replace the demo content and keep speaker notes out of the slide. Everything else is delegated to a master html-ppt skill and a template folder.",
+    "strengths": [
+      "Explains exactly how to fix the broken relative asset paths",
+      "Rule: speaker notes never appear as visible slide text"
+    ],
+    "cautions": [
+      "Depends on a master skill and template folder that are not part of this skill",
+      "The example prompt is about one product's growth metrics",
+      "Metadata is bilingual and cluttered with tags"
+    ],
+    "keywords": [
+      "html slides",
+      "weekly report",
+      "deck template",
+      "kpi deck",
+      "growth review",
+      "presentation",
+      "speaker notes",
+      "html presentation"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "fingerprint": "1d2532889c15d70eb6d6230bd0d99657905a4b4e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:56.783Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 6
+    },
+    "why": "Documents code and APIs: docstrings, OpenAPI, JSDoc, doc sites and guides, with tested examples and a coverage report.",
+    "summary": "Six-step workflow (discover, detect, analyze, document, validate, report) for docstrings, OpenAPI specs, JSDoc, documentation sites and user guides. It validates examples with doctest, tsc and an OpenAPI linter, asks for the docstring format first, and provides eight reference guides per framework.",
+    "strengths": [
+      "Validation step: run doctests, tsc and an OpenAPI lint before reporting",
+      "Asks the docstring format before starting",
+      "Reference guides per framework (FastAPI, Django, NestJS, Express)"
+    ],
+    "cautions": [
+      "Developer documentation only",
+      "The eight reference files are described, not read in this review",
+      "Validation needs pytest, tsc and npx tools installed"
+    ],
+    "keywords": [
+      "code documentation",
+      "docstrings",
+      "openapi",
+      "swagger",
+      "jsdoc",
+      "api docs",
+      "doc site",
+      "user guides",
+      "tutorials"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "fingerprint": "e815971e85915cb88099c4a0f84121915f9246b9",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:01:45.974Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Tailors one resume to one posting with a requirement-to-evidence table, gap questions instead of invention and honest ATS advice.",
+    "summary": "Tailors a resume to a job description: weighted requirement table, evidence map, gap questions, rewrite on a copy (headline, summary, bullet order, skills), parse and defensibility checks, optional cover letter. Three depth tiers, six reference files, and an optional Reactive Resume tool path with review gates.",
+    "strengths": [
+      "Facts are locked: a gap becomes a question, never a fill-in",
+      "Weighted coverage table with honest labels, not a match score to chase",
+      "Checks knockout questions first and corrects ATS myths"
+    ],
+    "cautions": [
+      "Long skill (34,000 characters) that loads six reference files as needed",
+      "The tool section only helps when Reactive Resume is connected",
+      "Optional AI tools send the full resume and posting to a provider; it says to ask first"
+    ],
+    "keywords": [
+      "resume tailoring",
+      "job posting",
+      "requirement table",
+      "ats myths",
+      "gap questions",
+      "cover letter",
+      "evidence map",
+      "tailored resume",
+      "knockout questions"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

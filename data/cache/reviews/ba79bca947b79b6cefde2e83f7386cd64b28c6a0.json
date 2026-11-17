@@ -1,0 +1,42 @@
+{
+  "fingerprint": "ba79bca947b79b6cefde2e83f7386cd64b28c6a0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:56.783Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Guides a blameless incident post-mortem: inputs, UTC timeline, fishbone, 5 Whys and typed action items.",
+    "summary": "Collects incident facts from the user, rebuilds a UTC timeline, uses a fishbone diagram to surface causes, runs 5 Whys on the confirmed branches and writes a post-mortem in the Google SRE structure with detect, mitigate and prevent action items. Markdown by default; HTML, DOCX or PDF on request. A template and a worked example are provided.",
+    "strengths": [
+      "Never invents timestamps, metrics or causes: unknowns become open questions",
+      "Fishbone before 5 Whys, with confirmed, suspected and ruled-out labels",
+      "Action items are typed and owned by individuals"
+    ],
+    "cautions": [
+      "Specific to production incidents",
+      "DOCX output relies on another skill of the same repository",
+      "The template and example files are described, not read in this review"
+    ],
+    "keywords": [
+      "post-mortem",
+      "incident review",
+      "root cause analysis",
+      "5 whys",
+      "fishbone diagram",
+      "blameless",
+      "sre",
+      "rca report",
+      "action items"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

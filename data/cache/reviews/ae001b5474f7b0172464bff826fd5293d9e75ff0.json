@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ae001b5474f7b0172464bff826fd5293d9e75ff0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:00:40.907Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Writes nursing and healthcare resumes with exact licence status, clinical scope and patient privacy.",
+    "summary": "Resume writing for nursing, allied health, clinical support and healthcare administration. It keeps licences, placements and scope of practice accurate, distinguishes student, supervised and independent practice, and forbids patient-identifying details. It says it is not clinical or licensing advice.",
+    "strengths": [
+      "Clinical verbs and titles kept faithful to the real scope of practice",
+      "Strict rules against inferring licence status or eligibility",
+      "Privacy guidance, including rare events that could identify a patient"
+    ],
+    "cautions": [
+      "Instructions only: no template",
+      "Narrow audience: healthcare roles",
+      "Jurisdiction rules for titles and licences are left to the user to confirm"
+    ],
+    "keywords": [
+      "healthcare resume",
+      "nursing resume",
+      "clinical placement",
+      "allied health",
+      "licence status",
+      "patient privacy",
+      "healthcare administration",
+      "nursing cv"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

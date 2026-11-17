@@ -1,0 +1,42 @@
+{
+  "fingerprint": "6509b9db69edbbff5aac1d609975475c93c889f4",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:02:24.986Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Decodes a job offer, benchmarks it, drafts one honest counter and a call script, and role-plays the recruiter.",
+    "summary": "Evaluates and negotiates job offers: decodes each term with unknowns kept unknown and each offer in its own currency, benchmarks with checkable sources, finds true leverage, drafts one consolidated counter as email and call script, rehearses with a recruiter role-play and handles deadlines, best and final, competing offers and written acceptance or decline.",
+    "strengths": [
+      "Refuses bluffs and invented figures, and offers an honest alternative",
+      "Never sums uncertain pay into one total: year-1 cash, 4-year base and a conditional range",
+      "Country-aware (India CTC, 13th-month pay, public pay scales)"
+    ],
+    "cautions": [
+      "Very long (40,000 characters); depth sits in six reference files",
+      "Market figures must be read live; without browsing it gives a checklist",
+      "General information, not financial, tax or legal advice"
+    ],
+    "keywords": [
+      "job offer",
+      "salary negotiation",
+      "counter offer",
+      "offer evaluation",
+      "equity compensation",
+      "recruiter role play",
+      "salary expectations",
+      "compensation package",
+      "negotiation script"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

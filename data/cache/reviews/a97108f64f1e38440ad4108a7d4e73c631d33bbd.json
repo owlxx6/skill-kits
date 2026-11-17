@@ -1,0 +1,41 @@
+{
+  "fingerprint": "a97108f64f1e38440ad4108a7d4e73c631d33bbd",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Heavy-duty research for costly decisions: tests hypotheses, triangulates each claim across 3+ sources, saves every quote.",
+    "summary": "Nine-phase investigation for strategy or irreversible decisions: reframe the question with falsifiable hypotheses, plan, audit available channels, search with parallel sub-agents, score sources, triangulate, run an adversarial pass, verify citations and write refresh targets. Output is a folder with one file per source and quotes.",
+    "strengths": [
+      "Needs three independent source types per thesis, else flags insufficient evidence",
+      "An empty fetch gives an empty claim, never an invented citation",
+      "Refresh targets make later updates cheap"
+    ],
+    "cautions": [
+      "Phases are summarized in a table: step-level detail sits in a catalog file not read here",
+      "Costly in tokens and time; it says quick questions should be answered directly",
+      "Relies on sub-agents and on search channels the environment may not have"
+    ],
+    "keywords": [
+      "meta research",
+      "multi-source research",
+      "triangulation",
+      "adversarial review",
+      "hypothesis testing",
+      "source scoring",
+      "research plan",
+      "refresh targets"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

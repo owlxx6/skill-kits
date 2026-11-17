@@ -1,0 +1,41 @@
+{
+  "fingerprint": "83662def51306c58d1d4306a47aa87f01df93d9a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:01:16.853Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 6,
+      "usefulness": 7
+    },
+    "why": "Reviews a product manager resume against 10 practices (XYZ+S bullets, keywords, structure), quoting the resume.",
+    "summary": "Prompt-style reviewer for PM resumes: a friendly intro, feedback on ten practices (summary, no pronouns, concision, XYZ+S bullets, professional email, tailoring, skills shown in bullets, section order, new graduates and career changers, standard titles), then a conclusion. An optional job posting tailors the feedback.",
+    "strengths": [
+      "Ten concrete practices, each with an evaluation and guidance",
+      "Requires quotes from the user's own resume",
+      "Optional job posting steers the feedback"
+    ],
+    "cautions": [
+      "Product manager roles only",
+      "Opinionated rules (no pronouns, one to two pages, XYZ+S on 70% of bullets)",
+      "Ends with links to the author's own articles and course"
+    ],
+    "keywords": [
+      "pm resume",
+      "product manager resume",
+      "resume review",
+      "xyz formula",
+      "resume feedback",
+      "resume best practices",
+      "resume tailoring",
+      "product management"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

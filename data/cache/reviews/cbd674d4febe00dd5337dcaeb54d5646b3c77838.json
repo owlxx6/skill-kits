@@ -1,0 +1,41 @@
+{
+  "fingerprint": "cbd674d4febe00dd5337dcaeb54d5646b3c77838",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:56.783Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Applies Strunk's composition rules and a list of AI-writing tics to prose, loading one section at a time.",
+    "summary": "Summarizes Strunk's 18 rules of usage and composition, points to five reference sections with their token cost, and lists AI writing patterns to avoid (puffery, empty -ing phrases, promotional adjectives, overused vocabulary). It suggests a subagent copyedit when context is tight.",
+    "strengths": [
+      "Loads one section (about 1,000 to 4,500 tokens) instead of everything",
+      "Concrete list of AI-prose tells to avoid",
+      "The rule summary is usable even without the files"
+    ],
+    "cautions": [
+      "English prose rules only",
+      "The Strunk text and the AI-writing guide are in files not read here",
+      "A 1918 style guide, not tailored to reports or technical documents"
+    ],
+    "keywords": [
+      "clear writing",
+      "strunk",
+      "elements of style",
+      "concise writing",
+      "plain language",
+      "editing",
+      "ai writing patterns",
+      "documentation prose"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

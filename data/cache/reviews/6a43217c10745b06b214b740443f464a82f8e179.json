@@ -1,0 +1,41 @@
+{
+  "fingerprint": "6a43217c10745b06b214b740443f464a82f8e179",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:38.402Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Models newsletter revenue: paid tiers, a sponsorship rate card, referral loops and a list-growth projection with disclosure checks.",
+    "summary": "Takes list size, open and click rates and the goal, then sizes the sellable audience, builds a paid-subscription model, a CPM or flat-rate sponsorship card, growth loops and a growth-to-revenue projection. Every figure is labeled measured, user-provided or estimated, and a checklist covers ad disclosure, claims and consent.",
+    "strengths": [
+      "Never invents a conversion rate or CPM: missing figures are marked as needing a source",
+      "Revenue resting on an assumed rate is never shown as measured",
+      "Sponsorships must be labeled as ads"
+    ],
+    "cautions": [
+      "Written for a large skill suite: memory ledgers, registries and sibling skills are not included",
+      "No built-in benchmarks: the user must supply conversion rates and prices",
+      "Suite jargon (SEND, D1, EQS) is explained elsewhere"
+    ],
+    "keywords": [
+      "newsletter monetization",
+      "sponsorship rate card",
+      "paid subscriptions",
+      "cpm",
+      "referral loops",
+      "revenue projection",
+      "ad disclosure",
+      "email revenue"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

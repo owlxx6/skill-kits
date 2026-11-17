@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ba7e99057063e75832fd30cd3a6fa30e0ae008a8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "Researches a competitor's product and launches from public sources, separating facts, claims, estimates and hypotheses.",
+    "summary": "Starts from the decision the user faces, then gathers evidence from the product's own pages and independent accounts, or from supplied materials. Each claim is labelled observed, attributed, estimated or hypothesis, with dates. It warns against common mix-ups (installs versus users, traffic spike versus cause) and proposes at most three small experiments.",
+    "strengths": [
+      "Explicit list of claims that must not be equated, such as revenue and MRR",
+      "Stops after two searches that add nothing and reports the gaps",
+      "Refuses to install connectors, create accounts or spend money unasked"
+    ],
+    "cautions": [
+      "Centred on software growth and acquisition, less on other markets",
+      "Needs search and browsing tools from the host, or supplied files",
+      "Reference files for evidence and the report layout are not read here"
+    ],
+    "keywords": [
+      "competitor research",
+      "growth research",
+      "acquisition channels",
+      "launch history",
+      "evidence labels",
+      "pricing analysis",
+      "experiments",
+      "cited brief"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

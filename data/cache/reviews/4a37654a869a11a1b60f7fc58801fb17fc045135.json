@@ -1,0 +1,41 @@
+{
+  "fingerprint": "4a37654a869a11a1b60f7fc58801fb17fc045135",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:59:12.855Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 6,
+      "completeness": 6,
+      "usefulness": 5
+    },
+    "why": "Codifies a brand's voice (register, tone spectrum, banned phrases, few-shots) and naming rules from its own published material.",
+    "summary": "Gathers the brand's own published copy, names a register and tone spectrum, lists banned phrases, writes three to six before and after examples taken only from that material, and sets naming rules with approved and banned term tables. Claims found in samples are marked as needing a source, not encoded as brand fact. Output is staged for a narrative registry.",
+    "strengths": [
+      "Examples come only from the brand's own text, never invented or copied from competitors",
+      "Naming rules with approved and banned term tables, each term labeled by origin",
+      "Decides how the brand speaks, not whether a claim is true"
+    ],
+    "cautions": [
+      "Stops without an upstream message house produced by another skill of the same suite",
+      "Registry, event-file and framework jargon hides the useful part",
+      "Titles and summaries mix English and Chinese"
+    ],
+    "keywords": [
+      "brand voice",
+      "tone of voice guide",
+      "banned phrases",
+      "naming rules",
+      "brand language",
+      "few-shot examples",
+      "terminology",
+      "style guide"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

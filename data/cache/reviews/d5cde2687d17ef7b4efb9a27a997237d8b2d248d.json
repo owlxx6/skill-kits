@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d5cde2687d17ef7b4efb9a27a997237d8b2d248d",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Converts PDFs to Markdown with a bundled script and extracts embedded images, folders included.",
+    "summary": "Runs a bundled Python script (MarkItDown plus PyMuPDF) to turn a PDF into Markdown and a folder of extracted images before analysis, for single files or folders. Images are appended in a final section because the text has no reliable page markers. Includes a setup guide and troubleshooting table.",
+    "strengths": [
+      "Honest about the limits: images are listed at the end, not inline",
+      "Troubleshooting table with exit codes",
+      "Batch mode for folders, with a rule to also handle other file types"
+    ],
+    "cautions": [
+      "No OCR: scanned PDFs give an empty body",
+      "Needs Python, markitdown and PyMuPDF installed",
+      "Tells the agent not to read PDFs directly, even for tiny files"
+    ],
+    "keywords": [
+      "pdf to markdown",
+      "pdf conversion",
+      "markitdown",
+      "pymupdf",
+      "extract pdf text",
+      "pdf tables",
+      "batch conversion",
+      "document reading"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

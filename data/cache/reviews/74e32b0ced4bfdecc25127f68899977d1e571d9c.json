@@ -1,0 +1,41 @@
+{
+  "fingerprint": "74e32b0ced4bfdecc25127f68899977d1e571d9c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Runs evidence-based research memos with a plan, source registry, citation checks and a quality gate before delivery.",
+    "summary": "A single-agent-first research workflow with three output sizes (brief memo, full report, delta update). It scopes the task, plans one to five threads, writes notes that separate facts from analysis, builds a source registry, checks citations with scripts, and runs an evaluator and quality gates. It records a run summary and keeps publishing out of scope.",
+    "strengths": [
+      "Clear routing: lists when not to use it and defaults to the lightest output",
+      "Conflicting evidence is shown, not averaged away",
+      "Degraded mode when scripts or subagents are missing"
+    ],
+    "cautions": [
+      "Many artifacts and references: heavy for a small question",
+      "Source scores are heuristics, and the skill says so",
+      "Most method details sit in reference files not read here"
+    ],
+    "keywords": [
+      "deep research",
+      "research memo",
+      "literature review",
+      "source registry",
+      "citation verification",
+      "decision brief",
+      "market landscape",
+      "delta update"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

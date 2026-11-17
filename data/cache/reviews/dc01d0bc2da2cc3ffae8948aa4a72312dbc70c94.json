@@ -1,0 +1,41 @@
+{
+  "fingerprint": "dc01d0bc2da2cc3ffae8948aa4a72312dbc70c94",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:38.402Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 4,
+      "usefulness": 5
+    },
+    "why": "Schedules and publishes posts to a dozen social platforms through a third-party posting API, with media reuse and post analytics.",
+    "summary": "Six steps: define the campaign, draft platform variants, upload media once for reuse, validate timing and rate limits, publish or schedule through the SocialClaw API, then pull engagement metrics after one to two days. It lists supported platforms, three usage examples and four guidelines, and needs a workspace API key from that service.",
+    "strengths": [
+      "Adapts copy per platform and validates timing before submitting",
+      "Upload media once and reuse it across posts",
+      "Post-level analytics step after publishing"
+    ],
+    "cautions": [
+      "Tied to one third-party service and its API key",
+      "The steps move from draft to publish with no explicit confirmation from the user",
+      "Short: no limits per platform, no failure handling"
+    ],
+    "keywords": [
+      "social publishing",
+      "scheduling",
+      "multi-platform",
+      "social media api",
+      "content campaign",
+      "post analytics",
+      "media upload",
+      "socialclaw"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

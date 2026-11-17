@@ -1,3 +1,4 @@
+import { mapLimit } from "./lib/concurrency";
 import { errorMessage } from "./lib/errors";
 import type { GitHubClient } from "./lib/github";
 import {
@@ -30,14 +31,42 @@ import type {
 import {
   findSkillLocations,
   parseSkillFrontmatter,
+  type SkillFrontmatter,
+  type SkillLocation,
   skillFilePath,
   skillId,
 } from "./lib/skillfile";
+import {
+  type SafetyCache,
+  type SafetyCounts,
+  type SafetyLimits,
+  safetyCleared,
+  type ScanContext,
+  scanWaitingSkills,
+  summarizeSafety,
+} from "./lib/skill-safety";
 import { compareText } from "./lib/text";
 
 type ExtractClient = Pick<GitHubClient, "getTree" | "getFileText" | "getFileBytes">;
 
 const SYMLINK_MODE = "120000";
+
+// SKILL.md files read at the same time in one repository.
+const SKILL_READ_CONCURRENCY = 8;
+
+// What extractRepo does with each skill folder of a listing.
+type ReadPlan = {
+  kind: "read";
+  location: SkillLocation;
+  id: string;
+  known: SkillRecord | undefined;
+  // Set once the SKILL.md was read: its front matter (null when invalid), or the error.
+  outcome?: { frontmatter: SkillFrontmatter | null } | { error: unknown };
+};
+type ExtractPlan =
+  | { kind: "unsafe" }
+  | { kind: "reuse"; known: SkillRecord; frontmatterLicense: string | undefined }
+  | ReadPlan;
 
 // The front matter license a resolution was computed with: a reused record is not
 // downloaded again, so its front matter value comes from its previous evidence.
@@ -107,12 +136,16 @@ export async function extractRepo(
   repo: RepoMeta,
   previous: Map<string, SkillRecord>,
   licenseCache: LicenseCache = {},
+  // The safety scan of the skills that need it, run once their licenses are resolved. Absent:
+  // no skill is scanned.
+  safety?: ScanContext,
 ): Promise<{
   skills: SkillRecord[];
   invalid: number;
   failedDownloads: number;
   licenseFailedDownloads: number;
   truncated: boolean;
+  safety?: SafetyCounts;
 }> {
   const tree = await gh.getTree(repo.fullName, repo.defaultBranch);
   const skills: SkillRecord[] = [];
@@ -135,13 +168,13 @@ export async function extractRepo(
   let invalid = 0;
   let failedDownloads = 0;
   const locations = findSkillLocations(tree.entries);
-  for (const location of locations) {
+  // First decide, in listing order, what each skill needs. The SKILL.md files to read are then
+  // downloaded a few at a time (they come from raw.githubusercontent.com, outside the API
+  // quota: one after the other, a repository of thousands of skills takes hours), and the
+  // records are built in listing order, so the result does not depend on the download order.
+  const plans = locations.map((location): ExtractPlan => {
     // A folder name with a backtick or a line break could break out of a Markdown code span.
-    if (/[\x00-\x1f\x7f`]/.test(location.dir)) {
-      console.warn(`Unsafe skill folder name skipped in ${repo.fullName}`);
-      invalid += 1;
-      continue;
-    }
+    if (/[\x00-\x1f\x7f`]/.test(location.dir)) return { kind: "unsafe" };
     const id = skillId(repo.fullName, location.dir);
     const known = previous.get(id);
     // A record written before license resolution, or whose SKILL.md was not re-read, has no
@@ -151,25 +184,43 @@ export async function extractRepo(
     const knowsFrontmatter =
       license !== undefined && !(license.outcome === "ambiguous" && license.unread === "skill-file");
     if (known && license && knowsFrontmatter && known.fingerprint === location.fingerprint) {
-      queue(known, frontmatterLicenseOf(license));
+      return { kind: "reuse", known, frontmatterLicense: frontmatterLicenseOf(license) };
+    }
+    return { kind: "read", location, id, known };
+  });
+  await mapLimit(
+    plans.filter((plan): plan is ReadPlan => plan.kind === "read"),
+    SKILL_READ_CONCURRENCY,
+    async (plan) => {
+      try {
+        const content = await gh.getFileText(repo.fullName, repo.defaultBranch, skillFilePath(plan.location.dir));
+        // Only the front matter is kept: a repository of thousands of skills must not hold all their text.
+        plan.outcome = { frontmatter: parseSkillFrontmatter(content) };
+      } catch (error) {
+        plan.outcome = { error };
+      }
+    },
+  );
+  for (const plan of plans) {
+    if (plan.kind === "unsafe") {
+      console.warn(`Unsafe skill folder name skipped in ${repo.fullName}`);
+      invalid += 1;
       continue;
     }
-    let content: string;
-    try {
-      content = await gh.getFileText(
-        repo.fullName,
-        repo.defaultBranch,
-        skillFilePath(location.dir),
-      );
-    } catch (error) {
-      console.warn(`Skipping ${id}: ${errorMessage(error)}`);
+    if (plan.kind === "reuse") {
+      queue(plan.known, plan.frontmatterLicense);
+      continue;
+    }
+    const { location, id, known, outcome } = plan;
+    if (outcome === undefined || "error" in outcome) {
+      console.warn(`Skipping ${id}: ${errorMessage(outcome === undefined ? "not read" : outcome.error)}`);
       // A failed download must not drop a skill that already has a record. Its license is
       // not known for the changed content: not re-read, so neither eligible nor removed.
       failedDownloads += 1;
       if (known) skills.push({ ...known, license: notReReadLicense(tree.sha) });
       continue;
     }
-    const frontmatter = parseSkillFrontmatter(content);
+    const frontmatter = outcome.frontmatter;
     if (!frontmatter) {
       console.warn(`Invalid SKILL.md front matter: ${id}`);
       invalid += 1;
@@ -210,7 +261,18 @@ export async function extractRepo(
       if (record.repo === repo.fullName && !listedIds.has(record.id)) skills.push(record);
     }
   }
-  return { skills, invalid, failedDownloads, licenseFailedDownloads, truncated: tree.truncated };
+  const scanned =
+    safety === undefined
+      ? {}
+      : { safety: await scanWaitingSkills(gh, repo, { entries: tree.entries, truncated: tree.truncated }, skills, safety) };
+  return { skills, invalid, failedDownloads, licenseFailedDownloads, truncated: tree.truncated, ...scanned };
+}
+
+export interface ExtractSafetyOptions {
+  // Reports by skill id, completed in place. The file is admin-only and not versioned.
+  cache: SafetyCache;
+  save: (cache: SafetyCache) => Promise<void>;
+  limits?: Partial<SafetyLimits>;
 }
 
 export interface ExtractLicenseOptions {
@@ -219,8 +281,13 @@ export interface ExtractLicenseOptions {
   save: (cache: LicenseCache) => Promise<void>;
   // config.filter.allowedLicenses, for the statistics.
   allowed: readonly string[];
-  // The safety scan, for the count of skills waiting for it (none cleared by default).
+  // Whether the safety scan cleared a skill, for the count of skills waiting for it. With
+  // `safety`, the scan of this run decides; without either, no skill is cleared.
   isSafetyCleared?: SafetyCleared;
+  // Scans the skills that need the scan (license not allowed, missing or unclear).
+  safety?: ExtractSafetyOptions;
+  // Progress: one line per repository.
+  log?: (message: string) => void;
 }
 
 export function countLicenses(
@@ -281,11 +348,40 @@ export async function runExtract(
     [...byRepo.values()].flat().sort((a, b) => compareText(a.id, b.id));
   let licenseFailedDownloads = 0;
   let savedLicenseCount = Object.keys(licenses.cache).length;
+  const safety = licenses.safety;
+  const safetyContext: ScanContext | undefined =
+    safety === undefined
+      ? undefined
+      : {
+          cache: safety.cache,
+          allowed: licenses.allowed,
+          ...(safety.limits ? { limits: safety.limits } : {}),
+          checkpoint: () => safety.save(safety.cache),
+        };
+  const safetyCounts = { scanned: 0, reused: 0, failedDownloads: 0 };
 
-  for (const repo of repos) {
+  // Small repositories first: the many repositories of a few skills are done and saved within
+  // minutes, and the few registries of thousands of skills (nothing is saved for a repository
+  // before it is done) come last, so a stop or a failure there loses the least. The result is
+  // sorted by skill id and does not depend on this order. Repositories of the same size keep the
+  // order of the list (the sort is stable).
+  const sizeOf = (repo: RepoMeta): number => byRepo.get(repo.fullName)?.length ?? 0;
+  const ordered = [...repos].sort((a, b) => sizeOf(a) - sizeOf(b));
+
+  for (const [position, repo] of ordered.entries()) {
     try {
-      const result = await extractRepo(gh, repo, previousById, licenses.cache);
+      const result = await extractRepo(gh, repo, previousById, licenses.cache, safetyContext);
+      licenses.log?.(
+        `[${position + 1}/${ordered.length}] ${repo.fullName}: ${result.skills.length} skills${result.safety ? `, ${result.safety.scanned} scanned, ${result.safety.reused} reused, ${result.safety.failedDownloads} not scanned` : ""}`,
+      );
       licenseFailedDownloads += result.licenseFailedDownloads;
+      if (result.safety) {
+        safetyCounts.scanned += result.safety.scanned;
+        safetyCounts.reused += result.safety.reused;
+        safetyCounts.failedDownloads += result.safety.failedDownloads;
+        // Saved after each repository: a long run that stops keeps the reports already made.
+        if (result.safety.changed && safety) await safety.save(safety.cache);
+      }
       if (result.skills.length === 0 && (byRepo.get(repo.fullName)?.length ?? 0) > 0) {
         console.warn(`No skill found anymore in ${repo.fullName}: its records are dropped`);
       }
@@ -308,6 +404,14 @@ export async function runExtract(
   }
   const skills = all();
   stats.skills = skills.length;
-  stats.licenses = countLicenses(skills, licenses.allowed, licenseFailedDownloads, licenses.isSafetyCleared);
+  const isSafetyCleared =
+    licenses.isSafetyCleared ?? (safety === undefined ? NO_SAFETY_SCAN : safetyCleared(safety.cache));
+  if (safety !== undefined) {
+    const summary = summarizeSafety(skills, licenses.allowed, safety.cache, safetyCounts);
+    stats.safety = summary.stats;
+    // Reports of skills that are gone or no longer need the scan are dropped.
+    if (summary.pruned) await safety.save(safety.cache);
+  }
+  stats.licenses = countLicenses(skills, licenses.allowed, licenseFailedDownloads, isSafetyCleared);
   return { skills, stats };
 }

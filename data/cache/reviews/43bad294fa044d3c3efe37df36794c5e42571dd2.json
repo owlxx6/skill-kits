@@ -1,0 +1,41 @@
+{
+  "fingerprint": "43bad294fa044d3c3efe37df36794c5e42571dd2",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:37.145Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 8,
+      "usefulness": 5
+    },
+    "why": "Writes articles, posts, newsletters, scripts and repurposed cuts from a saved brand workspace, with an edit note and claims check on each.",
+    "summary": "Picks one of five paths (repurposed set, single post, fresh piece, refresh redline, newsletter issue), reads the brand's saved positioning and voice, asks at most four questions, then drafts, edits and checks claims. Gaps are tagged as proof needed, long pieces wait for an outline approval, and nothing is published.",
+    "strengths": [
+      "Claims gate: unsupported numbers and names are cut or blocked, never invented",
+      "Stops at the brief when fewer than half of the factual sections have proof",
+      "Every piece ships with an edit note and a list of open gaps"
+    ],
+    "cautions": [
+      "Built around one marketing service: its brand workspace, tools and many sibling skills are not included",
+      "Heavy setup and gates for a short post",
+      "Press releases, landing pages and sales decks are out of scope"
+    ],
+    "keywords": [
+      "content writing",
+      "repurposing",
+      "newsletter",
+      "claims check",
+      "brand voice",
+      "blog posts",
+      "social posts",
+      "content refresh"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

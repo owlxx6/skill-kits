@@ -1,44 +1,41 @@
 {
   "fingerprint": "48a612a2715a2288cdc8f9539f78e006b12a1f4f",
   "model": "in-session-review",
-  "reviewedAt": "2026-11-15T12:00:00.000Z",
+  "reviewedAt": "2026-11-17T09:59:18.333Z",
   "review": {
     "kits": [
-      "resume-career",
-      "marketing-content"
+      "resume-career"
     ],
     "scores": {
       "clarity": 9,
       "completeness": 9,
       "usefulness": 7
     },
-    "why": "Scores and rewrites a LinkedIn profile with bundled audit scripts, worksheet and references.",
-    "summary": "Audits a LinkedIn profile section by section, scores the headline, ranks fixes by points per hour and builds the About section using three Python scripts, a worksheet, an example input and reference notes.",
+    "why": "Audits and rewrites a LinkedIn profile with three scoring scripts and exit codes that say when to stop.",
+    "summary": "Workflow to audit a LinkedIn profile, then rewrite the headline, About section and experience. Three Python scripts score the headline, audit completeness ranked by points per hour, and assemble the About section. A worksheet, an example input and two references are provided.",
     "strengths": [
-      "Ordered workflow with exit-code stop conditions",
-      "Three scripts plus worksheet and example input",
-      "Prioritizes fixes by effort"
+      "Scripts with exit codes give clear stop conditions",
+      "Fixes ranked by points per hour with a first-hour plan",
+      "Rules: never invent a credential or metric, nothing is scraped"
     ],
     "cautions": [
-      "LinkedIn only, not a resume",
-      "Needs Python 3",
-      "Scripts must be read before trusting"
+      "LinkedIn only: no resume or ATS content",
+      "The scripts and references are described, not read in this review",
+      "Needs Python 3 and a profile JSON the user fills in"
     ],
     "keywords": [
       "linkedin",
-      "profile audit",
+      "linkedin profile",
       "headline",
       "about section",
+      "profile audit",
       "personal branding",
-      "career",
-      "profile optimization",
-      "cv"
+      "profile rewrite",
+      "featured section"
     ],
     "security": {
       "level": "notice",
-      "notes": [
-        "Instructs running local Python scripts on user-provided profile data; review scripts before running."
-      ]
+      "notes": []
     }
   }
 }

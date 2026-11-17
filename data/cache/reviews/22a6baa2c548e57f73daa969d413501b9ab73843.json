@@ -1,0 +1,41 @@
+{
+  "fingerprint": "22a6baa2c548e57f73daa969d413501b9ab73843",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:38:47.216Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Generates API reference docs from code: endpoints, errors and examples in several languages, with a document outline.",
+    "summary": "Describes how to document an API from its code: endpoint details, request and response specs, cURL, JavaScript and Python examples, usage guides, error handling and interactive formats. It gives full worked examples for a REST endpoint, a GraphQL query and authentication, a nine-section outline and a pitfalls list.",
+    "strengths": [
+      "Complete worked examples for REST, GraphQL and authentication",
+      "Document outline from introduction to changelog",
+      "Pitfalls list: drift, missing errors, broken examples"
+    ],
+    "cautions": [
+      "Written as 'I'll examine your code' but gives no concrete method to read a codebase",
+      "Overlaps with the code-documenter skill",
+      "Points to related skills that are not included"
+    ],
+    "keywords": [
+      "api documentation",
+      "openapi",
+      "swagger",
+      "rest api docs",
+      "graphql docs",
+      "code examples",
+      "postman collection",
+      "error handling docs"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

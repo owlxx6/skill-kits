@@ -1,0 +1,41 @@
+{
+  "fingerprint": "60dad2a729161ecebd5e3429fbb219c1e3029f93",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:43:11.823Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 6
+    },
+    "why": "Runs Apify scrapers across 15+ platforms for brand monitoring, competitor intelligence and trend research.",
+    "summary": "Selects an Actor from an index of about 100, fetches its input schema, runs it through the Apify CLI and delivers results as a quick answer, CSV or JSON. It includes workflow guides by use case (brand monitoring, competitive intelligence, reviews, trends, company research) and a file of gotchas for pay-per-event Actors.",
+    "strengths": [
+      "Workflow guides by use case, from brand monitoring to company research",
+      "Gotchas file to read before pay-per-event runs",
+      "Quick-answer mode for simple lookups"
+    ],
+    "cautions": [
+      "Needs the Apify CLI and an account; some Actors cost money per event",
+      "Covers scraping of personal data (LinkedIn, contact enrichment): legal and privacy review needed",
+      "Sends a telemetry user-agent string with each command"
+    ],
+    "keywords": [
+      "web scraping",
+      "apify",
+      "brand monitoring",
+      "competitor intelligence",
+      "trend research",
+      "review analysis",
+      "social media scraping",
+      "data extraction"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

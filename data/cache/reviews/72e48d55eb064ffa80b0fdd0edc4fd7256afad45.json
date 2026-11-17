@@ -1,0 +1,42 @@
+{
+  "fingerprint": "72e48d55eb064ffa80b0fdd0edc4fd7256afad45",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:38:47.216Z",
+  "review": {
+    "kits": [
+      "docs-reports",
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Builds evidence-traceable market reports: source and claim ledgers, TAM/SAM/SOM scenarios and forecast sensitivity.",
+    "summary": "Workflow for auditable market research reports: a research contract, an evidence plan, source and claims ledgers with validators, top-down and bottom-up sizing as reconciled scenarios, forecasts with explicit uncertainty, survey and competitor evidence rules, unit checks and a release gate. Ships offline Python scripts, CSV and JSON templates and a LaTeX template.",
+    "strengths": [
+      "Every claim maps to source IDs and is audited by scripts",
+      "Market size shown as reconciled scenarios, never one certain number",
+      "Ethics rules: no invented citations, no brand impersonation, no investment advice"
+    ],
+    "cautions": [
+      "Heavy process for a quick brief",
+      "Validators check structure, not whether a source really supports a claim",
+      "Ends with an instruction to cite the authors' own paper"
+    ],
+    "keywords": [
+      "market research",
+      "market sizing",
+      "tam sam som",
+      "competitive analysis",
+      "forecast sensitivity",
+      "claims ledger",
+      "evidence audit",
+      "research report"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

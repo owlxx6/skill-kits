@@ -1,0 +1,41 @@
+{
+  "fingerprint": "3f51fb2bd73928269303b015661705e40dafb5c9",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Gets cited web research on disk: an approved plan, parallel subtopic searches and a report with quoted sources.",
+    "summary": "Takes a finished research question, writes a plan with one to five subtopics, asks the user to approve it, dispatches up to three search subagents, and synthesizes a report with TL;DR, findings, gaps and a numbered source list. Every citation carries URL, title and a verbatim excerpt; failures are recorded rather than hidden.",
+    "strengths": [
+      "Hard gates evidenced by files on disk, not by an internal claim",
+      "Honest Gaps & Limitations section, including failed subagents",
+      "Never invents citation metadata such as retrieval dates"
+    ],
+    "cautions": [
+      "Treats the question as final: it will not sharpen a vague one",
+      "Built to be called by other skills of the same collection; the contract references them",
+      "English only; no paywalled sources"
+    ],
+    "keywords": [
+      "web research",
+      "cited report",
+      "research plan",
+      "subagents",
+      "citations",
+      "evidence gathering",
+      "synthesis",
+      "research gaps"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

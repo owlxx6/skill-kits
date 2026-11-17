@@ -1,0 +1,41 @@
+{
+  "fingerprint": "59a39dfca2da54d8329bef2a2c7342676182bc18",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:39:13.080Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 6
+    },
+    "why": "Generates read-and-share slide decks as AI images from an outline and one prompt per slide, merged into PPTX and PDF.",
+    "summary": "Turns content into an outline, then one prompt file per slide, then raster slide images through an available image backend, and merges them into PPTX and PDF. It offers 17 style presets built from four dimensions, a confirmation gate before generating, batch generation, and rules to edit the prompt then regenerate.",
+    "strengths": [
+      "One prompt file per slide: reproducible and independent of the image backend",
+      "Asks for confirmation before generating unless the user opts out",
+      "Never patches text inside a generated image: it regenerates"
+    ],
+    "cautions": [
+      "Slides are images: their text cannot be edited in PowerPoint",
+      "Needs an image generation backend, which may be paid or require a login",
+      "Designed for reading and sharing, not for live presentation"
+    ],
+    "keywords": [
+      "slide deck",
+      "ai slides",
+      "image slides",
+      "presentation generator",
+      "pptx export",
+      "slide styles",
+      "outline",
+      "infographic slides"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "e05c6993a77f2ccfa4bc86e5e35669a74c8be7ef",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:59:12.855Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 6
+    },
+    "why": "Plans a seven-day LinkedIn calendar by pillar, format, hook formula, CTA and time, with daily comment targets and an inbound check.",
+    "summary": "Takes a theme, audience and pillar mix, then returns a calendar table, three to five comment targets per posting day and a weekly checklist. Guardrails: three to five pillars, no pillar over 60%, no hook formula repeated in a week, goals spread across comments, reposts, likes and saves. A founders edition swaps in a different pillar set.",
+    "strengths": [
+      "Clear guardrails that catch a lopsided week",
+      "Angles come from a story bank, and no figure may appear that the user did not supply",
+      "Founders variant with its own pillars"
+    ],
+    "cautions": [
+      "Leans on companion files and skills (story bank, voice profile, numbered hook formulas) outside this file",
+      "Posting-day and frequency rules are unverified heuristics",
+      "Examples come from the author's own business"
+    ],
+    "keywords": [
+      "linkedin content plan",
+      "content calendar",
+      "content pillars",
+      "hook formulas",
+      "comment strategy",
+      "founder content",
+      "weekly plan",
+      "posting schedule"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

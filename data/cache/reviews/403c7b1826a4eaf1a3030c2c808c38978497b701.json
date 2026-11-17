@@ -1,0 +1,41 @@
+{
+  "fingerprint": "403c7b1826a4eaf1a3030c2c808c38978497b701",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 7,
+      "usefulness": 5
+    },
+    "why": "Researches the space before a build: local projects, competitors, forums, libraries and platform features, in three depths.",
+    "summary": "Pre-build discovery in three depths (focused, wide, deep). It scans the user's local projects for reusable code, researches competitors, forums, reviews, plugin ecosystems and libraries, checks the current platform docs instead of trusting memory, looks ahead, and writes a research brief with a proposed architecture and build phases.",
+    "strengths": [
+      "Reads reviews, issues and forums as demand signals",
+      "Tells the agent to check current platform docs, not training data",
+      "Brief template ends with risks and open questions"
+    ],
+    "cautions": [
+      "Tied to the author's setup: a specific notes folder, artifact path and a Cloudflare checklist",
+      "No citation or verification discipline: it says it is not for fact-checked reports",
+      "Product and developer discovery, not general research"
+    ],
+    "keywords": [
+      "discovery research",
+      "competitive analysis",
+      "pre-build research",
+      "market landscape",
+      "ecosystem research",
+      "technical options",
+      "research brief",
+      "product discovery"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

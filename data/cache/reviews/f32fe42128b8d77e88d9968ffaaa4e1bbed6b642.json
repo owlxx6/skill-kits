@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f32fe42128b8d77e88d9968ffaaa4e1bbed6b642",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:43.807Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 7
+    },
+    "why": "Writes B2B cold emails, follow-ups and cadences, and sets the deliverability basics: secondary domains, verified lists, no open tracking.",
+    "summary": "Peer-voice emails with one low-friction ask, short internal-looking subject lines and three to five follow-ups that each add something new. A pre-send checklist covers secondary domains, authentication, warm-up, list verification, bounce limits, an opt-out line and a postal address. It extends to LinkedIn and multichannel cadences and to classifying replies.",
+    "strengths": [
+      "Compliance and deliverability rules come before the copy",
+      "A reply on any channel stops every channel",
+      "Honest about terms-of-service risk in LinkedIn automation"
+    ],
+    "cautions": [
+      "Sales outbound rather than content: leans on prospect lists and sending tools",
+      "Eleven reference files with benchmarks and plays are not read here",
+      "Sending at scale carries legal and reputation risks the user must own"
+    ],
+    "keywords": [
+      "cold email",
+      "outbound",
+      "follow-up sequences",
+      "deliverability",
+      "subject lines",
+      "linkedin outreach",
+      "reply handling",
+      "b2b sales"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

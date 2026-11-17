@@ -1,0 +1,42 @@
+{
+  "fingerprint": "1ee48004300dcd1b30aa2aec2246c0b4f54c5f89",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:37:00.305Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Creates, edits and reviews Word documents: docx-js, XML edits, tracked changes, comments and render checks.",
+    "summary": "Guide to create, edit and read .docx files: docx-js pitfalls (page size, tables, lists, headings, TOC), editing by unpacking and patching XML, tracked changes and comments with helper scripts, schema validation and a render-to-image check. Ships helper scripts and XSD schemas.",
+    "strengths": [
+      "Practical list of docx-js pitfalls that break real documents",
+      "Validation and tracked-change checks backed by scripts",
+      "Treats .docx from outsiders as untrusted (no unzip)"
+    ],
+    "cautions": [
+      "Needs node, pandoc, LibreOffice and poppler installed",
+      "Licence text is in a separate file not read in this review",
+      "Word only: PDFs, spreadsheets and Google Docs are out of scope"
+    ],
+    "keywords": [
+      "word document",
+      "docx",
+      "tracked changes",
+      "document comments",
+      "report template",
+      "letterhead",
+      "table of contents",
+      "document editing",
+      "ooxml"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

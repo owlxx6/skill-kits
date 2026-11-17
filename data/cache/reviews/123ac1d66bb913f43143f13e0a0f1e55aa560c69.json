@@ -1,0 +1,41 @@
+{
+  "fingerprint": "123ac1d66bb913f43143f13e0a0f1e55aa560c69",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:01:16.853Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 6,
+      "usefulness": 6
+    },
+    "why": "Guides creative-field resumes: an ATS-safe version plus a designed version, with typography, color and portfolio links.",
+    "summary": "Two-version strategy for creative professionals: an ATS-compatible resume for portals and a designed one for networking and direct sends. Covers design principles, guidance per field (graphic, UX, marketing, writers, photo and video), portfolio integration, checklists, tools and an output template.",
+    "strengths": [
+      "Clear rule for when to use each version",
+      "Field-by-field guidance for creative roles",
+      "Checklists for typography, layout and color"
+    ],
+    "cautions": [
+      "Advice only: no template or design files",
+      "Tool list (InDesign, Figma, Canva) is generic",
+      "Overlaps with design work; the ATS part repeats common resume advice"
+    ],
+    "keywords": [
+      "creative resume",
+      "designer resume",
+      "portfolio resume",
+      "ats compatible",
+      "visual resume",
+      "resume design",
+      "typography",
+      "portfolio link"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

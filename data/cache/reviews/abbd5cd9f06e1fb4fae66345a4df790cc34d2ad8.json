@@ -1,0 +1,41 @@
+{
+  "fingerprint": "abbd5cd9f06e1fb4fae66345a4df790cc34d2ad8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:46:46.836Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Runs systematic and scoping literature reviews with recorded searches, PRISMA counts and verified citations.",
+    "summary": "Seven phases: scope the question, search several databases with logged queries, screen, extract and appraise quality, synthesize by theme, verify every citation and produce a Markdown or PDF review. It separates records, reports and studies, reconciles PRISMA counts, and warns that a DOI that exists does not prove a claim.",
+    "strengths": [
+      "Reproducibility: every search string and date is recorded",
+      "Honest about limits: ranked web results cannot prove exhaustive coverage",
+      "Bundled scripts for citation checks, deduplication and PDF export"
+    ],
+    "cautions": [
+      "Several optional tools: a search CLI with an account, Pandoc, XeLaTeX, an image-generation key",
+      "Aimed at scientific literature; less fit for business sources",
+      "Ends with a request to cite the library's own paper in outputs"
+    ],
+    "keywords": [
+      "literature review",
+      "systematic review",
+      "scoping review",
+      "prisma",
+      "pubmed",
+      "arxiv",
+      "citation checking",
+      "research synthesis"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

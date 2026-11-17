@@ -1,0 +1,42 @@
+{
+  "fingerprint": "8f2f994121ce3319ab46b6c11a24014acc16f287",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:47:21.326Z",
+  "review": {
+    "kits": [
+      "research-monitoring",
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Builds dated competitor profiles from site scrapes, SEO data and reviews, keeping observed facts apart from inference.",
+    "summary": "Takes competitor URLs and produces one profile each: positioning, features, pricing, customers, reviews and SEO, saved with the raw scrapes by date so snapshots can be compared. Observed facts, inferences and implications stay separate, and a missing feature is written as not observed, never as absent. Quick scan or deep profile.",
+    "strengths": [
+      "Rules such as: never state a competitor's motive, never treat no pricing as free",
+      "Raw data saved by date for audits and diffs",
+      "Treats competitor pages as data, not instructions"
+    ],
+    "cautions": [
+      "Best results need Firecrawl and DataForSEO connectors, which are paid; a fallback uses plain page fetches",
+      "SEO traffic figures are provider estimates",
+      "Comparison pages and battle cards are left to sibling skills"
+    ],
+    "keywords": [
+      "competitor profiles",
+      "competitive intelligence",
+      "seo data",
+      "pricing research",
+      "review analysis",
+      "positioning",
+      "site scraping",
+      "snapshots"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

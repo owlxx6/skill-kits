@@ -1,0 +1,41 @@
+{
+  "fingerprint": "d48d53d31256d56bf434653f078c503402d05901",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:02:24.986Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Runs a structured mock interview for a job posting, probes vague answers and scores each answer with quotes.",
+    "summary": "Plays the interviewer for a chosen round, persona and difficulty. Builds a question plan from the job description, asks one question at a time, probes with quoted specifics and scores answers on written anchors, after each answer (coach mode) or at the end (realistic). Model answers use only the user's real experience.",
+    "strengths": [
+      "Quote-backed scoring against written anchors: no quote, no rating",
+      "Never invents the user's experience; gaps are marked [NEED: ...]",
+      "Covers behavioral, coding, system design, case and panel rounds"
+    ],
+    "cautions": [
+      "Very long (43,000 characters) with five reference files",
+      "Typed practice cannot judge pace or tone",
+      "Declines to feed answers during a live interview, by design"
+    ],
+    "keywords": [
+      "mock interview",
+      "interview practice",
+      "behavioral interview",
+      "interview rubric",
+      "system design interview",
+      "case interview",
+      "interview feedback",
+      "structured interview"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

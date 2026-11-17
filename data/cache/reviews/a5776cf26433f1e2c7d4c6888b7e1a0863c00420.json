@@ -1,0 +1,41 @@
+{
+  "fingerprint": "a5776cf26433f1e2c7d4c6888b7e1a0863c00420",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:57:02.442Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Plans and drafts organic posts, threads, carousels and short videos for five platforms, with drafts-first publishing.",
+    "summary": "Covers goals, audience and voice, a platform quick reference, content pillars, hook formulas, a repurposing system for blogs, podcasts, webinars and newsletters, a weekly calendar, engagement routines, metrics and short-form video structures. Scheduling through a connected tool creates drafts first and never publishes without an explicit go-ahead.",
+    "strengths": [
+      "Drafts first: nothing is auto-published",
+      "Build-in-public posts may use only numbers found in the commits or given by the developer",
+      "Social-specific AI tells: broetry, engagement bait, manufactured vulnerability"
+    ],
+    "cautions": [
+      "Wide scope; ten reference files, including algorithm notes that date quickly, are not read here",
+      "Platform frequency and reach advice is generic rule of thumb",
+      "Needs a scheduling tool with its own connector for direct posting"
+    ],
+    "keywords": [
+      "social media content",
+      "linkedin posts",
+      "threads",
+      "carousels",
+      "short-form video",
+      "content repurposing",
+      "hooks",
+      "content calendar"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

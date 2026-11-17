@@ -1,0 +1,41 @@
+{
+  "fingerprint": "932be5c14834f28ece61bfb8bc3e8131e2ee68b1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:58:37.145Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 5,
+      "usefulness": 6
+    },
+    "why": "Gives a quick-start path for brand voice, SEO blog posts, social content and calendars, with two helper scripts and reference guides.",
+    "summary": "Three entry points (brand voice, blog, social) and workflows to set a voice from existing content, write keyword-optimized posts and plan a monthly calendar with a 40/25/25/10 pillar split. Two Python scripts report voice profile, readability and an SEO score. Frameworks and platform guidance sit in reference files; a KPI list runs from content to business metrics.",
+    "strengths": [
+      "Builds a voice baseline from the brand's existing content",
+      "Clear order of work, from audience need to proofreading",
+      "Metrics span content, engagement and business results"
+    ],
+    "cautions": [
+      "Most of the method is in reference files not read here",
+      "Keyword density and search volume targets are generic rules of thumb",
+      "The grep command offered to check voice does not test voice at all"
+    ],
+    "keywords": [
+      "content creation",
+      "brand voice",
+      "seo blog posts",
+      "social media content",
+      "content calendar",
+      "content frameworks",
+      "readability",
+      "keyword optimization"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

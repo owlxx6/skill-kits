@@ -1,0 +1,41 @@
+{
+  "fingerprint": "046c78ee0456e1e0aa049d5c620eb18e1a8e8b2e",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-17T10:43:11.823Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 7
+    },
+    "why": "Produces a formal cited research report from open-web evidence, with depth tiers set by the time the user allows.",
+    "summary": "For report-scale questions only: asks how long the task may run, then searches and scrapes with Firecrawl at a quick, thorough or exhaustive depth, optionally splitting by angle across sub-agents, and returns an executive summary, findings, contrarian views, open questions and a full source list.",
+    "strengths": [
+      "Depth tiers tied to the time the user gives",
+      "Refuses quick lookups and top-N lists",
+      "Hands paper-based questions to the sibling literature skill"
+    ],
+    "cautions": [
+      "Needs a Firecrawl API key and the Firecrawl service",
+      "Instructions only: no scripts or templates beyond the report outline",
+      "Always asks a runtime question before starting"
+    ],
+    "keywords": [
+      "deep research",
+      "research report",
+      "web research",
+      "cited report",
+      "market analysis",
+      "policy research",
+      "contrarian views",
+      "firecrawl"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}
