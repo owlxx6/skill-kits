@@ -42,6 +42,7 @@ import {
   type SafetyLimits,
   safetyCleared,
   type ScanContext,
+  type ScanOverride,
   scanWaitingSkills,
   summarizeSafety,
 } from "./lib/skill-safety";
@@ -273,6 +274,8 @@ export interface ExtractSafetyOptions {
   cache: SafetyCache;
   save: (cache: SafetyCache) => Promise<void>;
   limits?: Partial<SafetyLimits>;
+  // The owner's decisions about `review` verdicts (data/scan-overrides.yaml).
+  overrides?: readonly ScanOverride[];
 }
 
 export interface ExtractLicenseOptions {
@@ -405,7 +408,8 @@ export async function runExtract(
   const skills = all();
   stats.skills = skills.length;
   const isSafetyCleared =
-    licenses.isSafetyCleared ?? (safety === undefined ? NO_SAFETY_SCAN : safetyCleared(safety.cache));
+    licenses.isSafetyCleared ??
+    (safety === undefined ? NO_SAFETY_SCAN : safetyCleared(safety.cache, safety.overrides));
   if (safety !== undefined) {
     const summary = summarizeSafety(skills, licenses.allowed, safety.cache, safetyCounts);
     stats.safety = summary.stats;

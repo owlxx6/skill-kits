@@ -148,8 +148,13 @@ and rank use it (the review and rank steps read the file written by the last ext
 current report, no skill is cleared, as before the integration.
 
 `review` is not cleared on purpose: for a skill without a usable license, a warning is a reason to
-have the owner look first. Letting `review` pass would be a one-line change in `safetyCleared`; it is
-an owner decision.
+have the owner look first. The owner's look is recorded in `data/scan-overrides.yaml` (versioned,
+read by every step through `readScanOverrides`): one entry per skill, with the skill id, its
+fingerprint, the `contentId` of the scan that was read, the date and a short neutral `basis`. The
+entry clears a `review` verdict only while the fingerprint and the `contentId` still match, so a
+changed skill waits for a new look. A `block` verdict, a skill without a report and a stale report
+are never cleared by it. The file holds no finding text: the reports stay admin-only. A fresh
+checkout scans again and recomputes the same `contentId`, so the entry keeps applying in CI.
 
 ### Not done yet
 

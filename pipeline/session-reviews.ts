@@ -17,7 +17,7 @@ import {
   writeReviewPackets,
 } from "./lib/session-reviews";
 import { buildCandidateRows, saveSkillFiles, writeCandidates } from "./lib/session-export";
-import { readSafetyCache, safetyCleared } from "./lib/skill-safety";
+import { readSafetyCache, readScanOverrides, safetyCleared } from "./lib/skill-safety";
 import { ConfigSchema, KitsSchema, RepoMetaSchema, SkillRecordSchema } from "./lib/schemas";
 import { readJsonFile, readYamlFile, resolvePaths, writeJsonFile } from "./lib/store";
 
@@ -70,7 +70,7 @@ async function main(): Promise<void> {
   const skills = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
   // The safety reports of the last extraction decide for the skills that need the scan.
   const safetyReports = readSafetyCache(await readJsonFile(paths.safety, z.unknown(), undefined));
-  const isSafetyCleared = safetyCleared(safetyReports);
+  const isSafetyCleared = safetyCleared(safetyReports, await readScanOverrides(paths.scanOverrides));
   const ineligibility = (skill: (typeof skills)[number]): string | null => {
     const status = publication(skill, config.filter.allowedLicenses, isSafetyCleared);
     return status.status === "publishable" ? null : status.reason;

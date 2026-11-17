@@ -30,7 +30,7 @@ describe("resolvePaths", () => {
 
   it("puts every other dry-run path under .dry-run", () => {
     const dry = resolvePaths(root, true);
-    const inputs = ["sources", "kits", "config", "curation"];
+    const inputs = ["sources", "kits", "config", "curation", "scanOverrides"];
     for (const [key, value] of Object.entries(dry)) {
       if (inputs.includes(key)) continue;
       expect(value.startsWith(path.join(root, ".dry-run"))).toBe(true);

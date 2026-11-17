@@ -53,6 +53,8 @@ export interface Paths {
   kits: string;
   config: string;
   curation: string;
+  // The owner's decisions about skills whose scan verdict is `review`: versioned, no finding text.
+  scanOverrides: string;
   candidates: string;
   repos: string;
   skills: string;
@@ -77,6 +79,7 @@ export function resolvePaths(root: string, dryRun: boolean): Paths {
     kits: path.join(data, "kits.yaml"),
     config: path.join(data, "config.yaml"),
     curation: path.join(data, "curation.yaml"),
+    scanOverrides: path.join(data, "scan-overrides.yaml"),
     candidates: path.join(cache, "candidates.json"),
     repos: path.join(cache, "repos.json"),
     skills: path.join(cache, "skills.json"),
