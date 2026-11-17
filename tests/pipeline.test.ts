@@ -2,23 +2,47 @@ import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/pr
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { CatalogSchema, RunInfoSchema, type Catalog, type RunInfo } from "../pipeline/lib/schemas";
+import { z } from "zod";
+import {
+  CatalogSchema,
+  RunInfoSchema,
+  SkillRecordSchema,
+  type Catalog,
+  type RunInfo,
+} from "../pipeline/lib/schemas";
 import { FatalLlmError } from "../pipeline/lib/errors";
 import { STEPS, loadReviews, runPipeline } from "../pipeline/run";
-import { FakeGitHub, FakeLlm } from "./fakes";
+import { FakeGitHub, FakeLlm, type FakeRepo, blobIdOf } from "./fakes";
 import { NOW, makeRepo, makeReview, skillMd } from "./fixtures";
+import { MIT_TEXT } from "./license-texts";
+import { LICENSE_RULES_VERSION } from "../pipeline/lib/license";
+
+const blobOf = blobIdOf;
 
 const recent = "2026-11-05T00:00:00Z";
 
 const atsId = "acme/career-skills:skills/ats-check";
 
 function makeGitHub(
-  options: { atsBody?: string; redirects?: Record<string, string>; careerLicense?: string | null } = {},
+  options: {
+    atsBody?: string;
+    redirects?: Record<string, string>;
+    careerLicense?: string | null;
+    careerArchived?: boolean;
+    extraRepos?: FakeRepo[];
+  } = {},
 ): FakeGitHub {
-  const { atsBody = "Do the thing.", redirects = {}, careerLicense = "MIT" } = options;
+  const {
+    atsBody = "Do the thing.",
+    redirects = {},
+    careerLicense = "MIT",
+    careerArchived = false,
+    extraRepos = [],
+  } = options;
   return new FakeGitHub([
+    ...extraRepos,
     {
-      meta: makeRepo({ fullName: "acme/career-skills", url: "https://github.com/acme/career-skills", stars: 2000, forks: 200, pushedAt: recent, license: careerLicense }),
+      meta: makeRepo({ fullName: "acme/career-skills", url: "https://github.com/acme/career-skills", stars: 2000, forks: 200, pushedAt: recent, license: careerLicense, archived: careerArchived }),
       files: {
         "skills/resume-tailor/SKILL.md": skillMd("resume-tailor", "Tailors a resume to a job offer."),
         "skills/resume-tailor/examples.md": "Example",
@@ -53,7 +77,15 @@ function makeLlm(
   options: { noKitFor?: string; failReviewAt?: number; invalidFor?: string } = {},
 ): FakeLlm {
   let reviewCount = 0;
-  const careerSkills = new Set(["resume-tailor", "ats-check", "cover-letter", "flaky", "exfil"]);
+  const careerSkills = new Set([
+    "resume-tailor",
+    "ats-check",
+    "cover-letter",
+    "flaky",
+    "exfil",
+    "salary-coach",
+    "negotiation",
+  ]);
   return new FakeLlm(
     (items) => ({
       results: items.map((item) => ({
@@ -136,12 +168,24 @@ describe("runPipeline", () => {
     const catalog = await readCatalog(root);
     const runInfo = await readRunInfo(root);
 
+    // A repository is no longer filtered for its license: nolicense/skills is read.
     expect(runInfo.filtered).toEqual([
       { fullName: "ghost/deleted", reason: "not found" },
-      { fullName: "nolicense/skills", reason: "license none not allowed" },
       { fullName: "old/archived-skills", reason: "archived" },
     ]);
-    expect(runInfo.extract).toMatchObject({ repos: 3, skills: 6, invalid: 1 });
+    expect(runInfo.extract).toMatchObject({ repos: 4, skills: 7, invalid: 1 });
+    // The skill of nolicense/skills has no license evidence: it is not triaged.
+    expect(runInfo.extract?.licenses).toEqual({
+      identifiedAllowed: 6,
+      identifiedNotAllowed: 0,
+      custom: 0,
+      ambiguous: 0,
+      missing: 1,
+      notReRead: 0,
+      waitingForSafetyScan: 1,
+      unresolved: 0,
+      failedDownloads: 0,
+    });
     expect(runInfo.review).toMatchObject({ triaged: 6, reviewed: 4, deferred: 0 });
     expect(runInfo.review?.failed.map((entry) => entry.skillId)).toEqual([
       "solo/broken:skills/flaky",
@@ -153,6 +197,13 @@ describe("runPipeline", () => {
       "cover-letter",
     ]);
     expect(catalog.collections.map((collection) => collection.id)).toEqual(["acme/career-skills"]);
+    // No safety scan yet: the unlicensed skill of nolicense/skills stays out, as before.
+    expect(catalog.skills.map((skill) => [skill.license, skill.licenseOutcome, skill.licenseCategory])).toEqual([
+      ["MIT", "identified", "permissive"],
+      ["MIT", "identified", "permissive"],
+      ["MIT", "identified", "permissive"],
+    ]);
+    expect(catalog.collections[0]).toMatchObject({ license: "MIT", licenses: ["MIT"] });
     const resume = catalog.kits.find((kit) => kit.id === "resume-career");
     expect(resume?.proposals.skills.map((entry) => entry.id)).toEqual([
       "acme/career-skills:skills/resume-tailor",
@@ -362,16 +413,170 @@ describe("runPipeline", () => {
     );
   }
 
-  it("removes an approved skill whose repository lost its license", async () => {
+  it("removes an approved skill whose repository is no longer listed", async () => {
     await run();
     await approveAts();
-    gh = makeGitHub({ careerLicense: null });
+    gh = makeGitHub({ careerArchived: true });
     await run();
     const resume = (await readCatalog(root)).kits.find((kit) => kit.id === "resume-career");
     expect(resume?.removed).toEqual([{ id: atsId, reason: "repository no longer listed" }]);
     expect(resume?.skills).toEqual([]);
     const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
     expect(summary).toContain(`- \`${atsId}\` - repository no longer listed`);
+  });
+
+  it("keeps an approved skill whose license is now missing pending for the safety scan, without reviewing it", async () => {
+    await run();
+    await approveAts();
+    gh = makeGitHub({ careerLicense: null, atsBody: "Do the thing, version two." });
+    const reviewCalls = llm.reviewCalls.length;
+    await run();
+    const resume = (await readCatalog(root)).kits.find((kit) => kit.id === "resume-career");
+    expect(resume?.pending).toEqual([atsId]);
+    expect(resume?.pendingReasons).toEqual({ [atsId]: "waiting for the safety scan" });
+    expect(resume?.removed).toEqual([]);
+    expect(resume?.skills).toEqual([]);
+    // The changed approved skill is not reviewed: only the failed flaky skill is tried again.
+    expect(llm.reviewCalls.slice(reviewCalls).map((call) => call.name)).toEqual(["flaky", "flaky"]);
+    const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
+    expect(summary).toContain(`- \`${atsId}\` - waiting for the safety scan`);
+    expect(summary).toMatch(/- Licenses: .* 5 waiting for the safety scan,/);
+  });
+
+  function splitRepo(): FakeRepo {
+    return {
+      meta: makeRepo({
+        fullName: "split/skills",
+        url: "https://github.com/split/skills",
+        license: null,
+        stars: 3,
+        forks: 0,
+        pushedAt: recent,
+      }),
+      files: {
+        "skills/salary-coach/SKILL.md": skillMd("salary-coach", "Prepares a salary negotiation."),
+        "skills/salary-coach/LICENSE": MIT_TEXT,
+        "skills/negotiation/SKILL.md": skillMd("negotiation", "Negotiates an offer."),
+      },
+    };
+  }
+
+  async function nominateSplit(): Promise<void> {
+    gh = makeGitHub({ extraRepos: [splitRepo()] });
+    const sourcesFile = path.join(root, "data", "sources.yaml");
+    const sources = await readFile(sourcesFile, "utf8");
+    // A nominated repository with 3 stars: kept despite minStars.
+    await writeFile(sourcesFile, sources.replace("repos:\n", "repos:\n  - split/skills\n"));
+  }
+
+  const licensesFile = (): string => path.join(root, "data", "cache", "licenses.json");
+
+  it("publishes the one skill whose folder has an MIT license from a repository with no GitHub license", async () => {
+    await nominateSplit();
+    await run();
+
+    const skills = z
+      .array(SkillRecordSchema)
+      .parse(JSON.parse(await readFile(path.join(root, "data", "cache", "skills.json"), "utf8")));
+    const splitSkills = skills.filter((skill) => skill.repo === "split/skills");
+    expect(
+      splitSkills.map((skill) => [
+        skill.name,
+        skill.license?.outcome,
+        skill.license?.outcome === "identified" ? skill.license.spdx : undefined,
+      ]),
+    ).toEqual([
+      ["negotiation", "missing", undefined],
+      ["salary-coach", "identified", "MIT"],
+    ]);
+
+    const catalog = await readCatalog(root);
+    const listed = catalog.skills.filter((skill) => skill.repo === "split/skills");
+    expect(listed.map((skill) => skill.name)).toEqual(["salary-coach"]);
+    expect(listed[0]).toMatchObject({
+      license: "MIT",
+      licenseEvidence: {
+        level: "skill",
+        path: "skills/salary-coach/LICENSE",
+        url: "https://github.com/split/skills/blob/main/skills/salary-coach/LICENSE",
+      },
+    });
+    // No triage and no review is spent on the skill that cannot be published.
+    expect(llm.triageCalls.flat().map((item) => item.name)).not.toContain("negotiation");
+    expect(llm.reviewCalls.map((call) => call.name)).not.toContain("negotiation");
+    expect(catalog.collections.map((collection) => collection.id)).not.toContain("split/skills");
+
+    const licenseCache = JSON.parse(await readFile(licensesFile(), "utf8"));
+    expect(licenseCache).toEqual({
+      rulesVersion: LICENSE_RULES_VERSION,
+      entries: { [blobOf(MIT_TEXT)]: { kind: "spdx", spdx: "MIT" } },
+    });
+  });
+
+  it.each([
+    ["written by other identification rules", { rulesVersion: LICENSE_RULES_VERSION + 1, entries: {} }],
+    ["in the shape written before rules versions", {}],
+  ])("identifies every license text again when the cache was %s", async (_label, shape) => {
+    await nominateSplit();
+    await mkdir(path.dirname(licensesFile()), { recursive: true });
+    // A stale answer for the MIT text: it must not be used.
+    const stale = { [blobOf(MIT_TEXT)]: { spdx: null } };
+    const file = "entries" in shape ? { ...shape, entries: stale } : stale;
+    await writeFile(licensesFile(), JSON.stringify(file));
+    await run();
+    expect(gh.fileReads).toContain("split/skills/skills/salary-coach/LICENSE");
+    const catalog = await readCatalog(root);
+    expect(catalog.skills.map((skill) => skill.name)).toContain("salary-coach");
+    expect(JSON.parse(await readFile(licensesFile(), "utf8"))).toEqual({
+      rulesVersion: LICENSE_RULES_VERSION,
+      entries: { [blobOf(MIT_TEXT)]: { kind: "spdx", spdx: "MIT" } },
+    });
+  });
+
+  it("replaces a discarded cache file even when no license text is downloaded", async () => {
+    await mkdir(path.dirname(licensesFile()), { recursive: true });
+    await writeFile(licensesFile(), JSON.stringify({ ["a".repeat(40)]: { spdx: "MIT" } }));
+    await run();
+    expect(JSON.parse(await readFile(licensesFile(), "utf8"))).toEqual({
+      rulesVersion: LICENSE_RULES_VERSION,
+      entries: {},
+    });
+  });
+
+  it("does not download a license text again with a cache of the current rules", async () => {
+    await nominateSplit();
+    await run();
+    gh = makeGitHub({ extraRepos: [splitRepo()] });
+    await run(["extract"]);
+    expect(gh.fileReads).not.toContain("split/skills/skills/salary-coach/LICENSE");
+  });
+
+  it("lists no collection for a repository whose tree listing was truncated", async () => {
+    // Three skills, each with its own MIT license: eligible even in a truncated listing.
+    const licensed: FakeRepo = {
+      meta: makeRepo({ fullName: "big/skills", url: "https://github.com/big/skills", license: null, pushedAt: recent }),
+      files: Object.fromEntries(
+        ["resume-tailor", "ats-check", "cover-letter"].flatMap((name) => [
+          [`skills/${name}/SKILL.md`, skillMd(name, `Does ${name}.`)],
+          [`skills/${name}/LICENSE`, MIT_TEXT],
+        ]),
+      ),
+    };
+    gh = makeGitHub({ extraRepos: [licensed] });
+    const sourcesFile = path.join(root, "data", "sources.yaml");
+    const sources = await readFile(sourcesFile, "utf8");
+    await writeFile(sourcesFile, sources.replace("repos:\n", "repos:\n  - big/skills\n"));
+    await run();
+    expect((await readCatalog(root)).collections.map((collection) => collection.id)).toContain("big/skills");
+
+    gh.truncateTreeFor.add("big/skills");
+    await run();
+    const catalog = await readCatalog(root);
+    expect(catalog.skills.filter((skill) => skill.repo === "big/skills")).toHaveLength(3);
+    expect(catalog.collections.map((collection) => collection.id)).not.toContain("big/skills");
+    // rank run alone reads the truncated repositories from the run information.
+    await run(["rank"]);
+    expect((await readCatalog(root)).collections.map((collection) => collection.id)).not.toContain("big/skills");
   });
 
   it("keeps a changed approved skill pending when its review fails", async () => {
@@ -386,7 +591,7 @@ describe("runPipeline", () => {
     expect((await readRunInfo(root)).review?.failed.map((entry) => entry.skillId)).toContain(atsId);
     const summary = await readFile(path.join(root, "pipeline-summary.md"), "utf8");
     expect(summary).toContain(
-      `**Approved entries awaiting re-review (hidden until reviewed):**\n\n- \`${atsId}\`\n`,
+      `**Approved entries pending (hidden until ready):**\n\n- \`${atsId}\` - awaiting re-review\n`,
     );
   });
 

@@ -18,7 +18,7 @@ afterEach(async () => {
 });
 
 describe("resolvePaths", () => {
-  const root = "/some/root";
+  const root = path.resolve("/some/root");
 
   it("keeps the YAML inputs identical in dry-run and real mode", () => {
     const dry = resolvePaths(root, true);
@@ -46,6 +46,11 @@ describe("resolvePaths", () => {
     for (const key of ["catalog", "summary", "runInfo"] as const) {
       expect(path.dirname(real[key])).toBe(root);
     }
+  });
+
+  it("keeps the license cache in data/cache, and a dry run in its own cache folder", () => {
+    expect(resolvePaths(root, false).licenses).toBe(path.join(root, "data", "cache", "licenses.json"));
+    expect(resolvePaths(root, true).licenses).toBe(path.join(root, ".dry-run", "cache", "licenses.json"));
   });
 });
 

@@ -1,7 +1,7 @@
 ---
 import CopyCommand from "./CopyCommand.astro";
 import Icon from "./Icon.astro";
-import { type CatalogCollection, collectionHref, collectionInstallCommand, formatCount } from "../lib/catalog";
+import { type CatalogCollection, collectionHref, collectionLicenseLabel, collectionInstallCommand, formatCount } from "../lib/catalog";
 
 interface Props {
   collection: CatalogCollection;
@@ -20,7 +20,7 @@ const { collection } = Astro.props;
   </div>
   {collection.description && <p class="collection-why">{collection.description}</p>}
   <div class="badges">
-    <span class="badge"><Icon name="scale" size={14} />{collection.license}</span>
+    <span class="badge"><Icon name="scale" size={14} />{collectionLicenseLabel(collection)}</span>
     {collection.humanReviewed && <span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span>}
   </div>
   <CopyCommand command={collectionInstallCommand(collection.id)} label={`Copy install command for ${collection.id}`} />

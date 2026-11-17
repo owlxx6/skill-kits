@@ -1,6 +1,7 @@
 ---
 import CopyCommand from "./CopyCommand.astro";
 import Icon from "./Icon.astro";
+import LicenseDetails from "./LicenseDetails.astro";
 import { type CatalogSkill, collectionHref, formatCount, skillHref, skillInstallCommand } from "../lib/catalog";
 
 interface Props {
@@ -9,7 +10,6 @@ interface Props {
   showRepo?: boolean;
 }
 const { skill, showRepo = true } = Astro.props;
-const notice = skill.review.security.level === "notice";
 const href = skillHref(skill.id);
 ---
 <li class="card skill-card" data-license={skill.license} data-review={skill.reviewScore} data-forks={skill.forks}>
@@ -30,9 +30,8 @@ const href = skillHref(skill.id);
   </div>
   <p class="skill-why">{skill.review.why}</p>
   <div class="badges">
-    <span class="badge"><Icon name="scale" size={14} />{skill.license}</span>
+    <LicenseDetails skill={skill} />
     {skill.humanReviewed && <span class="badge accent"><Icon name="badge-check" size={14} />Reviewed by a human</span>}
-    {notice && <span class="badge notice"><Icon name="shield-alert" size={14} />Security notice</span>}
   </div>
   <div class="skill-actions">
     <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} />

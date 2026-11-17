@@ -7,8 +7,14 @@ import type { TreeEntry } from "./skillfile";
 export interface GitHubClient {
   searchReposByTopic(topic: string, minStars: number, maxPages: number): Promise<string[]>;
   getRepo(fullName: string): Promise<RepoMeta | null>;
-  getTree(fullName: string, ref: string): Promise<{ entries: TreeEntry[]; truncated: boolean }>;
+  // sha: the id of the tree that was listed, when GitHub gives it.
+  getTree(
+    fullName: string,
+    ref: string,
+  ): Promise<{ entries: TreeEntry[]; truncated: boolean; sha?: string }>;
   getFileText(fullName: string, ref: string, filePath: string): Promise<string>;
+  // The raw bytes, BOM included: a git blob id can be checked against them.
+  getFileBytes(fullName: string, ref: string, filePath: string): Promise<Uint8Array>;
 }
 
 const ThrottledOctokit = Octokit.plugin(throttling);
@@ -34,7 +40,7 @@ function hasBlockField(error: unknown): boolean {
   return typeof data === "object" && data !== null && "block" in data;
 }
 
-const encodePath = (value: string): string => value.split("/").map(encodeURIComponent).join("/");
+export const encodePath = (value: string): string => value.split("/").map(encodeURIComponent).join("/");
 
 const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -56,6 +62,56 @@ export function createGitHubClient(
         await sleep(attempt * retryDelayMs);
       }
     }
+  }
+
+  // File contents come from raw.githubusercontent.com so they do not count
+  // against the API quota, which is small for the token GitHub Actions provides.
+  async function download<T>(
+    fullName: string,
+    ref: string,
+    filePath: string,
+    read: (response: Response) => Promise<T>,
+    size: (body: T) => number,
+  ): Promise<T> {
+    const url = `https://raw.githubusercontent.com/${fullName}/${encodePath(ref)}/${encodePath(filePath)}`;
+    let lastStatus = 0;
+    let lastError = "";
+    for (let attempt = 1; attempt <= RAW_ATTEMPTS; attempt += 1) {
+      let response: Response | undefined;
+      try {
+        response = await fetch(url, { signal: AbortSignal.timeout(RAW_TIMEOUT_MS) });
+      } catch (error) {
+        lastError = errorMessage(error);
+      }
+      if (response?.ok) {
+        const declared = Number(response.headers.get("content-length"));
+        if (response.headers.has("content-length") && declared > MAX_FILE_BYTES) {
+          await response.body?.cancel();
+          throw new Error(`${url} is larger than ${MAX_FILE_BYTES} bytes`);
+        }
+        let body: T | undefined;
+        try {
+          body = await read(response);
+        } catch (error) {
+          lastError = errorMessage(error);
+        }
+        if (body !== undefined) {
+          if (size(body) > MAX_FILE_BYTES) {
+            throw new Error(`${url} is larger than ${MAX_FILE_BYTES} bytes`);
+          }
+          return body;
+        }
+      } else if (response) {
+        lastStatus = response.status;
+        lastError = "";
+        await response.body?.cancel();
+        const retryable = response.status === 429 || response.status >= 500;
+        if (!retryable) break;
+      }
+      if (attempt < RAW_ATTEMPTS) await sleep(attempt * retryDelayMs);
+    }
+    if (lastError) throw new Error(`GET ${url} failed: ${lastError}`);
+    throw new Error(`GET ${url} failed with status ${lastStatus}`);
   }
 
   const octokit = new ThrottledOctokit({
@@ -134,9 +190,13 @@ export function createGitHubClient(
         for (const item of data.tree) {
           if (!item.path || !item.sha) continue;
           if (item.type !== "blob" && item.type !== "tree") continue;
-          entries.push({ path: item.path, type: item.type, sha: item.sha });
+          entries.push(
+            item.mode
+              ? { path: item.path, type: item.type, sha: item.sha, mode: item.mode }
+              : { path: item.path, type: item.type, sha: item.sha },
+          );
         }
-        return { entries, truncated: data.truncated };
+        return { entries, truncated: data.truncated, sha: data.sha };
       } catch (error) {
         // 404: branch missing. 409: empty repository. Both mean "no files".
         const status = httpStatus(error);
@@ -145,48 +205,18 @@ export function createGitHubClient(
       }
     },
 
-    // File contents come from raw.githubusercontent.com so they do not count
-    // against the API quota, which is small for the token GitHub Actions provides.
     async getFileText(fullName, ref, filePath) {
-      const url = `https://raw.githubusercontent.com/${fullName}/${encodePath(ref)}/${encodePath(filePath)}`;
-      let lastStatus = 0;
-      let lastError = "";
-      for (let attempt = 1; attempt <= RAW_ATTEMPTS; attempt += 1) {
-        let response: Response | undefined;
-        try {
-          response = await fetch(url, { signal: AbortSignal.timeout(RAW_TIMEOUT_MS) });
-        } catch (error) {
-          lastError = errorMessage(error);
-        }
-        if (response?.ok) {
-          const declared = Number(response.headers.get("content-length"));
-          if (response.headers.has("content-length") && declared > MAX_FILE_BYTES) {
-            await response.body?.cancel();
-            throw new Error(`${url} is larger than ${MAX_FILE_BYTES} bytes`);
-          }
-          let text: string | undefined;
-          try {
-            text = await response.text();
-          } catch (error) {
-            lastError = errorMessage(error);
-          }
-          if (text !== undefined) {
-            if (text.length > MAX_FILE_BYTES) {
-              throw new Error(`${url} is larger than ${MAX_FILE_BYTES} bytes`);
-            }
-            return text;
-          }
-        } else if (response) {
-          lastStatus = response.status;
-          lastError = "";
-          await response.body?.cancel();
-          const retryable = response.status === 429 || response.status >= 500;
-          if (!retryable) break;
-        }
-        if (attempt < RAW_ATTEMPTS) await sleep(attempt * retryDelayMs);
-      }
-      if (lastError) throw new Error(`GET ${url} failed: ${lastError}`);
-      throw new Error(`GET ${url} failed with status ${lastStatus}`);
+      return download(fullName, ref, filePath, (response) => response.text(), (text) => text.length);
+    },
+
+    async getFileBytes(fullName, ref, filePath) {
+      return download(
+        fullName,
+        ref,
+        filePath,
+        async (response) => new Uint8Array(await response.arrayBuffer()),
+        (bytes) => bytes.length,
+      );
     },
   };
 }

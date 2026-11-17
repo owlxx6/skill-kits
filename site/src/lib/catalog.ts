@@ -96,3 +96,9 @@ export function kitsOfCollection(catalog: Catalog, collectionId: string): Catalo
 export function formatCount(value: number): string {
   return value >= 1000 ? `${(value / 1000).toFixed(value >= 10_000 ? 0 : 1)}k` : String(value);
 }
+
+/** Mixed collections describe every included license when the optional list is available. */
+export function collectionLicenseLabel(collection: Pick<CatalogCollection, "license" | "licenses">): string {
+  if (collection.license !== "Mixed" || !collection.licenses?.length) return collection.license;
+  return "Mixed (" + collection.licenses.join(", ") + ")";
+}

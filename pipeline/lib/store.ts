@@ -57,6 +57,7 @@ export interface Paths {
   repos: string;
   skills: string;
   triage: string;
+  licenses: string;
   reviewsDir: string;
   kitsHash: string;
   runInfo: string;
@@ -78,6 +79,7 @@ export function resolvePaths(root: string, dryRun: boolean): Paths {
     repos: path.join(cache, "repos.json"),
     skills: path.join(cache, "skills.json"),
     triage: path.join(cache, "triage.json"),
+    licenses: path.join(cache, "licenses.json"),
     reviewsDir: path.join(cache, "reviews"),
     kitsHash: path.join(cache, "kits.sha256"),
     runInfo: path.join(out, "pipeline-run.json"),

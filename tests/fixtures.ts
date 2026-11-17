@@ -1,4 +1,4 @@
-import type { Config, Kit, RepoMeta, Review, SkillRecord } from "../pipeline/lib/schemas";
+import type { Config, Kit, LicenseResolution, RepoMeta, Review, SkillRecord } from "../pipeline/lib/schemas";
 
 export const NOW = new Date("2026-11-11T00:00:00Z");
 
@@ -62,6 +62,16 @@ export function makeRepo(overrides: Partial<RepoMeta> = {}): RepoMeta {
 // 40 identical hex characters: a valid git object id that is easy to read in tests.
 export const fp = (hexChar: string): string => hexChar.repeat(40);
 
+// GitHub's detection alone, as for a repository without license files.
+export function githubLicense(spdx: string): LicenseResolution {
+  return {
+    outcome: "identified",
+    spdx,
+    level: "repository",
+    evidence: [{ kind: "github", level: "repository", value: spdx, spdx }],
+  };
+}
+
 export function makeSkill(overrides: Partial<SkillRecord> = {}): SkillRecord {
   return {
     id: "acme/skills:skills/a",
@@ -71,6 +81,7 @@ export function makeSkill(overrides: Partial<SkillRecord> = {}): SkillRecord {
     description: "Skill a",
     fingerprint: fp("a"),
     files: [],
+    license: githubLicense("MIT"),
     ...overrides,
   };
 }

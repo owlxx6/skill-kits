@@ -1,6 +1,6 @@
 Tu travailles sur owlxx6/skill-kits avec un autre agent. Lis docs/LAUNCH-PLAN.md avant toute modification. Le public comprend développeurs et utilisateurs moins techniques. Chaque agent utilise sa propre branche et son propre dossier de travail. Ne modifie pas le dossier de travail de l'autre agent. Ne réinitialise pas les modifications existantes.
 
-La direction choisie est Switchyard + Career Desk, blanc/noir/rouge et bouton de thème icon-only. Les références approuvées comme direction sont docs/design-previews/signal-map.html et career-desk.html. Leur intégration Astro devra encore être montrée et approuvée.
+La direction retenue pour l’accueil est maintenant Build Room, blanc/noir/rouge et bouton de thème icon-only. La référence est docs/design-previews/build-room.html. Les anciens Switchyard/Career Desk restent des alternatives historiques. Les pages de détail Astro sont conservées pour le moment. Le rendu intégré doit encore être validé visuellement sur desktop/mobile.
 
 Main est la branche de production prévue. Travaille sur la branche indiquée, avec commits ciblés et PR relue. Aucun merge dans main sans validation du propriétaire. Pour le design, montre le résultat desktop/mobile avant de pousser l'implémentation. Les trois branches initiales ont été vérifiées sur GitHub au commit 38b3c4f. Récupère aussi le dernier plan depuis planning/launch-parallel avant de commencer.
 
@@ -17,3 +17,4 @@ Relève aussi les écarts du sprint curation: cache de 40 000 skills absent du L
 LIVRABLES: explication des règles, tests pertinents, typecheck et tests existants, impact catalogue documenté. En parallèle Codex intègre le design dans site/. Relis sa PR; il relira la tienne.
 
 CRITÈRE CONFIRMÉ: priorité à la fiabilité et à la valeur démontrée pour une tâche. Faible usage, peu de stars ou de forks ne disqualifient pas un skill. Lire la section Selection policy du plan; conserver les preuves de licence, de revue et de test, ainsi que la validation finale du propriétaire. Documenter la révision du seuil minStars et du classement pour un suivi coordonné.
+\nSYNCHRONISATION: Build Room (945acd6) est validé. Après chaque sprint validé, suivre AGENTS.md et docs/SPRINT-STATUS.md. Fusionner origin/integration/validated-sprints dans ta branche après avoir préservé ton travail local. Relancer les checks et confirmer que cette base est ancêtre de HEAD. Aucun reset ou push forcé pour synchroniser.\n

@@ -9,12 +9,18 @@ export type FilterVerdict = { ok: true } | { ok: false; reason: string };
 
 // pushedAt is the last push to any branch: the closest signal GitHub gives
 // for "last commit" without one more request per repo.
-export function checkRepo(repo: RepoMeta, filter: Config["filter"], now: Date): FilterVerdict {
+// No license check here: licenses are resolved per skill after extraction, and
+// RepoMeta.license is only evidence (docs/LICENSE-RESOLUTION.md).
+// minStars bounds topic discovery only: a repository nominated in sources.yaml is never
+// rejected for its stars.
+export function checkRepo(
+  repo: RepoMeta,
+  filter: Config["filter"],
+  now: Date,
+  nominated = false,
+): FilterVerdict {
   if (repo.archived) return { ok: false, reason: "archived" };
-  if (!repo.license || !filter.allowedLicenses.includes(repo.license)) {
-    return { ok: false, reason: `license ${repo.license ?? "none"} not allowed` };
-  }
-  if (repo.stars < filter.minStars) {
+  if (!nominated && repo.stars < filter.minStars) {
     return { ok: false, reason: `stars ${repo.stars} < ${filter.minStars}` };
   }
   if (!RepoMetaSchema.shape.pushedAt.safeParse(repo.pushedAt).success) {
@@ -32,7 +38,10 @@ export async function filterRepos(
   candidates: string[],
   filter: Config["filter"],
   now: Date,
+  // Repositories listed in sources.yaml, compared case-insensitively.
+  nominated: ReadonlySet<string> = new Set(),
 ): Promise<{ repos: RepoMeta[]; filtered: FilteredRepo[]; renamed: RenamedRepo[] }> {
+  const nominatedLower = new Set([...nominated].map((name) => name.toLowerCase()));
   const repos: RepoMeta[] = [];
   const filtered: FilteredRepo[] = [];
   const renamed: RenamedRepo[] = [];
@@ -51,7 +60,9 @@ export async function filterRepos(
     const key = repo.fullName.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);
-    const verdict = checkRepo(repo, filter, now);
+    // A nominated repository that was renamed is still listed under its old name.
+    const isNominated = nominatedLower.has(candidate.toLowerCase()) || nominatedLower.has(key);
+    const verdict = checkRepo(repo, filter, now, isNominated);
     // Renamed or transferred: GitHub followed a redirect to another name.
     const moved = key !== candidate.toLowerCase();
     if (verdict.ok) {

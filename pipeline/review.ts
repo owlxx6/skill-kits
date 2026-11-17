@@ -138,6 +138,8 @@ export function selectForReview(
   repos: RepoMeta[],
   max: number,
   priorityIds: Set<string> = new Set(),
+  // No review is spent on a skill that cannot be published (its license), priority or not.
+  isEligible: (skill: SkillRecord) => boolean = () => true,
 ): { selected: SkillRecord[]; deferred: number } {
   const stars = new Map(repos.map((repo) => [repo.fullName, repo.stars]));
   // Approved skills (priority) are re-reviewed first and do not wait for triage.
@@ -145,6 +147,7 @@ export function selectForReview(
     .filter(
       (skill) =>
         stars.has(skill.repo) &&
+        isEligible(skill) &&
         !reviewed.has(skill.fingerprint) &&
         (priorityIds.has(skill.id) || (triage[skill.fingerprint]?.length ?? 0) > 0),
     )

@@ -3,7 +3,9 @@ import { describe, expect, it } from "vitest";
 import {
   ConfigSchema,
   CurationSchema,
+  ExtractStatsSchema,
   KitsSchema,
+  LicenseCacheSchema,
   RepoMetaSchema,
   ReviewSchema,
   SkillRecordSchema,
@@ -218,6 +220,102 @@ describe("SkillRecordSchema id", () => {
 
   it("rejects an id containing a backtick", () => {
     expect(SkillRecordSchema.safeParse({ ...record, id: `acme/skills:skills/a${"`"}b` }).success).toBe(false);
+  });
+});
+
+describe("SkillRecordSchema license", () => {
+  const record = {
+    id: "acme/skills:skills/a",
+    repo: "acme/skills",
+    path: "skills/a",
+    name: "a",
+    description: "Skill a",
+    fingerprint: "a".repeat(40),
+    files: [],
+  };
+
+  it("reads a record written before license resolution, without a license", () => {
+    expect(SkillRecordSchema.parse(record).license).toBeUndefined();
+  });
+
+  it("accepts the resolution of the contract", () => {
+    const license = {
+      outcome: "identified",
+      spdx: "Apache-2.0",
+      level: "skill",
+      revision: "c".repeat(40),
+      evidence: [
+        {
+          kind: "file",
+          level: "skill",
+          path: "skills/a/LICENSE.txt",
+          blob: "b".repeat(40),
+          status: "identified",
+          spdx: "Apache-2.0",
+        },
+        {
+          kind: "frontmatter",
+          level: "skill",
+          path: "skills/a/SKILL.md",
+          value: "Complete terms in LICENSE.txt",
+          spdx: null,
+        },
+        { kind: "github", level: "repository", value: "NOASSERTION", spdx: null },
+      ],
+    };
+    expect(SkillRecordSchema.parse({ ...record, license }).license).toEqual(license);
+  });
+
+  it("accepts a resolution not re-read this run", () => {
+    const license = { outcome: "ambiguous", level: "none", unread: "skill-file", evidence: [] };
+    expect(SkillRecordSchema.parse({ ...record, license }).license).toEqual(license);
+  });
+
+  // A resolution this code cannot read is dropped: the record is unresolved until the next
+  // extract resolves it again, never given a license.
+  it.each([
+    ["an unknown outcome", { outcome: "maybe", level: "skill", evidence: [] }],
+    ["an unknown level", { outcome: "custom", level: "folder", evidence: [] }],
+    ["an identified license without an id", { outcome: "identified", level: "skill", evidence: [] }],
+    ["an id on a custom license", { outcome: "custom", spdx: "MIT", level: "skill", evidence: [] }],
+    ["a missing license at a level", { outcome: "missing", level: "skill", evidence: [] }],
+    [
+      "a file without a blob id",
+      {
+        outcome: "custom",
+        level: "skill",
+        evidence: [{ kind: "file", level: "skill", path: "LICENSE", blob: "x", status: "unknown", spdx: null }],
+      },
+    ],
+    [
+      "evidence written before levels and statuses",
+      { outcome: "custom", level: "skill", evidence: [{ kind: "file", path: "LICENSE", blob: "b".repeat(40), spdx: null }] },
+    ],
+  ])("drops %s", (_label, license) => {
+    expect(SkillRecordSchema.parse({ ...record, license }).license).toBeUndefined();
+  });
+});
+
+describe("LicenseCacheSchema", () => {
+  it("maps blob ids to what each text was identified as", () => {
+    const cache = {
+      ["a".repeat(40)]: { kind: "spdx", spdx: "MIT" },
+      ["b".repeat(40)]: { kind: "restricted" },
+      ["c".repeat(40)]: { kind: "multiple" },
+      ["d".repeat(40)]: { kind: "unknown" },
+    };
+    expect(LicenseCacheSchema.parse(cache)).toEqual(cache);
+  });
+
+  it("rejects a key that is not a blob id", () => {
+    expect(LicenseCacheSchema.safeParse({ LICENSE: { kind: "unknown" } }).success).toBe(false);
+  });
+});
+
+describe("ExtractStatsSchema", () => {
+  it("reads extract statistics written before license counts", () => {
+    const old = { repos: 1, skills: 2, invalid: 0, failedDownloads: 0, truncatedRepos: [], failedRepos: [] };
+    expect(ExtractStatsSchema.parse(old).licenses).toBeUndefined();
   });
 });
 

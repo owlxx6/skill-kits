@@ -35,6 +35,58 @@ describe("parseSkillFrontmatter", () => {
     expect(parseSkillFrontmatter("---\nname: [unclosed\n---\n")).toBeNull();
   });
 
+  it("reads an optional license value, trimmed", () => {
+    const content = "---\nname: a\ndescription: b\nlicense: '  Complete terms in LICENSE.txt  '\n---\n";
+    expect(parseSkillFrontmatter(content)).toEqual({
+      name: "a",
+      description: "b",
+      license: "Complete terms in LICENSE.txt",
+    });
+  });
+
+  it("has no license key when the front matter has no license", () => {
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\n---\n")).not.toHaveProperty("license");
+  });
+
+  it("drops an empty license value", () => {
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: '  '\n---\n")).not.toHaveProperty(
+      "license",
+    );
+  });
+
+  it("removes line breaks and control characters from the license value", () => {
+    const content = "---\nname: a\ndescription: b\nlicense: \"Complete terms\\nin\\u0007 LICENSE.txt\\u202E\"\n---\n";
+    expect(parseSkillFrontmatter(content)?.license).toBe("Complete terms in LICENSE.txt");
+  });
+
+  it("keeps at most 200 characters of the license value", () => {
+    const content = `---\nname: a\ndescription: b\nlicense: ${"x".repeat(300)}\n---\n`;
+    expect(parseSkillFrontmatter(content)?.license).toBe("x".repeat(200));
+  });
+
+  it("keeps a number or boolean license value as text", () => {
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: 2\n---\n")?.license).toBe("2");
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: true\n---\n")?.license).toBe("true");
+  });
+
+  it.each([
+    ["a list", "[MIT, Apache-2.0]"],
+    ["a map", "{ name: MIT }"],
+    ["a circular alias list", "&a [*a]"],
+    ["a circular alias map", "&a { b: *a }"],
+  ])("marks %s as a non-text license value, never ignored and never throwing", (_label, value) => {
+    const parse = () => parseSkillFrontmatter(`---\nname: a\ndescription: b\nlicense: ${value}\n---\n`);
+    expect(parse).not.toThrow();
+    expect(parse()?.license).toBe("[non-text value]");
+  });
+
+  it("does not reject a skill for its license value", () => {
+    expect(parseSkillFrontmatter("---\nname: a\ndescription: b\nlicense: null\n---\n")).toEqual({
+      name: "a",
+      description: "b",
+    });
+  });
+
   it("never treats a code front matter block as front matter", () => {
     expect(parseSkillFrontmatter("---js\nprocess.exit(1)\n---\n")).toBeNull();
   });
