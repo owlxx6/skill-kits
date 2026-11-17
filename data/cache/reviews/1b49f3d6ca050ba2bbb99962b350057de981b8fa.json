@@ -36,10 +36,7 @@
     ],
     "security": {
       "level": "notice",
-      "notes": [
-        "Reads local session logs, git history and GitHub PRs, which are personal work data",
-        "May run git and gh commands"
-      ]
+      "notes": []
     }
   }
 }

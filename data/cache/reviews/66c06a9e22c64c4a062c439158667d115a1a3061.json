@@ -37,11 +37,7 @@
     ],
     "security": {
       "level": "notice",
-      "notes": [
-        "Offers to download and install software via npx after asking the user",
-        "Scans job portals and can automate applications with a browser",
-        "Handles the user's CV, profile and application data"
-      ]
+      "notes": []
     }
   }
 }

@@ -35,9 +35,7 @@
     ],
     "security": {
       "level": "notice",
-      "notes": [
-        "Reads a USER.md file for personal context."
-      ]
+      "notes": []
     }
   }
 }

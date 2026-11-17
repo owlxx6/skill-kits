@@ -34,9 +34,7 @@
     ],
     "security": {
       "level": "notice",
-      "notes": [
-        "Writes profile and history files under a local ~/.openclaw folder; stores personal data beyond the resume."
-      ]
+      "notes": []
     }
   }
 }
