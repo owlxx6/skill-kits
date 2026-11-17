@@ -11,3 +11,5 @@ data/cache/repos.json
 data/cache/skills.json
 site/dist/
 site/.astro/
+# Private local curation inputs, scan reports and disposable test environments.
+.intake/

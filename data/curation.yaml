@@ -1,17 +1,51 @@
 resume-career:
   approved:
-    - "davila7/claude-code-templates"
-    - "alirezarezvani/claude-skills:marketing/linkedin/skills/linkedin-profile"
-    - "github/awesome-copilot:skills/brag-sheet"
-    - "davila7/claude-code-templates:cli-tool/components/skills/career/resume-tailor"
-    - "davila7/claude-code-templates:cli-tool/components/skills/career/resume-ats-optimizer"
-    - "davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer"
-    - "davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator"
+    - davila7/claude-code-templates
+    - alirezarezvani/claude-skills:marketing/linkedin/skills/linkedin-profile
+    - github/awesome-copilot:skills/brag-sheet
+    - davila7/claude-code-templates:cli-tool/components/skills/career/resume-tailor
+    - davila7/claude-code-templates:cli-tool/components/skills/career/resume-ats-optimizer
+    - davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer
+    - davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator
   rejected: []
-web-app: { approved: [], rejected: [] }
-data-analysis: { approved: [], rejected: [] }
-docs-reports: { approved: [], rejected: [] }
-marketing-content: { approved: [], rejected: [] }
-research-monitoring: { approved: [], rejected: [] }
-ui-design: { approved: [], rejected: [] }
-workflow-automation: { approved: [], rejected: [] }
+web-app:
+  approved:
+    - obra/superpowers:skills/systematic-debugging
+    - vercel-labs/agent-skills:skills/react-best-practices
+    - supabase/agent-skills:skills/supabase-postgres-best-practices
+    - cloudflare/skills:skills/workers-best-practices
+    - cloudflare/skills:skills/web-perf
+  rejected: []
+data-analysis:
+  approved:
+    - TerminalSkills/skills:skills/data-analysis
+    - TerminalSkills/skills:skills/pandas
+    - supabase/agent-skills:skills/supabase-postgres-best-practices
+    - dbt-labs/dbt-agent-skills:skills/dbt/skills/running-dbt-commands
+    - dbt-labs/dbt-agent-skills:skills/dbt/skills/answering-natural-language-questions-with-dbt
+  rejected: []
+docs-reports:
+  approved: []
+  rejected: []
+marketing-content:
+  approved: []
+  rejected: []
+research-monitoring:
+  approved: []
+  rejected: []
+ui-design:
+  approved:
+    - anthropics/skills:skills/frontend-design
+    - nextlevelbuilder/ui-ux-pro-max-skill:.claude/skills/ui-ux-pro-max
+    - vercel-labs/agent-skills:skills/web-design-guidelines
+    - vercel-labs/agent-skills:skills/react-view-transitions
+    - cloudflare/skills:skills/web-perf
+  rejected: []
+workflow-automation:
+  approved:
+    - n8n-io/skills:skills/using-n8n-skills-official
+    - n8n-io/skills:skills/n8n-workflow-lifecycle-official
+    - n8n-io/skills:skills/n8n-node-configuration-official
+    - n8n-io/skills:skills/n8n-error-handling-official
+    - n8n-io/skills:skills/n8n-binary-and-data-official
+  rejected: []

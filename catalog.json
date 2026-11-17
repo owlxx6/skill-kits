@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T21:18:59.715Z",
+  "generatedAt": "2026-11-17T10:41:20.765Z",
   "kits": [
     {
       "id": "resume-career",
@@ -66,7 +66,13 @@
       "title": "Web app builder",
       "description": "Build, test and ship a web application, from frontend and backend to database and deployment.",
       "collections": [],
-      "skills": [],
+      "skills": [
+        "obra/superpowers:skills/systematic-debugging",
+        "vercel-labs/agent-skills:skills/react-best-practices",
+        "supabase/agent-skills:skills/supabase-postgres-best-practices",
+        "cloudflare/skills:skills/workers-best-practices",
+        "cloudflare/skills:skills/web-perf"
+      ],
       "pending": [],
       "removed": [],
       "proposals": {
@@ -79,7 +85,13 @@
       "title": "Data analysis agent",
       "description": "Load, clean, analyze and chart data from spreadsheets, CSV files and databases.",
       "collections": [],
-      "skills": [],
+      "skills": [
+        "TerminalSkills/skills:skills/data-analysis",
+        "TerminalSkills/skills:skills/pandas",
+        "supabase/agent-skills:skills/supabase-postgres-best-practices",
+        "dbt-labs/dbt-agent-skills:skills/dbt/skills/running-dbt-commands",
+        "dbt-labs/dbt-agent-skills:skills/dbt/skills/answering-natural-language-questions-with-dbt"
+      ],
       "pending": [],
       "removed": [],
       "proposals": {
@@ -140,7 +152,13 @@
       "title": "UI design agent",
       "description": "Design interfaces, including layouts, design systems, components, accessibility and visual polish.",
       "collections": [],
-      "skills": [],
+      "skills": [
+        "anthropics/skills:skills/frontend-design",
+        "nextlevelbuilder/ui-ux-pro-max-skill:.claude/skills/ui-ux-pro-max",
+        "vercel-labs/agent-skills:skills/web-design-guidelines",
+        "vercel-labs/agent-skills:skills/react-view-transitions",
+        "cloudflare/skills:skills/web-perf"
+      ],
       "pending": [],
       "removed": [],
       "proposals": {
@@ -153,7 +171,13 @@
       "title": "Workflow automation agent",
       "description": "Automate recurring work with scheduled tasks, integrations between tools, browser automation and scripts.",
       "collections": [],
-      "skills": [],
+      "skills": [
+        "n8n-io/skills:skills/using-n8n-skills-official",
+        "n8n-io/skills:skills/n8n-workflow-lifecycle-official",
+        "n8n-io/skills:skills/n8n-node-configuration-official",
+        "n8n-io/skills:skills/n8n-error-handling-official",
+        "n8n-io/skills:skills/n8n-binary-and-data-official"
+      ],
       "pending": [],
       "removed": [],
       "proposals": {
@@ -1168,6 +1192,1006 @@
       "reviewScore": 6.3,
       "repoSignal": 6.6,
       "score": 6.4,
+      "humanReviewed": false
+    },
+    {
+      "id": "vercel-labs/agent-skills:skills/react-best-practices",
+      "repo": "vercel-labs/agent-skills",
+      "path": "skills/react-best-practices",
+      "name": "vercel-react-best-practices",
+      "description": "React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements.",
+      "url": "https://github.com/vercel-labs/agent-skills/tree/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills/react-best-practices",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/react-best-practices/SKILL.md",
+        "url": "https://github.com/vercel-labs/agent-skills/blob/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills/react-best-practices/SKILL.md"
+      },
+      "stars": 34205,
+      "forks": 2985,
+      "pushedAt": "2026-11-12T14:09:10Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 9
+        },
+        "why": "Prioritized React and Next.js rules for avoiding waterfalls, reducing bundles and checking server actions.",
+        "summary": "A task-routed reference with 70 rules, examples and explicit impact priorities. Strong for React/Next.js performance reviews; applicability and benchmark claims need checking against the actual stack.",
+        "strengths": [
+          "Priorities distinguish high-impact work",
+          "Detailed positive and negative examples",
+          "Includes authorization checks in server actions"
+        ],
+        "cautions": [
+          "React/Next.js specific",
+          "Performance figures are illustrative, not measured on your app",
+          "Avoid mechanically applying micro-optimizations"
+        ],
+        "keywords": [
+          "react",
+          "nextjs",
+          "performance",
+          "waterfalls",
+          "bundles"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 9,
+      "repoSignal": 9.5,
+      "score": 9.2,
+      "humanReviewed": false
+    },
+    {
+      "id": "anthropics/skills:skills/frontend-design",
+      "repo": "anthropics/skills",
+      "path": "skills/frontend-design",
+      "name": "frontend-design",
+      "description": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one. Helps with aesthetic direction, typography, and making choices that don't read as templated defaults.",
+      "url": "https://github.com/anthropics/skills/tree/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/frontend-design",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/frontend-design/LICENSE.txt",
+        "url": "https://github.com/anthropics/skills/blob/e4bb5d960d87126ff3b3a8af1a104b7db67560ba/skills/frontend-design/LICENSE.txt"
+      },
+      "stars": 196059,
+      "forks": 23015,
+      "pushedAt": "2026-11-16T14:22:50Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "A brief-led visual design process with explicit critique, typography, content and restrained interaction guidance.",
+        "summary": "Strong complement to a searchable UI reference: it starts with the subject and audience, develops tokens and layout, then critiques the result. Concrete quality principles, without a reusable implementation library.",
+        "strengths": [
+          "Brief takes precedence over aesthetic defaults",
+          "Includes responsive, focus and reduced-motion expectations",
+          "Connects interface copy to user actions"
+        ],
+        "cautions": [
+          "Subjective heuristics require visual judgment",
+          "No automated accessibility or browser verification supplied"
+        ],
+        "keywords": [
+          "frontend",
+          "design",
+          "typography",
+          "layout",
+          "critique"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 10,
+      "score": 9.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "nextlevelbuilder/ui-ux-pro-max-skill:.claude/skills/ui-ux-pro-max",
+      "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "path": ".claude/skills/ui-ux-pro-max",
+      "name": "ui-ux-pro-max",
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 80 searchable styles (51 active), 192 product palettes and reasoning profiles, 74 font pairings, 120 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/e59ff376a41f7ca47b7541ad5c116495cbade3ee/.claude/skills/ui-ux-pro-max",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/e59ff376a41f7ca47b7541ad5c116495cbade3ee/LICENSE"
+      },
+      "stars": 150442,
+      "forks": 15905,
+      "pushedAt": "2026-11-16T04:10:04Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "Searchable product, accessibility, style and stack guidance with bounded queries and explicit fallback behavior.",
+        "summary": "Local checks verified focused UX search, an Astro query, zero-result behavior, 36 typed token leaves and preservation of an existing MASTER file. A useful searchable reference; these targeted checks do not audit every dataset or Python module.",
+        "strengths": [
+          "Detects actual stack instead of assuming one",
+          "Preserves existing design decisions by default",
+          "Explicit no-match and retry contract"
+        ],
+        "cautions": [
+          "Search defaults can conflict with the owner palette; preserve the brief",
+          "Installation paths depend on client layout",
+          "Targeted tests do not prove every search result or implementation path"
+        ],
+        "keywords": [
+          "ui",
+          "ux",
+          "accessibility",
+          "design system",
+          "search"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 10,
+      "score": 9.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "obra/superpowers:skills/systematic-debugging",
+      "repo": "obra/superpowers",
+      "path": "skills/systematic-debugging",
+      "name": "systematic-debugging",
+      "description": "Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes",
+      "url": "https://github.com/obra/superpowers/tree/22f0b463e7a5e579904dd6211a520321035526f7/skills/systematic-debugging",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/obra/superpowers/blob/22f0b463e7a5e579904dd6211a520321035526f7/LICENSE"
+      },
+      "stars": 318694,
+      "forks": 28397,
+      "pushedAt": "2026-11-03T23:24:58Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "A reproducible investigation workflow that traces failures before proposing changes and adds regression evidence.",
+        "summary": "Four phases cover reproduction, comparisons, hypotheses and minimal fixes. Useful across stacks. Its mandatory sequencing can be heavyweight for small issues and should remain subordinate to project instructions.",
+        "strengths": [
+          "Explicit diagnostic phases",
+          "Multi-component tracing",
+          "Recognizes environmental causes"
+        ],
+        "cautions": [
+          "Rigid process wording may add friction",
+          "Supporting shell/TypeScript tools have not been executed"
+        ],
+        "keywords": [
+          "debugging",
+          "root cause",
+          "regression",
+          "diagnostics",
+          "testing"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 10,
+      "score": 9.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "vercel-labs/agent-skills:skills/react-view-transitions",
+      "repo": "vercel-labs/agent-skills",
+      "path": "skills/react-view-transitions",
+      "name": "vercel-react-view-transitions",
+      "description": "Guide for implementing smooth, native-feeling animations using React's View Transition API (`<ViewTransition>` component, `addTransitionType`, and CSS view transition pseudo-elements). Use this skill whenever the user wants to add page transitions, animate route changes, create shared element animations, animate enter/exit of components, animate list reorder, implement directional (forward/back) navigation animations, or integrate view transitions in Next.js. Also use when the user mentions view transitions, `startViewTransition`, `ViewTransition`, transition types, or asks about animating between UI states in React without third-party animation libraries.",
+      "url": "https://github.com/vercel-labs/agent-skills/tree/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills/react-view-transitions",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/react-view-transitions/SKILL.md",
+        "url": "https://github.com/vercel-labs/agent-skills/blob/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills/react-view-transitions/SKILL.md"
+      },
+      "stars": 34205,
+      "forks": 2985,
+      "pushedAt": "2026-11-12T14:09:10Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Concrete shared-element, route and state animation patterns with reduced-motion and version requirements.",
+        "summary": "Adds purposeful dynamic UI patterns rather than decorative motion. Primary instructions and CSS recipes were read fully; current React documentation confirms the API and reduced-motion requirement. React/Next runtime examples were not executed.",
+        "strengths": [
+          "Distinguishes spatial navigation from lateral changes",
+          "Covers named elements and transition conflicts",
+          "Includes reduced-motion CSS"
+        ],
+        "cautions": [
+          "React-specific; not an Astro-native implementation",
+          "Confirm installed React/Next and browser compatibility",
+          "Avoid implementing every possible animation when the brief needs less"
+        ],
+        "keywords": [
+          "react",
+          "animation",
+          "view transitions",
+          "motion",
+          "accessibility"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 9.5,
+      "score": 8.7,
+      "humanReviewed": false
+    },
+    {
+      "id": "cloudflare/skills:skills/workers-best-practices",
+      "repo": "cloudflare/skills",
+      "path": "skills/workers-best-practices",
+      "name": "workers-best-practices",
+      "description": "Cloudflare Workers best practices for production applications. Use when writing, reviewing, or configuring Workers.",
+      "url": "https://github.com/cloudflare/skills/tree/cbf893b954222276bf1af57e5f23379231e0efb9/skills/workers-best-practices",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/cloudflare/skills/blob/cbf893b954222276bf1af57e5f23379231e0efb9/LICENSE"
+      },
+      "stars": 3374,
+      "forks": 350,
+      "pushedAt": "2026-11-10T11:41:34Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Checks Workers runtime, binding, compatibility and observability choices against project settings and current docs.",
+        "summary": "Strong platform-specific review checklist with separated configuration, runtime and API references. It explicitly prioritizes current evidence and installed compatibility settings over generic advice.",
+        "strengths": [
+          "Version-aware guidance",
+          "Specific anti-pattern consequences",
+          "Preserves project scope and existing choices"
+        ],
+        "cautions": [
+          "Cloudflare-specific alternative, not a requirement for every web app",
+          "Verify current platform settings and observability cost before changes"
+        ],
+        "keywords": [
+          "cloudflare",
+          "workers",
+          "runtime",
+          "bindings",
+          "deployment"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 6.9,
+      "score": 8.2,
+      "humanReviewed": false
+    },
+    {
+      "id": "vercel-labs/agent-skills:skills/web-design-guidelines",
+      "repo": "vercel-labs/agent-skills",
+      "path": "skills/web-design-guidelines",
+      "name": "web-design-guidelines",
+      "description": "Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\".",
+      "url": "https://github.com/vercel-labs/agent-skills/tree/1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62/skills/web-design-guidelines",
+      "license": "No license",
+      "licenseOutcome": "missing",
+      "licenseCategory": "none",
+      "stars": 34205,
+      "forks": 2985,
+      "pushedAt": "2026-11-12T14:09:10Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 7,
+          "usefulness": 8
+        },
+        "why": "A lightweight UI audit router with concrete interface checks retrieved from a separate upstream source.",
+        "summary": "Useful for source-level accessibility, focus, forms and interaction review. It downloads its actual rules dynamically, so the SKILL directory fingerprint alone does not bind the reviewed checklist. Not a WCAG certification.",
+        "strengths": [
+          "Concise findings linked to file lines",
+          "Covers practical interaction and focus mistakes"
+        ],
+        "cautions": [
+          "Record or pin the external checklist revision for reproducible reviews",
+          "Some brand and style rules are preferences, not accessibility requirements",
+          "No license detected for this skill in the extraction"
+        ],
+        "keywords": [
+          "ui",
+          "accessibility",
+          "focus",
+          "forms",
+          "audit"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 7.7,
+      "repoSignal": 9.5,
+      "score": 8.2,
+      "humanReviewed": false
+    },
+    {
+      "id": "supabase/agent-skills:skills/supabase-postgres-best-practices",
+      "repo": "supabase/agent-skills",
+      "path": "skills/supabase-postgres-best-practices",
+      "name": "supabase-postgres-best-practices",
+      "description": "Postgres best practices maintained by Supabase, for Postgres running anywhere. Load this skill BEFORE writing or changing anything that lives in a Postgres database: creating or altering tables and columns (including choosing column types), schema design, migrations and declarative schema files, RLS policies and the tests that verify them, indexes, triggers, database functions, queues and scheduled jobs (pg_cron, pgmq), vector/semantic search (pgvector), and restoring dumps (pg_restore) or importing data. Also load it when diagnosing slow queries, high CPU, timeouts, EXPLAIN plans, connection exhaustion, locking, bloat, or rows visible to the wrong user or tenant. This is not just a performance guide — schema, migration, security, and SQL authoring tasks need these rules too, even for a one-column change or a single query.",
+      "url": "https://github.com/supabase/agent-skills/tree/c9be0e931b7930f7d02126d04774d904c381e7d7/skills/supabase-postgres-best-practices",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/supabase-postgres-best-practices/SKILL.md",
+        "url": "https://github.com/supabase/agent-skills/blob/c9be0e931b7930f7d02126d04774d904c381e7d7/skills/supabase-postgres-best-practices/SKILL.md"
+      },
+      "stars": 3096,
+      "forks": 269,
+      "pushedAt": "2026-11-12T15:32:31Z",
+      "review": {
+        "kits": [
+          "web-app",
+          "data-analysis"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "Prioritized Postgres query, schema, pooling and row-policy guidance with focused SQL references.",
+        "summary": "A database reference that applies beyond Supabase. It covers indexes, connections, schema design and tenant isolation, with SQL examples. Broad performance claims are not substitutes for workload measurements.",
+        "strengths": [
+          "Useful without a Supabase account",
+          "Focused SQL reference files",
+          "Includes tenant access patterns"
+        ],
+        "cautions": [
+          "Requires Postgres expertise and workload-specific EXPLAIN checks",
+          "Illustrative RLS examples depend on a trusted role/session setup"
+        ],
+        "keywords": [
+          "postgres",
+          "sql",
+          "indexes",
+          "schema",
+          "database"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 6.7,
+      "score": 8.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "cloudflare/skills:skills/web-perf",
+      "repo": "cloudflare/skills",
+      "path": "skills/web-perf",
+      "name": "web-perf",
+      "description": "Audit, diagnose, or optimize website loading and interaction performance, Core Web Vitals, and Lighthouse performance scores.",
+      "url": "https://github.com/cloudflare/skills/tree/cbf893b954222276bf1af57e5f23379231e0efb9/skills/web-perf",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/cloudflare/skills/blob/cbf893b954222276bf1af57e5f23379231e0efb9/LICENSE"
+      },
+      "stars": 3374,
+      "forks": 350,
+      "pushedAt": "2026-11-10T11:41:34Z",
+      "review": {
+        "kits": [
+          "web-app",
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "A measurement-led browser performance workflow with network, trace and source-code investigation.",
+        "summary": "Complements visual design and React patterns with measured loading and interaction evidence. Falls back honestly when trace tools are missing. A source or accessibility snapshot alone cannot measure contrast or field performance.",
+        "strengths": [
+          "Requires evidence before removing assets",
+          "Prioritizes user-visible impact",
+          "Handles absent trace tooling"
+        ],
+        "cautions": [
+          "Chrome DevTools MCP needed for full trace workflow",
+          "A single lab trace is not field Core Web Vitals",
+          "Verify thresholds and supported tools against current docs"
+        ],
+        "keywords": [
+          "performance",
+          "web vitals",
+          "network",
+          "traces",
+          "frontend"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 6.9,
+      "score": 7.9,
+      "humanReviewed": false
+    },
+    {
+      "id": "n8n-io/skills:skills/n8n-node-configuration-official",
+      "repo": "n8n-io/skills",
+      "path": "skills/n8n-node-configuration-official",
+      "name": "n8n-node-configuration-official",
+      "description": "Use when configuring any n8n node: HTTP, webhooks, database, comms (Slack/Gmail/Discord), AI, triggers, Merge, anything. Triggers on any node-builder call (`node(...)`, `trigger(...)`, `tool(...)`, `memory(...)`, `languageModel(...)`, `ifElse(...)`, `merge(...)`, etc.), configuring a parameter, `useDataOfInput`, `numberOfInputs`, fan-in convergence, or any node-specific debugging.",
+      "url": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/n8n-node-configuration-official",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/n8n-io/skills/blob/626f50fdf2934116eea2c5469339e03d2d524e83/LICENSE"
+      },
+      "stars": 611,
+      "forks": 92,
+      "pushedAt": "2026-11-14T05:04:39Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "Derives node parameters from live operation-specific schemas instead of guessing names and resource IDs.",
+        "summary": "Strong n8n workflow-building reference with credential, validation and saved-config checks. It depends on the corresponding n8n tools being available; it is not a standalone JSON generator for arbitrary installations.",
+        "strengths": [
+          "Operation-specific configuration sequence",
+          "Resolves real resource identifiers",
+          "Distinguishes schema checks from runtime tests"
+        ],
+        "cautions": [
+          "Requires matching live n8n MCP tools",
+          "No connected instance tested",
+          "Companion credential skill is outside this reviewed set"
+        ],
+        "keywords": [
+          "n8n",
+          "nodes",
+          "configuration",
+          "automation",
+          "workflows"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 5.1,
+      "score": 7.6,
+      "humanReviewed": false
+    },
+    {
+      "id": "n8n-io/skills:skills/n8n-workflow-lifecycle-official",
+      "repo": "n8n-io/skills",
+      "path": "skills/n8n-workflow-lifecycle-official",
+      "name": "n8n-workflow-lifecycle-official",
+      "description": "Use when starting, designing, organizing, finishing, or shipping an n8n workflow. Covers visual layout (sticky notes), descriptions that capture the *why*, node names, validation, testing, folders/projects, and publishing. Triggers on create_workflow_from_code, update_workflow, validate_workflow, publish_workflow, archive_workflow, \"design\", \"lay out\", \"organize\", \"structure\", \"sticky\", \"describe this workflow\", \"ship\", \"deploy\", \"publish\", \"name this workflow\", or any folder/project organization request.",
+      "url": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/n8n-workflow-lifecycle-official",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/n8n-io/skills/blob/626f50fdf2934116eea2c5469339e03d2d524e83/LICENSE"
+      },
+      "stars": 611,
+      "forks": 92,
+      "pushedAt": "2026-11-14T05:04:39Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "Plans, validates, tests and hands off workflows while distinguishing schema validity from correct connections.",
+        "summary": "A coherent start-to-finish workflow guide with useful limits around pinning, credentials and publication. Detailed layout and tool-version prescriptions may drift. No connected n8n instance is available for runtime validation.",
+        "strengths": [
+          "Verifies connections after save",
+          "Explicit test and handoff stages",
+          "Documents side effects and placement limitations"
+        ],
+        "cautions": [
+          "Requires matching n8n tools and credentials",
+          "Some layout rules are pack preferences",
+          "Live n8n execution not verified"
+        ],
+        "keywords": [
+          "n8n",
+          "lifecycle",
+          "validation",
+          "testing",
+          "handoff"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 5.1,
+      "score": 7.6,
+      "humanReviewed": false
+    },
+    {
+      "id": "dbt-labs/dbt-agent-skills:skills/dbt/skills/answering-natural-language-questions-with-dbt",
+      "repo": "dbt-labs/dbt-agent-skills",
+      "path": "skills/dbt/skills/answering-natural-language-questions-with-dbt",
+      "name": "answering-natural-language-questions-with-dbt",
+      "description": "Writes and executes SQL queries against the data warehouse using dbt's Semantic Layer or ad-hoc SQL to answer business questions. Use when a user asks about analytics, metrics, KPIs, or data (e.g., \"What were total sales last quarter?\", \"Show me top customers by revenue\"). NOT for validating, testing, or building dbt models during development.",
+      "url": "https://github.com/dbt-labs/dbt-agent-skills/tree/b8facde20b7a92c40ce3e6b86b71c4b92aa44040/skills/dbt/skills/answering-natural-language-questions-with-dbt",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/dbt-labs/dbt-agent-skills/blob/b8facde20b7a92c40ce3e6b86b71c4b92aa44040/LICENSE"
+      },
+      "stars": 763,
+      "forks": 65,
+      "pushedAt": "2026-11-06T10:17:14Z",
+      "review": {
+        "kits": [
+          "data-analysis"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Routes business questions through defined metrics, compiled SQL, model discovery and local artifacts.",
+        "summary": "Adds an analyst workflow distinct from model development: verify metrics and dimensions, then use progressively lower-level fallbacks. Custom SQL still requires grain and join checks, access controls and a query budget.",
+        "strengths": [
+          "Clear separation from building models",
+          "Useful fallback without live database access",
+          "Grounds questions in existing business models"
+        ],
+        "cautions": [
+          "Requires dbt artifacts or matching MCP tools",
+          "Compiled SQL edits can change metric meaning or duplicate rows",
+          "No live warehouse execution in this review"
+        ],
+        "keywords": [
+          "dbt",
+          "metrics",
+          "analytics",
+          "business questions",
+          "sql"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 5.1,
+      "score": 7.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "dbt-labs/dbt-agent-skills:skills/dbt/skills/running-dbt-commands",
+      "repo": "dbt-labs/dbt-agent-skills",
+      "path": "skills/dbt/skills/running-dbt-commands",
+      "name": "running-dbt-commands",
+      "description": "Formats and executes dbt CLI commands, selects the correct dbt executable, and structures command parameters. Use when running models, tests, builds, compiles, or show queries via dbt CLI. Use when unsure which dbt executable to use or how to format command parameters.",
+      "url": "https://github.com/dbt-labs/dbt-agent-skills/tree/b8facde20b7a92c40ce3e6b86b71c4b92aa44040/skills/dbt/skills/running-dbt-commands",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/dbt-labs/dbt-agent-skills/blob/b8facde20b7a92c40ce3e6b86b71c4b92aa44040/LICENSE"
+      },
+      "stars": 763,
+      "forks": 65,
+      "pushedAt": "2026-11-06T10:17:14Z",
+      "review": {
+        "kits": [
+          "data-analysis"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Selects the dbt CLI and explicit resource scope, previews data and catches selector mistakes.",
+        "summary": "Practical CLI guide. A real local Core/DuckDB build and exact-total test passed; a misspelled selector correctly failed with warn-error enabled. This does not test Fusion or Cloud CLI compatibility.",
+        "strengths": [
+          "Explicit selection limits unintended work",
+          "Warn-error catches empty selections",
+          "Inspects execution artifacts"
+        ],
+        "cautions": [
+          "Prefer project instructions over blanket build defaults",
+          "Core/DuckDB only tested",
+          "Full-refresh and cleanup commands need task-specific judgment"
+        ],
+        "keywords": [
+          "dbt",
+          "cli",
+          "selectors",
+          "build",
+          "tests"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 5.1,
+      "score": 7.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "n8n-io/skills:skills/n8n-binary-and-data-official",
+      "repo": "n8n-io/skills",
+      "path": "skills/n8n-binary-and-data-official",
+      "name": "n8n-binary-and-data-official",
+      "description": "Use when handling files, images, attachments, or binary data in n8n, OR when an AI agent needs to take a user-uploaded file as tool input or return a generated file. For Data Tables (schemas, dedup, persistent state), see the separate n8n-data-tables-official skill. Triggers on \"file\", \"image\", \"PDF\", \"attachment\", \"binary\", \"upload\", \"download\", chat trigger with files, agent tool that needs a file, vision/multimodal, or any handling of non-JSON file data.",
+      "url": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/n8n-binary-and-data-official",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/n8n-io/skills/blob/626f50fdf2934116eea2c5469339e03d2d524e83/LICENSE"
+      },
+      "stars": 611,
+      "forks": 92,
+      "pushedAt": "2026-11-14T05:04:39Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Explains file flow and storage references across JSON-only agent-tool boundaries.",
+        "summary": "Useful niche capability for uploaded files and generated artifacts: staged storage, synchronization, keys and lifecycle. References include platform-specific differences and signed URL guidance. Real storage and chat-surface integrations remain untested.",
+        "strengths": [
+          "Covers inbound and outbound files",
+          "Calls out multi-file duplicate execution",
+          "Includes retention and private storage choices"
+        ],
+        "cautions": [
+          "Requires storage and credential setup",
+          "Validate platform-specific file events and rendering",
+          "Timeout and node behavior must match installed version"
+        ],
+        "keywords": [
+          "n8n",
+          "files",
+          "binary",
+          "storage",
+          "agent tools"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 5.1,
+      "score": 7.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "n8n-io/skills:skills/n8n-error-handling-official",
+      "repo": "n8n-io/skills",
+      "path": "skills/n8n-error-handling-official",
+      "name": "n8n-error-handling-official",
+      "description": "Use when building any webhook-triggered workflow, scheduled/production-bound workflow, wiring a per-node error output, or any workflow where silent failure would drop user-visible work. Triggers on \"webhook\", \"respond to webhook\", \"API\", \"production\", \"error\", \"failure\", \"5xx\", \"try/catch\", \"error workflow\", \"onError\", \"continueErrorOutput\", \"error branch\", \"node error output\", \"output(1)\", \"main[1]\", \"scheduled\", or any workflow that runs unattended.",
+      "url": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/n8n-error-handling-official",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/n8n-io/skills/blob/626f50fdf2934116eea2c5469339e03d2d524e83/LICENSE"
+      },
+      "stars": 611,
+      "forks": 92,
+      "pushedAt": "2026-11-14T05:04:39Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 7,
+          "usefulness": 9
+        },
+        "why": "Builds explicit webhook errors and unattended failure handling, but blanket retries need idempotency limits.",
+        "summary": "Provides structured status responses, error branches and fallback alerts. The default retry advice covers all network nodes even though retries apply to every error, which can duplicate writes or sends after ambiguous failures.",
+        "strengths": [
+          "Separates caller errors and execution failures",
+          "Includes workflow-level fallback handling",
+          "Explains swallowed-error behavior"
+        ],
+        "cautions": [
+          "Apply retry only with idempotency and error classification",
+          "Alert payloads need redaction and absent-field handling",
+          "Version-specific settings require live verification"
+        ],
+        "keywords": [
+          "n8n",
+          "errors",
+          "retries",
+          "webhooks",
+          "monitoring"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 5.1,
+      "score": 7.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "n8n-io/skills:skills/using-n8n-skills-official",
+      "repo": "n8n-io/skills",
+      "path": "skills/using-n8n-skills-official",
+      "name": "using-n8n-skills-official",
+      "description": "Use when working with n8n workflows in any capacity. The always-on protocol for the n8n-skills plugin, loaded by the SessionStart hook every session. Routes to the right skill, summarizes every n8n MCP tool (closing the deferred-description gap), and lists the cross-cutting rules.",
+      "url": "https://github.com/n8n-io/skills/tree/626f50fdf2934116eea2c5469339e03d2d524e83/skills/using-n8n-skills-official",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/n8n-io/skills/blob/626f50fdf2934116eea2c5469339e03d2d524e83/LICENSE"
+      },
+      "stars": 611,
+      "forks": 92,
+      "pushedAt": "2026-11-14T05:04:39Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Routes n8n work to task-specific skills and documents tool prerequisites and validation boundaries.",
+        "summary": "Useful entry point to the official n8n pack. Very broad and tool-version dependent; it recommends multiple companion skills and includes cloud gateway defaults that must not imply permission to spend.",
+        "strengths": [
+          "Clear discovery and credential boundaries",
+          "Distinguishes drafts from publication",
+          "Explains real side effects of tests"
+        ],
+        "cautions": [
+          "Requires matching MCP capabilities",
+          "Large always-on router adds context overhead",
+          "Gateway and telemetry defaults must respect owner preferences"
+        ],
+        "keywords": [
+          "n8n",
+          "router",
+          "mcp",
+          "workflows",
+          "credentials"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8,
+      "repoSignal": 5.1,
+      "score": 7.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "TerminalSkills/skills:skills/pandas",
+      "repo": "TerminalSkills/skills",
+      "path": "skills/pandas",
+      "name": "pandas",
+      "description": "Assists with loading, cleaning, transforming, and analyzing tabular data using pandas. Use when importing CSV/Excel/SQL data, handling missing values, performing groupby aggregations, merging datasets, working with time series, or building analysis-ready datasets. Trigger words: pandas, dataframe, csv, groupby, merge, time series, data cleaning.",
+      "url": "https://github.com/TerminalSkills/skills/tree/42289059901710441bfa8081c08c3a9f36b93f9c/skills/pandas",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/pandas/SKILL.md",
+        "url": "https://github.com/TerminalSkills/skills/blob/42289059901710441bfa8081c08c3a9f36b93f9c/skills/pandas/SKILL.md"
+      },
+      "stars": 209,
+      "forks": 32,
+      "pushedAt": "2026-11-08T14:54:44Z",
+      "review": {
+        "kits": [
+          "data-analysis"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Focused loading, cleaning, grouping and validated joins with pandas 3 compatibility guidance.",
+        "summary": "Prepare tabular data with explicit types, validated joins, pandas 3 assignment and resampling patterns, and Parquet export. This community-maintained reference complements the analysis workflow; runtime verification remains incomplete.",
+        "strengths": [
+          "Explicit dtypes and validated joins",
+          "Version-aware assignment and resampling",
+          "States Parquet dependency"
+        ],
+        "cautions": [
+          "Requires compatible Python/pandas; Parquet needs pyarrow",
+          "Do not replace unknown amounts with zero without a business rule",
+          "Choose join cardinality for the actual data; runtime verification is incomplete"
+        ],
+        "keywords": [
+          "pandas",
+          "csv",
+          "cleaning",
+          "joins",
+          "parquet"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 3.9,
+      "score": 7,
+      "humanReviewed": false
+    },
+    {
+      "id": "TerminalSkills/skills:skills/data-analysis",
+      "repo": "TerminalSkills/skills",
+      "path": "skills/data-analysis",
+      "name": "data-analysis",
+      "description": "Analyze spreadsheet data, generate insights, and create visualizations. Use when a user asks to analyze data, explore a dataset, find trends, generate statistics, create charts from CSV or Excel data, summarize data, or answer questions about tabular data.",
+      "url": "https://github.com/TerminalSkills/skills/tree/42289059901710441bfa8081c08c3a9f36b93f9c/skills/data-analysis",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/data-analysis/SKILL.md",
+        "url": "https://github.com/TerminalSkills/skills/blob/42289059901710441bfa8081c08c3a9f36b93f9c/skills/data-analysis/SKILL.md"
+      },
+      "stars": 209,
+      "forks": 32,
+      "pushedAt": "2026-11-08T14:54:44Z",
+      "review": {
+        "kits": [
+          "data-analysis"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 7,
+          "usefulness": 8
+        },
+        "why": "A complete CSV exploration outline covering schema, missing values, summaries, time series and charts.",
+        "summary": "Explore CSV and spreadsheet data, report missing values, summarize patterns and create charts with pandas. Requires a compatible Python environment. Instructions were reviewed; runtime verification remains incomplete.",
+        "strengths": [
+          "Covers data quality before interpretation",
+          "Uses current month-end aliases",
+          "Includes non-interactive plotting guidance"
+        ],
+        "cautions": [
+          "Requires Python 3.11+, pandas 3.x, matplotlib and seaborn",
+          "Exploratory correlations do not establish causation",
+          "Choose missing-value and sampling policies for the actual dataset; runtime verification is incomplete"
+        ],
+        "keywords": [
+          "csv",
+          "pandas",
+          "analysis",
+          "statistics",
+          "charts"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 7.7,
+      "repoSignal": 3.9,
+      "score": 6.6,
       "humanReviewed": false
     }
   ],
