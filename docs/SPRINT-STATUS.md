@@ -151,3 +151,24 @@ Unfiltered installation controls require explicit complete membership and a pinn
 This sprint is not yet accepted or pushed. Show the owner desktop/mobile output and the final check results before publishing the implementation. Do not advance `integration/validated-sprints` or merge main for this proposal. The other workstation has not been observed fetching or merging it.
 
 Final local checks: typecheck passes; all 1,001 tests across 28 files pass; site build produces 3,405 pages; site verification passes for eight kits and 3,361 skill pages. Isolated Chrome checks pass on all eight kit pages, the homepage and a source listing at 1440px and 390px (20 page checks), plus search and command-copy checks, with no page errors or document overflow. The temporary server is stopped. Original-worktree homepage edits remain untouched. Remote main remains `669570d`, accepted integration remains `c69553c`, and no implementation push or production merge has been performed for this sprint.
+
+## Complete-directory sprint approval — 2026-11-18
+
+After inspecting the running local site, the owner explicitly requested stopping it and merging this sprint. This accepts the available collection inventory, the twelve additional collections and the rule that age alone does not exclude candidates. It authorizes pushing the feature branch, opening its PR, merging into main and advancing the accepted integration baseline normally, without rewriting history. The earlier local-proposal notes above describe the pre-approval state and are superseded by this approval.
+
+Implementation: `c20cb1566be3df36612e56a96e05db577ba2a5e5`, with planning alignment at `cb659fd651bb40aa21d551cb9d87a0959f5a97c2`, on `ui/complete-collection-directory`. The already approved production UI at `669570d` is included. The unchanged catalog has 3,361 available records (236 with existing reviews, 3,125 source listings), 29 collections and eight domains; Documents has four collections and every other domain has three. The 193 pending entries and 67 invalid primary files remain unadmitted. Approval is not a claim of human source-file review or successful runtime execution of each skill.
+
+The local server has been stopped and no listener remains on ports 4342/4344. Before publication, confirm the combined code with typecheck, tests, site build and site verification, then check the PR head and remote branch references. No private source copies or reports may be committed. The scheduled workflow and credentials remain unchanged. A repository merge does not itself verify a hosting deployment.
+
+After the authorized merge, synchronize `integration/validated-sprints` with the verified production merge without overwriting other branches. The other workstation's update remains unobserved. After preserving local work on its own feature branch, it should run:
+
+    git status
+    git fetch origin
+    git merge origin/integration/validated-sprints
+    git merge-base --is-ancestor origin/integration/validated-sprints HEAD
+    npm run typecheck
+    npm test
+    npm run site:build
+    npm run site:verify
+
+Use `npm.cmd` under Windows PowerShell. Report the fetched commit and check results; do not infer the second workstation updated from a successful push here.

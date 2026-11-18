@@ -1,6 +1,6 @@
 # Launch plan and parallel work
 
-Current selection update, 2026-11-18: the owner requested complete available membership for selected collections, with editorial recommendations kept separate, and explicitly confirmed that age alone must not exclude a candidate. The current implementation proposal is documented in [Complete collection inventory](COLLECTION-DIRECTORY.md) and the latest section of [Sprint status](SPRINT-STATUS.md). Earlier age-cutoff and reviewed-subset descriptions in this planning history are superseded. The complete-directory sprint remains a local proposal pending presentation and owner review, not a production release.
+Current selection update, 2026-11-18: the owner requested complete available membership for selected collections, with editorial recommendations kept separate, and explicitly confirmed that age alone must not exclude a candidate. The implementation is documented in [Complete collection inventory](COLLECTION-DIRECTORY.md) and the latest section of [Sprint status](SPRINT-STATUS.md). Earlier age-cutoff and reviewed-subset descriptions in this planning history are superseded. After reviewing the local site, the owner approved the complete-directory sprint and authorized its production merge; publication and synchronization results must be verified separately.
 
 Planning baseline: origin/main cce38ff. This document records a proposed allocation of work from the supplied sprints. The owner confirmed option B: skill-level license resolution. Whether accounts are required for first launch still needs the owner's decision.
 
