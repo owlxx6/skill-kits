@@ -1,7 +1,4 @@
 ---
-import Icon from "./Icon.astro";
 import { reviewLabel } from "../lib/catalog";
 ---
-<span class="badge">
-  <Icon name="file-text" size={14} />{reviewLabel()}
-</span>
+<span class="review-status">{reviewLabel()}</span>

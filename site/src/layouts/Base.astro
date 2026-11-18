@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import Icon from "../components/Icon.astro";
+import SideNav from "../components/SideNav.astro";
 import { loadCatalog } from "../lib/catalog";
 
 interface Props {
@@ -11,146 +12,138 @@ const { title, description } = Astro.props;
 const pageTitle = title === "Skill Kits" ? title : `${title} - Skill Kits`;
 const updated = loadCatalog().generatedAt.slice(0, 10);
 const path = Astro.url.pathname;
-const nav = [
-  { href: "/#kits", label: "Kits", current: path.startsWith("/kits/") ? "true" : undefined },
-  { href: "/search/", label: "Search", current: path.startsWith("/search/") ? "page" : undefined },
-  { href: "/methodology/", label: "How we pick", current: path.startsWith("/methodology/") ? "page" : undefined },
-];
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="day">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)" />
     <script is:inline>
-      try {
-        const theme = localStorage.getItem("skill-kits-theme");
-        if (theme === "night") document.documentElement.dataset.theme = "night";
-      } catch { /* Storage can be unavailable in private contexts. */ }
-      // Motion is opt-in: entrance animations only hide content once this class is set,
-      // so the page stays complete without JavaScript or with reduced motion.
-      if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        document.documentElement.classList.add("motion");
-      }
+      // Before first paint: the visitor's saved choice, else their system setting.
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem("skill-kits-theme"); } catch (e) { /* storage can be unavailable */ }
+        var system = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day";
+        document.documentElement.dataset.theme = saved === "night" || saved === "day" ? saved : system;
+      })();
     </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{pageTitle}</title>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header class="site-header">
-      <div class="container">
-        <a class="brand" href="/">
-          <span class="brand-mark"><Icon name="layers" size={18} /></span>
-          Skill Kits
-        </a>
-        <nav class="site-nav" aria-label="Main">
-          {nav.map((item) => <a href={item.href} aria-current={item.current}>{item.label}</a>)}
-        </nav>
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Night Shift" title="Night Shift" aria-pressed="false" hidden>
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
-            <circle cx="12" cy="12" r="8.5" /><path d="M12 3.5a8.5 8.5 0 0 1 0 17Z" fill="currentColor" stroke="none" />
-          </svg>
-        </button>
+    <div class="shell">
+      <aside class="sidebar" aria-label="Site">
+        <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Skill Kits</a>
+        <form class="side-search" action="/search/" method="get" role="search">
+          <label for="side-search-input" class="visually-hidden">Search skills and collections</label>
+          <Icon name="search" size={18} />
+          <input id="side-search-input" type="search" name="q" placeholder="Search skills" autocomplete="off" enterkeyhint="search" aria-keyshortcuts="/" data-search-shortcut />
+          <kbd aria-hidden="true">/</kbd>
+        </form>
+        <SideNav path={path} label="Main" />
+      </aside>
+
+      <div class="main-col">
+        <header class="topbar">
+          <div class="topbar-inner">
+            <details class="menu" data-menu>
+              <summary class="icon-button" aria-label="Menu">
+                <Icon name="menu" size={20} class="icon-open" />
+                <Icon name="x" size={20} class="icon-close" />
+              </summary>
+              <div class="menu-panel">
+                <SideNav path={path} label="Main menu" />
+              </div>
+            </details>
+            <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Skill Kits</a>
+            <div class="topbar-actions">
+              <a class="icon-button search-link" href="/search/" aria-label="Search"><Icon name="search" size={20} /></a>
+              <a class="button github-link" href="https://github.com/owlxx6/skill-kits">Source on GitHub <Icon name="external-link" size={15} /></a>
+              <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Night mode" title="Night mode" aria-pressed="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                  <circle cx="12" cy="12" r="8.5" /><path d="M12 3.5a8.5 8.5 0 0 1 0 17Z" fill="currentColor" stroke="none" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main id="main" tabindex="-1">
+          <slot />
+        </main>
+
+        <footer class="site-footer">
+          <div class="wrap">
+            <p>Catalog updated <time datetime={updated}>{updated}</time>. Static site: no accounts, no tracking.</p>
+            <nav aria-label="Footer">
+              <a href="/methodology/">How we pick</a>
+              <a href="https://github.com/owlxx6/skill-kits">Source on GitHub <Icon name="external-link" size={14} /></a>
+            </nav>
+          </div>
+        </footer>
       </div>
-    </header>
-    <main id="main" tabindex="-1">
-      <div class="container page-body"><slot /></div>
-    </main>
-    <footer class="site-footer">
-      <div class="container">
-        <p>Catalog updated <time datetime={updated}>{updated}</time></p>
-        <nav class="footer-links" aria-label="Footer">
-          <a href="/methodology/">How we pick</a>
-          <a href="https://github.com/owlxx6/skill-kits">
-            Source on GitHub <Icon name="external-link" size={14} />
-          </a>
-        </nav>
-      </div>
-    </footer>
+    </div>
   </body>
 </html>
 
 <script>
-  const themeToggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
-  if (themeToggle) {
-    const syncTheme = () => {
-      themeToggle.setAttribute("aria-pressed", String(document.documentElement.dataset.theme === "night"));
-      const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-      if (meta) meta.content = document.documentElement.dataset.theme === "night" ? "#141414" : "#ffffff";
-    };
-    syncTheme();
-    themeToggle.hidden = false;
-    themeToggle.addEventListener("click", () => {
-      const theme = document.documentElement.dataset.theme === "night" ? "day" : "night";
-      document.documentElement.dataset.theme = theme;
-      try { localStorage.setItem("skill-kits-theme", theme); } catch { /* The toggle still works without persistence. */ }
-      syncTheme();
-    });
-    window.addEventListener("storage", (event) => {
-      if (event.key === "skill-kits-theme" || event.key === null) {
-        document.documentElement.dataset.theme = event.newValue === "night" ? "night" : "day";
-        syncTheme();
-      }
-    });
-  }
-  // "/" focuses the page's search box, as on most developer sites; ignored while typing.
+  const KEY = "skill-kits-theme";
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+  const system = window.matchMedia("(prefers-color-scheme: dark)");
+  const saved = (): string | null => {
+    try { return localStorage.getItem(KEY); } catch { return null; }
+  };
+  const sync = () => {
+    const night = root.dataset.theme === "night";
+    toggle?.setAttribute("aria-pressed", String(night));
+    toggle?.setAttribute("title", night ? "Switch to day mode" : "Switch to night mode");
+  };
+  sync();
+  toggle?.addEventListener("click", () => {
+    const theme = root.dataset.theme === "night" ? "day" : "night";
+    root.dataset.theme = theme;
+    try { localStorage.setItem(KEY, theme); } catch { /* The toggle still works without persistence. */ }
+    sync();
+  });
+  // Follow the system setting until the visitor makes a choice of their own.
+  system.addEventListener("change", (event) => {
+    const choice = saved();
+    if (choice === "night" || choice === "day") return;
+    root.dataset.theme = event.matches ? "night" : "day";
+    sync();
+  });
+  window.addEventListener("storage", (event) => {
+    if (event.key !== KEY && event.key !== null) return;
+    root.dataset.theme = event.newValue === "night" ? "night" : event.newValue === "day" ? "day" : system.matches ? "night" : "day";
+    sync();
+  });
+
+  // Phone menu: Escape closes it and returns focus to its button.
+  const menu = document.querySelector<HTMLDetailsElement>("[data-menu]");
+  menu?.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menu.open) {
+      menu.open = false;
+      menu.querySelector("summary")?.focus();
+    }
+  });
+
+  // "/" focuses the page's main search box (or the sidebar one); ignored while typing.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
     const target = event.target;
     if (target instanceof HTMLElement && (target.isContentEditable || target.closest("input, textarea, select"))) return;
-    const input = document.querySelector<HTMLInputElement>("input[data-search-shortcut]");
+    const visible = (input: HTMLInputElement) => input.offsetParent !== null;
+    const input =
+      [...document.querySelectorAll<HTMLInputElement>("input[data-search-primary]")].find(visible) ??
+      [...document.querySelectorAll<HTMLInputElement>("input[data-search-shortcut]")].find(visible);
     if (!input) return;
     event.preventDefault();
     input.focus();
     input.select();
   });
-
-  // One observer for every entrance on the page: [data-reveal] and [data-fill] get "is-visible" (staggered
-  // within each batch) and [data-count-to] counts up from zero. Each runs once.
-  const root = document.documentElement;
-  if (root.classList.contains("motion")) {
-    const COUNT_MS = 1000;
-    const easeOut = (t: number) => 1 - (1 - t) ** 3;
-    const countUp = (element: HTMLElement, target: number) => {
-      const start = performance.now();
-      const step = (now: number) => {
-        const progress = Math.min(1, (now - start) / COUNT_MS);
-        element.textContent = String(Math.round(target * easeOut(progress)));
-        if (progress < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        let order = 0;
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const element = entry.target as HTMLElement;
-          observer.unobserve(element);
-          const target = Number(element.dataset.countTo);
-          if (element.dataset.countTo !== undefined && Number.isFinite(target)) {
-            countUp(element, target);
-            continue;
-          }
-          element.style.setProperty("--reveal-delay", `${Math.min(order, 6) * 70}ms`);
-          element.classList.add("is-visible");
-          order += 1;
-        }
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
-    );
-
-    for (const element of document.querySelectorAll<HTMLElement>("[data-reveal], [data-fill], [data-count-to]")) {
-      if (element.dataset.countTo !== undefined) element.textContent = "0";
-      observer.observe(element);
-    }
-  }
 </script>
-
-<style>
-  main:focus { outline: none; }
-</style>

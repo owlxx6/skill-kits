@@ -1,87 +1,58 @@
 ---
 import Base from "../layouts/Base.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
-import Icon from "../components/Icon.astro";
-import type { IconName } from "../lib/icons";
 import { loadConfig } from "../lib/methodology";
 
 const config = await loadConfig();
 const { filter, review, scoring } = config;
 const percent = (value: number) => `${Math.round(value * 100)}%`;
-const steps: { title: string; icon: IconName; text: string }[] = [
+const steps: { title: string; text: string }[] = [
   {
     title: "Found and filtered",
-    icon: "search",
     text: "We read public GitHub repositories tagged with agent-skill topics, plus explicit nominations. Repositories must not be archived and must be active within " + filter.maxDaysSinceLastCommit + " days. Topic searches currently use a " + filter.minStars + "-star discovery threshold. Explicitly nominated repositories have no minimum star count: low usage does not disqualify them.",
   },
   {
     title: "Read and reviewed",
-    icon: "file-text",
     text: "An AI reviewer reads each candidate SKILL.md and scores it from 0 to 10 on clarity (does an agent know what to do and when to stop), completeness (examples, scripts and references provided) and usefulness for the kit.",
   },
   {
     title: "License shown per skill",
-    icon: "scale",
     text: 'Each skill’s license is resolved from its files and metadata, applicable parent folders and repository evidence. A repository can contain several licenses. Missing licenses are shown as "No license", and unresolved evidence as "Unclear license". Mixed collections list the included licenses. Check the source terms for your intended use.',
   },
   {
     title: "Ranked",
-    icon: "bar-chart",
     text: `A skill needs a review score of at least ${review.minCatalogScore} to appear. Its ranking score is ${percent(scoring.skill.review)} review and ${percent(scoring.skill.repoSignal)} repository signal (stars, forks and recent activity on a log scale). A collection is a repository with at least ${config.collection.minSkills} valid skills; its score for a kit combines its repository signal, the median review of its skills in that kit, and how many of them fit the kit.`,
   },
   {
     title: "Approved by a human",
-    icon: "badge-check",
     text: 'The best candidates are proposed to the curator, who approves or rejects each one and sets the order you see on a kit page.',
   },
 ];
 ---
 <Base title="How we pick" description="How skills are found, filtered, reviewed and approved.">
-  <div class="narrow">
-    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "How we pick" }]} />
+  <div class="wrap page" style="gap: var(--s7)">
     <header class="page-head">
-      <span class="icon-tile large"><Icon name="list-checks" size={28} /></span>
-      <div class="page-head-text">
-        <h1>How we pick</h1>
-        <p class="lead muted">Explore how candidates become catalog entries and curated kits. A maintainer approves every entry added to a kit.</p>
-      </div>
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "How we pick" }]} />
+      <p class="eyebrow">Trust</p>
+      <h1 class="display">How we pick</h1>
+      <p class="lead">Explore how candidates become catalog entries and curated kits. A maintainer approves every entry added to a kit.</p>
     </header>
 
-    <ol class="steps">
+    <ol class="method-steps">
       {steps.map((step, index) => (
-        <li class="step">
-          <span class="step-number" aria-hidden="true">{index + 1}</span>
-          <div class="card step-card">
-            <h2><Icon name={step.icon} size={20} /><span><span class="visually-hidden">Step {index + 1}: </span>{step.title}</span></h2>
+        <li>
+          <span class="part-no" aria-hidden="true">{index + 1}</span>
+          <div>
+            <h2><span class="visually-hidden">Step {index + 1}: </span>{step.title}</h2>
             <p>{step.text}</p>
           </div>
         </li>
       ))}
     </ol>
 
-    <aside class="callout info" aria-labelledby="limits-title">
-      <Icon name="info" size={22} />
-      <div>
-        <h2 id="limits-title">Before installing</h2>
-        <p>The catalog records reviews of skill instructions. A review score does not demonstrate successful execution of every task. Read the source, prerequisites and license before installing.</p>
-      </div>
+    <aside class="callout" aria-labelledby="limits-title">
+      <h2 id="limits-title">Before installing</h2>
+      <p>The catalog records reviews of skill instructions. A review score does not demonstrate successful execution of every task. Read the source, prerequisites and license before installing.</p>
     </aside>
   </div>
 </Base>
-
-<style>
-  .steps { list-style: none; margin: var(--space-6) 0 var(--space-5); padding: 0; display: grid; gap: var(--space-4); }
-  .step { position: relative; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: var(--space-4); }
-  .step:not(:last-child)::before {
-    content: ""; position: absolute; left: 19px; top: 44px; bottom: calc(var(--space-4) * -1);
-    width: 2px; background: var(--border);
-  }
-  .step-number {
-    display: grid; place-items: center; width: 40px; height: 40px; border-radius: 999px;
-    background: var(--accent); color: var(--on-accent); font-weight: 700; font-variant-numeric: tabular-nums;
-  }
-  .step-card { display: grid; gap: var(--space-2); }
-  .step-card h2 { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-lg); }
-  .step-card h2 :global(.icon) { color: var(--accent-text); }
-  .step-card p { color: var(--text-muted); max-width: var(--measure); }
-</style>

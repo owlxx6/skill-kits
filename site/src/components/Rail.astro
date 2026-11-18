@@ -1,0 +1,57 @@
+---
+// A titled, horizontally scrolling row. Every item is a normal link, so keyboard users reach
+// each one with Tab and the row scrolls to it; the arrow buttons are a convenience for pointers.
+import Icon from "./Icon.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  subtitle?: string;
+  viewAll?: { href: string; label: string };
+}
+const { id, title, subtitle, viewAll } = Astro.props;
+---
+<section class="rail-section" aria-labelledby={`${id}-title`} id={id}>
+  <div class="section-head" style="border-bottom: 0; padding-bottom: var(--s6)">
+    <div>
+      <h2 id={`${id}-title`}>{title}</h2>
+      {subtitle && <p>{subtitle}</p>}
+    </div>
+    <div style="display: flex; align-items: center; gap: var(--s3)">
+      {viewAll && <a class="view-all" href={viewAll.href}>{viewAll.label} <Icon name="chevron-right" size={16} /></a>}
+      <div class="rail-controls" hidden>
+        <button type="button" class="icon-button" data-rail-prev aria-label={`Scroll ${title} back`}><Icon name="chevron-left" size={18} /></button>
+        <button type="button" class="icon-button" data-rail-next aria-label={`Scroll ${title} forward`}><Icon name="chevron-right" size={18} /></button>
+      </div>
+    </div>
+  </div>
+  <div class="rail-wrap">
+    <ul class="rail" data-rail>
+      <slot />
+    </ul>
+  </div>
+</section>
+
+<script>
+  for (const section of document.querySelectorAll<HTMLElement>(".rail-section")) {
+    const rail = section.querySelector<HTMLElement>("[data-rail]");
+    const controls = section.querySelector<HTMLElement>(".rail-controls");
+    const prev = section.querySelector<HTMLButtonElement>("[data-rail-prev]");
+    const next = section.querySelector<HTMLButtonElement>("[data-rail-next]");
+    if (!rail || !controls || !prev || !next) continue;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => {
+      const overflow = rail.scrollWidth > rail.clientWidth + 4;
+      controls.hidden = !overflow;
+      prev.disabled = rail.scrollLeft <= 4;
+      next.disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 4;
+    };
+    const step = (direction: number) =>
+      rail.scrollBy({ left: direction * rail.clientWidth * 0.9, behavior: reduced.matches ? "auto" : "smooth" });
+    prev.addEventListener("click", () => step(-1));
+    next.addEventListener("click", () => step(1));
+    rail.addEventListener("scroll", sync, { passive: true });
+    new ResizeObserver(sync).observe(rail);
+    sync();
+  }
+</script>

@@ -1,0 +1,30 @@
+---
+// The site navigation, rendered in the desktop sidebar and again in the phone menu.
+import Icon from "./Icon.astro";
+import { loadCatalog } from "../lib/catalog";
+
+interface Props {
+  path: string;
+  label: string;
+}
+const { path, label } = Astro.props;
+const catalog = loadCatalog();
+const current = (match: boolean) => (match ? "page" : undefined);
+---
+<nav class="side-nav" aria-label={label}>
+  <a class="side-link" href="/" aria-current={current(path === "/")}><Icon name="home" size={20} />Home</a>
+  <p class="side-label">Kits</p>
+  <ul class="side-kits">
+    {catalog.kits.map((kit) => (
+      <li>
+        <a href={`/kits/${kit.id}/`} aria-current={current(path === `/kits/${kit.id}/`)}>{kit.title}</a>
+      </li>
+    ))}
+  </ul>
+  <p class="side-label">Browse</p>
+  <a class="side-link" href="/search/?type=collection" aria-current={path.startsWith("/collections/") ? "true" : undefined}><Icon name="layers" size={20} />Collections</a>
+  <a class="side-link" href="/search/?type=skill" aria-current={path.startsWith("/skills/") ? "true" : undefined}><Icon name="puzzle" size={20} />Skills</a>
+  <a class="side-link" href="/search/" aria-current={current(path.startsWith("/search/"))}><Icon name="search" size={20} />Search everything</a>
+  <p class="side-label">Trust</p>
+  <a class="side-link" href="/methodology/" aria-current={current(path.startsWith("/methodology/"))}><Icon name="list-checks" size={20} />How we pick</a>
+</nav>
