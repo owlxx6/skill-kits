@@ -1,27 +1,20 @@
-import MiniSearch, { type Options } from "minisearch";
+import MiniSearch from "minisearch";
 import type { Catalog } from "../../../pipeline/lib/schemas";
-import { collectionHref, collectionCoverageLabel, collectionInstallScope, collectionLicenseLabel, reviewLabel, skillHref } from "./catalog";
+import {
+  collectionHref,
+  collectionCoverageLabel,
+  collectionInstallScope,
+  collectionLicenseLabel,
+  displayDate,
+  isPartialCollection,
+  listedSecurityLevel,
+  reviewLabel,
+  securityLevel,
+  skillHref,
+} from "./catalog";
 
-export interface SearchDocument {
-  id: string;
-  kind: "skill" | "collection";
-  title: string;
-  text: string;
-  keywords: string;
-  license: string;
-  href: string;
-  why: string;
-  coverage?: string;
-  installScope?: string;
-  reviewStatus: string;
-}
-
-// Shared by the build and the browser: the index must be loaded with the options it was built with.
-export const SEARCH_OPTIONS: Options<SearchDocument> = {
-  fields: ["title", "keywords", "text"],
-  storeFields: ["kind", "title", "license", "href", "why", "coverage", "installScope", "reviewStatus"],
-  searchOptions: { boost: { title: 3, keywords: 2 }, prefix: true, fuzzy: 0.2 },
-};
+export { SEARCH_OPTIONS, type SearchDocument } from "./search-options";
+import { SEARCH_OPTIONS, type SearchDocument } from "./search-options";
 
 export function searchDocuments(catalog: Catalog): SearchDocument[] {
   const skills: SearchDocument[] = catalog.skills.map((skill) => ({
@@ -34,6 +27,13 @@ export function searchDocuments(catalog: Catalog): SearchDocument[] {
     href: skillHref(skill.id),
     why: skill.review.why,
     reviewStatus: reviewLabel(),
+    repo: skill.repo,
+    kits: catalog.kits.filter((kit) => kit.skills.includes(skill.id)).map((kit) => kit.id),
+    security: securityLevel(skill),
+    updated: displayDate(skill.pushedAt),
+    rating: skill.reviewScore,
+    stars: skill.stars,
+    partial: false,
   }));
   const collections: SearchDocument[] = catalog.collections.map((collection) => ({
     id: `collection:${collection.id}`,
@@ -47,6 +47,13 @@ export function searchDocuments(catalog: Catalog): SearchDocument[] {
     coverage: collectionCoverageLabel(collection),
     installScope: collectionInstallScope(collection),
     reviewStatus: reviewLabel(),
+    repo: collection.id,
+    kits: catalog.kits.filter((kit) => kit.collections.includes(collection.id)).map((kit) => kit.id),
+    security: listedSecurityLevel(catalog, collection.id),
+    updated: displayDate(collection.pushedAt),
+    rating: 0,
+    stars: collection.stars,
+    partial: isPartialCollection(collection),
   }));
   return [...skills, ...collections];
 }
