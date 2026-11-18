@@ -1,13 +1,12 @@
 ---
-// A drawn preview for a rail tile. Decorative: the link around it carries the accessible name.
-import { type Catalog, type CatalogCollection, type CatalogKit, type CatalogSkill, formatCount } from "../lib/catalog";
+// A drawn preview for a home tile (a repository or a skill). Decorative: the link around it carries the accessible name.
+import type { Catalog, CatalogCollection, CatalogSkill } from "../lib/catalog";
 
 type Props =
   | { kind: "collection"; tone: number; catalog: Catalog; collection: CatalogCollection }
-  | { kind: "kit"; tone: number; kit: CatalogKit }
   | { kind: "skill"; tone: number; skill: CatalogSkill };
 const props = Astro.props;
-const tone = String(props.tone % 3);
+const tone = String(props.tone % 5); // dark, white, Verde Abetone, grey, terracotta
 const skillNames = props.kind === "collection"
   ? props.collection.catalogSkillIds.flatMap((id) => props.catalog.skills.find((entry) => entry.id === id)?.name ?? []).slice(0, 4)
   : [];
@@ -15,21 +14,12 @@ const skillNames = props.kind === "collection"
 <div class="tile" data-tone={tone} aria-hidden="true">
   {props.kind === "collection" && (
     <>
-      <div class="tile-top"><span>COLLECTION</span><span>{props.collection.catalogSkillIds.length} / {formatCount(props.collection.skillCount)} listed</span></div>
       <div class="tile-cmd"><span>$ </span>npx skills add {props.collection.id}</div>
       <ul class="tile-list">{skillNames.map((name, i) => <li><span class="n">{String(i + 1).padStart(2, "0")}</span><span>{name}</span></li>)}</ul>
     </>
   )}
-  {props.kind === "kit" && (
-    <>
-      <div class="tile-top"><span>PARTS LIST</span><span>{props.kit.collections.length} {props.kit.collections.length === 1 ? "part" : "parts"}</span></div>
-      <p class="tile-title">{props.kit.title}</p>
-      <ol class="tile-list">{props.kit.collections.slice(0, 3).map((id, i) => <li><span class="box">{i + 1}</span><span>{id}</span></li>)}</ol>
-    </>
-  )}
   {props.kind === "skill" && (
     <>
-      <div class="tile-top"><span>SKILL.md</span><span>{props.skill.reviewScore.toFixed(1)}/10</span></div>
       <p class="tile-title">{props.skill.name}</p>
       <p class="tile-text">{props.skill.review.why}</p>
     </>

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import CommandPalette from "../components/CommandPalette.astro";
 import Icon from "../components/Icon.astro";
 import SideNav from "../components/SideNav.astro";
 import { loadCatalog } from "../lib/catalog";
@@ -9,14 +10,19 @@ interface Props {
   description: string;
   // The home page lets its hero sit under a transparent top bar; every other page gets a solid one.
   landing?: boolean;
+  // Share image, as a path under the site root. Kit pages pass their own; every other page uses the default one.
+  image?: string;
 }
-const { title, description, landing = false } = Astro.props;
+const { title, description, landing = false, image = "/og/default.png" } = Astro.props;
 const pageTitle = title === "Skill Kits" ? title : `${title} - Skill Kits`;
 const catalog = loadCatalog();
 const updated = catalog.generatedAt.slice(0, 10);
 const path = Astro.url.pathname;
-// The search page already has a large search box, so the top bar does not repeat it there.
-const showTopSearch = !path.startsWith("/search/");
+// Absolute links for sharing exist only when the public address is known (SITE_URL at build time, see astro.config.mjs).
+const canonical = Astro.site ? new URL(path, Astro.site).href : undefined;
+const shareImage = Astro.site ? new URL(image, Astro.site).href : undefined;
+// The home page and the Browse page already have a large search box, so the top bar does not repeat it there.
+const showTopSearch = !landing && !path.startsWith("/search/");
 const current = (match: boolean) => (match ? "page" : undefined);
 ---
 <!doctype html>
@@ -37,6 +43,16 @@ const current = (match: boolean) => (match ? "page" : undefined);
       })();
     </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:site_name" content="Skill Kits" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    {shareImage && <meta property="og:image" content={shareImage} />}
+    {shareImage && <meta property="og:image:width" content="1200" />}
+    {shareImage && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content={shareImage ? "summary_large_image" : "summary"} />
     <title>{pageTitle}</title>
   </head>
   <body>
@@ -81,17 +97,15 @@ const current = (match: boolean) => (match ? "page" : undefined);
             </nav>
             <div class="topbar-actions">
               {showTopSearch && (
-                <form class="top-search" action="/search/" method="get" role="search">
-                  <label for="top-search-input" class="visually-hidden">Search skills and collections</label>
+                <a class="top-search" href="/search/" data-palette-open aria-label="Search skills and collections" aria-keyshortcuts="/ Control+K Meta+K">
                   <Icon name="search" size={18} />
-                  <input id="top-search-input" type="search" name="q" placeholder="Search skills" autocomplete="off" enterkeyhint="search" aria-keyshortcuts="/" data-search-shortcut />
+                  <span>Search skills</span>
                   <kbd aria-hidden="true">/</kbd>
-                </form>
+                </a>
               )}
-              <a class="icon-button search-link" href="/search/" aria-label="Search"><Icon name="search" size={20} /></a>
-              <a class="button github-link" href="https://github.com/owlxx6/skill-kits">GitHub <Icon name="external-link" size={15} /></a>
+              {showTopSearch && <a class="icon-button search-link" href="/search/" data-palette-open aria-label="Search"><Icon name="search" size={20} /></a>}
               <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Night mode" title="Night mode" aria-pressed="false">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
                   <circle cx="12" cy="12" r="8.5" /><path d="M12 3.5a8.5 8.5 0 0 1 0 17Z" fill="currentColor" stroke="none" />
                 </svg>
               </button>
@@ -108,12 +122,12 @@ const current = (match: boolean) => (match ? "page" : undefined);
             <p>Catalog updated <time datetime={updated}>{updated}</time>. Static site: no accounts, no tracking.</p>
             <nav aria-label="Footer">
               <a href="/methodology/">How we pick</a>
-              <a href="https://github.com/owlxx6/skill-kits">Source on GitHub <Icon name="external-link" size={14} /></a>
             </nav>
           </div>
         </footer>
       </div>
     </div>
+    <CommandPalette />
   </body>
 </html>
 
@@ -183,18 +197,19 @@ const current = (match: boolean) => (match ? "page" : undefined);
     }
   });
 
-  // "/" focuses the page's main search box (or the top bar one); ignored while typing.
+  // "/" focuses the page's own search box when it has one (the Browse page); everywhere else it opens the search palette.
+  // Ignored while typing. Ctrl+K opens the palette on every page (see CommandPalette.astro).
   document.addEventListener("keydown", (event) => {
     if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
     const target = event.target;
     if (target instanceof HTMLElement && (target.isContentEditable || target.closest("input, textarea, select"))) return;
-    const visible = (input: HTMLInputElement) => input.offsetParent !== null;
-    const input =
-      [...document.querySelectorAll<HTMLInputElement>("input[data-search-primary]")].find(visible) ??
-      [...document.querySelectorAll<HTMLInputElement>("input[data-search-shortcut]")].find(visible);
-    if (!input) return;
+    const own = [...document.querySelectorAll<HTMLInputElement>("input[data-search-primary]")].find((input) => input.offsetParent !== null);
     event.preventDefault();
-    input.focus();
-    input.select();
+    if (own) {
+      own.focus();
+      own.select();
+    } else {
+      document.dispatchEvent(new CustomEvent("palette:open"));
+    }
   });
 </script>

@@ -14,6 +14,7 @@ const { command, label = "Copy install command" } = Astro.props;
     <Icon name="check" size={18} class="icon-done" />
   </button>
   <span class="copy-status visually-hidden" role="status"></span>
+  <span class="copy-toast" aria-hidden="true"></span>
 </div>
 
 <script>
@@ -23,19 +24,27 @@ const { command, label = "Copy install command" } = Astro.props;
     const button = (event.target as Element | null)?.closest<HTMLButtonElement>("button[data-copy]");
     if (!button) return;
     const status = button.parentElement?.querySelector<HTMLElement>(".copy-status");
+    const toast = button.parentElement?.querySelector<HTMLElement>(".copy-toast");
     const label = button.dataset.label ?? "Copy";
     let message: string;
+    let shortMessage: string;
     try {
       await navigator.clipboard.writeText(button.dataset.copy ?? "");
       button.classList.add("is-copied");
       message = "Copied";
+      shortMessage = "Copied";
     } catch {
       // Clipboard access can be refused: select the command so it can be copied by hand.
       const code = button.parentElement?.querySelector("code");
       if (code) window.getSelection()?.selectAllChildren(code);
       message = "Selected. Press Ctrl+C or Cmd+C to copy";
+      shortMessage = "Press Ctrl+C to copy";
     }
     if (status) status.textContent = message;
+    if (toast) {
+      toast.textContent = shortMessage;
+      toast.classList.add("is-visible");
+    }
     button.setAttribute("aria-label", message);
     window.clearTimeout(timers.get(button));
     timers.set(
@@ -43,6 +52,7 @@ const { command, label = "Copy install command" } = Astro.props;
       window.setTimeout(() => {
         button.classList.remove("is-copied");
         button.setAttribute("aria-label", label);
+        toast?.classList.remove("is-visible");
         if (status) status.textContent = "";
       }, 2000),
     );

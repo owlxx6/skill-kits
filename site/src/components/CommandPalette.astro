@@ -1,0 +1,198 @@
+---
+// Search overlay opened with "/" or Ctrl+K (or by any [data-palette-open] link). It is a native <dialog>, so the browser
+// traps focus, makes the page inert, closes on Escape and gives focus back to whatever opened it. Without JavaScript the
+// trigger links fall back to the Browse page. The index is fetched the first time the palette opens.
+import Icon from "./Icon.astro";
+import { loadCatalog, plural } from "../lib/catalog";
+
+const kits = loadCatalog().kits.map((kit) => ({
+  title: kit.title,
+  href: `/kits/${kit.id}/`,
+  sub: plural(kit.collections.length, "collection"),
+}));
+// "<" is escaped so the JSON can never end the script element early.
+const kitsJson = JSON.stringify(kits).replace(/</g, "\\u003c");
+---
+<dialog class="palette" id="palette" aria-labelledby="palette-title">
+  <h2 id="palette-title" class="visually-hidden">Search Skill Kits</h2>
+  <div class="palette-bar">
+    <Icon name="search" size={20} />
+    <input
+      id="palette-input"
+      type="search"
+      role="combobox"
+      aria-expanded="true"
+      aria-controls="palette-list"
+      aria-autocomplete="list"
+      aria-label="Search skills, collections and kits"
+      placeholder="Search skills, collections and kits"
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+      enterkeyhint="search"
+    />
+    <button type="button" class="palette-close" data-palette-close aria-label="Close search"><kbd aria-hidden="true">Esc</kbd></button>
+  </div>
+  <div class="palette-body">
+    <ul id="palette-list" class="palette-list" role="listbox" aria-label="Results"></ul>
+    <p class="palette-empty" data-palette-empty hidden>No match yet. <a data-palette-all-inline href="/search/">Browse every skill</a> or try fewer words.</p>
+  </div>
+  <p class="visually-hidden" id="palette-status" role="status" aria-live="polite"></p>
+  <div class="palette-foot">
+    <span><kbd>↑</kbd> <kbd>↓</kbd> move</span>
+    <span><kbd>Enter</kbd> open</span>
+    <a data-palette-all href="/search/">All results <Icon name="arrow-right" size={14} /></a>
+  </div>
+  <script type="application/json" id="palette-kits" is:inline set:html={kitsJson} />
+</dialog>
+
+<script>
+  import MiniSearch from "minisearch";
+  import { SEARCH_OPTIONS, type SearchDocument } from "../lib/search-options";
+
+  interface Item { kind: "Kit" | "Collection" | "Skill"; title: string; sub: string; href: string }
+
+  const dialog = document.getElementById("palette") as HTMLDialogElement | null;
+  if (dialog) {
+    const input = dialog.querySelector<HTMLInputElement>("#palette-input")!;
+    const list = dialog.querySelector<HTMLUListElement>("#palette-list")!;
+    const empty = dialog.querySelector<HTMLElement>("[data-palette-empty]")!;
+    const status = dialog.querySelector<HTMLElement>("#palette-status")!;
+    const allLink = dialog.querySelector<HTMLAnchorElement>("[data-palette-all]")!;
+    const allInline = dialog.querySelector<HTMLAnchorElement>("[data-palette-all-inline]")!;
+    const kits: Omit<Item, "kind">[] = JSON.parse(document.getElementById("palette-kits")?.textContent ?? "[]");
+
+    let index: MiniSearch<SearchDocument> | null = null;
+    let loading: Promise<void> | null = null;
+    let loadFailed = false;
+    let options: HTMLElement[] = [];
+    let active = -1;
+
+    // The index is fetched once, the first time the palette opens.
+    const ensureIndex = (): Promise<void> => {
+      loading ??= fetch("/search-index.json")
+        .then((response) => (response.ok ? response.text() : Promise.reject(new Error(String(response.status)))))
+        .then((json) => { index = MiniSearch.loadJSON<SearchDocument>(json, SEARCH_OPTIONS); })
+        .catch(() => { loadFailed = true; });
+      return loading;
+    };
+
+    const setActive = (next: number) => {
+      options.forEach((option, position) => option.setAttribute("aria-selected", String(position === next)));
+      active = next;
+      const current = options[next];
+      if (current) {
+        input.setAttribute("aria-activedescendant", current.id);
+        current.scrollIntoView({ block: "nearest" });
+      } else {
+        input.removeAttribute("aria-activedescendant");
+      }
+    };
+
+    const itemsFor = (query: string): Item[] => {
+      const needle = query.toLowerCase();
+      if (!needle) return kits.map((kit) => ({ kind: "Kit", ...kit }));
+      const kitHits: Item[] = kits.filter((kit) => kit.title.toLowerCase().includes(needle)).slice(0, 2).map((kit) => ({ kind: "Kit", ...kit }));
+      const hits = (index?.search(query) ?? []).slice(0, 8 - kitHits.length).map((hit): Item => {
+        const doc = hit as unknown as SearchDocument;
+        return doc.kind === "collection"
+          ? { kind: "Collection", title: doc.title, sub: doc.coverage ?? "", href: doc.href }
+          : { kind: "Skill", title: doc.title, sub: doc.repo, href: doc.href };
+      });
+      return [...kitHits, ...hits];
+    };
+
+    const render = () => {
+      const query = input.value.trim();
+      const items = itemsFor(query);
+      list.replaceChildren();
+      options = [];
+      if (!query) {
+        const heading = document.createElement("li");
+        heading.className = "palette-group";
+        heading.setAttribute("role", "presentation");
+        heading.textContent = "Kits";
+        list.append(heading);
+      }
+      items.forEach((item, position) => {
+        const row = document.createElement("li");
+        row.id = `palette-option-${position}`;
+        row.className = "palette-option";
+        row.setAttribute("role", "option");
+        row.setAttribute("aria-selected", "false");
+        const link = document.createElement("a");
+        link.href = item.href;
+        link.tabIndex = -1;
+        const kind = document.createElement("span");
+        kind.className = "palette-kind";
+        kind.textContent = item.kind;
+        const text = document.createElement("span");
+        text.className = "palette-text";
+        const title = document.createElement("strong");
+        title.textContent = item.title;
+        const sub = document.createElement("span");
+        sub.textContent = item.sub;
+        text.append(title, sub);
+        link.append(kind, text);
+        row.append(link);
+        row.addEventListener("mousemove", () => { if (active !== position) setActive(position); });
+        list.append(row);
+        options.push(row);
+      });
+      const nothing = Boolean(query) && items.length === 0 && (index !== null || loadFailed);
+      empty.hidden = !nothing;
+      const encoded = encodeURIComponent(input.value.trim());
+      allLink.href = query ? `/search/?q=${encoded}` : "/search/";
+      allInline.href = allLink.href;
+      setActive(items.length > 0 && query ? 0 : -1);
+      if (query) status.textContent = items.length > 0 ? `${items.length} ${items.length === 1 ? "result" : "results"}` : nothing ? "No results" : "Searching";
+      else status.textContent = "";
+    };
+
+    const open = () => {
+      if (!dialog.open) dialog.showModal();
+      input.value = "";
+      render();
+      input.focus();
+      void ensureIndex().then(() => { if (dialog.open) render(); });
+    };
+
+    input.addEventListener("input", render);
+    input.addEventListener("keydown", (event) => {
+      if (event.isComposing) return;
+      if (event.key === "Escape") {
+        // A search field would use the first Escape to clear its text; closing straight away matches what people expect.
+        event.preventDefault();
+        dialog.close();
+      } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        if (options.length === 0) return;
+        event.preventDefault();
+        const step = event.key === "ArrowDown" ? 1 : -1;
+        setActive((active + step + options.length) % options.length);
+      } else if (event.key === "Enter") {
+        event.preventDefault();
+        const href = options[active]?.querySelector("a")?.href;
+        if (href) window.location.assign(href);
+        else if (input.value.trim()) window.location.assign(allLink.href);
+      }
+    });
+    dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+    dialog.querySelector("[data-palette-close]")?.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("close", () => { input.value = ""; });
+
+    document.addEventListener("click", (event) => {
+      const trigger = (event.target as Element | null)?.closest("[data-palette-open]");
+      if (!trigger || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      open();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey) && !event.altKey) {
+        event.preventDefault();
+        open();
+      }
+    });
+    // Base.astro sends this event for the "/" shortcut when the page has no search box of its own.
+    document.addEventListener("palette:open", open);
+  }
+</script>
