@@ -104,3 +104,34 @@ Synchronization target: publish this accepted increment on its feature branch an
     npm run site:verify
 
 Resolve conflicts without discarding either workstation's work. Do not reset an active branch or replace its history to synchronize it.
+
+## Approved individual Expo skills — 2026-11-18
+
+The owner explicitly approved four individual additions in chat: `expo-project-structure`, `expo-router`, `expo-design-system` and `expo-upgrade`. All four belong to Web App; `expo-design-system` also belongs to UI Design. This is not approval of a whole-repository collection, other Expo skills or a production merge.
+
+Implementation: `065d905d6706ad35d16c16a24c7ab64e2515d9d8` on `data/approved-security-audit`, following the accepted security-audit increment. The existing reviewed-kit importer was run in preview mode, its preservation assertions passed, then it was run with `--apply`. Both runs verified the complete tree and Git blob hashes at source commit `dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d`. The four selected folders contain 23 text files; all pass the unchanged static scanner without skipped files. The normal license, fingerprint, review-score and curation gates remain in effect.
+
+The source nomination, four durable fingerprint-matched reviews and individual approval evidence are versioned under `data/`. Detailed findings, source copies, scans and execution logs remain private. Durable review security notes are empty and public records retain the existing redaction placeholder. Every new record keeps `humanReviewed: false`; inclusion approval does not claim the owner personally read the source.
+
+Catalog: 249 skills, 17 collections, 8 kits. Every previous skill record and collection is preserved. Only Web App and UI Design gain entries; the other six kits are unchanged. No whole-repository collection was added. Site implementation, dependencies, shared pipeline code, scripts, schemas, workflows and scan overrides are unchanged.
+
+Checks on the combined code: `npm.cmd run typecheck` passes; `npm.cmd test` passes all 984 tests across 26 files; `npm.cmd run site:build` produces 281 pages; `npm.cmd run site:verify` passes for eight kits and 249 skill pages. Additional built-output checks confirm four individual install commands, five kit links, four searchable entries, pinned MIT evidence and neutral session-review labels. Preview/application preservation checks and `git diff --check` pass.
+
+Review scope: all 25 primary Expo instruction files were read, and six skills received complete associated-file reviews. Only the four approved selections are imported. A separate private fixture suite reproduced six defects in three unselected skills (14 checks: eight pass, six fail); those failures are not part of the passing project suite. No generated application, device run, actual SDK migration, installation command or remote service operation was executed. No paid calls or credentials were used. Static clearance is not runtime certification.
+
+Inherited site limitation for follow-up: the generic repository detail page offers an unfiltered installation command with a scope warning even when the repository has no approved collection. The Expo repository page therefore still offers that existing control. This data increment does not change that interface or treat it as collection approval. A separate site change should decide whether to restrict this control to approved collections.
+
+The previously documented clean-install lockfile issue and scheduled workflow credential issue remain unchanged. The site remains stopped. Push the feature branch normally and advance `integration/validated-sprints` to this accepted increment after confirming it has not diverged. PR #7 carries the combined approved data changes; main remains `7c3c8e9` until a separate release decision. The other workstation's actual fetch and merge remain unobserved.
+
+Other-workstation handoff, after committing or stashing its local work on its own feature branch:
+
+    git status
+    git fetch origin
+    git merge origin/integration/validated-sprints
+    git merge-base --is-ancestor origin/integration/validated-sprints HEAD
+    npm run typecheck
+    npm test
+    npm run site:build
+    npm run site:verify
+
+On Windows PowerShell use `npm.cmd` for these commands. Report the resulting commit and checks; a successful remote push alone does not establish that the second workstation updated.
