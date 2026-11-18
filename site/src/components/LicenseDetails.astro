@@ -3,17 +3,11 @@ import Icon from "./Icon.astro";
 import type { CatalogSkill } from "../lib/catalog";
 interface Props { skill: CatalogSkill; }
 const { skill } = Astro.props;
-const categories: Record<string,string> = {permissive:"Permissive",copyleft:"Copyleft",other:"Other license",none:"No license found",unclear:"Unclear license"};
+const categories: Record<string, string> = { permissive: "Permissive", copyleft: "Copyleft", other: "Other license", none: "No license found", unclear: "Unclear license" };
 const category = skill.licenseCategory ? categories[skill.licenseCategory] : undefined;
 ---
 <span class="license-details">
- <span class="badge"><Icon name="scale" size={14} />{skill.license}</span>
- {category && <span class="license-category">{category}</span>}
- {skill.licenseEvidence?.url && <a href={skill.licenseEvidence.url}>License source <Icon name="external-link" size={12} /></a>}
+  <span>{skill.license}</span>
+  {category && <span class="category">{category}</span>}
+  {skill.licenseEvidence?.url && <a href={skill.licenseEvidence.url}>License source <Icon name="external-link" size={12} /></a>}
 </span>
-<style>
-.license-details{display:inline-flex;align-items:center;gap:.5rem;flex-wrap:wrap}
-.license-category,.license-details a{font-size:var(--text-xs)}
-.license-category{color:var(--text-muted)}
-.license-details a{display:inline-flex;align-items:center;gap:.25rem;min-height:28px}
-</style>

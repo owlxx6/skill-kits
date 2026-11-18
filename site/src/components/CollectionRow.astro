@@ -1,47 +1,33 @@
 ---
+// One numbered part of a kit: a whole repository, its scope, its command and its checks.
 import CopyCommand from "./CopyCommand.astro";
-import Icon from "./Icon.astro";
-import ReviewStatus from "./ReviewStatus.astro";
-import { type CatalogCollection, collectionHref, collectionLicenseLabel, collectionInstallCommand, collectionCoverageLabel, collectionInstallScope, formatCount } from "../lib/catalog";
+import ScopeNote from "./ScopeNote.astro";
+import TrustLine from "./TrustLine.astro";
+import { type Catalog, type CatalogCollection, collectionHref, collectionInstallCommand, collectionLicenseLabel, listedSecurityLevel } from "../lib/catalog";
 
 interface Props {
+  catalog: Catalog;
   collection: CatalogCollection;
+  index: number;
 }
-const { collection } = Astro.props;
+const { catalog, collection, index } = Astro.props;
 ---
-<li class="card collection-card" data-license={collection.license}>
-  <p class="eyebrow"><Icon name="layers" size={16} />Start here</p>
-  <div class="collection-head">
-    <h3><a href={collectionHref(collection.id)}>{collection.id}</a></h3>
-    <p class="meta">
-      <span data-collection-coverage><Icon name="puzzle" size={14} />{collectionCoverageLabel(collection)}</span>
-      <span><Icon name="star" size={14} />{formatCount(collection.stars)}<span class="visually-hidden"> stars</span></span>
-      <span><Icon name="git-fork" size={14} />{formatCount(collection.forks)}<span class="visually-hidden"> forks</span></span>
-    </p>
+<li class="part" data-license={collection.license}>
+  <span class="part-no" aria-hidden="true">{index + 1}</span>
+  <div class="part-body">
+    <h3><span class="visually-hidden">Part {index + 1}: </span><a href={collectionHref(collection.id)}>{collection.id}</a></h3>
+    <ScopeNote collection={collection} />
+    <CopyCommand command={collectionInstallCommand(collection.id)} label={`Copy install command for ${collection.id}`} />
+    <TrustLine
+      license={collectionLicenseLabel(collection)}
+      level={listedSecurityLevel(catalog, collection.id)}
+      shortLevel={false}
+      reviewed
+      updated={collection.pushedAt}
+      source={collection.url}
+    />
+    {collection.description && (
+      <blockquote class="quote"><cite>From the repository</cite>{collection.description}</blockquote>
+    )}
   </div>
-  {collection.description && <p class="collection-why">{collection.description}</p>}
-  <div class="badges">
-    <span class="badge"><Icon name="scale" size={14} />{collectionLicenseLabel(collection)}</span>
-    <ReviewStatus />
-  </div>
-  <p class="muted small" data-install-scope>{collectionInstallScope(collection)}</p>
-  <CopyCommand command={collectionInstallCommand(collection.id)} label={`Copy install command for ${collection.id}`} />
 </li>
-
-<style>
-  .collection-card {
-    display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3);
-    border-color: var(--accent-border); border-left: 4px solid var(--accent);
-    background: linear-gradient(135deg, var(--accent-soft), var(--surface) 65%);
-  }
-  .eyebrow {
-    justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px;
-    border-radius: 999px; background: var(--accent); color: var(--on-accent);
-    font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-  }
-  .collection-head { display: grid; gap: var(--space-1); }
-  .collection-head h3 { font-size: var(--text-lg); overflow-wrap: anywhere; }
-  .collection-head h3 a { color: var(--heading); text-decoration: none; }
-  .collection-head h3 a:hover { color: var(--link); text-decoration: underline; }
-  .collection-why { color: var(--text-muted); max-width: var(--measure); }
-</style>

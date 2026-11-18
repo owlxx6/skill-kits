@@ -1,0 +1,18 @@
+---
+import Icon from "./Icon.astro";
+import { collectionCoverageLabel, collectionInstallScope, isPartialCollection, type CatalogCollection } from "../lib/catalog";
+
+interface Props {
+  collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount">;
+}
+const { collection } = Astro.props;
+const partial = isPartialCollection(collection);
+---
+{partial ? (
+  <div class="scope partial" data-collection-coverage>
+    <Icon name="triangle-alert" size={16} />
+    <p><strong>Partial: {collectionCoverageLabel(collection)}.</strong> <span data-install-scope>{collectionInstallScope(collection)}</span></p>
+  </div>
+) : (
+  <p class="scope" data-collection-coverage><strong>{collectionCoverageLabel(collection)}.</strong> <span data-install-scope>{collectionInstallScope(collection)}</span></p>
+)}

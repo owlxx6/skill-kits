@@ -2,11 +2,10 @@
 import Base from "../../layouts/Base.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import CollectionRow from "../../components/CollectionRow.astro";
+import CopyCommand from "../../components/CopyCommand.astro";
 import EmptyState from "../../components/EmptyState.astro";
-import Icon from "../../components/Icon.astro";
 import SkillRow from "../../components/SkillRow.astro";
-import { kitView, licenseOptions, loadCatalog } from "../../lib/catalog";
-import { kitIcon } from "../../lib/icons";
+import { kitInstallCommand, kitView, loadCatalog, plural } from "../../lib/catalog";
 
 export function getStaticPaths() {
   return loadCatalog().kits.map((kit) => ({ params: { kit: kit.id } }));
@@ -15,127 +14,65 @@ export function getStaticPaths() {
 const catalog = loadCatalog();
 const view = kitView(catalog, Astro.params.kit as string);
 if (!view) throw new Error(`Unknown kit ${Astro.params.kit}`);
-const licenses = licenseOptions(view.skills);
-const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
+const { kit, collections, skills } = view;
+const totalInstalled = collections.reduce((sum, entry) => sum + entry.skillCount, 0);
+const totalListed = collections.reduce((sum, entry) => sum + entry.catalogSkillIds.length, 0);
+const afterStep = skills.length > 0 ? "03" : "02";
 ---
-<Base title={view.kit.title} description={view.kit.description}>
-  <div class="narrow">
-    <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: view.kit.title }]} />
+<Base title={kit.title} description={kit.description}>
+  <div class="wrap page" style="gap: var(--s7)">
     <header class="page-head">
-      <span class:list={["icon-tile", "large", { quiet: view.isEmpty }]}><Icon name={kitIcon(view.kit.id)} size={28} /></span>
-      <div class="page-head-text">
-        <h1>{view.kit.title}</h1>
-        <p class="lead muted">{view.kit.description}</p>
-        <p class="meta">
-          {view.isEmpty ? (
-            <span class="badge"><Icon name="clock" size={14} />Coming soon</span>
-          ) : (
-            <>
-              <span><Icon name="layers" size={14} />{plural(view.collections.length, "collection")}</span>
-              <span><Icon name="puzzle" size={14} />{view.skills.length} individually selected skills</span>
-            </>
-          )}
-          <span><Icon name="clock" size={14} />Reviewed {catalog.generatedAt.slice(0, 10)}</span>
-          <a href="/methodology/">How we pick</a>
-        </p>
-      </div>
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Kits", href: "/#kits" }, { label: kit.title }]} />
+      <p class="eyebrow">Kit</p>
+      <h1 class="display">{kit.title}</h1>
+      <p class="lead">{kit.description}</p>
+      <p class="meta-line"><span>Reviewed <time datetime={catalog.generatedAt}>{catalog.generatedAt.slice(0, 10)}</time></span><a href="/methodology/">How we pick</a></p>
     </header>
 
     {view.isEmpty ? (
-      <div class="section">
-        <EmptyState icon="inbox" title="This kit is being assembled">
-          <p>No skill has passed review for this kit yet. The catalog search covers every reviewed skill in the meantime.</p>
-          <div class="button-row">
-            <a class="button primary" href="/search/"><Icon name="search" size={16} />Search all skills</a>
-            <a class="button" href="/#kits">Browse other kits</a>
-          </div>
-        </EmptyState>
-      </div>
+      <EmptyState title="This kit is being assembled">
+        <p>No skill has passed review for this kit yet. Search covers every reviewed skill in the meantime.</p>
+        <div class="button-row"><a class="button primary" href="/search/">Search all skills</a><a class="button" href="/#kits">See other kits</a></div>
+      </EmptyState>
     ) : (
-      <>
-        {view.collections.length > 0 && (
-          <section class="section" aria-labelledby="collections-title">
-            <div class="section-head">
-              <h2 id="collections-title">Start with a collection</h2>
-              <p>Each command installs every skill in its repository. Coverage shows how many are listed in this catalog.</p>
-            </div>
-            <ul class="card-list">{view.collections.map((collection) => <CollectionRow collection={collection} />)}</ul>
-          </section>
+      <div class="split">
+        {collections.length > 0 && (
+          <aside class="side install-box" aria-labelledby="quick-title">
+            <h2 id="quick-title">Install this kit</h2>
+            <p>{plural(collections.length, "command")}, run in this order. {collections.length > 1 ? "This line runs them one after another." : ""}</p>
+            <CopyCommand command={kitInstallCommand(collections.map((entry) => entry.id))} label={`Copy the install command for the whole ${kit.title} kit`} />
+            <p>Installs {totalInstalled.toLocaleString("en-US")} skills in total, {totalListed.toLocaleString("en-US")} of them listed here after review.</p>
+          </aside>
         )}
-        {view.skills.length > 0 && (
-          <section class="section" aria-labelledby="skills-title">
-            <div class="section-head">
-              <h2 id="skills-title">Add these skills</h2>
-              <p id="skill-count" aria-live="polite">{plural(view.skills.length, "skill")}</p>
-            </div>
-            <div class="filter-bar" role="group" aria-label="Filter and order skills">
-              <label class="field" for="license-filter">License
-                <select id="license-filter">
-                  <option value="">All licenses</option>
-                  {licenses.map((license) => <option value={license}>{license}</option>)}
-                </select>
-              </label>
-              <label class="field" for="skill-sort">Order
-                <select id="skill-sort">
-                  <option value="curated">Recommended order</option>
-                  <option value="review">Review score</option>
-                  <option value="forks">Forks</option>
-                </select>
-              </label>
-            </div>
-            <ul class="card-list" id="skill-list">{view.skills.map((skill) => <SkillRow skill={skill} />)}</ul>
-            <div id="no-match" hidden>
-              <EmptyState icon="search-x" title="No skill uses that license" headingLevel={3}>
-                <p>Choose another license, or show every license again.</p>
-              </EmptyState>
-            </div>
+        <div class="primary">
+          {collections.length > 0 && (
+            <section aria-labelledby="parts-title">
+              <div class="section-head">
+                <h2 id="parts-title"><span class="step-no">01</span>Install the collections, in this order</h2>
+                <p>Parts list · {collections.length}</p>
+              </div>
+              <ol class="parts">{collections.map((collection, index) => <CollectionRow catalog={catalog} collection={collection} index={index} />)}</ol>
+            </section>
+          )}
+          {skills.length > 0 && (
+            <section aria-labelledby="single-title">
+              <div class="section-head">
+                <h2 id="single-title"><span class="step-no">{collections.length > 0 ? "02" : "01"}</span>Add single skills</h2>
+                <p>{collections.length > 0 ? "Optional · " : ""}{plural(skills.length, "skill")} picked for this job</p>
+              </div>
+              <ul class="rows">{skills.map((skill) => <SkillRow skill={skill} />)}</ul>
+            </section>
+          )}
+          <section aria-labelledby="after-title">
+            <div class="section-head"><h2 id="after-title"><span class="step-no">{collections.length > 0 ? afterStep : "02"}</span>After installing</h2></div>
+            <ol class="steps-after">
+              <li>Start a new agent session so it loads the new skills.</li>
+              <li>Open each part and read its cautions before the first run. Skills are reviewed, not tested.</li>
+              <li>Ask for the job in plain words. Your agent picks the matching skill.</li>
+            </ol>
           </section>
-        )}
-      </>
+        </div>
+      </div>
     )}
   </div>
 </Base>
-
-<script>
-  const list = document.getElementById("skill-list");
-  const licenseSelect = document.getElementById("license-filter") as HTMLSelectElement | null;
-  const sortSelect = document.getElementById("skill-sort") as HTMLSelectElement | null;
-  const noMatch = document.getElementById("no-match");
-  const count = document.getElementById("skill-count");
-
-  if (list && licenseSelect && sortSelect && noMatch && count) {
-    const rows = [...list.querySelectorAll<HTMLLIElement>(":scope > li[data-license]")];
-    const curated = [...rows];
-
-    const apply = () => {
-      const license = licenseSelect.value;
-      const key = sortSelect.value;
-      const ordered =
-        key === "curated"
-          ? curated
-          : [...rows].sort((a, b) => Number(b.dataset[key]) - Number(a.dataset[key]));
-      let visible = 0;
-      for (const row of ordered) {
-        const show = license === "" || row.dataset.license === license;
-        row.hidden = !show;
-        if (show) visible += 1;
-        list.append(row);
-      }
-      noMatch.hidden = visible > 0;
-      count.textContent = visible === rows.length ? `${rows.length} skill${rows.length === 1 ? "" : "s"}` : `${visible} of ${rows.length} skills`;
-    };
-
-    licenseSelect.addEventListener("change", apply);
-    sortSelect.addEventListener("change", apply);
-  }
-</script>
-
-<style>
-  .filter-bar {
-    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3);
-    margin-bottom: var(--space-4); padding: var(--space-3) var(--space-4);
-    border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface);
-  }
-  @media (min-width: 768px) { .filter-bar { grid-template-columns: repeat(2, minmax(0, 16rem)); } }
-  @media (max-width: 359px) { .filter-bar { grid-template-columns: minmax(0, 1fr); } }
-</style>

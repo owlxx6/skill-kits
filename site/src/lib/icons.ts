@@ -18,7 +18,6 @@ export const ICONS = {
     path("m9 12 2 2 4-4"),
   ],
   "bar-chart": [path("M3 3v16a2 2 0 0 0 2 2h16"), path("M18 17V9"), path("M13 17V5"), path("M8 17v-3")],
-  bot: [path("M12 8V4H8"), rect(4, 8, 16, 12, 2), path("M2 14h2"), path("M20 14h2"), path("M15 13v2"), path("M9 13v2")],
   check: [path("M20 6 9 17l-5-5")],
   "chevron-right": [path("m9 18 6-6-6-6")],
   "circle-check": [circle(12, 12, 10), path("m9 12 2 2 4-4")],
@@ -95,6 +94,12 @@ export const ICONS = {
   terminal: [{ tag: "polyline", points: "4 17 10 11 4 5" }, path("M12 19h8")],
   "triangle-alert": [path("m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"), path("M12 9v4"), path("M12 17h.01")],
   workflow: [rect(3, 3, 8, 8, 2), path("M7 11v4a2 2 0 0 0 2 2h4"), rect(13, 13, 8, 8, 2)],
+  home: [path("M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"), path("M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z")],
+  menu: [path("M4 6h16"), path("M4 12h16"), path("M4 18h16")],
+  x: [path("M18 6 6 18"), path("m6 6 12 12")],
+  "chevron-left": [path("m15 18-6-6 6-6")],
+  "octagon-alert": [path("M12 16h.01"), path("M12 8v4"), path("M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z")],
+  "sliders": [path("M4 21v-7"), path("M4 10V3"), path("M12 21v-9"), path("M12 8V3"), path("M20 21v-5"), path("M20 12V3"), path("M2 14h4"), path("M10 8h4"), path("M18 16h4")],
 } satisfies Record<string, IconNode[]>;
 
 export type IconName = keyof typeof ICONS;
@@ -112,5 +117,5 @@ const KIT_ICONS: Record<string, IconName> = {
 
 // A kit added to the catalog later gets a neutral icon until it is given its own.
 export function kitIcon(kitId: string): IconName {
-  return KIT_ICONS[kitId] ?? "bot";
+  return KIT_ICONS[kitId] ?? "layers";
 }

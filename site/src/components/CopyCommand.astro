@@ -8,13 +8,12 @@ interface Props {
 const { command, label = "Copy install command" } = Astro.props;
 ---
 <div class="command">
-  <span class="command-prompt mono" aria-hidden="true">$</span>
-  <code>{command}</code>
+  <code><span class="command-prompt" aria-hidden="true">$ </span>{command}</code>
   <button type="button" class="copy-button" data-copy={command} data-label={label} aria-label={label} title={label}>
     <Icon name="copy" size={18} class="icon-idle" />
     <Icon name="check" size={18} class="icon-done" />
   </button>
-  <span class="copy-status" role="status"></span>
+  <span class="copy-status visually-hidden" role="status"></span>
 </div>
 
 <script>
@@ -31,7 +30,10 @@ const { command, label = "Copy install command" } = Astro.props;
       button.classList.add("is-copied");
       message = "Copied";
     } catch {
-      message = "Select the command to copy it";
+      // Clipboard access can be refused: select the command so it can be copied by hand.
+      const code = button.parentElement?.querySelector("code");
+      if (code) window.getSelection()?.selectAllChildren(code);
+      message = "Selected. Press Ctrl+C or Cmd+C to copy";
     }
     if (status) status.textContent = message;
     button.setAttribute("aria-label", message);

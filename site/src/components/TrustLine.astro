@@ -1,0 +1,22 @@
+---
+import Icon from "./Icon.astro";
+import SecurityLevel from "./SecurityLevel.astro";
+import { displayDate, reviewLabel, type SecurityLevel as Level } from "../lib/catalog";
+
+interface Props {
+  license: string;
+  level: Level;
+  updated?: string;
+  source?: string;
+  reviewed?: boolean;
+  shortLevel?: boolean;
+}
+const { license, level, updated, source, reviewed = false, shortLevel = true } = Astro.props;
+---
+<ul class="trust" aria-label="License and checks">
+  <li><span class="visually-hidden">License: </span>{license}</li>
+  <li><SecurityLevel level={level} short={shortLevel} /></li>
+  {reviewed && <li>{reviewLabel()}</li>}
+  {updated && <li>Updated <time datetime={updated}>{displayDate(updated)}</time></li>}
+  {source && <li><a href={source}>Source <Icon name="external-link" size={13} /></a></li>}
+</ul>

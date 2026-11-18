@@ -1,57 +1,35 @@
 ---
 import CopyCommand from "./CopyCommand.astro";
-import Icon from "./Icon.astro";
-import LicenseDetails from "./LicenseDetails.astro";
-import ReviewStatus from "./ReviewStatus.astro";
-import { type CatalogSkill, collectionHref, formatCount, skillHref, skillInstallCommand } from "../lib/catalog";
+import TrustLine from "./TrustLine.astro";
+import { type CatalogSkill, collectionHref, securityLevel, skillHref, skillInstallCommand } from "../lib/catalog";
 
 interface Props {
   skill: CatalogSkill;
   // Hidden on a collection page, where every skill comes from the same repository.
   showRepo?: boolean;
+  headingLevel?: 2 | 3;
 }
-const { skill, showRepo = true } = Astro.props;
-const href = skillHref(skill.id);
+const { skill, showRepo = true, headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 2 ? "h2" : "h3";
+const level = securityLevel(skill);
 ---
-<li class="card skill-card" data-license={skill.license} data-review={skill.reviewScore} data-forks={skill.forks}>
-  <div class="skill-head">
-    <div class="skill-title">
-      <h3><a href={href}>{skill.name}</a></h3>
-      <p class="meta">
-        {showRepo && (
-          <span><Icon name="layers" size={14} /><a href={collectionHref(skill.repo)}>{skill.repo}</a></span>
-        )}
-        <span><Icon name="star" size={14} />{formatCount(skill.stars)}<span class="visually-hidden"> stars</span></span>
-        <span><Icon name="git-fork" size={14} />{formatCount(skill.forks)}<span class="visually-hidden"> forks</span></span>
-      </p>
+<li
+  class="row"
+  data-license={skill.license}
+  data-security={level}
+  data-review={skill.reviewScore}
+  data-updated={skill.pushedAt}
+  data-name={skill.name}
+>
+  <div class="row-main">
+    <div class="row-title">
+      <Heading><a href={skillHref(skill.id)}>{skill.name}</a></Heading>
+      {showRepo && <a class="row-repo" href={collectionHref(skill.repo)}>{skill.repo}</a>}
     </div>
-    <span class="badge score" title="Review score out of 10">
-      <span class="visually-hidden">Review score </span><strong>{skill.reviewScore.toFixed(1)}</strong>/ 10
-    </span>
+    <p class="row-why">{skill.review.why}</p>
+    <TrustLine license={skill.license} level={level} updated={skill.pushedAt} />
   </div>
-  <p class="skill-why">{skill.review.why}</p>
-  <div class="badges">
-    <LicenseDetails skill={skill} />
-    <ReviewStatus />
-  </div>
-  <div class="skill-actions">
+  <div class="row-action">
     <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} />
-    <a class="button details" href={href} aria-label={`Details for ${skill.name}`}>Details <Icon name="arrow-right" size={16} /></a>
   </div>
 </li>
-
-<style>
-  .skill-card { display: grid; gap: var(--space-3); }
-  .skill-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
-  .skill-title { display: grid; gap: var(--space-1); min-width: 0; }
-  .skill-title h3 { font-size: var(--text-lg); overflow-wrap: anywhere; }
-  .skill-title h3 a { color: var(--heading); text-decoration: none; }
-  .skill-title h3 a:hover { color: var(--link); text-decoration: underline; }
-  .skill-title .meta a { overflow-wrap: anywhere; }
-  .skill-why { color: var(--text-muted); max-width: var(--measure); }
-  .skill-actions { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2); margin-top: var(--space-1); }
-  .details { padding: 0 var(--space-4); }
-  @media (max-width: 479px) {
-    .skill-actions { grid-template-columns: minmax(0, 1fr); }
-  }
-</style>

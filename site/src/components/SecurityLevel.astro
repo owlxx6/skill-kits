@@ -1,0 +1,13 @@
+---
+// Shows the static scan level only. Scan notes are private and never rendered.
+import Icon from "./Icon.astro";
+import { securityLabel, type SecurityLevel } from "../lib/catalog";
+
+interface Props {
+  level: SecurityLevel;
+  short?: boolean;
+}
+const { level, short = false } = Astro.props;
+const icon = level === "severe" ? "octagon-alert" : level === "notice" ? "triangle-alert" : "circle-check";
+---
+<span class="sec" data-level={level}><Icon name={icon} size={15} />{securityLabel(level, short)}</span>

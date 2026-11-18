@@ -1,94 +1,94 @@
 ---
 import Base from "../layouts/Base.astro";
-import CopyCommand from "../components/CopyCommand.astro";
 import Icon from "../components/Icon.astro";
-import LicenseDetails from "../components/LicenseDetails.astro";
-import CollectionRow from "../components/CollectionRow.astro";
-import ReviewStatus from "../components/ReviewStatus.astro";
-import { collectionHref, collectionCoverageLabel, collectionInstallScope, collectionLicenseLabel, collectionInstallCommand, kitView, loadCatalog, skillHref, skillInstallCommand } from "../lib/catalog";
-import "../styles/build-room.css";
+import PreviewTile from "../components/PreviewTile.astro";
+import Rail from "../components/Rail.astro";
+import SecurityLevel from "../components/SecurityLevel.astro";
+import { collectionHref, collectionsByStars, formatCount, loadCatalog, plural, securityLevel, skillHref, topSkillPerRepo } from "../lib/catalog";
+
 const catalog = loadCatalog();
-const views = catalog.kits.map((kit) => kitView(catalog, kit.id)!);
-const names: Record<string, string> = {"resume-career":"Career","web-app":"Web apps","data-analysis":"Data analysis","docs-reports":"Documents","marketing-content":"Marketing","research-monitoring":"Research","ui-design":"UI design","workflow-automation":"Automation"};
-const firstReady = Math.max(0, views.findIndex((view) => !view.isEmpty));
-const normalize = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/-/g, " ");
+const top = collectionsByStars(catalog, 3);
+const best = topSkillPerRepo(catalog, 6);
 ---
-<Base title="Skill Kits" description="Explore skills for your project. Inspect curated kits and copy individual installation commands.">
-<section class="build-intro" aria-labelledby="build-title">
-  <h1 id="build-title">Pick a project.<br /><span>Build your toolkit.</span></h1>
-  <p>A closer look at the skills behind each kit. Choose a project to see what goes inside.</p>
-</section>
-<div class="build-room" id="kits" data-build-room data-first-kit={firstReady}>
- <div class="project-list" aria-label="Choose your project" hidden>
- {views.map((view,index) => <button type="button" class="project-choice" data-project={index} aria-controls={"project-"+view.kit.id}><span>{names[view.kit.id] ?? view.kit.title}</span><Icon name="arrow-right" size={18}/></button>)}
- </div>
- <div class="project-workspace">
- {views.map((view,index) => <section class="project-panel" id={"project-"+view.kit.id} data-project-panel={index} aria-labelledby={"title-"+view.kit.id}>
-  <div class="project-meta"><span>{view.isEmpty ? "Awaiting curation" : "Curated selection"}</span><span>{String(index+1).padStart(2,"0")} / {String(views.length).padStart(2,"0")}</span></div>
-  <h2 id={"title-"+view.kit.id}>{view.kit.title}</h2><p class="project-description">{view.kit.description}</p>
-  {view.isEmpty ? <div class="project-empty"><Icon name="layers" size={28}/><p>This kit is still being selected.</p><p>Explore the skill directory while it takes shape.</p><a class="project-link" href="#directory">Browse the directory <Icon name="arrow-right" size={16}/></a></div> : <>
-   {view.skills.length > 0 && <>
-    <p class="parts-caption">{view.skills.length} selected {view.skills.length===1 ? "skill" : "skills"} · choose one to install</p>
-    <ul class="project-parts">{view.skills.map((skill,i) => <li><a href={skillHref(skill.id)}>{skill.name.replace(/-/g," ")}</a><button type="button" class="part-install" data-install={i} aria-controls={"install-"+view.kit.id+"-"+i} aria-label={"Show install command for "+skill.name} hidden>Install <Icon name="arrow-right" size={14}/></button></li>)}</ul>
-    {view.skills.map((skill,i) => <div class="project-install" id={"install-"+view.kit.id+"-"+i} data-install-panel={i}><span class="install-label">Install {skill.name}</span><CopyCommand command={skillInstallCommand(skill)} label={"Copy install command for "+skill.name}/><a href={skillHref(skill.id)} class="install-details">Read prerequisites and review <Icon name="arrow-right" size={14}/></a></div>)}
-   </>}
-   {view.collections.length>0 && <details class="project-collections"><summary>{view.collections.length} whole-repository {view.collections.length===1 ? "collection" : "collections"}</summary>{view.collections.map((collection)=><div class="collection-install"><a href={collectionHref(collection.id)}>{collection.id}</a><span class="muted small" data-collection-coverage>{collectionCoverageLabel(collection)}</span><div class="badges"><span class="muted small">{collectionLicenseLabel(collection)}</span><ReviewStatus/></div><p class="muted small" data-install-scope>{collectionInstallScope(collection)}</p><CopyCommand command={collectionInstallCommand(collection.id)} label={"Copy install command for "+collection.id}/></div>)}</details>}
-   <a class="project-link" href={"/kits/"+view.kit.id+"/"}>Explore the full kit <Icon name="arrow-right" size={16}/></a>
-  </>}
- </section>)}
- </div><p class="visually-hidden" role="status" data-project-status></p>
-</div>
-<section class="build-collections" aria-labelledby="collections-directory-title">
- <div class="directory-heading"><div><h2 id="collections-directory-title">Install a collection.</h2><p>Each command installs every skill in its repository. Listed coverage can be smaller.</p></div></div>
- <details class="collection-directory"><summary>Browse all {catalog.collections.length} collections</summary><ul class="card-list">{catalog.collections.map((collection)=><CollectionRow collection={collection}/>)}</ul></details>
-</section>
-<section class="build-directory" id="directory" aria-labelledby="directory-title">
- <div class="directory-heading"><div><h2 id="directory-title">Find a specific skill.</h2><p>Search by task, name or publisher.</p></div>
- <form class="directory-search" action="/search/" method="get" role="search"><label for="build-search" class="visually-hidden">Search skills by task, name or publisher</label><Icon name="search" size={20}/><input id="build-search" name="q" type="search" placeholder="Search skills…" autocomplete="off" data-search-shortcut/><button type="submit" aria-label="Open full search results" title="Open full search results"><Icon name="arrow-right" size={20}/></button></form></div>
- <p class="directory-count" data-directory-count role="status">{catalog.skills.length} skills</p>
- <ul class="build-results">{catalog.skills.map((skill)=><li data-directory-item data-search-text={normalize(skill.name+" "+skill.description+" "+skill.repo+" "+skill.review.keywords.join(" "))}>
-  <div class="directory-name"><h3><a href={skillHref(skill.id)}>{skill.name.replace(/-/g," ")}</a></h3><a class="directory-repo" href={collectionHref(skill.repo)}>{skill.repo}</a></div>
-  <div class="directory-description"><p>{skill.review.why || skill.description}</p><div class="badges"><LicenseDetails skill={skill} /><ReviewStatus/></div><span>Catalog review {skill.reviewScore.toFixed(1)}/10</span></div>
-  <a class="directory-open" href={skillHref(skill.id)} aria-label={"View "+skill.name}><Icon name="arrow-right" size={20}/></a>
- </li>)}</ul>
- <p class="directory-empty" hidden data-directory-empty>No matches. Try a broader task or <button type="button" data-clear-search>clear the search</button>.</p>
-</section>
+<Base title="Skill Kits" description="Reviewed agent skills grouped into kits by job: what to install, in which order, with one command each.">
+  <div class="wrap page">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">Ready-made toolsets for AI coding agents</p>
+      <h1 id="hero-title" class="display">Pick a job.<br /><span class="accent">Install the whole kit.</span></h1>
+      <p class="lead">Skill Kits groups reviewed agent skills by the work you want done. Each kit is a parts list: what to install, in which order, with one command per part.</p>
+      <ol class="how" aria-label="How it works">
+        <li><span class="step-no">1</span><strong>Pick the kit for your job</strong><span>Each kit lists the right collections, in install order.</span></li>
+        <li><span class="step-no">2</span><strong>Run one command per part</strong><span>Copy it and paste it in your terminal.</span></li>
+        <li><span class="step-no">3</span><strong>Read what you installed</strong><span>Every skill shows its license, review and security scan level.</span></li>
+      </ol>
+    </section>
+
+    <Rail id="kits" title="Kits" subtitle="Ready-made parts lists, one per job.">
+      {catalog.kits.map((kit, index) => (
+        <li>
+          <a class="tile-link" href={`/kits/${kit.id}/`}>
+            <span class="visually-hidden">{kit.title}: {plural(kit.collections.length, "collection")}{kit.skills.length > 0 ? `, ${plural(kit.skills.length, "single skill")}` : ""}</span>
+            <PreviewTile kind="kit" tone={index} kit={kit} />
+          </a>
+          <p class="tile-desc">{kit.description}</p>
+        </li>
+      ))}
+    </Rail>
+
+    <Rail id="top-collections" title="Most starred collections" subtitle="Whole repositories you install with one command. Ranked by GitHub stars." viewAll={{ href: "/search/?type=collection", label: "All collections" }}>
+      {top.map((collection, index) => (
+        <li class="ranked">
+          <span class="rank-num" aria-hidden="true">{index + 1}</span>
+          <div>
+            <a class="tile-link" href={collectionHref(collection.id)} tabindex="-1" aria-hidden="true">
+              <PreviewTile kind="collection" tone={index} catalog={catalog} collection={collection} />
+            </a>
+            <div class="tile-caption">
+              <a href={collectionHref(collection.id)}><span class="visually-hidden">Number {index + 1}: </span>{collection.id}</a>
+              <span>{formatCount(collection.stars)} stars</span>
+            </div>
+          </div>
+        </li>
+      ))}
+    </Rail>
+
+    <Rail id="top-skills" title="Highest-rated skills" subtitle="Top review score, one per repository." viewAll={{ href: "/search/?type=skill&sort=rating", label: "All skills" }}>
+      {best.map((skill, index) => (
+        <li>
+          <a class="tile-link" href={skillHref(skill.id)} tabindex="-1" aria-hidden="true">
+            <PreviewTile kind="skill" tone={index + 1} skill={skill} />
+          </a>
+          <div class="tile-caption">
+            <a href={skillHref(skill.id)}>{skill.name}</a>
+            <span>{skill.reviewScore.toFixed(1)}/10</span>
+          </div>
+          <div class="tile-caption"><span style="flex-shrink: 1; overflow-wrap: anywhere">{skill.repo}</span><SecurityLevel level={securityLevel(skill)} short /></div>
+        </li>
+      ))}
+    </Rail>
+
+    <section aria-labelledby="find-title" class="split even" style="align-items: end">
+      <div class="primary" style="gap: var(--s2)">
+        <h2 id="find-title" style="font-size: var(--t-xl)">Need one specific skill?</h2>
+        <p class="muted">Search by task, file type or publisher, then filter by kit, license or security level.</p>
+      </div>
+      <form class="search-form side" action="/search/" method="get" role="search">
+        <label for="home-search" class="visually-hidden">Search skills and collections</label>
+        <div class="search-input"><Icon name="search" size={20} /><input id="home-search" type="search" name="q" placeholder="cover letter, csv, slides" autocomplete="off" enterkeyhint="search" data-search-primary /></div>
+        <button class="button primary" type="submit">Search</button>
+      </form>
+    </section>
+
+    <section aria-labelledby="listed-title" style="display: flex; flex-direction: column; gap: var(--s5)">
+      <div class="section-head" style="border-bottom: 0; padding-bottom: 0">
+        <h2 id="listed-title">What “listed” means</h2>
+        <a class="view-all" href="/methodology/">How we pick <Icon name="chevron-right" size={16} /></a>
+      </div>
+      <dl class="listed-explainer">
+        <div><dt>Session reviewed</dt><dd>Each listed skill was read and scored for clarity, completeness and usefulness.</dd></div>
+        <div><dt>Security scan level</dt><dd>A static scan gives one level: none, notice or severe. The site shows the level, not the scan notes.</dd></div>
+        <div><dt>License and source</dt><dd>Every entry links to its repository and shows its license and last update.</dd></div>
+      </dl>
+    </section>
+  </div>
 </Base>
-<script>
-const room = document.querySelector<HTMLElement>("[data-build-room]");
-if(room){
- const buttons=[...room.querySelectorAll<HTMLButtonElement>("[data-project]")];
- const panels=[...room.querySelectorAll<HTMLElement>("[data-project-panel]")];
- const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
- const selectProject=(index:number)=>{
-  panels.forEach((p,i)=>{p.hidden=i!==index;});
-  buttons.forEach((b,i)=>b.setAttribute("aria-pressed",String(i===index)));
-  const panel=panels[index];if(!panel)return;
-  const status=room.querySelector<HTMLElement>("[data-project-status]");
-  if(status)status.textContent=panel.querySelector("h2")?.textContent+" — "+panel.querySelector(".project-meta span")?.textContent;
-  if(!reduced.matches){panel.getAnimations().forEach(a=>a.cancel());panel.animate([{opacity:.3,transform:"translateY(8px)"},{opacity:1,transform:"translateY(0)"}],{duration:260,easing:"ease-out"});}
- };
- for(const b of buttons)b.addEventListener("click",()=>selectProject(Number(b.dataset.project)));
- for(const panel of panels){
-  const buttons=[...panel.querySelectorAll<HTMLButtonElement>("[data-install]")];
-  const commands=[...panel.querySelectorAll<HTMLElement>("[data-install-panel]")];
-  const selectCommand=(index:number)=>{commands.forEach((c,i)=>{c.hidden=i!==index;});buttons.forEach((b,i)=>b.setAttribute("aria-pressed",String(i===index)));};
-  for(const b of buttons){b.hidden=false;b.addEventListener("click",()=>selectCommand(Number(b.dataset.install)));}
-  selectCommand(0);
- }
- selectProject(Number(room.dataset.firstKit));
- const list=room.querySelector<HTMLElement>(".project-list");if(list)list.hidden=false;
-}
-const search=document.querySelector<HTMLInputElement>("#build-search");
-const items=[...document.querySelectorAll<HTMLElement>("[data-directory-item]")];
-const count=document.querySelector<HTMLElement>("[data-directory-count]");
-const empty=document.querySelector<HTMLElement>("[data-directory-empty]");
-const filter=()=>{
- const query=(search?.value??"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/-/g," ").trim();
- let visible=0;for(const item of items){item.hidden=!(item.dataset.searchText??"").includes(query);if(!item.hidden)visible++;}
- if(count)count.textContent=visible+" "+(visible===1?"skill":"skills");if(empty)empty.hidden=visible>0;
-};
-search?.addEventListener("input",filter);
-document.querySelector("[data-clear-search]")?.addEventListener("click",()=>{if(search){search.value="";filter();search.focus();}});
-filter();
-</script>
