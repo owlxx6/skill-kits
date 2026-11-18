@@ -8,6 +8,8 @@ import ReviewStatus from "../../../components/ReviewStatus.astro";
 import ScopeNote from "../../../components/ScopeNote.astro";
 import SecurityLevel from "../../../components/SecurityLevel.astro";
 import SkillRow from "../../../components/SkillRow.astro";
+import SkillDirectory from "../../../components/SkillDirectory.astro";
+import {canInstallRepository} from "../../../lib/installation";
 import {
   collectionInstallCommand,
   collectionLicenseLabel,
@@ -38,7 +40,7 @@ const crumbKit = kits[0] ?? skillKits[0];
 const listedLicenses = licenseOptions(skills);
 const updated = collection?.pushedAt ?? skills.map((skill) => skill.pushedAt).sort().at(-1) ?? "";
 const listed = collection ? collection.catalogSkillIds.length : skills.length;
-const filterable = skills.length > 8;
+
 ---
 <Base title={repoId} description={collection?.description ?? `Skills from ${repoId}`}>
   <div class="wrap page">
@@ -61,10 +63,10 @@ const filterable = skills.length > 8;
         ) : (
           <>
             <p style="font-size: var(--t-md); font-weight: 600; color: var(--text)" data-collection-coverage>{plural(skills.length, "skill")} from this repository listed here after review.</p>
-            <div class="scope partial"><Icon name="triangle-alert" size={16} /><p data-install-scope>Installs every skill in this repository, not only the skills listed here.</p></div>
+            <p class="scope" data-install-scope>Choose an individual skill below. This repository is not an approved whole-repository installation.</p>
           </>
         )}
-        <CopyCommand command={collectionInstallCommand(repoId)} label={`Copy install command for ${repoId}`} />
+        {collection && canInstallRepository(catalog,collection) ? <CopyCommand command={collectionInstallCommand(repoId,collection.revision)} label={`Copy install command for ${repoId}`} /> : <a class="button" href="#skills-title">Browse available skills</a>}
       </section>
 
       <section class="side" aria-labelledby="trust-title">
@@ -72,7 +74,7 @@ const filterable = skills.length > 8;
         <dl class="facts">
           <dt>License</dt><dd>{collection ? collectionLicenseLabel(collection) : `Listed skills: ${listedLicenses.join(", ")}`}</dd>
           <dt>Security</dt><dd><SecurityLevel level={listedSecurityLevel(catalog, repoId)} /><span class="hint">Highest among the listed skills.</span></dd>
-          <dt>Review</dt><dd><ReviewStatus /></dd>
+          <dt>Review</dt><dd>Collection inventory · reviews shown per skill</dd>
           {updated && <><dt>Last update</dt><dd><time datetime={updated}>{displayDate(updated)}</time></dd></>}
           <dt>Source</dt><dd><a href={`https://github.com/${repoId}`}>github.com/{repoId} <Icon name="external-link" size={14} /></a></dd>
           {kits.length > 0 && <><dt>In kits</dt><dd>{kits.map((kit, i) => <>{i > 0 && ", "}<a href={`/kits/${kit.id}/`}>{kit.title}</a></>)}</dd></>}
@@ -86,52 +88,10 @@ const filterable = skills.length > 8;
         <h2 id="skills-title">Listed skills</h2>
         <p id="skill-count" aria-live="polite">{plural(skills.length, "skill")}</p>
       </div>
-      {filterable && (
-        <div class="button-row" role="group" aria-label="Filter listed skills" style="padding: var(--s5) 0; border-bottom: 1px solid var(--rule)">
-          <label class="field" for="license-filter">License
-            <select id="license-filter"><option value="">All</option>{listedLicenses.map((license) => <option value={license}>{license}</option>)}</select>
-          </label>
-          <label class="field" for="security-filter">Security
-            <select id="security-filter"><option value="">All</option><option value="none">No flags</option><option value="notice">Notice</option><option value="severe">Severe</option></select>
-          </label>
-          <label class="field" for="skill-sort">Order
-            <select id="skill-sort"><option value="name">Name</option><option value="review">Review score</option><option value="updated">Recently updated</option></select>
-          </label>
-        </div>
-      )}
-      <ul class="rows" id="skill-list">{[...skills].sort((a, b) => a.name.localeCompare(b.name, "en")).map((skill) => <SkillRow skill={skill} showRepo={false} />)}</ul>
+      <SkillDirectory skills={[...skills].sort((a,b)=>a.name.localeCompare(b.name,"en"))} id="repository-skills" showRepo={false} />
       <div id="no-match" hidden>
         <EmptyState title="No listed skill matches these filters" headingLevel={3}><p>Choose another license or security level.</p></EmptyState>
       </div>
     </section>
   </div>
 </Base>
-
-<script>
-  const list = document.getElementById("skill-list");
-  const license = document.getElementById("license-filter") as HTMLSelectElement | null;
-  const security = document.getElementById("security-filter") as HTMLSelectElement | null;
-  const sort = document.getElementById("skill-sort") as HTMLSelectElement | null;
-  const count = document.getElementById("skill-count");
-  const noMatch = document.getElementById("no-match");
-  if (list && license && security && sort && count && noMatch) {
-    const rows = [...list.querySelectorAll<HTMLLIElement>(":scope > li")];
-    const total = rows.length;
-    const apply = () => {
-      const ordered = [...rows].sort((a, b) =>
-        sort.value === "review" ? Number(b.dataset.review) - Number(a.dataset.review)
-        : sort.value === "updated" ? String(b.dataset.updated).localeCompare(String(a.dataset.updated))
-        : String(a.dataset.name).localeCompare(String(b.dataset.name), "en"));
-      let visible = 0;
-      for (const row of ordered) {
-        const show = (!license.value || row.dataset.license === license.value) && (!security.value || row.dataset.security === security.value);
-        row.hidden = !show;
-        if (show) visible += 1;
-        list.append(row);
-      }
-      noMatch.hidden = visible > 0;
-      count.textContent = visible === total ? `${total} skills` : `${visible} of ${total} skills`;
-    };
-    for (const select of [license, security, sort]) select.addEventListener("change", apply);
-  }
-</script>

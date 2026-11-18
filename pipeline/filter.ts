@@ -3,7 +3,6 @@ import type { GitHubClient } from "./lib/github";
 import { compareText } from "./lib/text";
 import { RepoMetaSchema } from "./lib/schemas";
 import type { Config, FilteredRepo, RenamedRepo, RepoMeta } from "./lib/schemas";
-import { daysBetween } from "./lib/scores";
 
 export type FilterVerdict = { ok: true } | { ok: false; reason: string };
 
@@ -26,10 +25,7 @@ export function checkRepo(
   if (!RepoMetaSchema.shape.pushedAt.safeParse(repo.pushedAt).success) {
     return { ok: false, reason: "no valid push date" };
   }
-  const days = daysBetween(repo.pushedAt, now);
-  if (days > filter.maxDaysSinceLastCommit) {
-    return { ok: false, reason: `last push ${Math.ceil(days)} days ago (limit ${filter.maxDaysSinceLastCommit})` };
-  }
+  // Last-push age is metadata, not evidence of usefulness or grounds for rejection.
   return { ok: true };
 }
 

@@ -135,3 +135,19 @@ Other-workstation handoff, after committing or stashing its local work on its ow
     npm run site:verify
 
 On Windows PowerShell use `npm.cmd` for these commands. Report the resulting commit and checks; a successful remote push alone does not establish that the second workstation updated.
+
+## Complete collection directory — local sprint proposal, 2026-11-18
+
+The owner requested complete collection membership, more collections per domain and no exclusion based solely on age, and assigned this workstation the pipeline portion while the other workstation handles separate work. Work is isolated on `ui/complete-collection-directory`. Production UI changes through `669570d` were merged into the branch without discarding the accepted additions at `c69553c`. Other worktrees remain untouched.
+
+The additive contract and reproduction commands are in `docs/COLLECTION-DIRECTORY.md`. Reviewed entries retain actual reviews; source listings have no invented editorial assessment. All admitted collection members require current scan clearance, including those with permissive licenses. Last-push age no longer rejects a candidate; dates remain context. An archived source is still subject to the existing gate. No scan overrides, credentials, scheduled workflows or dependency declarations were changed for this implementation.
+
+Local content proposal: 3,361 available records (236 with editorial reviews, 3,125 source listings), 29 collections in the catalog, 25 collections attached to domains. Each domain has at least three collections; Documents has four. Twelve additional repositories are proposed, including the two older candidates retained after the owner's clarification. Source and license evidence is pinned where available. Inclusion is proposed in this working branch, not a claim of final owner acceptance or successful native/service execution.
+
+The selected inventory contains 3,539 valid records and 67 invalid primary files. Of the valid records, 193 remain pending rather than being treated as confirmed harmful or approved by default. The public catalog also preserves 15 available entries outside the refreshed repositories. Findings and the inventory reconciliation remain private. Previously approved selections that need renewed assessment remain in curation and are marked pending; durable reviews are preserved rather than applied to changed content.
+
+Unfiltered installation controls require explicit complete membership and a pinned revision; partial collections offer individual choices. Ambiguous install names link to their source instead of copying a potentially different member. Browser checks use a temporary localhost server and an isolated profile, never a user's logged-in session. No upstream skill code was executed.
+
+This sprint is not yet accepted or pushed. Show the owner desktop/mobile output and the final check results before publishing the implementation. Do not advance `integration/validated-sprints` or merge main for this proposal. The other workstation has not been observed fetching or merging it.
+
+Final local checks: typecheck passes; all 1,001 tests across 28 files pass; site build produces 3,405 pages; site verification passes for eight kits and 3,361 skill pages. Isolated Chrome checks pass on all eight kit pages, the homepage and a source listing at 1440px and 390px (20 page checks), plus search and command-copy checks, with no page errors or document overflow. The temporary server is stopped. Original-worktree homepage edits remain untouched. Remote main remains `669570d`, accepted integration remains `c69553c`, and no implementation push or production merge has been performed for this sprint.

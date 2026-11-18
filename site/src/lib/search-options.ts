@@ -19,7 +19,7 @@ export interface SearchDocument {
   kits: string[];
   security: SecurityLevel;
   updated: string;
-  rating: number;
+  rating: number | null;
   stars: number;
   partial: boolean;
 }

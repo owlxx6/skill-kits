@@ -39,6 +39,7 @@ import {
 import { compareText } from "./lib/text";
 import { buildSummary } from "./publish";
 import { buildCatalog } from "./rank";
+import { buildCollectionDirectory } from "./lib/collection-directory";
 import { emptyReviewStats, runReviews, runTriage, selectForReview } from "./review";
 
 export const STEPS = ["discover", "filter", "extract", "review", "rank", "summary"] as const;
@@ -178,6 +179,9 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
   },
 
   async extract({ paths, config, deps }) {
+    const directoryCatalog = await readJsonFile(paths.catalog, CatalogSchema.optional(), undefined);
+    const directoryCuration = directoryCatalog?.sourceSkills !== undefined ? await readYamlFile(paths.curation, CurationSchema) : {};
+    const scanRepos = Object.values(directoryCuration).flatMap(entry=>entry.approved).filter(id=>!id.includes(":"));
     const repos = await readJsonFile(paths.repos, z.array(RepoMetaSchema), []);
     const previous = await readJsonFile(paths.skills, z.array(SkillRecordSchema), []);
     // Entries identified by other rules (or written before rules versions) are dropped.
@@ -203,6 +207,7 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         save: (cache) => writeJsonFile(paths.licenses, licenseCacheFile(cache)),
         allowed: config.filter.allowedLicenses,
         safety: {
+          scanRepos,
           cache: safetyReports,
           save: (cache) => writeJsonFile(paths.safety, safetyCacheFile(cache)),
           overrides: await readScanOverrides(paths.scanOverrides),
@@ -310,7 +315,9 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
     // Repositories listed only in part at the last extraction get no collection.
     const runInfo = await readJsonFile(paths.runInfo, RunInfoSchema, {});
     const truncatedRepos = runInfo.extract?.truncatedRepos ?? [];
-    const catalog = CatalogSchema.parse(
+    const previous = await readJsonFile(paths.catalog, CatalogSchema.optional(), undefined);
+    const clearance = safetyCleared(await loadSafetyReports(paths), await readScanOverrides(paths.scanOverrides));
+    const baseCatalog = CatalogSchema.parse(
       buildCatalog({
         repos,
         skills,
@@ -326,8 +333,14 @@ const handlers: Record<Step, (context: StepContext) => Promise<void>> = {
         ),
       }),
     );
+    const complete = runInfo.extract && runInfo.extract.invalid === 0 && runInfo.extract.failedDownloads === 0
+      ? new Set(repos.filter(repo=>!truncatedRepos.includes(repo.fullName)&&!runInfo.extract!.failedRepos.some(f=>f.repo===repo.fullName)).map(repo=>repo.fullName)) : new Set<string>();
+    const catalog = previous?.sourceSkills !== undefined
+      ? buildCollectionDirectory({existing:previous,repos,skills,reviews,curation,config,now:deps.now,
+          isSafetyCleared:skill=>!runInfo.extract?.failedRepos.some(f=>f.repo.toLowerCase()===skill.repo.toLowerCase())&&clearance(skill),completeRepos:complete}).catalog
+      : baseCatalog;
     await writeJsonFile(paths.catalog, catalog);
-    deps.log(`catalog: ${catalog.skills.length} skills, ${catalog.collections.length} collections`);
+    deps.log(`catalog: ${catalog.skills.length + (catalog.sourceSkills?.length ?? 0)} skills, ${catalog.collections.length} collections`);
   },
 
   async summary({ paths, deps }) {

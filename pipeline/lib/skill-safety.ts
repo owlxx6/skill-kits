@@ -173,6 +173,9 @@ export const CHECKPOINT_EVERY = 100;
 export interface ScanContext {
   cache: SafetyCache;
   allowed: readonly string[];
+  // Explicit collection inventory scans cover permissive-license members too.
+  scanAll?: boolean;
+  scanRepos?: readonly string[];
   limits?: Partial<SafetyLimits>;
   // Saves the cache. Called about every CHECKPOINT_EVERY new reports, never twice at once.
   checkpoint?: () => Promise<void>;
@@ -278,7 +281,7 @@ export async function scanWaitingSkills(
     delete context.cache[id];
     counts.changed = true;
   };
-  const waiting = skills.filter((skill) => needsSafetyScan(skill, context.allowed));
+  const waiting = skills.filter((skill) => context.scanAll || context.scanRepos?.includes(repo.fullName) || needsSafetyScan(skill, context.allowed));
   if (tree.truncated) {
     for (const skill of skills) drop(skill.id);
     return counts;
@@ -343,6 +346,7 @@ export function summarizeSafety(
   allowed: readonly string[],
   cache: SafetyCache,
   counts: Pick<SafetyCounts, "scanned" | "reused" | "failedDownloads">,
+  scanRepos: readonly string[] = [],
 ): { stats: SafetyStats; pruned: boolean } {
   const stats: SafetyStats = {
     scanned: counts.scanned,
@@ -355,7 +359,7 @@ export function summarizeSafety(
   };
   const live = new Set<string>();
   for (const skill of skills) {
-    if (!needsSafetyScan(skill, allowed)) continue;
+    if (!scanRepos.includes(skill.repo) && !needsSafetyScan(skill, allowed)) continue;
     live.add(skill.id);
     const entry = Object.hasOwn(cache, skill.id) ? cache[skill.id] : undefined;
     if (entry === undefined || entry.fingerprint !== skill.fingerprint) stats.notScanned += 1;

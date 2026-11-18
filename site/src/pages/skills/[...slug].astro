@@ -6,6 +6,7 @@ import Icon from "../../components/Icon.astro";
 import LicenseDetails from "../../components/LicenseDetails.astro";
 import ReviewStatus from "../../components/ReviewStatus.astro";
 import SecurityLevel from "../../components/SecurityLevel.astro";
+import {hasInstallIdentifier} from "../../lib/installation";
 import { collectionHref, displayDate, kitsOfSkill, loadCatalog, sameNameSkills, securityLevel, skillHref, skillInstallCommand, skillSlug } from "../../lib/catalog";
 
 export function getStaticPaths() {
@@ -24,31 +25,32 @@ const crumbs = [
   ...(kits[0] ? [{ label: kits[0].title, href: `/kits/${kits[0].id}/` }] : [{ label: "Skills", href: "/search/?type=skill" }]),
   { label: skill.name },
 ];
-const scores = [
+const scores = review ? [
   { label: "Clarity", value: review.scores.clarity },
   { label: "Completeness", value: review.scores.completeness },
   { label: "Usefulness", value: review.scores.usefulness },
-];
+] : [];
 const width = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
 ---
-<Base title={skill.name} description={review.why}>
+<Base title={skill.name} description={review?.why ?? skill.description}>
   <div class="wrap page">
     <header class="page-head">
       <Breadcrumbs items={crumbs} />
       <p class="eyebrow">From <a href={collectionHref(skill.repo)}>{skill.repo}</a></p>
       <h1 class="display" style="font-size: var(--t-title)">{skill.name}</h1>
-      <p class="lead">{review.summary}</p>
+      <p class="lead">{review?.summary ?? skill.description}</p>
+      {!review && <p class="small muted">Source listing · not editorially reviewed. Description supplied by the repository; no editorial score is assigned.</p>}
     </header>
 
     <div class="split aside-400">
       <div class="primary" style="gap: var(--s8)">
         <section aria-labelledby="install-title" style="display: flex; flex-direction: column; gap: var(--s4)">
           <h2 id="install-title" style="font-size: var(--t-title)">Install</h2>
-          <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} />
-          <p class="small muted">Installs this skill only.{isCollection && <> For the whole repository, use <a href={collectionHref(skill.repo)}>the collection</a>.</>} Reviewed, not tested: read it before you run it.</p>
+          {hasInstallIdentifier(skill) ? <><CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} /><p class="small muted">Installs this skill only. Read the source and prerequisites before you run it.</p></> : <><a class="button" href={skill.url}>View source installation instructions</a><p class="small muted">This listing cannot be addressed uniquely by the standard command. Check its source before installing.</p></>}
+          {isCollection && <p class="small muted">Browse the other available skills in <a href={collectionHref(skill.repo)}>the collection</a>.</p>}
         </section>
 
-        {(review.strengths.length > 0 || review.cautions.length > 0) && (
+        {review && (review.strengths.length > 0 || review.cautions.length > 0) && (
           <div class="columns-2">
             {review.strengths.length > 0 && (
               <section class="ruled" aria-labelledby="strengths-title">
@@ -65,8 +67,8 @@ const width = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
           </div>
         )}
 
-        <section class="scores" aria-labelledby="scores-title">
-          <div class="scores-head"><h2 id="scores-title">Review score</h2><p class="mono"><strong>{skill.reviewScore.toFixed(1)}</strong>/10</p></div>
+        {review && <section class="scores" aria-labelledby="scores-title">
+          <div class="scores-head"><h2 id="scores-title">Review score</h2><p class="mono"><strong>{skill.reviewScore?.toFixed(1)}</strong>/10</p></div>
           <dl style="display: flex; flex-direction: column; gap: var(--s3)">
             {scores.map((score) => (
               <div class="score-row">
@@ -76,22 +78,22 @@ const width = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
               </div>
             ))}
           </dl>
-        </section>
+        </section>}
       </div>
 
       <aside class="side" aria-labelledby="trust-title">
         <h2 id="trust-title" style="font-size: var(--t-md); margin-bottom: var(--s2)">Trust</h2>
         <dl class="facts">
           <dt>License</dt><dd><LicenseDetails skill={skill} /></dd>
-          <dt>Security</dt><dd><SecurityLevel level={securityLevel(skill)} /></dd>
-          <dt>Review</dt><dd><ReviewStatus /></dd>
+          {review && <><dt>Security</dt><dd><SecurityLevel level={securityLevel(skill)} /></dd></>}
+          <dt>Review</dt><dd>{review ? <ReviewStatus /> : "Not editorially reviewed"}</dd>
           <dt>Last update</dt><dd><time datetime={skill.pushedAt}>{displayDate(skill.pushedAt)}</time></dd>
           <dt>Source</dt><dd><a href={skill.url}>SKILL.md on GitHub <Icon name="external-link" size={14} /></a></dd>
           <dt>Repository</dt><dd><a href={collectionHref(skill.repo)}>{skill.repo}</a></dd>
           {kits.length > 0 && <><dt>In kits</dt><dd>{kits.map((kit, i) => <>{i > 0 && ", "}<a href={`/kits/${kit.id}/`}>{kit.title}</a></>)}</dd></>}
         </dl>
         {twins.length > 0 && (
-          <p class="small muted" style="margin-top: var(--s4)">Same name, different source: {twins.map((twin, i) => <>{i > 0 && ", "}<a href={skillHref(twin.id)}>{twin.repo}</a></>)}</p>
+          <p class="small muted" style="margin-top: var(--s4)">Other listings with the same name: {twins.map((twin, i) => <>{i > 0 && ", "}<a href={skillHref(twin.id)}>{twin.repo}{twin.repo===skill.repo ? ` / ${twin.path}` : ""}</a></>)}</p>
         )}
       </aside>
     </div>

@@ -1,5 +1,7 @@
 # Whole-repository approvals
 
+Current directory policy (owner direction, 2026-11-18): see [Complete collection inventory](../COLLECTION-DIRECTORY.md). Available members can now be source listings without an editorial review or minimum score. Age alone does not exclude a candidate. Whole-repository installation requires complete admission and a pinned revision; partial collections use individual installs. The counts and publication description below are a historical snapshot of the earlier reviewed-subset workflow.
+
 The owner chose to recommend installing whole repositories, with every skill they contain, instead of picking skills one by one. The safeguard is the static security scan: it runs on every skill of an approved repository, and only a severe finding (a `block` verdict) calls for intervention. Repositories are treated one at a time: every skill is reviewed so that each one has a catalog entry.
 
 | Kit | Repository | Status |

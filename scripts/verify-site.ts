@@ -36,7 +36,7 @@ else {
   const index = MiniSearch.loadJSON(readFileSync(indexFile, "utf8"), SEARCH_OPTIONS);
   for (const kit of catalog.kits) {
     const first = kitView(catalog, kit.id)?.skills[0];
-    const keyword = first?.review.keywords[0];
+    const keyword = first?.review?.keywords[0];
     if (keyword && index.search(keyword).length === 0) problems.push(`search finds nothing for "${keyword}" (kit ${kit.id})`);
   }
 }

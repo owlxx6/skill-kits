@@ -99,6 +99,8 @@ Code: `pipeline/lib/skill-safety.ts`, called by `pipeline/extract.ts` and `pipel
 
 ### Which skills are scanned
 
+Directory-mode update (2026-11-18): when the catalog contains `sourceSkills`, the extraction also scans every member of approved collection repositories through `scanRepos`, regardless of license. `scripts/sync-collection-directory.ts` performs the same all-member checks explicitly through `scanAll`. These reports remain in the private cache and retain the same rules and content-bound decisions. The original license-dependent path below still applies outside directory mode. See [Complete collection inventory](COLLECTION-DIRECTORY.md).
+
 Only the skills whose license does not publish them alone (publication policy in
 `docs/LICENSE-RESOLUTION.md`): an identified license that is not allowed, a missing license, or an
 unclear one. A skill with an allowed license is not downloaded for the scan.

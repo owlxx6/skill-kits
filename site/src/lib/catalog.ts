@@ -1,22 +1,26 @@
 import { z } from "zod";
 import {
-  type Catalog,
+  type Catalog as RawCatalog,
   type CatalogCollection,
   type CatalogKit,
-  type CatalogSkill,
+  type CatalogSkill as ReviewedSkill,
+  type DirectorySkill,
   CatalogSchema,
 } from "../../../pipeline/lib/schemas";
 import { compareText } from "../../../pipeline/lib/text";
 import rawCatalog from "../../../catalog.json";
 import { securityLabel, type SecurityLevel } from "./labels";
 
-export type { Catalog, CatalogCollection, CatalogKit, CatalogSkill, SecurityLevel };
+export type CatalogSkill = DirectorySkill;
+export type Catalog = Omit<RawCatalog, "skills"> & { skills: DirectorySkill[] };
+export type { CatalogCollection, CatalogKit, SecurityLevel };
 export { securityLabel };
 
 export function parseCatalog(data: unknown): Catalog {
   const result = CatalogSchema.safeParse(data);
   if (!result.success) throw new Error(`catalog.json is invalid: ${z.prettifyError(result.error)}`);
-  return result.data;
+  const reviewedIds = new Set(result.data.skills.map(skill => skill.id));
+  return {...result.data, skills: [...result.data.skills, ...(result.data.sourceSkills ?? []).filter(skill => !reviewedIds.has(skill.id))]};
 }
 
 let cached: Catalog | null = null;
@@ -51,18 +55,20 @@ export function collectionHref(id: string): string {
 
 // Format of the open "skills" CLI: `npx skills add <owner/repo> [--skill <name>]`.
 export function skillInstallCommand(skill: CatalogSkill): string {
-  return `npx skills add ${skill.repo} --skill ${skill.name}`;
+  const revision=skill.url.match(/\/tree\/([a-f0-9]{40})(?:\/|$)/)?.[1];
+  return `npx skills add ${skill.repo}${revision ? '@'+revision : ''} --skill ${skill.name}`;
 }
 
-export function collectionInstallCommand(id: string): string {
-  return `npx skills add ${id}`;
+export function collectionInstallCommand(id: string, revision?:string): string {
+  return `npx skills add ${id}${revision && /^[a-f0-9]{40}$/.test(revision) ? '@'+revision : ''}`;
 }
 
 export function collectionCoverageLabel(collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount">): string {
   return `${collection.catalogSkillIds.length} of ${collection.skillCount} skills listed`;
 }
 
-export function collectionInstallScope(collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount">): string {
+export function collectionInstallScope(collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount" | "installScope" | "revision">): string {
+  if(collection.installScope!=="repository" || !collection.revision || !/^[a-f0-9]{40}$/.test(collection.revision) || collection.catalogSkillIds.length!==collection.skillCount) return "Choose individual installs from the listed skills. Whole-repository installation is unavailable.";
   return collection.catalogSkillIds.length < collection.skillCount
     ? "Installs every skill in this repository, not only the skills listed here."
     : "Installs every skill in this repository.";
@@ -93,7 +99,7 @@ export type SkillSort = "curated" | "review" | "forks";
 
 export function sortSkills(skills: CatalogSkill[], sort: SkillSort): CatalogSkill[] {
   if (sort === "curated") return [...skills];
-  const key = sort === "review" ? (entry: CatalogSkill) => entry.reviewScore : (entry: CatalogSkill) => entry.forks;
+  const key = sort === "review" ? (entry: CatalogSkill) => entry.reviewScore ?? -1 : (entry: CatalogSkill) => entry.forks;
   return [...skills].sort((a, b) => key(b) - key(a) || compareText(a.id, b.id));
 }
 
@@ -102,7 +108,8 @@ export function licenseOptions(skills: CatalogSkill[]): string[] {
 }
 
 export function kitsOfSkill(catalog: Catalog, skillId: string): CatalogKit[] {
-  return catalog.kits.filter((kit) => kit.skills.includes(skillId));
+  const repo = catalog.skills.find(skill => skill.id === skillId)?.repo;
+  return catalog.kits.filter((kit) => kit.skills.includes(skillId) || (repo !== undefined && kit.collections.includes(repo)));
 }
 
 export function kitsOfCollection(catalog: Catalog, collectionId: string): CatalogKit[] {
@@ -125,7 +132,7 @@ const SECURITY_RANK: Record<SecurityLevel, number> = { none: 0, notice: 1, sever
 
 /** The scan level only. Scan notes stay private and are never read here. */
 export function securityLevel(skill: Pick<CatalogSkill, "review">): SecurityLevel {
-  return skill.review.security?.level ?? "none";
+  return skill.review?.security?.level ?? "none";
 }
 
 export function highestSecurityLevel(levels: Iterable<SecurityLevel>): SecurityLevel {
@@ -149,7 +156,7 @@ export function unlistedCount(collection: Pick<CatalogCollection, "catalogSkillI
 
 /** One line that installs every part of a kit, in the curator's order. */
 export function kitInstallCommand(collectionIds: string[]): string {
-  return collectionIds.map(collectionInstallCommand).join(" && ");
+  return collectionIds.map(id=>collectionInstallCommand(id)).join(" && ");
 }
 
 export function collectionsByStars(catalog: Catalog, limit: number): CatalogCollection[] {
@@ -157,10 +164,11 @@ export function collectionsByStars(catalog: Catalog, limit: number): CatalogColl
 }
 
 /** Highest review score first, at most one skill per repository so one publisher cannot fill the row. */
-export function topSkillPerRepo(catalog: Catalog, limit: number): CatalogSkill[] {
+export function topSkillPerRepo(catalog: Catalog, limit: number): ReviewedSkill[] {
   const seen = new Set<string>();
-  const picks: CatalogSkill[] = [];
-  const sorted = [...catalog.skills].sort((a, b) => b.reviewScore - a.reviewScore || compareText(a.name, b.name));
+  const picks: ReviewedSkill[] = [];
+  const sorted = catalog.skills.filter((skill): skill is ReviewedSkill => skill.review !== undefined && skill.reviewScore >= 6)
+    .sort((a, b) => b.reviewScore - a.reviewScore || compareText(a.name, b.name));
   for (const skill of sorted) {
     if (seen.has(skill.repo)) continue;
     seen.add(skill.repo);

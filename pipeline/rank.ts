@@ -53,7 +53,7 @@ const duplicates = (ids: string[]): string[] =>
 // the repository when the evidence is GitHub's detection. For an unclear license, the first
 // evidence of the deciding level; none for a missing license. The resolution's revision is a
 // tree id, which GitHub blob URLs do not accept, so the branch name is used.
-function licenseEvidenceOf(skill: SkillRecord, repo: RepoMeta): CatalogSkill["licenseEvidence"] {
+export function licenseEvidenceOf(skill: SkillRecord, repo: RepoMeta): CatalogSkill["licenseEvidence"] {
   const license = skill.license;
   if (!license || license.level === "none") return undefined;
   const evidence =

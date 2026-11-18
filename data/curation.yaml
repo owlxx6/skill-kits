@@ -8,6 +8,7 @@ resume-career:
     - davila7/claude-code-templates:cli-tool/components/skills/career/resume-ats-optimizer
     - davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer
     - davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator
+    - jirawatp/resume-career-toolkit
   rejected: []
 web-app:
   approved:
@@ -34,19 +35,26 @@ data-analysis:
     - supabase/agent-skills:skills/supabase-postgres-best-practices
     - dbt-labs/dbt-agent-skills:skills/dbt/skills/running-dbt-commands
     - dbt-labs/dbt-agent-skills:skills/dbt/skills/answering-natural-language-questions-with-dbt
+    - databricks-solutions/ai-dev-kit
   rejected: []
 docs-reports:
   approved:
     - anthropics/skills
+    - arih04x/office-skills
+    - shinob/msoffice-skills
+    - phuryn/pm-skills
   rejected: []
 marketing-content:
   approved:
     - coreyhaines31/marketingskills
     - alirezarezvani/claude-skills
+    - AgriciDaniel/claude-seo
   rejected: []
 research-monitoring:
   approved:
     - K-Dense-AI/scientific-agent-skills
+    - Orchestra-Research/AI-Research-SKILLs
+    - KalarisLabs/research-agent-skills
   rejected: []
 ui-design:
   approved:
@@ -57,6 +65,8 @@ ui-design:
     - vercel-labs/agent-skills:skills/react-view-transitions
     - cloudflare/skills:skills/web-perf
     - expo/skills:plugins/expo/skills/expo-design-system
+    - emilkowalski/skills
+    - addyosmani/web-quality-skills
   rejected: []
 workflow-automation:
   approved:
@@ -66,4 +76,6 @@ workflow-automation:
     - n8n-io/skills:skills/n8n-node-configuration-official
     - n8n-io/skills:skills/n8n-error-handling-official
     - n8n-io/skills:skills/n8n-binary-and-data-official
+    - triggerdotdev/skills
+    - googleworkspace/cli
   rejected: []

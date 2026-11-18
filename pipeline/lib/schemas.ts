@@ -390,8 +390,23 @@ export const CatalogSkillSchema = z.object({
   repoSignal: z.number(),
   score: z.number(),
   humanReviewed: z.boolean(),
+  // False when a name cannot uniquely address this folder through the installation CLI.
+  installable: z.boolean().optional(),
 });
 export type CatalogSkill = z.infer<typeof CatalogSkillSchema>;
+
+// Collection inventory without an editorial assessment. Never synthesize a review or a score.
+export const CatalogSourceSkillSchema = CatalogSkillSchema.omit({
+  review: true, reviewScore: true, score: true,
+}).extend({
+  reviewStatus: z.literal("unreviewed"),
+  humanReviewed: z.literal(false),
+  review: z.never().optional(),
+  reviewScore: z.never().optional(),
+  score: z.never().optional(),
+});
+export type CatalogSourceSkill = z.infer<typeof CatalogSourceSkillSchema>;
+export type DirectorySkill = CatalogSkill | CatalogSourceSkill;
 
 export const CatalogCollectionSchema = z.object({
   id: repoName,
@@ -407,6 +422,9 @@ export const CatalogCollectionSchema = z.object({
   repoSignal: z.number(),
   skillCount: z.number(),
   catalogSkillIds: z.array(z.string()),
+  // Missing on legacy catalogs: offer individual installs until coverage is verified.
+  installScope: z.enum(["repository", "listed"]).optional(),
+  revision: gitObjectId.optional(),
   kitScores: z.record(z.string(), z.number()),
   humanReviewed: z.boolean(),
 });
@@ -430,6 +448,7 @@ export const CatalogSchema = z.object({
   generatedAt: z.string(),
   kits: z.array(CatalogKitSchema),
   skills: z.array(CatalogSkillSchema),
+  sourceSkills: z.array(CatalogSourceSkillSchema).optional(),
   collections: z.array(CatalogCollectionSchema),
 });
 export type Catalog = z.infer<typeof CatalogSchema>;

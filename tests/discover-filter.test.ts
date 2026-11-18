@@ -57,7 +57,6 @@ describe("checkRepo", () => {
   it.each([
     [{ archived: true }, "archived"],
     [{ stars: 49 }, "stars 49 < 50"],
-    [{ pushedAt: "2026-01-01T00:00:00Z" }, "last push 314 days ago (limit 180)"],
     [{ pushedAt: "" }, "no valid push date"],
     [{ pushedAt: "2026-11-05" }, "no valid push date"],
   ])("rejects %j", (overrides, reason) => {
@@ -75,13 +74,15 @@ describe("checkRepo", () => {
 
   it.each([
     [{ archived: true }, "archived"],
-    [{ pushedAt: "2026-01-01T00:00:00Z" }, "last push 314 days ago (limit 180)"],
   ])("still rejects a nominated repository %j", (overrides, reason) => {
     expect(checkRepo(makeRepo({ stars: 3, ...overrides }), filter, NOW, true)).toEqual({ ok: false, reason });
   });
 });
 
 describe("checkRepo boundaries", () => {
+  it.each([false,true])("keeps an old repository regardless of nomination=%s",nominated=>{
+    expect(checkRepo(makeRepo({pushedAt:"2020-01-01T00:00:00Z"}),filter,NOW,nominated)).toEqual({ok:true});
+  });
   it.each([
     ["exactly the minimum stars", { stars: 50 }],
     ["a push exactly 180 days before now", { pushedAt: "2026-05-15T00:00:00Z" }],

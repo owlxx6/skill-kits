@@ -9,11 +9,11 @@ const licenses = [...new Set([...catalog.skills.map((skill) => skill.license), .
   .sort((a, b) => a.localeCompare(b, "en"));
 const levels = ["none", "notice", "severe"] as const;
 ---
-<Base title="Browse" description="Browse and filter every reviewed skill and collection by kit, license and security level.">
+<Base title="Browse" description="Browse available skills and collections by kit, license and editorial review.">
   <div class="wrap page" style="gap: var(--s6)">
     <header class="page-head" style="max-width: 760px">
       <h1 class="display" style="font-size: clamp(2rem, 1.2rem + 3vw, 3.25rem)">Browse</h1>
-      <p class="lead">Every reviewed skill and collection. Search by task, file type or publisher, then narrow the list.</p>
+      <p class="lead">Every available skill and collection, with editorial reviews where available. Search by task, file type or publisher, then narrow the list.</p>
       <SearchBox inputId="search-input" formId="search-form" submitButton={false} />
     </header>
 
@@ -195,7 +195,9 @@ const levels = ["none", "notice", "severe"] as const;
     sec.append(icon(`icon-${hit.security}`), securityLabel(hit.security, true));
     level.append(sec);
     const updated = el("li", "", `Updated ${hit.updated}`);
-    trust.append(license, level, updated);
+    trust.append(license);
+    if(!hit.reviewStatus.includes("not editorially reviewed"))trust.append(level);
+    trust.append(el("li", "", hit.reviewStatus), updated);
     main.append(trust);
     item.append(main);
     return item;

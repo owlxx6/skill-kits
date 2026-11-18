@@ -3,6 +3,7 @@
 import CopyCommand from "./CopyCommand.astro";
 import ScopeNote from "./ScopeNote.astro";
 import TrustLine from "./TrustLine.astro";
+import { canInstallRepository } from "../lib/installation";
 import { type Catalog, type CatalogCollection, collectionHref, collectionInstallCommand, collectionLicenseLabel, listedSecurityLevel } from "../lib/catalog";
 
 interface Props {
@@ -17,12 +18,12 @@ const { catalog, collection, index } = Astro.props;
   <div class="part-body">
     <h3><span class="visually-hidden">Part {index + 1}: </span><a href={collectionHref(collection.id)}>{collection.id}</a></h3>
     <ScopeNote collection={collection} />
-    <CopyCommand command={collectionInstallCommand(collection.id)} label={`Copy install command for ${collection.id}`} />
+    {canInstallRepository(catalog,collection) ? <CopyCommand command={collectionInstallCommand(collection.id,collection.revision)} label={`Copy install command for ${collection.id}`} /> : <a class="button" href={`${collectionHref(collection.id)}#skills-title`}>Choose individual skills</a>}
     <TrustLine
       license={collectionLicenseLabel(collection)}
       level={listedSecurityLevel(catalog, collection.id)}
       shortLevel={false}
-      reviewed
+      reviewed={false}
       updated={collection.pushedAt}
       source={collection.url}
     />

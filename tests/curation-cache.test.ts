@@ -17,11 +17,15 @@ describe("four-kit curation survives a later rank",()=>{
     for(const entry of evidence){
       const record=ReviewRecordSchema.parse(await json(`data/cache/reviews/${entry.fingerprint}.json`));
       const published=catalog.skills.find(skill=>skill.id===entry.id);
-      expect(published,entry.id).toBeDefined();
+      const source=catalog.sourceSkills?.find(skill=>skill.id===entry.id);
+      const pending=catalog.kits.some(kit=>kit.pending.includes(entry.id));
+      expect(Boolean(published||source||pending),entry.id).toBe(true);
       expect(record.fingerprint).toBe(entry.fingerprint);
       expect(record.model).toBe("in-session-review");
       expect(record.review.security).toEqual({level:"none",notes:[]});
-      expect(loaded.get(entry.fingerprint)).toEqual(published?.review);
+      expect(loaded.get(entry.fingerprint)).toEqual(record.review);
+      if(published)expect(loaded.get(entry.fingerprint)).toEqual(published.review);
+      if(source){expect(source.review).toBeUndefined();expect(source.reviewScore).toBeUndefined();expect(source.reviewStatus).toBe("unreviewed");}
     }
   });
 

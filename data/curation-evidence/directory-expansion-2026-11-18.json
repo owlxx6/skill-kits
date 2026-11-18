@@ -1,0 +1,110 @@
+[
+  {
+    "repository": "jirawatp/resume-career-toolkit",
+    "kit": "resume-career",
+    "revision": "85189e64c79dd544aa40d2d8b1a205517e6b0775",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "arih04x/office-skills",
+    "kit": "docs-reports",
+    "revision": "0fb34f48e26eb934b1cdd012b8d080b1e2105087",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "shinob/msoffice-skills",
+    "kit": "docs-reports",
+    "revision": "9c062aa5059ffee14f07b90dd1e09edf6020a86d",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "Orchestra-Research/AI-Research-SKILLs",
+    "kit": "research-monitoring",
+    "revision": "773a52944ba4747a18bd4ae9ade53fff041adcbc",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "KalarisLabs/research-agent-skills",
+    "kit": "research-monitoring",
+    "revision": "a74b0dbe5fa865d73b9f250ba5b0c9f107bd1baa",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "emilkowalski/skills",
+    "kit": "ui-design",
+    "revision": "64eb3deb9a5fbfa041faf783e0bc3fd635872e9c",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "addyosmani/web-quality-skills",
+    "kit": "ui-design",
+    "revision": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "triggerdotdev/skills",
+    "kit": "workflow-automation",
+    "revision": "43d4ee184f6f74b04d41710f6a73d69dc7d6616b",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "googleworkspace/cli",
+    "kit": "workflow-automation",
+    "revision": "cd3697e07eb520056dcf142d0c7439bbb9ba32e9",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "databricks-solutions/ai-dev-kit",
+    "kit": "data-analysis",
+    "revision": "07f8e1ccf3dfc09a794eaf86fd15a5848f9d63d4",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "AgriciDaniel/claude-seo",
+    "kit": "marketing-content",
+    "revision": "468ed5b0d9e3249394783710e54abb02837e326b",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  },
+  {
+    "repository": "phuryn/pm-skills",
+    "kit": "docs-reports",
+    "revision": "9af7bfd0bc47fdad43c2eaa7a43cd13918e7aaef",
+    "kind": "collection-inventory-proposal",
+    "status": "local-preview-awaiting-owner-review",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks. Source listings carry no fabricated editorial review or score.",
+    "nativeOrServiceExecution": false
+  }
+]

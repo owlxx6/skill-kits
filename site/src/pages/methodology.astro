@@ -9,11 +9,11 @@ const percent = (value: number) => `${Math.round(value * 100)}%`;
 const steps: { title: string; text: string }[] = [
   {
     title: "Found and filtered",
-    text: "We read public GitHub repositories tagged with agent-skill topics, plus explicit nominations. Repositories must not be archived and must be active within " + filter.maxDaysSinceLastCommit + " days. Topic searches currently use a " + filter.minStars + "-star discovery threshold. Explicitly nominated repositories have no minimum star count: low usage does not disqualify them.",
+    text: "We read public GitHub repositories tagged with agent-skill topics, plus explicit nominations. Archived repositories are held back. Last-update dates are shown as context: an older skill can remain useful and is not rejected for age alone. Topic searches currently use a " + filter.minStars + "-star discovery threshold. Explicitly nominated repositories have no minimum star count: low usage does not disqualify them.",
   },
   {
-    title: "Read and reviewed",
-    text: "An AI reviewer reads each candidate SKILL.md and scores it from 0 to 10 on clarity (does an agent know what to do and when to stop), completeness (examples, scripts and references provided) and usefulness for the kit.",
+    title: "Complete collection inventory",
+    text: "Selected collections list their available skills, including members without an editorial review. Source listings use the repository's description and carry no editorial score. Unresolved entries stay pending while their files and admission checks are processed.",
   },
   {
     title: "License shown per skill",
@@ -21,7 +21,7 @@ const steps: { title: string; text: string }[] = [
   },
   {
     title: "Ranked",
-    text: `A skill needs a review score of at least ${review.minCatalogScore} to appear. Its ranking score is ${percent(scoring.skill.review)} review and ${percent(scoring.skill.repoSignal)} repository signal (stars, forks and recent activity on a log scale). A collection is a repository with at least ${config.collection.minSkills} valid skills; its score for a kit combines its repository signal, the median review of its skills in that kit, and how many of them fit the kit.`,
+    text: `Editorial reviews score clarity, completeness and usefulness. Recommendations require at least ${review.minCatalogScore}/10; that threshold does not hide other available collection members. A collection needs at least ${config.collection.minSkills} distinct skills. Popularity is discovery metadata, not a quality guarantee.`,
   },
   {
     title: "Approved by a human",
@@ -35,7 +35,7 @@ const steps: { title: string; text: string }[] = [
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "How we pick" }]} />
       <p class="eyebrow">Trust</p>
       <h1 class="display">How we pick</h1>
-      <p class="lead">Explore how candidates become catalog entries and curated kits. A maintainer approves every entry added to a kit.</p>
+      <p class="lead">Explore how selected collections become a browsable directory, with editorial recommendations kept separate from source listings.</p>
     </header>
 
     <ol class="method-steps">
