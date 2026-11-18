@@ -8,8 +8,10 @@ import {
 } from "../../../pipeline/lib/schemas";
 import { compareText } from "../../../pipeline/lib/text";
 import rawCatalog from "../../../catalog.json";
+import { securityLabel, type SecurityLevel } from "./labels";
 
-export type { Catalog, CatalogCollection, CatalogKit, CatalogSkill };
+export type { Catalog, CatalogCollection, CatalogKit, CatalogSkill, SecurityLevel };
+export { securityLabel };
 
 export function parseCatalog(data: unknown): Catalog {
   const result = CatalogSchema.safeParse(data);
@@ -115,4 +117,68 @@ export function formatCount(value: number): string {
 export function collectionLicenseLabel(collection: Pick<CatalogCollection, "license" | "licenses">): string {
   if (collection.license !== "Mixed" || !collection.licenses?.length) return collection.license;
   return "Mixed (" + collection.licenses.join(", ") + ")";
+}
+
+// ---------------------------------------------------------------- trust, scope and ranking helpers
+
+const SECURITY_RANK: Record<SecurityLevel, number> = { none: 0, notice: 1, severe: 2 };
+
+/** The scan level only. Scan notes stay private and are never read here. */
+export function securityLevel(skill: Pick<CatalogSkill, "review">): SecurityLevel {
+  return skill.review.security?.level ?? "none";
+}
+
+export function highestSecurityLevel(levels: Iterable<SecurityLevel>): SecurityLevel {
+  let highest: SecurityLevel = "none";
+  for (const level of levels) if (SECURITY_RANK[level] > SECURITY_RANK[highest]) highest = level;
+  return highest;
+}
+
+/** Highest level among the skills of this repository that the catalog lists. */
+export function listedSecurityLevel(catalog: Catalog, repoId: string): SecurityLevel {
+  return highestSecurityLevel(catalog.skills.filter((skill) => skill.repo === repoId).map(securityLevel));
+}
+
+export function isPartialCollection(collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount">): boolean {
+  return collection.catalogSkillIds.length < collection.skillCount;
+}
+
+export function unlistedCount(collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount">): number {
+  return Math.max(0, collection.skillCount - collection.catalogSkillIds.length);
+}
+
+/** One line that installs every part of a kit, in the curator's order. */
+export function kitInstallCommand(collectionIds: string[]): string {
+  return collectionIds.map(collectionInstallCommand).join(" && ");
+}
+
+export function collectionsByStars(catalog: Catalog, limit: number): CatalogCollection[] {
+  return [...catalog.collections].sort((a, b) => b.stars - a.stars || compareText(a.id, b.id)).slice(0, limit);
+}
+
+/** Highest review score first, at most one skill per repository so one publisher cannot fill the row. */
+export function topSkillPerRepo(catalog: Catalog, limit: number): CatalogSkill[] {
+  const seen = new Set<string>();
+  const picks: CatalogSkill[] = [];
+  const sorted = [...catalog.skills].sort((a, b) => b.reviewScore - a.reviewScore || compareText(a.name, b.name));
+  for (const skill of sorted) {
+    if (seen.has(skill.repo)) continue;
+    seen.add(skill.repo);
+    picks.push(skill);
+    if (picks.length === limit) break;
+  }
+  return picks;
+}
+
+/** Other listed skills with the same name from another repository, so look-alike names can be told apart. */
+export function sameNameSkills(catalog: Catalog, skill: Pick<CatalogSkill, "id" | "name">): CatalogSkill[] {
+  return catalog.skills.filter((entry) => entry.name === skill.name && entry.id !== skill.id);
+}
+
+export function displayDate(iso: string): string {
+  return iso.slice(0, 10);
+}
+
+export function plural(count: number, word: string, many = `${word}s`): string {
+  return `${count.toLocaleString("en-US")} ${count === 1 ? word : many}`;
 }
