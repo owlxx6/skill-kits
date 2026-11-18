@@ -2,13 +2,15 @@
 // "Pick your kit" as a small explorer: the jobs on the left, and for the chosen job its parts in install order and the
 // command that installs them. Every panel is in the page; the buttons only change which one is shown, so nothing is fetched.
 import CopyCommand from "./CopyCommand.astro";
-import { canInstallRepository, kitCommands } from "../lib/installation";
 import Icon from "./Icon.astro";
 import { kitIcon } from "../lib/icons";
-import { collectionHref, formatCount, kitInstallCommand, kitView, loadCatalog, plural } from "../lib/catalog";
+import { kitInstallPlan } from "../lib/kit-install";
+import { collectionHref, formatCount, kitView, loadCatalog, plural } from "../lib/catalog";
 
 const catalog = loadCatalog();
 const views = catalog.kits.flatMap((kit) => kitView(catalog, kit.id) ?? []);
+// The command covers only the parts that install as whole repositories; a note names the others (see lib/kit-install.ts).
+const panels = views.map((view) => ({ ...view, ...kitInstallPlan(catalog, view.kit.title, view.collections) }));
 ---
 <div class="explorer" data-explorer>
   <div class="explorer-tabs" role="tablist" aria-label="Kits" aria-orientation="vertical">
@@ -30,7 +32,7 @@ const views = catalog.kits.flatMap((kit) => kitView(catalog, kit.id) ?? []);
   </div>
 
   <div class="explorer-panels">
-    {views.map(({ kit, collections, skills }, index) => (
+    {panels.map(({ kit, collections, skills, command, commandLabel, note }, index) => (
       <section
         class="explorer-panel"
         role="tabpanel"
@@ -59,8 +61,10 @@ const views = catalog.kits.flatMap((kit) => kitView(catalog, kit.id) ?? []);
         )}
         {skills.length > 0 && <p class="muted explorer-more">{collections.length > 0 ? "Plus " : ""}{plural(skills.length, "single skill")} picked for this job.</p>}
 
+        {note && <p class="muted explorer-note">{note}</p>}
+
         <div class="explorer-foot">
-          {collections.length > 0 && collections.every(entry=>canInstallRepository(catalog,entry)) && <CopyCommand command={kitCommands(catalog,collections.map(entry=>entry.id)).join(' && ')} label={`Copy the install command for the ${kit.title} kit`} />}
+          {command && <CopyCommand command={command} label={`Copy the install command for ${commandLabel}`} />}
           <a class="button primary" href={`/kits/${kit.id}/`}>Open this kit <Icon name="arrow-right" size={16} /></a>
         </div>
       </section>
