@@ -1,6 +1,7 @@
 ---
 import CopyCommand from "./CopyCommand.astro";
 import TrustLine from "./TrustLine.astro";
+import { hasInstallIdentifier } from "../lib/installation";
 import { type CatalogSkill, collectionHref, securityLevel, skillHref, skillInstallCommand } from "../lib/catalog";
 
 interface Props {
@@ -20,16 +21,19 @@ const level = securityLevel(skill);
   data-review={skill.reviewScore}
   data-updated={skill.pushedAt}
   data-name={skill.name}
+  data-editorial={skill.review ? "reviewed" : "source"}
 >
   <div class="row-main">
     <div class="row-title">
       <Heading><a href={skillHref(skill.id)}>{skill.name}</a></Heading>
       {showRepo && <a class="row-repo" href={collectionHref(skill.repo)}>{skill.repo}</a>}
     </div>
-    <p class="row-why">{skill.review.why}</p>
-    <TrustLine license={skill.license} level={level} updated={skill.pushedAt} />
+    <p class="row-why">{skill.review?.why ?? skill.description}</p>
+    {!skill.review && <p class="small muted">Source listing · not editorially reviewed</p>}
+    {skill.installable === false && <p class="small muted">{skill.path} · See the source for installation details.</p>}
+    <TrustLine license={skill.license} level={skill.review ? level : undefined} updated={skill.pushedAt} />
   </div>
   <div class="row-action">
-    <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} />
+    {hasInstallIdentifier(skill) ? <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} /> : <a class="button" href={skill.url}>View source</a>}
   </div>
 </li>

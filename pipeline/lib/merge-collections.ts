@@ -31,7 +31,9 @@ export function mergeApprovedCollections(
     throw new Error(`Unknown kit in the approvals: ${unknownKits.join(", ")}`);
   }
 
-  const known = new Set(existing.skills.map((skill) => skill.id));
+  const incomingSources=(computed.sourceSkills??[]).filter(skill=>repos.includes(skill.repo));
+  const incomingSourceIds=new Set(incomingSources.map(skill=>skill.id));
+  const known = new Set(existing.skills.filter(skill=>!incomingSourceIds.has(skill.id)).map((skill) => skill.id));
   const added = computed.skills
     .filter((skill) => repos.includes(skill.repo) && !known.has(skill.id))
     .map((skill) => ({
@@ -40,7 +42,9 @@ export function mergeApprovedCollections(
       review: { ...skill.review, security: { ...skill.review.security, notes: [] } },
     }))
     .sort((a, b) => b.score - a.score || compareText(a.id, b.id));
-  const skills = [...existing.skills, ...added];
+  const skills = [...existing.skills.filter(skill=>!incomingSourceIds.has(skill.id)), ...added];
+  const reviewedIds=new Set(skills.map(skill=>skill.id));
+  const sourceSkills=[...(existing.sourceSkills??[]).filter(skill=>!repos.includes(skill.repo)&&!reviewedIds.has(skill.id)),...incomingSources.filter(skill=>!reviewedIds.has(skill.id))];
 
   const merged: CatalogCollection[] = [
     ...existing.collections.filter((collection) => !repos.includes(collection.id)),
@@ -48,7 +52,7 @@ export function mergeApprovedCollections(
   ].sort((a, b) => b.repoSignal - a.repoSignal || compareText(a.id, b.id));
 
   // Every skill a collection lists must be in the catalog.
-  const skillIds = new Set(skills.map((skill) => skill.id));
+  const skillIds = new Set([...skills,...sourceSkills].map((skill) => skill.id));
   for (const collection of merged) {
     const absent = collection.catalogSkillIds.filter((id) => !skillIds.has(id));
     if (absent.length > 0) {
@@ -71,5 +75,5 @@ export function mergeApprovedCollections(
     };
   });
 
-  return { generatedAt: computed.generatedAt, kits, skills, collections: merged };
+  return { generatedAt: computed.generatedAt, kits, skills, ...(existing.sourceSkills!==undefined||computed.sourceSkills!==undefined?{sourceSkills}:{}), collections: merged };
 }

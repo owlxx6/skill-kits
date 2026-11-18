@@ -65,7 +65,7 @@ export function buildSummary(catalog: Catalog, runInfo: RunInfo): string {
   const lines: string[] = [
     `# Pipeline run ${catalog.generatedAt.slice(0, 10)}`,
     "",
-    `Catalog: ${catalog.skills.length} skills, ${catalog.collections.length} collections.`,
+    `Catalog: ${catalog.skills.length + (catalog.sourceSkills?.length ?? 0)} skills, ${catalog.collections.length} collections.`,
     "",
     "To validate: add ids to `approved` or `rejected` in `data/curation.yaml` on this branch, then merge.",
     "",

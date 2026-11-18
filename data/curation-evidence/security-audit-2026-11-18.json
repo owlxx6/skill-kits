@@ -1,0 +1,32 @@
+[
+  {
+    "id": "cloudflare/security-audit-skill:skills/security-audit",
+    "commit": "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
+    "fingerprint": "ccbc33ed119b28c3ef7b44a7e2081ab191ad63af",
+    "sourceUrl": "https://github.com/cloudflare/security-audit-skill/tree/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8/skills/security-audit",
+    "reviewedAt": "2026-11-18T10:41:10.581Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T11:02:33.724Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved the individual skill for Web App with a Linux/WSL prerequisite.",
+    "kind": "individual-skill",
+    "kit": "web-app",
+    "compatibility": {
+      "linux": {
+        "node": "v24.22.3",
+        "tests": 65,
+        "passed": 65,
+        "failed": 0,
+        "skipped": 0
+      },
+      "nativeWindows": {
+        "node": "v26.13.0",
+        "passed": 46,
+        "failed": 7,
+        "skipped": 12,
+        "limitation": "Validator CLIs require input protections unavailable in the tested native Windows runtime."
+      }
+    },
+    "validationScope": "Bundled validator tests only; full audit workflow and installation were not executed."
+  }
+]

@@ -5,6 +5,8 @@ import CollectionRow from "../../components/CollectionRow.astro";
 import CopyCommand from "../../components/CopyCommand.astro";
 import EmptyState from "../../components/EmptyState.astro";
 import SkillRow from "../../components/SkillRow.astro";
+import SkillDirectory from "../../components/SkillDirectory.astro";
+import { canInstallRepository, kitCommands } from "../../lib/installation";
 import { kitInstallCommand, kitView, loadCatalog, plural } from "../../lib/catalog";
 
 export function getStaticPaths() {
@@ -18,6 +20,9 @@ const { kit, collections, skills } = view;
 const totalInstalled = collections.reduce((sum, entry) => sum + entry.skillCount, 0);
 const totalListed = collections.reduce((sum, entry) => sum + entry.catalogSkillIds.length, 0);
 const afterStep = skills.length > 0 ? "03" : "02";
+const canInstallAll=collections.length>0&&collections.every(entry=>canInstallRepository(catalog,entry));
+const allIds=new Set([...kit.skills,...collections.flatMap(entry=>entry.catalogSkillIds)]);
+const allSkills=catalog.skills.filter(skill=>allIds.has(skill.id)).sort((a,b)=>a.name.localeCompare(b.name,'en'));
 ---
 <Base title={kit.title} description={kit.description} image={`/og/${kit.id}.png`}>
   <div class="wrap page">
@@ -29,7 +34,7 @@ const afterStep = skills.length > 0 ? "03" : "02";
 
     {view.isEmpty ? (
       <EmptyState title="This kit is being assembled">
-        <p>No skill has passed review for this kit yet. Search covers every reviewed skill in the meantime.</p>
+        <p>No skills are available in this kit yet. Browse the catalog while its collections are being assembled.</p>
         <div class="button-row"><a class="button primary" href="/search/">Search all skills</a><a class="button" href="/#kits">See other kits</a></div>
       </EmptyState>
     ) : (
@@ -37,9 +42,8 @@ const afterStep = skills.length > 0 ? "03" : "02";
         {collections.length > 0 && (
           <aside class="side install-box" aria-labelledby="quick-title">
             <h2 id="quick-title">Install this kit</h2>
-            <p>{collections.length > 1 ? `${collections.length} commands in one line, run in order.` : "One command."}</p>
-            <CopyCommand command={kitInstallCommand(collections.map((entry) => entry.id))} label={`Copy the install command for the whole ${kit.title} kit`} />
-            <p>Installs {totalInstalled.toLocaleString("en-US")} skills, {totalListed.toLocaleString("en-US")} of them listed here.</p>
+            {canInstallAll ? <><p>{collections.length > 1 ? `${collections.length} commands in one line, run in order.` : "One command."}</p><CopyCommand command={kitCommands(catalog,collections.map(entry=>entry.id)).join(' && ')} label={`Copy the install command for the whole ${kit.title} kit`} /></> : <><p>Choose individual skills from the collections below.</p><a class="button" href="#all-skills-title">Browse all available skills</a></>}
+            <p>{allSkills.length.toLocaleString("en-US")} skills available in this kit.</p>
           </aside>
         )}
         <div class="primary">
@@ -60,9 +64,14 @@ const afterStep = skills.length > 0 ? "03" : "02";
               <ul class="rows">{skills.map((skill) => <SkillRow skill={skill} />)}</ul>
             </section>
           )}
+          <section aria-labelledby="all-skills-title">
+            <div class="section-head"><h2 id="all-skills-title">All available skills</h2><p>{plural(allSkills.length,"skill")}</p></div>
+            <p class="small muted">Browse every available member of the selected collections. Source listings have not received an editorial review.</p>
+            <SkillDirectory skills={allSkills} id={`kit-${kit.id}`} />
+          </section>
           <section aria-labelledby="after-title">
             <div class="section-head"><h2 id="after-title"><span class="step-no">{collections.length > 0 ? afterStep : "02"}</span>After installing</h2></div>
-            <p class="after-note">Start a new agent session, then ask for the job in plain words. Skills are reviewed, not tested: read each one's cautions before the first run.</p>
+            <p class="after-note">Start a new agent session, then ask for the job in plain words. Read the source, prerequisites and any editorial cautions before the first run. A listing or review does not establish successful execution.</p>
           </section>
         </div>
       </div>

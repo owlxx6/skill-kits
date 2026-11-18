@@ -10,7 +10,7 @@ export interface BrowseItem {
   kits: string[];
   security: SecurityLevel;
   updated: string;
-  rating: number;
+  rating: number | null;
   stars: number;
 }
 
@@ -89,14 +89,14 @@ export function applyBrowse<T extends BrowseItem>(items: T[], state: BrowseState
         sorted.sort((a, b) =>
           a.kind !== b.kind ? (a.kind === "collection" ? -1 : 1)
           : a.kind === "collection" ? b.stars - a.stars || byName(a, b)
-          : b.rating - a.rating || byName(a, b));
+          : (b.rating ?? -1) - (a.rating ?? -1) || byName(a, b));
       }
       break;
     case "rating":
       // Collections have no review score of their own; they follow the skills, most starred first.
       sorted.sort((a, b) =>
         a.kind !== b.kind ? (a.kind === "skill" ? -1 : 1)
-        : a.kind === "skill" ? b.rating - a.rating || byName(a, b)
+        : a.kind === "skill" ? (b.rating ?? -1) - (a.rating ?? -1) || byName(a, b)
         : b.stars - a.stars || byName(a, b));
       break;
     case "updated":

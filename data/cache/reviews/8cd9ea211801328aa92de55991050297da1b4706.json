@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8cd9ea211801328aa92de55991050297da1b4706",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T11:40:28.788Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 9
+    },
+    "why": "Build Expo navigation with explicit route conventions, native stacks, tabs and platform limits.",
+    "summary": "Explains file-based routes, nested stacks, native tabs, links, previews, sheets, header search and iOS transitions.",
+    "strengths": [
+      "Six detailed navigation references accompany the main instructions.",
+      "Explains route naming, nested histories and platform-specific behavior.",
+      "Covers common failures and practical navigation structures."
+    ],
+    "cautions": [
+      "References mix SDK-specific syntax; match the installed SDK before copying examples.",
+      "Several menus, toolbars and transitions require specific iOS versions or platform fallbacks.",
+      "Device navigation was not executed; example handlers still need real application behavior."
+    ],
+    "keywords": [
+      "expo router",
+      "navigation",
+      "routes",
+      "tabs",
+      "stacks",
+      "deep links",
+      "modals",
+      "react native"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

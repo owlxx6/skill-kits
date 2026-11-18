@@ -3,7 +3,7 @@ import Icon from "./Icon.astro";
 import { collectionCoverageLabel, collectionInstallScope, isPartialCollection, type CatalogCollection } from "../lib/catalog";
 
 interface Props {
-  collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount">;
+  collection: Pick<CatalogCollection, "catalogSkillIds" | "skillCount" | "installScope" | "revision">;
 }
 const { collection } = Astro.props;
 const partial = isPartialCollection(collection);

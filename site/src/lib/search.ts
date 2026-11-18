@@ -1,5 +1,5 @@
 import MiniSearch from "minisearch";
-import type { Catalog } from "../../../pipeline/lib/schemas";
+import type { Catalog } from "./catalog";
 import {
   collectionHref,
   collectionCoverageLabel,
@@ -11,6 +11,7 @@ import {
   reviewLabel,
   securityLevel,
   skillHref,
+  kitsOfSkill,
 } from "./catalog";
 
 export { SEARCH_OPTIONS, type SearchDocument } from "./search-options";
@@ -21,17 +22,17 @@ export function searchDocuments(catalog: Catalog): SearchDocument[] {
     id: `skill:${skill.id}`,
     kind: "skill",
     title: skill.name,
-    text: `${skill.description} ${skill.review.summary} ${skill.repo}`,
-    keywords: skill.review.keywords.join(" "),
+    text: `${skill.description} ${skill.review?.summary ?? ""} ${skill.repo}`,
+    keywords: skill.review?.keywords.join(" ") ?? "",
     license: skill.license,
     href: skillHref(skill.id),
-    why: skill.review.why,
-    reviewStatus: reviewLabel(),
+    why: skill.review?.why ?? skill.description,
+    reviewStatus: skill.review ? reviewLabel() : "Source listing · not editorially reviewed",
     repo: skill.repo,
-    kits: catalog.kits.filter((kit) => kit.skills.includes(skill.id)).map((kit) => kit.id),
+    kits: kitsOfSkill(catalog, skill.id).map(kit => kit.id),
     security: securityLevel(skill),
     updated: displayDate(skill.pushedAt),
-    rating: skill.reviewScore,
+    rating: skill.reviewScore ?? null,
     stars: skill.stars,
     partial: false,
   }));
@@ -46,7 +47,7 @@ export function searchDocuments(catalog: Catalog): SearchDocument[] {
     why: collection.description ?? "",
     coverage: collectionCoverageLabel(collection),
     installScope: collectionInstallScope(collection),
-    reviewStatus: reviewLabel(),
+    reviewStatus: catalog.skills.some(skill=>skill.repo===collection.id&&!skill.review) ? "Collection inventory · reviews shown per skill" : reviewLabel(),
     repo: collection.id,
     kits: catalog.kits.filter((kit) => kit.collections.includes(collection.id)).map((kit) => kit.id),
     security: listedSecurityLevel(catalog, collection.id),

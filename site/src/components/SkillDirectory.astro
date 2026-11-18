@@ -1,0 +1,48 @@
+---
+import SkillRow from './SkillRow.astro';
+import type {CatalogSkill} from '../lib/catalog';
+interface Props { skills:CatalogSkill[]; id:string; showRepo?:boolean; }
+const {skills,id,showRepo=true}=Astro.props;
+const licenses=[...new Set(skills.map(skill=>skill.license))].sort();
+---
+<div data-skill-directory>
+  <div class="button-row" style="margin-block: var(--s4)">
+    <label class="field" for={`${id}-query`}>Search this list<span class="search-input"><input id={`${id}-query`} type="search" data-directory-query placeholder="Name, repository or description" /></span></label>
+    <label class="field" for={`${id}-review`}>Editorial review<select id={`${id}-review`} data-directory-review><option value="">All skills</option><option value="reviewed">With a review</option><option value="source">Source listings</option></select></label>
+    <label class="field" for={`${id}-license`}>License<select id={`${id}-license`} data-directory-license><option value="">All licenses</option>{licenses.map(license=><option value={license}>{license}</option>)}</select></label>
+    <label class="field" for={`${id}-order`}>Order<select id={`${id}-order`} data-directory-order><option value="name">Name</option><option value="review">Review score</option><option value="updated">Recently updated</option></select></label>
+  </div>
+  <p class="small muted" aria-live="polite" data-directory-count>{skills.length} skills</p>
+  <ul class="rows" data-directory-rows>{skills.map(skill=><SkillRow skill={skill} showRepo={showRepo} />)}</ul>
+  <button class="button" type="button" data-directory-more hidden style="margin-top: var(--s4)">Show more skills</button>
+</div>
+<script>
+  for(const root of document.querySelectorAll<HTMLElement>('[data-skill-directory]')){
+    const query=root.querySelector<HTMLInputElement>('[data-directory-query]')!;
+    const review=root.querySelector<HTMLSelectElement>('[data-directory-review]')!;
+    const license=root.querySelector<HTMLSelectElement>('[data-directory-license]')!;
+    const order=root.querySelector<HTMLSelectElement>('[data-directory-order]')!;
+    const rows=[...root.querySelectorAll<HTMLElement>('[data-directory-rows] > li')];
+    const count=root.querySelector<HTMLElement>('[data-directory-count]')!;
+    const more=root.querySelector<HTMLButtonElement>('[data-directory-more]')!;
+    const terms=rows.map(row=>({row,text:row.textContent?.toLocaleLowerCase()??''}));
+    let shown=40;
+    const render=()=>{
+      const needle=query.value.trim().toLocaleLowerCase();
+      const matches=terms.filter(({row,text})=>(!needle||text.includes(needle))&&(!review.value||row.dataset.editorial===review.value)&&(!license.value||row.dataset.license===license.value));
+      matches.sort((a,b)=>order.value==='review'?(Number(b.row.dataset.review??-1)-Number(a.row.dataset.review??-1))||(a.row.dataset.name??'').localeCompare(b.row.dataset.name??''):order.value==='updated'?(b.row.dataset.updated??'').localeCompare(a.row.dataset.updated??''):(a.row.dataset.name??'').localeCompare(b.row.dataset.name??''));
+      const list=root.querySelector('[data-directory-rows]')!;
+      for(const {row} of matches)list.append(row);
+      rows.forEach(row=>row.hidden=true);matches.slice(0,shown).forEach(({row})=>row.hidden=false);
+      more.hidden=matches.length<=shown;
+      more.textContent=`Show ${Math.min(40,matches.length-shown)} more skills`;
+      count.textContent=`${Math.min(shown,matches.length)} of ${matches.length} matching skills · ${rows.length} in this list`;
+    };
+    query.addEventListener('input',()=>{shown=40;render();});
+    review.addEventListener('change',()=>{shown=40;render();});
+    license.addEventListener('change',()=>{shown=40;render();});
+    order.addEventListener('change',()=>{shown=40;render();});
+    more.addEventListener('click',()=>{shown+=40;render();});
+    render();
+  }
+</script>

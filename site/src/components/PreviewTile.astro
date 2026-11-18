@@ -1,6 +1,8 @@
 ---
 // A drawn preview for a home tile (a repository or a skill). Decorative: the link around it carries the accessible name.
 import type { Catalog, CatalogCollection, CatalogSkill } from "../lib/catalog";
+import {canInstallRepository} from "../lib/installation";
+import {collectionInstallCommand} from "../lib/catalog";
 
 type Props =
   | { kind: "collection"; tone: number; catalog: Catalog; collection: CatalogCollection }
@@ -14,14 +16,14 @@ const skillNames = props.kind === "collection"
 <div class="tile" data-tone={tone} aria-hidden="true">
   {props.kind === "collection" && (
     <>
-      <div class="tile-cmd"><span>$ </span>npx skills add {props.collection.id}</div>
+      <div class="tile-cmd">{canInstallRepository(props.catalog,props.collection) ? <><span>$ </span>{collectionInstallCommand(props.collection.id,props.collection.revision)}</> : "Choose individual skills"}</div>
       <ul class="tile-list">{skillNames.map((name, i) => <li><span class="n">{String(i + 1).padStart(2, "0")}</span><span>{name}</span></li>)}</ul>
     </>
   )}
   {props.kind === "skill" && (
     <>
       <p class="tile-title">{props.skill.name}</p>
-      <p class="tile-text">{props.skill.review.why}</p>
+      <p class="tile-text">{props.skill.review?.why ?? props.skill.description}</p>
     </>
   )}
 </div>

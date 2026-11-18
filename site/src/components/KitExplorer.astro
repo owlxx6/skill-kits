@@ -2,6 +2,7 @@
 // "Pick your kit" as a small explorer: the jobs on the left, and for the chosen job its parts in install order and the
 // command that installs them. Every panel is in the page; the buttons only change which one is shown, so nothing is fetched.
 import CopyCommand from "./CopyCommand.astro";
+import { canInstallRepository, kitCommands } from "../lib/installation";
 import Icon from "./Icon.astro";
 import { kitIcon } from "../lib/icons";
 import { collectionHref, formatCount, kitInstallCommand, kitView, loadCatalog, plural } from "../lib/catalog";
@@ -59,7 +60,7 @@ const views = catalog.kits.flatMap((kit) => kitView(catalog, kit.id) ?? []);
         {skills.length > 0 && <p class="muted explorer-more">{collections.length > 0 ? "Plus " : ""}{plural(skills.length, "single skill")} picked for this job.</p>}
 
         <div class="explorer-foot">
-          {collections.length > 0 && <CopyCommand command={kitInstallCommand(collections.map((entry) => entry.id))} label={`Copy the install command for the ${kit.title} kit`} />}
+          {collections.length > 0 && collections.every(entry=>canInstallRepository(catalog,entry)) && <CopyCommand command={kitCommands(catalog,collections.map(entry=>entry.id)).join(' && ')} label={`Copy the install command for the ${kit.title} kit`} />}
           <a class="button primary" href={`/kits/${kit.id}/`}>Open this kit <Icon name="arrow-right" size={16} /></a>
         </div>
       </section>

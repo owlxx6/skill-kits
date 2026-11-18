@@ -12,6 +12,20 @@ repos:
   - dbt-labs/dbt-agent-skills
   - n8n-io/skills
   - TerminalSkills/skills
+  - cloudflare/security-audit-skill
+  - expo/skills
+  - jirawatp/resume-career-toolkit
+  - arih04x/office-skills
+  - shinob/msoffice-skills
+  - Orchestra-Research/AI-Research-SKILLs
+  - KalarisLabs/research-agent-skills
+  - emilkowalski/skills
+  - addyosmani/web-quality-skills
+  - triggerdotdev/skills
+  - googleworkspace/cli
+  - databricks-solutions/ai-dev-kit
+  - AgriciDaniel/claude-seo
+  - phuryn/pm-skills
 topics:
   - agent-skills
   - claude-skills

@@ -1,0 +1,40 @@
+{
+  "fingerprint": "6d66527fff2dbc83bc4a0507efa3d7624348e7b0",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T11:40:28.788Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Keep a new Expo project organized so routes, screen code and server helpers have clear boundaries.",
+    "summary": "Defines a starting layout for new Expo Router apps, with route-only directories, reusable components, screen modules and platform-specific files.",
+    "strengths": [
+      "Explicitly preserves existing app conventions.",
+      "Separates routes, shared code and server-only helpers.",
+      "Provides a concrete folder tree and extraction rules."
+    ],
+    "cautions": [
+      "A starting convention for new Expo projects, not a required migration.",
+      "Backend placement and platform variants still need project-specific review.",
+      "No generated app or native build was run in this review."
+    ],
+    "keywords": [
+      "expo",
+      "project structure",
+      "react native",
+      "routing",
+      "architecture",
+      "folders",
+      "scaffolding"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

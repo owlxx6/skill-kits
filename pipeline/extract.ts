@@ -270,6 +270,7 @@ export async function extractRepo(
 }
 
 export interface ExtractSafetyOptions {
+  scanRepos?: readonly string[];
   // Reports by skill id, completed in place. The file is admin-only and not versioned.
   cache: SafetyCache;
   save: (cache: SafetyCache) => Promise<void>;
@@ -358,6 +359,7 @@ export async function runExtract(
       : {
           cache: safety.cache,
           allowed: licenses.allowed,
+          scanRepos: safety.scanRepos,
           ...(safety.limits ? { limits: safety.limits } : {}),
           checkpoint: () => safety.save(safety.cache),
         };
@@ -411,7 +413,7 @@ export async function runExtract(
     licenses.isSafetyCleared ??
     (safety === undefined ? NO_SAFETY_SCAN : safetyCleared(safety.cache, safety.overrides));
   if (safety !== undefined) {
-    const summary = summarizeSafety(skills, licenses.allowed, safety.cache, safetyCounts);
+    const summary = summarizeSafety(skills, licenses.allowed, safety.cache, safetyCounts, safety.scanRepos);
     stats.safety = summary.stats;
     // Reports of skills that are gone or no longer need the scan are dropped.
     if (summary.pruned) await safety.save(safety.cache);

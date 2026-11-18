@@ -78,3 +78,97 @@ The 18 selected reviews are committed by fingerprint under data/cache/reviews wi
 The integrated scanner and real rank/summary steps replayed against the pinned intake retain all 18 selections, five skills per kit. A committed regression checks durable cache coverage, sanitized fields and source nominations. Main, the accepted baseline and other working folders remain untouched. The feature PR is for sprint review only and must not be merged without that review.
 
 Post-merge verification: typecheck and 951 tests pass; site build produces 64 pages and site:verify passes for eight kits / 37 skills. The scanner and contract have no diff against origin/main 8d48c35. No paid model calls or production merge were performed.
+
+## Approved individual security-audit — 2026-11-18
+
+The owner approved `cloudflare/security-audit-skill:skills/security-audit` for Web App in chat, with a Linux/WSL prerequisite. This approves one individual skill, not the remaining nominated repositories or a whole-repository collection. Inclusion approval does not claim the owner personally read the source.
+
+Implementation: `236b464a2f556c9c0b817f202931fb617e5bb92e` on `data/approved-security-audit`, based on production commit `7c3c8e9`. The separate working folder preserves the pending homepage work elsewhere. No site implementation or dependency files change in this increment.
+
+The existing reviewed-kit importer rechecked the pinned source commit `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8`, all 20 skill files and their Git blob hashes, then applied its normal scan, license, review-score and curation gates. The durable review fingerprint is `ccbc33ed119b28c3ef7b44a7e2081ab191ad63af`. Its source nomination, individual approval and provenance are versioned, so a later extraction can find the review. Detailed scan reports, source copies and execution logs remain private. Public records use the importer's existing redaction placeholder; the durable review keeps its level and empty notes.
+
+Catalog verification: 245 skills, 17 collections and 8 kits. Every one of the previous 244 skill records and all collections is preserved. Only Web App gains the individual selection; the seven unrelated kits are unchanged. The Linux prerequisite, targeted install command, pinned license evidence, kit link and search entry are present in the built output. The new record keeps `humanReviewed: false`.
+
+Checks: typecheck and all 984 project tests pass; the site build produces 276 pages and site verification passes for 8 kits / 245 skill pages. The unmodified upstream validator suite passes all 65 tests in isolated Ubuntu with Node 24.22.3. Native Windows with Node 26.13.0 has 46 passing, 7 failing and 12 skipped tests: the validator CLIs require input protections unavailable in that runtime. Full audit orchestration and the installation command were not executed; validator tests do not establish vulnerability-detection effectiveness.
+
+Environment limitation inherited from the shared base: a standard `npm ci` fails because the lockfile lacks several optional `@emnapi/core` and `@emnapi/runtime` peer entries. Validation dependencies were prepared with `npm install --package-lock=false --no-save --ignore-scripts --no-audit --no-fund`; package.json and package-lock.json remain unchanged. A clean-install repair is separate work. The scheduled pipeline's missing model credential also remains unchanged; no paid calls or credentials were added.
+
+Synchronization target: publish this accepted increment on its feature branch and advance `integration/validated-sprints` without rewriting history. Production main remains a separate release decision. The other workstation's actual fetch/merge has not been observed. To update its own feature branch after preserving local changes:
+
+    git status
+    git fetch origin
+    git merge origin/integration/validated-sprints
+    npm run typecheck
+    npm test
+    npm run site:build
+    npm run site:verify
+
+Resolve conflicts without discarding either workstation's work. Do not reset an active branch or replace its history to synchronize it.
+
+## Approved individual Expo skills — 2026-11-18
+
+The owner explicitly approved four individual additions in chat: `expo-project-structure`, `expo-router`, `expo-design-system` and `expo-upgrade`. All four belong to Web App; `expo-design-system` also belongs to UI Design. This is not approval of a whole-repository collection, other Expo skills or a production merge.
+
+Implementation: `065d905d6706ad35d16c16a24c7ab64e2515d9d8` on `data/approved-security-audit`, following the accepted security-audit increment. The existing reviewed-kit importer was run in preview mode, its preservation assertions passed, then it was run with `--apply`. Both runs verified the complete tree and Git blob hashes at source commit `dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d`. The four selected folders contain 23 text files; all pass the unchanged static scanner without skipped files. The normal license, fingerprint, review-score and curation gates remain in effect.
+
+The source nomination, four durable fingerprint-matched reviews and individual approval evidence are versioned under `data/`. Detailed findings, source copies, scans and execution logs remain private. Durable review security notes are empty and public records retain the existing redaction placeholder. Every new record keeps `humanReviewed: false`; inclusion approval does not claim the owner personally read the source.
+
+Catalog: 249 skills, 17 collections, 8 kits. Every previous skill record and collection is preserved. Only Web App and UI Design gain entries; the other six kits are unchanged. No whole-repository collection was added. Site implementation, dependencies, shared pipeline code, scripts, schemas, workflows and scan overrides are unchanged.
+
+Checks on the combined code: `npm.cmd run typecheck` passes; `npm.cmd test` passes all 984 tests across 26 files; `npm.cmd run site:build` produces 281 pages; `npm.cmd run site:verify` passes for eight kits and 249 skill pages. Additional built-output checks confirm four individual install commands, five kit links, four searchable entries, pinned MIT evidence and neutral session-review labels. Preview/application preservation checks and `git diff --check` pass.
+
+Review scope: all 25 primary Expo instruction files were read, and six skills received complete associated-file reviews. Only the four approved selections are imported. A separate private fixture suite reproduced six defects in three unselected skills (14 checks: eight pass, six fail); those failures are not part of the passing project suite. No generated application, device run, actual SDK migration, installation command or remote service operation was executed. No paid calls or credentials were used. Static clearance is not runtime certification.
+
+Inherited site limitation for follow-up: the generic repository detail page offers an unfiltered installation command with a scope warning even when the repository has no approved collection. The Expo repository page therefore still offers that existing control. This data increment does not change that interface or treat it as collection approval. A separate site change should decide whether to restrict this control to approved collections.
+
+The previously documented clean-install lockfile issue and scheduled workflow credential issue remain unchanged. The site remains stopped. Push the feature branch normally and advance `integration/validated-sprints` to this accepted increment after confirming it has not diverged. PR #7 carries the combined approved data changes; main remains `7c3c8e9` until a separate release decision. The other workstation's actual fetch and merge remain unobserved.
+
+Other-workstation handoff, after committing or stashing its local work on its own feature branch:
+
+    git status
+    git fetch origin
+    git merge origin/integration/validated-sprints
+    git merge-base --is-ancestor origin/integration/validated-sprints HEAD
+    npm run typecheck
+    npm test
+    npm run site:build
+    npm run site:verify
+
+On Windows PowerShell use `npm.cmd` for these commands. Report the resulting commit and checks; a successful remote push alone does not establish that the second workstation updated.
+
+## Complete collection directory — local sprint proposal, 2026-11-18
+
+The owner requested complete collection membership, more collections per domain and no exclusion based solely on age, and assigned this workstation the pipeline portion while the other workstation handles separate work. Work is isolated on `ui/complete-collection-directory`. Production UI changes through `669570d` were merged into the branch without discarding the accepted additions at `c69553c`. Other worktrees remain untouched.
+
+The additive contract and reproduction commands are in `docs/COLLECTION-DIRECTORY.md`. Reviewed entries retain actual reviews; source listings have no invented editorial assessment. All admitted collection members require current scan clearance, including those with permissive licenses. Last-push age no longer rejects a candidate; dates remain context. An archived source is still subject to the existing gate. No scan overrides, credentials, scheduled workflows or dependency declarations were changed for this implementation.
+
+Local content proposal: 3,361 available records (236 with editorial reviews, 3,125 source listings), 29 collections in the catalog, 25 collections attached to domains. Each domain has at least three collections; Documents has four. Twelve additional repositories are proposed, including the two older candidates retained after the owner's clarification. Source and license evidence is pinned where available. Inclusion is proposed in this working branch, not a claim of final owner acceptance or successful native/service execution.
+
+The selected inventory contains 3,539 valid records and 67 invalid primary files. Of the valid records, 193 remain pending rather than being treated as confirmed harmful or approved by default. The public catalog also preserves 15 available entries outside the refreshed repositories. Findings and the inventory reconciliation remain private. Previously approved selections that need renewed assessment remain in curation and are marked pending; durable reviews are preserved rather than applied to changed content.
+
+Unfiltered installation controls require explicit complete membership and a pinned revision; partial collections offer individual choices. Ambiguous install names link to their source instead of copying a potentially different member. Browser checks use a temporary localhost server and an isolated profile, never a user's logged-in session. No upstream skill code was executed.
+
+This sprint is not yet accepted or pushed. Show the owner desktop/mobile output and the final check results before publishing the implementation. Do not advance `integration/validated-sprints` or merge main for this proposal. The other workstation has not been observed fetching or merging it.
+
+Final local checks: typecheck passes; all 1,001 tests across 28 files pass; site build produces 3,405 pages; site verification passes for eight kits and 3,361 skill pages. Isolated Chrome checks pass on all eight kit pages, the homepage and a source listing at 1440px and 390px (20 page checks), plus search and command-copy checks, with no page errors or document overflow. The temporary server is stopped. Original-worktree homepage edits remain untouched. Remote main remains `669570d`, accepted integration remains `c69553c`, and no implementation push or production merge has been performed for this sprint.
+
+## Complete-directory sprint approval — 2026-11-18
+
+After inspecting the running local site, the owner explicitly requested stopping it and merging this sprint. This accepts the available collection inventory, the twelve additional collections and the rule that age alone does not exclude candidates. It authorizes pushing the feature branch, opening its PR, merging into main and advancing the accepted integration baseline normally, without rewriting history. The earlier local-proposal notes above describe the pre-approval state and are superseded by this approval.
+
+Implementation: `c20cb1566be3df36612e56a96e05db577ba2a5e5`, with planning alignment at `cb659fd651bb40aa21d551cb9d87a0959f5a97c2`, on `ui/complete-collection-directory`. The already approved production UI at `669570d` is included. The unchanged catalog has 3,361 available records (236 with existing reviews, 3,125 source listings), 29 collections and eight domains; Documents has four collections and every other domain has three. The 193 pending entries and 67 invalid primary files remain unadmitted. Approval is not a claim of human source-file review or successful runtime execution of each skill.
+
+The local server has been stopped and no listener remains on ports 4342/4344. Before publication, confirm the combined code with typecheck, tests, site build and site verification, then check the PR head and remote branch references. No private source copies or reports may be committed. The scheduled workflow and credentials remain unchanged. A repository merge does not itself verify a hosting deployment.
+
+After the authorized merge, synchronize `integration/validated-sprints` with the verified production merge without overwriting other branches. The other workstation's update remains unobserved. After preserving local work on its own feature branch, it should run:
+
+    git status
+    git fetch origin
+    git merge origin/integration/validated-sprints
+    git merge-base --is-ancestor origin/integration/validated-sprints HEAD
+    npm run typecheck
+    npm test
+    npm run site:build
+    npm run site:verify
+
+Use `npm.cmd` under Windows PowerShell. Report the fetched commit and check results; do not infer the second workstation updated from a successful push here.
