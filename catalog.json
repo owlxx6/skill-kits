@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T18:15:28.413Z",
+  "generatedAt": "2026-11-18T21:33:39.281Z",
   "kits": [
     {
       "id": "resume-career",
@@ -16,7 +16,9 @@
         "davila7/claude-code-templates:cli-tool/components/skills/career/resume-tailor",
         "davila7/claude-code-templates:cli-tool/components/skills/career/resume-ats-optimizer",
         "davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer",
-        "davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator"
+        "davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator",
+        "Paramchoudhary/ResumeSkills:skills/application-form-filler",
+        "Paramchoudhary/ResumeSkills:skills/cold-email-writer"
       ],
       "pending": [],
       "removed": [],
@@ -120,11 +122,13 @@
       "description": "Write and format professional documents such as reports, proposals, slide decks, PDFs and technical documentation.",
       "collections": [
         "anthropics/skills",
-        "arih04x/office-skills",
         "shinob/msoffice-skills",
         "phuryn/pm-skills"
       ],
-      "skills": [],
+      "skills": [
+        "MiniMax-AI/skills:skills/minimax-pdf",
+        "firecrawl/anydoc:skills/convert-documents-to-markdown"
+      ],
       "pending": [],
       "removed": [],
       "proposals": {
@@ -14205,6 +14209,246 @@
       "score": 7.9,
       "humanReviewed": false,
       "installable": true
+    },
+    {
+      "id": "MiniMax-AI/skills:skills/minimax-pdf",
+      "repo": "MiniMax-AI/skills",
+      "path": "skills/minimax-pdf",
+      "name": "minimax-pdf",
+      "description": "Use this skill when visual quality and design identity matter for a PDF. CREATE (generate from scratch): \"make a PDF\", \"generate a report\", \"write a proposal\", \"create a resume\", \"beautiful PDF\", \"professional document\", \"cover page\", \"polished PDF\", \"client-ready document\". FILL (complete form fields): \"fill in the form\", \"fill out this PDF\", \"complete the form fields\", \"write values into PDF\", \"what fields does this PDF have\". REFORMAT (apply design to an existing doc): \"reformat this document\", \"apply our style\", \"convert this Markdown/text to PDF\", \"make this doc look good\", \"re-style this PDF\". This skill uses a token-based design system: color, typography, and spacing are derived from the document type and flow through every page. The output is print-ready. Prefer this skill when appearance matters, not just when any PDF output is needed.",
+      "url": "https://github.com/MiniMax-AI/skills/tree/02853d885acb1abc157477ce00c4d98a8ed14a71/skills/minimax-pdf",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/minimax-pdf/SKILL.md",
+        "url": "https://github.com/MiniMax-AI/skills/blob/02853d885acb1abc157477ce00c4d98a8ed14a71/skills/minimax-pdf/SKILL.md"
+      },
+      "stars": 13870,
+      "forks": 1212,
+      "pushedAt": "2026-11-10T15:35:17Z",
+      "review": {
+        "kits": [
+          "docs-reports"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Create, fill and restyle print-ready PDFs with a design system: 15 document types, charts, math, tables and form filling.",
+        "summary": "Three routes: CREATE a styled PDF from a content file (cover rendered in a headless browser, body with ReportLab), FILL existing form fields after inspecting their names, and REFORMAT Markdown, text or PDF into the design. A design guide explains palette, type and spacing.",
+        "strengths": [
+          "Complete pipeline with 20 block types (tables, charts, math, flowcharts, bibliography) and a documented design rationale.",
+          "Form filling inspects the real field names first instead of guessing them.",
+          "A check command reports missing dependencies, and the merge step runs a page-count and file-size sanity check."
+        ],
+        "cautions": [
+          "Heavy setup: Python 3.9+ with reportlab and pypdf, Node 18+, Playwright and Chromium. Several scripts install missing packages themselves (pip with --break-system-packages, npm install -g).",
+          "Cover pages load Google Fonts over the network when rendered; body pages use system fonts.",
+          "SKILL.md, the design guide, make.sh, merge.py and render_cover.js were read; the large rendering scripts were searched for risky calls, not read line by line, and the pipeline was not run, so output quality is unverified."
+        ],
+        "keywords": [
+          "PDF",
+          "report",
+          "proposal",
+          "form filling",
+          "reformat",
+          "design system",
+          "charts",
+          "reportlab",
+          "cover page",
+          "print-ready"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 8.4,
+      "score": 8.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "firecrawl/anydoc:skills/convert-documents-to-markdown",
+      "repo": "firecrawl/anydoc",
+      "path": "skills/convert-documents-to-markdown",
+      "name": "convert-documents-to-markdown",
+      "description": "Convert Word (.doc, .docx), PowerPoint (.ppt, .pptx), Excel (.xls, .xlsx), OpenDocument (.odt, .ods, .odp), RTF, EPUB, CSV, and PDF files to GitHub-Flavored Markdown. Use when a task needs the contents of an office document, spreadsheet, presentation, ebook, or PDF you cannot read directly.",
+      "url": "https://github.com/firecrawl/anydoc/tree/6feb6c2aedd69b97fa8af112ffeb187dcf79986e/skills/convert-documents-to-markdown",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/convert-documents-to-markdown/SKILL.md",
+        "url": "https://github.com/firecrawl/anydoc/blob/6feb6c2aedd69b97fa8af112ffeb187dcf79986e/skills/convert-documents-to-markdown/SKILL.md"
+      },
+      "stars": 23604,
+      "forks": 1535,
+      "pushedAt": "2026-11-18T20:15:51Z",
+      "review": {
+        "kits": [
+          "docs-reports"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 7,
+          "usefulness": 8
+        },
+        "why": "Turn Word, Excel, PowerPoint, OpenDocument, EPUB and PDF files into clean Markdown with one command so the agent can read them.",
+        "summary": "Runs the anydoc command through npx on a file or stdin and writes GitHub-flavored Markdown. Lists the supported formats and exit codes, advises on large files, and offers a hosted OCR option for scanned PDFs.",
+        "strengths": [
+          "One command covers about twenty office, ebook and PDF formats; the format is detected from the content.",
+          "Documents exit codes and failure output so the agent can react to them.",
+          "Advises writing large conversions to a file and reading only the needed parts."
+        ],
+        "cautions": [
+          "Runs npx -y @firecrawl/anydoc, which fetches an unpinned npm package at run time; the package itself was not reviewed here.",
+          "The optional hosted OCR mode sends the document to Firecrawl Parse; the default mode does no OCR.",
+          "Instruction-only skill; conversion quality on complex layouts was not tested."
+        ],
+        "keywords": [
+          "document conversion",
+          "markdown",
+          "docx",
+          "xlsx",
+          "pptx",
+          "pdf",
+          "epub",
+          "ocr",
+          "office files",
+          "reading documents"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8,
+      "repoSignal": 8.9,
+      "score": 8.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "Paramchoudhary/ResumeSkills:skills/application-form-filler",
+      "repo": "Paramchoudhary/ResumeSkills",
+      "path": "skills/application-form-filler",
+      "name": "application-form-filler",
+      "description": "Fill out job application form fields with context-aware, tailored answers drawn from the candidate's CV and the job description",
+      "url": "https://github.com/Paramchoudhary/ResumeSkills/tree/74ae19e7c62b0516d1c298328e5544976c12da5d/skills/application-form-filler",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/Paramchoudhary/ResumeSkills/blob/74ae19e7c62b0516d1c298328e5544976c12da5d/LICENSE"
+      },
+      "stars": 3253,
+      "forks": 260,
+      "pushedAt": "2026-06-19T07:20:29Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Draft honest, specific answers to job-application form fields from the candidate's CV and the job posting.",
+        "summary": "Seven question types (experience, why this company, portfolio, technical skills, tell us about yourself, behavioral, opinion), each with a format, rules, length targets and before/after examples. Answers come as copy-paste blocks.",
+        "strengths": [
+          "Clear format and rules for each question type, with a length target per field.",
+          "Insists on real projects and honest years or ratings; warns against repeating the job posting or padding.",
+          "Asks for the CV and the job description before writing instead of guessing."
+        ],
+        "cautions": [
+          "Examples come from one engineer's projects; answers must use the user's own facts.",
+          "Tuned to technical roles on English-language application systems; no guidance for salary, work-authorization or diversity questions.",
+          "Instruction-only skill: no scripts or form integration, nothing is submitted for the user."
+        ],
+        "keywords": [
+          "job application",
+          "application form",
+          "ATS form",
+          "why this company",
+          "tell us about yourself",
+          "behavioral questions",
+          "resume",
+          "career"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 5.1,
+      "score": 7.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "Paramchoudhary/ResumeSkills:skills/cold-email-writer",
+      "repo": "Paramchoudhary/ResumeSkills",
+      "path": "skills/cold-email-writer",
+      "name": "cold-email-writer",
+      "description": "Write personalized cold outreach emails to hiring managers and founders — specific, human, not a pitch deck",
+      "url": "https://github.com/Paramchoudhary/ResumeSkills/tree/74ae19e7c62b0516d1c298328e5544976c12da5d/skills/cold-email-writer",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/Paramchoudhary/ResumeSkills/blob/74ae19e7c62b0516d1c298328e5544976c12da5d/LICENSE"
+      },
+      "stars": 3253,
+      "forks": 260,
+      "pushedAt": "2026-06-19T07:20:29Z",
+      "review": {
+        "kits": [
+          "resume-career"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 7,
+          "usefulness": 8
+        },
+        "why": "Write short, specific cold emails to hiring managers and founders that read like a person, not a cover letter.",
+        "summary": "A template for the subject, hook, location and experience-gap disclosure, short background, connection and closing, with research steps, length limits, phrases to avoid and a full example email.",
+        "strengths": [
+          "Concrete structure with good and bad hook examples and a list of filler phrases to drop.",
+          "Covers real situations: writing from another country, or a role that asks for more years than the candidate has.",
+          "A research checklist and a 200 to 300 word target keep each email specific."
+        ],
+        "cautions": [
+          "The voice is informal and startup-oriented; it may not suit formal industries or some regions.",
+          "No follow-up or reply guidance, and nothing checks that the claims in the email are true.",
+          "The example email uses invented people and companies."
+        ],
+        "keywords": [
+          "cold email",
+          "outreach",
+          "hiring manager",
+          "founder",
+          "job search",
+          "networking",
+          "introduction",
+          "email writing"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8,
+      "repoSignal": 5.1,
+      "score": 7.1,
+      "humanReviewed": false
     }
   ],
   "sourceSkills": [
@@ -72284,98 +72528,6 @@
       "reviewStatus": "unreviewed"
     },
     {
-      "id": "arih04x/office-skills:.claude/skills/office-skills-review",
-      "repo": "arih04x/office-skills",
-      "path": ".claude/skills/office-skills-review",
-      "name": "office-skills-review",
-      "description": "Review pull requests and local changes for the office-skills repository. Use when validating Office skills, checking SKILL.md frontmatter, reviewing repository structure, or scanning for hardcoded secrets before commit/push.",
-      "url": "https://github.com/arih04x/office-skills/tree/0fb34f48e26eb934b1cdd012b8d080b1e2105087/.claude/skills/office-skills-review",
-      "license": "MIT",
-      "licenseOutcome": "identified",
-      "licenseCategory": "permissive",
-      "licenseEvidence": {
-        "level": "skill",
-        "path": ".claude/skills/office-skills-review/SKILL.md",
-        "url": "https://github.com/arih04x/office-skills/blob/0fb34f48e26eb934b1cdd012b8d080b1e2105087/.claude/skills/office-skills-review/SKILL.md"
-      },
-      "stars": 6,
-      "forks": 0,
-      "pushedAt": "2026-05-12T08:45:20Z",
-      "repoSignal": 0,
-      "humanReviewed": false,
-      "installable": true,
-      "reviewStatus": "unreviewed"
-    },
-    {
-      "id": "arih04x/office-skills:office-figure",
-      "repo": "arih04x/office-skills",
-      "path": "office-figure",
-      "name": "office-figure",
-      "description": "Create editable research figures, diagrams, charts, and hybrid visual assets for Word, PowerPoint, and LaTeX. Use for method figures, architecture diagrams, pipelines, flowcharts, data charts, scientific illustrations, visual abstracts, figure redesign, style-guided image generation, TikZ/PGFPlots, draw.io, SVG/PNG export, and Word/PPT/LaTeX insertion-ready figures.",
-      "url": "https://github.com/arih04x/office-skills/tree/0fb34f48e26eb934b1cdd012b8d080b1e2105087/office-figure",
-      "license": "MIT",
-      "licenseOutcome": "identified",
-      "licenseCategory": "permissive",
-      "licenseEvidence": {
-        "level": "repository",
-        "path": "LICENSE",
-        "url": "https://github.com/arih04x/office-skills/blob/0fb34f48e26eb934b1cdd012b8d080b1e2105087/LICENSE"
-      },
-      "stars": 6,
-      "forks": 0,
-      "pushedAt": "2026-05-12T08:45:20Z",
-      "repoSignal": 0,
-      "humanReviewed": false,
-      "installable": true,
-      "reviewStatus": "unreviewed"
-    },
-    {
-      "id": "arih04x/office-skills:office-motion",
-      "repo": "arih04x/office-skills",
-      "path": "office-motion",
-      "name": "office-motion",
-      "description": "Create promotional GIFs, animated stickers, short motion assets, and PowerPoint-ready animated visuals for Office workflows. Use for marketing GIFs, PPT animated GIF insertion, looping product promos, animated banners, social/WeChat motion assets, GIF optimization, MP4-to-GIF conversion, image-sequence animation, motion storyboards, and presentation-safe animated media.",
-      "url": "https://github.com/arih04x/office-skills/tree/0fb34f48e26eb934b1cdd012b8d080b1e2105087/office-motion",
-      "license": "MIT",
-      "licenseOutcome": "identified",
-      "licenseCategory": "permissive",
-      "licenseEvidence": {
-        "level": "repository",
-        "path": "LICENSE",
-        "url": "https://github.com/arih04x/office-skills/blob/0fb34f48e26eb934b1cdd012b8d080b1e2105087/LICENSE"
-      },
-      "stars": 6,
-      "forks": 0,
-      "pushedAt": "2026-05-12T08:45:20Z",
-      "repoSignal": 0,
-      "humanReviewed": false,
-      "installable": true,
-      "reviewStatus": "unreviewed"
-    },
-    {
-      "id": "arih04x/office-skills:office-pdf",
-      "repo": "arih04x/office-skills",
-      "path": "office-pdf",
-      "name": "office-pdf",
-      "description": "Create, inspect, extract, render, fill, merge, split, and validate PDF files with cross-platform Python workflows. Use for PDF work: polished report/proposal PDFs, PDF visual QA, form field inspection/filling, text/table extraction, PDF page rendering to PNG, PDF repair diagnostics, combining PDFs, converting structured content to PDF, or checking PDF print/readability quality.",
-      "url": "https://github.com/arih04x/office-skills/tree/0fb34f48e26eb934b1cdd012b8d080b1e2105087/office-pdf",
-      "license": "MIT",
-      "licenseOutcome": "identified",
-      "licenseCategory": "permissive",
-      "licenseEvidence": {
-        "level": "repository",
-        "path": "LICENSE",
-        "url": "https://github.com/arih04x/office-skills/blob/0fb34f48e26eb934b1cdd012b8d080b1e2105087/LICENSE"
-      },
-      "stars": 6,
-      "forks": 0,
-      "pushedAt": "2026-05-12T08:45:20Z",
-      "repoSignal": 0,
-      "humanReviewed": false,
-      "installable": true,
-      "reviewStatus": "unreviewed"
-    },
-    {
       "id": "shinob/msoffice-skills:docx-design-ops",
       "repo": "shinob/msoffice-skills",
       "path": "docx-design-ops",
@@ -89188,30 +89340,6 @@
       ],
       "installScope": "repository",
       "revision": "85189e64c79dd544aa40d2d8b1a205517e6b0775",
-      "kitScores": {},
-      "humanReviewed": false
-    },
-    {
-      "id": "arih04x/office-skills",
-      "url": "https://github.com/arih04x/office-skills",
-      "description": "Our mission is to create the ultimate Office skill: the most comprehensive, the most effective, and the most universally applicable solution for every document, spreadsheet, slide, and workflow.",
-      "license": "MIT",
-      "licenses": [
-        "MIT"
-      ],
-      "stars": 6,
-      "forks": 0,
-      "pushedAt": "2026-05-12T08:45:20Z",
-      "repoSignal": 0,
-      "skillCount": 6,
-      "catalogSkillIds": [
-        "arih04x/office-skills:.claude/skills/office-skills-review",
-        "arih04x/office-skills:office-figure",
-        "arih04x/office-skills:office-motion",
-        "arih04x/office-skills:office-pdf"
-      ],
-      "installScope": "listed",
-      "revision": "0fb34f48e26eb934b1cdd012b8d080b1e2105087",
       "kitScores": {},
       "humanReviewed": false
     },

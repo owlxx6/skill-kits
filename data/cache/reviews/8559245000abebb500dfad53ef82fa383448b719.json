@@ -1,0 +1,43 @@
+{
+  "fingerprint": "8559245000abebb500dfad53ef82fa383448b719",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:33:39.276Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "Turn Word, Excel, PowerPoint, OpenDocument, EPUB and PDF files into clean Markdown with one command so the agent can read them.",
+    "summary": "Runs the anydoc command through npx on a file or stdin and writes GitHub-flavored Markdown. Lists the supported formats and exit codes, advises on large files, and offers a hosted OCR option for scanned PDFs.",
+    "strengths": [
+      "One command covers about twenty office, ebook and PDF formats; the format is detected from the content.",
+      "Documents exit codes and failure output so the agent can react to them.",
+      "Advises writing large conversions to a file and reading only the needed parts."
+    ],
+    "cautions": [
+      "Runs npx -y @firecrawl/anydoc, which fetches an unpinned npm package at run time; the package itself was not reviewed here.",
+      "The optional hosted OCR mode sends the document to Firecrawl Parse; the default mode does no OCR.",
+      "Instruction-only skill; conversion quality on complex layouts was not tested."
+    ],
+    "keywords": [
+      "document conversion",
+      "markdown",
+      "docx",
+      "xlsx",
+      "pptx",
+      "pdf",
+      "epub",
+      "ocr",
+      "office files",
+      "reading documents"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

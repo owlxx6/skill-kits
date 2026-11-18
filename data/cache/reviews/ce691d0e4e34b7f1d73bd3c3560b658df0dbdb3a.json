@@ -1,0 +1,43 @@
+{
+  "fingerprint": "ce691d0e4e34b7f1d73bd3c3560b658df0dbdb3a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:33:39.276Z",
+  "review": {
+    "kits": [
+      "docs-reports"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Create, fill and restyle print-ready PDFs with a design system: 15 document types, charts, math, tables and form filling.",
+    "summary": "Three routes: CREATE a styled PDF from a content file (cover rendered in a headless browser, body with ReportLab), FILL existing form fields after inspecting their names, and REFORMAT Markdown, text or PDF into the design. A design guide explains palette, type and spacing.",
+    "strengths": [
+      "Complete pipeline with 20 block types (tables, charts, math, flowcharts, bibliography) and a documented design rationale.",
+      "Form filling inspects the real field names first instead of guessing them.",
+      "A check command reports missing dependencies, and the merge step runs a page-count and file-size sanity check."
+    ],
+    "cautions": [
+      "Heavy setup: Python 3.9+ with reportlab and pypdf, Node 18+, Playwright and Chromium. Several scripts install missing packages themselves (pip with --break-system-packages, npm install -g).",
+      "Cover pages load Google Fonts over the network when rendered; body pages use system fonts.",
+      "SKILL.md, the design guide, make.sh, merge.py and render_cover.js were read; the large rendering scripts were searched for risky calls, not read line by line, and the pipeline was not run, so output quality is unverified."
+    ],
+    "keywords": [
+      "PDF",
+      "report",
+      "proposal",
+      "form filling",
+      "reformat",
+      "design system",
+      "charts",
+      "reportlab",
+      "cover page",
+      "print-ready"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

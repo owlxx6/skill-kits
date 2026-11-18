@@ -1,0 +1,67 @@
+[
+  {
+    "id": "Paramchoudhary/ResumeSkills:skills/application-form-filler",
+    "commit": "74ae19e7c62b0516d1c298328e5544976c12da5d",
+    "fingerprint": "5e13627a7457094d89c908984931a4b3bdf0938b",
+    "sourceUrl": "https://github.com/Paramchoudhary/ResumeSkills/tree/74ae19e7c62b0516d1c298328e5544976c12da5d/skills/application-form-filler",
+    "reviewedAt": "2026-11-18T21:33:39.276Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T21:36:37.305Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this individual addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "resume-career",
+    "validationScope": "Complete SKILL.md read. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "id": "Paramchoudhary/ResumeSkills:skills/cold-email-writer",
+    "commit": "74ae19e7c62b0516d1c298328e5544976c12da5d",
+    "fingerprint": "fbbd2eda52cdebd0e4f1031e7baac4487b1d2245",
+    "sourceUrl": "https://github.com/Paramchoudhary/ResumeSkills/tree/74ae19e7c62b0516d1c298328e5544976c12da5d/skills/cold-email-writer",
+    "reviewedAt": "2026-11-18T21:33:39.276Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T21:36:37.305Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this individual addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "resume-career",
+    "validationScope": "Complete SKILL.md read. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "id": "MiniMax-AI/skills:skills/minimax-pdf",
+    "commit": "02853d885acb1abc157477ce00c4d98a8ed14a71",
+    "fingerprint": "ce691d0e4e34b7f1d73bd3c3560b658df0dbdb3a",
+    "sourceUrl": "https://github.com/MiniMax-AI/skills/tree/02853d885acb1abc157477ce00c4d98a8ed14a71/skills/minimax-pdf",
+    "reviewedAt": "2026-11-18T21:33:39.276Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T21:36:37.305Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this individual addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "docs-reports",
+    "validationScope": "Complete SKILL.md read, plus the design guide, make.sh, merge.py and render_cover.js; the large rendering scripts were searched for risky calls but not read line by line. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "id": "firecrawl/anydoc:skills/convert-documents-to-markdown",
+    "commit": "6feb6c2aedd69b97fa8af112ffeb187dcf79986e",
+    "fingerprint": "8559245000abebb500dfad53ef82fa383448b719",
+    "sourceUrl": "https://github.com/firecrawl/anydoc/tree/6feb6c2aedd69b97fa8af112ffeb187dcf79986e/skills/convert-documents-to-markdown",
+    "reviewedAt": "2026-11-18T21:33:39.276Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T21:36:37.305Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this individual addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "docs-reports",
+    "validationScope": "Complete SKILL.md read. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "repository": "arih04x/office-skills",
+    "kit": "docs-reports",
+    "kind": "collection-removal",
+    "status": "owner-approved",
+    "ownerApprovedAt": "2026-11-18T21:36:37.305Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved removing this repository from Docs & reports in chat. Reason: after reading its listed skills, three are short stubs that overlap existing parts of the kit and one reviews pull requests for the repository itself."
+  }
+]

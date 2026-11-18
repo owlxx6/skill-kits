@@ -15,8 +15,10 @@ repos:
   - cloudflare/security-audit-skill
   - expo/skills
   - jirawatp/resume-career-toolkit
-  - arih04x/office-skills
   - shinob/msoffice-skills
+  - Paramchoudhary/ResumeSkills
+  - MiniMax-AI/skills
+  - firecrawl/anydoc
   - Orchestra-Research/AI-Research-SKILLs
   - KalarisLabs/research-agent-skills
   - emilkowalski/skills

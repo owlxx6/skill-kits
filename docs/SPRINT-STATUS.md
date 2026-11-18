@@ -172,3 +172,21 @@ After the authorized merge, synchronize `integration/validated-sprints` with the
     npm run site:verify
 
 Use `npm.cmd` under Windows PowerShell. Report the fetched commit and check results; do not infer the second workstation updated from a successful push here.
+
+## Individual additions chosen by usefulness, and one removal — 2026-11-18
+
+The owner asked that skills be judged by how useful they are, not by stars or forks. Candidate and existing parts were compared by reading their skill files at the pinned commits.
+
+Approved by the owner in chat, for four individual skills and one removal:
+
+- Resume & career: `application-form-filler` and `cold-email-writer` from `Paramchoudhary/ResumeSkills`. They cover application-form answers and cold outreach, which the kit lacked. `jirawatp/resume-career-toolkit` stays: its 20 skills are lean and practical, and its low star count says nothing about its content. `ResumeSkills` is not added as a collection because it overlaps the existing parts and holds 14 duplicated folders.
+- Docs & reports: `minimax-pdf` from `MiniMax-AI/skills` and `convert-documents-to-markdown` from `firecrawl/anydoc`. `MiniMax-AI/skills` is not added as a collection: most of it concerns mobile, music and shaders, and two of its slide skills declare a proprietary license.
+- Docs & reports: `arih04x/office-skills` is removed (collection and its four source listings). `shinob/msoffice-skills` stays.
+
+Reviews are in-session, fingerprint-matched under `data/cache/reviews/`, and every new record keeps `humanReviewed: false`. Approval and source commits are in `data/curation-evidence/replace-weak-parts-2026-11-18.json`. The three source repositories are nominated in `data/sources.yaml` (`arih04x/office-skills` is no longer nominated). The catalog goes from 236 to 240 reviewed skills, from 3,125 to 3,121 source listings, and from 29 to 28 collections.
+
+Held back: `minimax-docx` and `minimax-xlsx` have a `review` scan verdict (package installs with `sudo`, and a `PATH` line added to a shell profile, in setup scripts) and stay unadmitted until the owner decides. The proprietary-labelled slide skills and `pptx-generator` are not included. The other weak-looking parts (`TerminalSkills/skills`, `KalarisLabs/research-agent-skills`, `triggerdotdev/skills`) are still to be judged by content.
+
+Limits: nothing was executed. `minimax-pdf` needs Python, Node, Playwright and Chromium, and several of its scripts install packages themselves. `convert-documents-to-markdown` runs an unpinned npm package at run time. Its reviews say so.
+
+Checks: typecheck, 1,013 tests, site build (3,407 pages) and site verification (8 kits, 3,361 skill pages). Main is unchanged until a separate release decision.
