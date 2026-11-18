@@ -32,20 +32,20 @@ const scores = [
 const width = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
 ---
 <Base title={skill.name} description={review.why}>
-  <div class="wrap page" style="gap: var(--s7)">
+  <div class="wrap page">
     <header class="page-head">
       <Breadcrumbs items={crumbs} />
-      <p class="eyebrow">Skill · from <a href={collectionHref(skill.repo)}>{skill.repo}</a></p>
-      <h1 class="display" style="font-size: clamp(2rem, 1.2rem + 3vw, 3.25rem)">{skill.name}</h1>
+      <p class="eyebrow">From <a href={collectionHref(skill.repo)}>{skill.repo}</a></p>
+      <h1 class="display" style="font-size: var(--t-title)">{skill.name}</h1>
       <p class="lead">{review.summary}</p>
     </header>
 
     <div class="split aside-400">
-      <div class="primary" style="gap: var(--s7)">
-        <section aria-labelledby="install-title" style="display: flex; flex-direction: column; gap: var(--s3)">
-          <h2 id="install-title" style="font-size: var(--t-xl)">Install</h2>
+      <div class="primary" style="gap: var(--s8)">
+        <section aria-labelledby="install-title" style="display: flex; flex-direction: column; gap: var(--s4)">
+          <h2 id="install-title" style="font-size: var(--t-title)">Install</h2>
           <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} />
-          <p class="small muted">Installs this skill only. Reviewed, not tested: read the skill before you run it.{isCollection && <> To get every skill from this repository, use <a href={collectionHref(skill.repo)}>the collection</a>.</>}</p>
+          <p class="small muted">Installs this skill only.{isCollection && <> For the whole repository, use <a href={collectionHref(skill.repo)}>the collection</a>.</>} Reviewed, not tested: read it before you run it.</p>
         </section>
 
         {(review.strengths.length > 0 || review.cautions.length > 0) && (

@@ -26,8 +26,5 @@ const { catalog, collection, index } = Astro.props;
       updated={collection.pushedAt}
       source={collection.url}
     />
-    {collection.description && (
-      <blockquote class="quote"><cite>From the repository</cite>{collection.description}</blockquote>
-    )}
   </div>
 </li>

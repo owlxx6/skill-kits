@@ -20,13 +20,11 @@ const totalListed = collections.reduce((sum, entry) => sum + entry.catalogSkillI
 const afterStep = skills.length > 0 ? "03" : "02";
 ---
 <Base title={kit.title} description={kit.description}>
-  <div class="wrap page" style="gap: var(--s7)">
+  <div class="wrap page">
     <header class="page-head">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Kits", href: "/#kits" }, { label: kit.title }]} />
-      <p class="eyebrow">Kit</p>
       <h1 class="display">{kit.title}</h1>
       <p class="lead">{kit.description}</p>
-      <p class="meta-line"><span>Reviewed <time datetime={catalog.generatedAt}>{catalog.generatedAt.slice(0, 10)}</time></span><a href="/methodology/">How we pick</a></p>
     </header>
 
     {view.isEmpty ? (
@@ -39,17 +37,16 @@ const afterStep = skills.length > 0 ? "03" : "02";
         {collections.length > 0 && (
           <aside class="side install-box" aria-labelledby="quick-title">
             <h2 id="quick-title">Install this kit</h2>
-            <p>{plural(collections.length, "command")}, run in this order. {collections.length > 1 ? "This line runs them one after another." : ""}</p>
+            <p>{collections.length > 1 ? `${collections.length} commands in one line, run in order.` : "One command."}</p>
             <CopyCommand command={kitInstallCommand(collections.map((entry) => entry.id))} label={`Copy the install command for the whole ${kit.title} kit`} />
-            <p>Installs {totalInstalled.toLocaleString("en-US")} skills in total, {totalListed.toLocaleString("en-US")} of them listed here after review.</p>
+            <p>Installs {totalInstalled.toLocaleString("en-US")} skills, {totalListed.toLocaleString("en-US")} of them listed here.</p>
           </aside>
         )}
         <div class="primary">
           {collections.length > 0 && (
             <section aria-labelledby="parts-title">
               <div class="section-head">
-                <h2 id="parts-title"><span class="step-no">01</span>Install the collections, in this order</h2>
-                <p>Parts list · {collections.length}</p>
+                <h2 id="parts-title"><span class="step-no">01</span>Collections, in install order</h2>
               </div>
               <ol class="parts">{collections.map((collection, index) => <CollectionRow catalog={catalog} collection={collection} index={index} />)}</ol>
             </section>
@@ -58,18 +55,14 @@ const afterStep = skills.length > 0 ? "03" : "02";
             <section aria-labelledby="single-title">
               <div class="section-head">
                 <h2 id="single-title"><span class="step-no">{collections.length > 0 ? "02" : "01"}</span>Add single skills</h2>
-                <p>{collections.length > 0 ? "Optional · " : ""}{plural(skills.length, "skill")} picked for this job</p>
+                <p>{collections.length > 0 ? "Optional · " : ""}{plural(skills.length, "skill")}</p>
               </div>
               <ul class="rows">{skills.map((skill) => <SkillRow skill={skill} />)}</ul>
             </section>
           )}
           <section aria-labelledby="after-title">
             <div class="section-head"><h2 id="after-title"><span class="step-no">{collections.length > 0 ? afterStep : "02"}</span>After installing</h2></div>
-            <ol class="steps-after">
-              <li>Start a new agent session so it loads the new skills.</li>
-              <li>Open each part and read its cautions before the first run. Skills are reviewed, not tested.</li>
-              <li>Ask for the job in plain words. Your agent picks the matching skill.</li>
-            </ol>
+            <p class="after-note">Start a new agent session, then ask for the job in plain words. Skills are reviewed, not tested: read each one's cautions before the first run.</p>
           </section>
         </div>
       </div>

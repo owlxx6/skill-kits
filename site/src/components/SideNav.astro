@@ -17,10 +17,7 @@ const current = (match: boolean) => (match ? "page" : undefined);
   <ul class="side-kits">
     {catalog.kits.map((kit) => (
       <li>
-        <a href={`/kits/${kit.id}/`} aria-current={current(path === `/kits/${kit.id}/`)}>
-          <span>{kit.title}</span>
-          <span class="count" aria-label={`${kit.collections.length + kit.skills.length} parts`}>{kit.collections.length + kit.skills.length}</span>
-        </a>
+        <a href={`/kits/${kit.id}/`} aria-current={current(path === `/kits/${kit.id}/`)}>{kit.title}</a>
       </li>
     ))}
   </ul>

@@ -41,11 +41,10 @@ const listed = collection ? collection.catalogSkillIds.length : skills.length;
 const filterable = skills.length > 8;
 ---
 <Base title={repoId} description={collection?.description ?? `Skills from ${repoId}`}>
-  <div class="wrap page" style="gap: var(--s7)">
+  <div class="wrap page">
     <header class="page-head">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, ...(crumbKit ? [{ label: crumbKit.title, href: `/kits/${crumbKit.id}/` }] : []), { label: repoId }]} />
-      <p class="eyebrow">{collection ? "Collection · whole repository" : "Repository"}</p>
-      <h1 class="display" style="font-size: clamp(2rem, 1.2rem + 3vw, 3.25rem)">{repoId}</h1>
+      <h1 class="display" style="font-size: var(--t-title)">{repoId}</h1>
     </header>
 
     <div class="split even">
@@ -72,7 +71,7 @@ const filterable = skills.length > 8;
         <h2 id="trust-title" style="font-size: var(--t-md); margin-bottom: var(--s2)">Trust</h2>
         <dl class="facts">
           <dt>License</dt><dd>{collection ? collectionLicenseLabel(collection) : `Listed skills: ${listedLicenses.join(", ")}`}</dd>
-          <dt>Security</dt><dd><SecurityLevel level={listedSecurityLevel(catalog, repoId)} /><span class="hint">Highest level among the {plural(listed, "listed skill")}. Unlisted skills are not shown here.</span></dd>
+          <dt>Security</dt><dd><SecurityLevel level={listedSecurityLevel(catalog, repoId)} /><span class="hint">Highest among the listed skills.</span></dd>
           <dt>Review</dt><dd><ReviewStatus /></dd>
           {updated && <><dt>Last update</dt><dd><time datetime={updated}>{displayDate(updated)}</time></dd></>}
           <dt>Source</dt><dd><a href={`https://github.com/${repoId}`}>github.com/{repoId} <Icon name="external-link" size={14} /></a></dd>
@@ -85,10 +84,10 @@ const filterable = skills.length > 8;
     <section aria-labelledby="skills-title">
       <div class="section-head">
         <h2 id="skills-title">Listed skills</h2>
-        <p id="skill-count" aria-live="polite">{plural(skills.length, "skill")} · each can also be installed alone</p>
+        <p id="skill-count" aria-live="polite">{plural(skills.length, "skill")}</p>
       </div>
       {filterable && (
-        <div class="button-row" role="group" aria-label="Filter listed skills" style="padding: var(--s4) 0; border-bottom: 1px solid var(--rule)">
+        <div class="button-row" role="group" aria-label="Filter listed skills" style="padding: var(--s5) 0; border-bottom: 1px solid var(--rule)">
           <label class="field" for="license-filter">License
             <select id="license-filter"><option value="">All</option>{listedLicenses.map((license) => <option value={license}>{license}</option>)}</select>
           </label>
@@ -131,7 +130,7 @@ const filterable = skills.length > 8;
         list.append(row);
       }
       noMatch.hidden = visible > 0;
-      count.textContent = visible === total ? `${total} skills · each can also be installed alone` : `${visible} of ${total} skills`;
+      count.textContent = visible === total ? `${total} skills` : `${visible} of ${total} skills`;
     };
     for (const select of [license, security, sort]) select.addEventListener("change", apply);
   }

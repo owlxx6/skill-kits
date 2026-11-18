@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import Icon from "../components/Icon.astro";
 import PreviewTile from "../components/PreviewTile.astro";
 import Rail from "../components/Rail.astro";
 import SecurityLevel from "../components/SecurityLevel.astro";
@@ -13,29 +12,31 @@ const best = topSkillPerRepo(catalog, 6);
 <Base title="Skill Kits" description="Reviewed agent skills grouped into kits by job: what to install, in which order, with one command each.">
   <div class="wrap page">
     <section class="hero" aria-labelledby="hero-title">
-      <p class="eyebrow">Ready-made toolsets for AI coding agents</p>
       <h1 id="hero-title" class="display">Pick a job.<br /><span class="accent">Install the whole kit.</span></h1>
-      <p class="lead">Skill Kits groups reviewed agent skills by the work you want done. Each kit is a parts list: what to install, in which order, with one command per part.</p>
+      <p class="lead">Reviewed skills for AI coding agents, grouped by the work you want done.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#kits">Browse kits</a>
+        <a class="button" href="/search/">Search skills</a>
+      </div>
       <ol class="how" aria-label="How it works">
-        <li><span class="step-no">1</span><strong>Pick the kit for your job</strong><span>Each kit lists the right collections, in install order.</span></li>
-        <li><span class="step-no">2</span><strong>Run one command per part</strong><span>Copy it and paste it in your terminal.</span></li>
-        <li><span class="step-no">3</span><strong>Read what you installed</strong><span>Every skill shows its license, review and security scan level.</span></li>
+        <li><span class="step-no">1</span>Pick a kit</li>
+        <li><span class="step-no">2</span>Copy the command</li>
+        <li><span class="step-no">3</span>Check license and scan</li>
       </ol>
     </section>
 
-    <Rail id="kits" title="Kits" subtitle="Ready-made parts lists, one per job.">
+    <Rail id="kits" title="Kits">
       {catalog.kits.map((kit, index) => (
         <li>
           <a class="tile-link" href={`/kits/${kit.id}/`}>
             <span class="visually-hidden">{kit.title}: {plural(kit.collections.length, "collection")}{kit.skills.length > 0 ? `, ${plural(kit.skills.length, "single skill")}` : ""}</span>
             <PreviewTile kind="kit" tone={index} kit={kit} />
           </a>
-          <p class="tile-desc">{kit.description}</p>
         </li>
       ))}
     </Rail>
 
-    <Rail id="top-collections" title="Most starred collections" subtitle="Whole repositories you install with one command. Ranked by GitHub stars." viewAll={{ href: "/search/?type=collection", label: "All collections" }}>
+    <Rail id="top-collections" title="Most starred collections" viewAll={{ href: "/search/?type=collection", label: "All collections" }}>
       {top.map((collection, index) => (
         <li class="ranked">
           <span class="rank-num" aria-hidden="true">{index + 1}</span>
@@ -52,7 +53,7 @@ const best = topSkillPerRepo(catalog, 6);
       ))}
     </Rail>
 
-    <Rail id="top-skills" title="Highest-rated skills" subtitle="Top review score, one per repository." viewAll={{ href: "/search/?type=skill&sort=rating", label: "All skills" }}>
+    <Rail id="top-skills" title="Highest-rated skills" viewAll={{ href: "/search/?type=skill&sort=rating", label: "All skills" }}>
       {best.map((skill, index) => (
         <li>
           <a class="tile-link" href={skillHref(skill.id)} tabindex="-1" aria-hidden="true">
@@ -66,29 +67,5 @@ const best = topSkillPerRepo(catalog, 6);
         </li>
       ))}
     </Rail>
-
-    <section aria-labelledby="find-title" class="split even" style="align-items: end">
-      <div class="primary" style="gap: var(--s2)">
-        <h2 id="find-title" style="font-size: var(--t-xl)">Need one specific skill?</h2>
-        <p class="muted">Search by task, file type or publisher, then filter by kit, license or security level.</p>
-      </div>
-      <form class="search-form side" action="/search/" method="get" role="search">
-        <label for="home-search" class="visually-hidden">Search skills and collections</label>
-        <div class="search-input"><Icon name="search" size={20} /><input id="home-search" type="search" name="q" placeholder="cover letter, csv, slides" autocomplete="off" enterkeyhint="search" data-search-primary /></div>
-        <button class="button primary" type="submit">Search</button>
-      </form>
-    </section>
-
-    <section aria-labelledby="listed-title" style="display: flex; flex-direction: column; gap: var(--s5)">
-      <div class="section-head" style="border-bottom: 0; padding-bottom: 0">
-        <h2 id="listed-title">What “listed” means</h2>
-        <a class="view-all" href="/methodology/">How we pick <Icon name="chevron-right" size={16} /></a>
-      </div>
-      <dl class="listed-explainer">
-        <div><dt>Session reviewed</dt><dd>Each listed skill was read and scored for clarity, completeness and usefulness.</dd></div>
-        <div><dt>Security scan level</dt><dd>A static scan gives one level: none, notice or severe. The site shows the level, not the scan notes.</dd></div>
-        <div><dt>License and source</dt><dd>Every entry links to its repository and shows its license and last update.</dd></div>
-      </dl>
-    </section>
   </div>
 </Base>

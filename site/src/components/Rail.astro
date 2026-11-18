@@ -6,16 +6,16 @@ import Icon from "./Icon.astro";
 interface Props {
   id: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   viewAll?: { href: string; label: string };
 }
 const { id, title, subtitle, viewAll } = Astro.props;
 ---
 <section class="rail-section" aria-labelledby={`${id}-title`} id={id}>
-  <div class="section-head" style="border-bottom: 0; padding-bottom: var(--s5)">
+  <div class="section-head" style="border-bottom: 0; padding-bottom: var(--s6)">
     <div>
       <h2 id={`${id}-title`}>{title}</h2>
-      <p>{subtitle}</p>
+      {subtitle && <p>{subtitle}</p>}
     </div>
     <div style="display: flex; align-items: center; gap: var(--s3)">
       {viewAll && <a class="view-all" href={viewAll.href}>{viewAll.label} <Icon name="chevron-right" size={16} /></a>}

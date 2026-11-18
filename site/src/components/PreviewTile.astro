@@ -25,7 +25,6 @@ const skillNames = props.kind === "collection"
       <div class="tile-top"><span>PARTS LIST</span><span>{props.kit.collections.length} {props.kit.collections.length === 1 ? "part" : "parts"}</span></div>
       <p class="tile-title">{props.kit.title}</p>
       <ol class="tile-list">{props.kit.collections.slice(0, 3).map((id, i) => <li><span class="box">{i + 1}</span><span>{id}</span></li>)}</ol>
-      {props.kit.skills.length > 0 && <p class="tile-text">+ {props.kit.skills.length} single skills</p>}
     </>
   )}
   {props.kind === "skill" && (
@@ -33,7 +32,6 @@ const skillNames = props.kind === "collection"
       <div class="tile-top"><span>SKILL.md</span><span>{props.skill.reviewScore.toFixed(1)}/10</span></div>
       <p class="tile-title">{props.skill.name}</p>
       <p class="tile-text">{props.skill.review.why}</p>
-      <div class="tile-foot">--skill {props.skill.name}</div>
     </>
   )}
 </div>
