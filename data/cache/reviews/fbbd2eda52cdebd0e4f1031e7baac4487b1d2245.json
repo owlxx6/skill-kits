@@ -1,0 +1,41 @@
+{
+  "fingerprint": "fbbd2eda52cdebd0e4f1031e7baac4487b1d2245",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:33:39.276Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "Write short, specific cold emails to hiring managers and founders that read like a person, not a cover letter.",
+    "summary": "A template for the subject, hook, location and experience-gap disclosure, short background, connection and closing, with research steps, length limits, phrases to avoid and a full example email.",
+    "strengths": [
+      "Concrete structure with good and bad hook examples and a list of filler phrases to drop.",
+      "Covers real situations: writing from another country, or a role that asks for more years than the candidate has.",
+      "A research checklist and a 200 to 300 word target keep each email specific."
+    ],
+    "cautions": [
+      "The voice is informal and startup-oriented; it may not suit formal industries or some regions.",
+      "No follow-up or reply guidance, and nothing checks that the claims in the email are true.",
+      "The example email uses invented people and companies."
+    ],
+    "keywords": [
+      "cold email",
+      "outreach",
+      "hiring manager",
+      "founder",
+      "job search",
+      "networking",
+      "introduction",
+      "email writing"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

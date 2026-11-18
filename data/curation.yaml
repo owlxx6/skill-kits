@@ -9,6 +9,8 @@ resume-career:
     - davila7/claude-code-templates:cli-tool/components/skills/career/resume-bullet-writer
     - davila7/claude-code-templates:cli-tool/components/skills/career/interview-prep-generator
     - jirawatp/resume-career-toolkit
+    - Paramchoudhary/ResumeSkills:skills/application-form-filler
+    - Paramchoudhary/ResumeSkills:skills/cold-email-writer
   rejected: []
 web-app:
   approved:
@@ -40,9 +42,10 @@ data-analysis:
 docs-reports:
   approved:
     - anthropics/skills
-    - arih04x/office-skills
     - shinob/msoffice-skills
     - phuryn/pm-skills
+    - MiniMax-AI/skills:skills/minimax-pdf
+    - firecrawl/anydoc:skills/convert-documents-to-markdown
   rejected: []
 marketing-content:
   approved:

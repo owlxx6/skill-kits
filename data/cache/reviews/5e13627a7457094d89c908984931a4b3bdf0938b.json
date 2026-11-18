@@ -1,0 +1,41 @@
+{
+  "fingerprint": "5e13627a7457094d89c908984931a4b3bdf0938b",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:33:39.276Z",
+  "review": {
+    "kits": [
+      "resume-career"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Draft honest, specific answers to job-application form fields from the candidate's CV and the job posting.",
+    "summary": "Seven question types (experience, why this company, portfolio, technical skills, tell us about yourself, behavioral, opinion), each with a format, rules, length targets and before/after examples. Answers come as copy-paste blocks.",
+    "strengths": [
+      "Clear format and rules for each question type, with a length target per field.",
+      "Insists on real projects and honest years or ratings; warns against repeating the job posting or padding.",
+      "Asks for the CV and the job description before writing instead of guessing."
+    ],
+    "cautions": [
+      "Examples come from one engineer's projects; answers must use the user's own facts.",
+      "Tuned to technical roles on English-language application systems; no guidance for salary, work-authorization or diversity questions.",
+      "Instruction-only skill: no scripts or form integration, nothing is submitted for the user."
+    ],
+    "keywords": [
+      "job application",
+      "application form",
+      "ATS form",
+      "why this company",
+      "tell us about yourself",
+      "behavioral questions",
+      "resume",
+      "career"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}
