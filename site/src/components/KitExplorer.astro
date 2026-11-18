@@ -1,0 +1,110 @@
+---
+// "Pick your kit" as a small explorer: the jobs on the left, and for the chosen job its parts in install order and the
+// command that installs them. Every panel is in the page; the buttons only change which one is shown, so nothing is fetched.
+import CopyCommand from "./CopyCommand.astro";
+import Icon from "./Icon.astro";
+import { kitIcon } from "../lib/icons";
+import { collectionHref, formatCount, kitInstallCommand, kitView, loadCatalog, plural } from "../lib/catalog";
+
+const catalog = loadCatalog();
+const views = catalog.kits.flatMap((kit) => kitView(catalog, kit.id) ?? []);
+---
+<div class="explorer" data-explorer>
+  <div class="explorer-tabs" role="tablist" aria-label="Kits" aria-orientation="vertical">
+    {views.map(({ kit }, index) => (
+      <button
+        type="button"
+        class="explorer-tab"
+        role="tab"
+        id={`kit-tab-${kit.id}`}
+        aria-controls={`kit-panel-${kit.id}`}
+        aria-selected={index === 0 ? "true" : "false"}
+        tabindex={index === 0 ? 0 : -1}
+      >
+        <Icon name={kitIcon(kit.id)} size={20} />
+        <span>{kit.title}</span>
+        <Icon name="chevron-right" size={16} class="explorer-chevron" />
+      </button>
+    ))}
+  </div>
+
+  <div class="explorer-panels">
+    {views.map(({ kit, collections, skills }, index) => (
+      <section
+        class="explorer-panel"
+        role="tabpanel"
+        id={`kit-panel-${kit.id}`}
+        aria-labelledby={`kit-tab-${kit.id}`}
+        data-active={index === 0 ? "true" : "false"}
+      >
+        <header class="explorer-head">
+          <span class="tone-chip" data-tone={String(index % 5)} aria-hidden="true"><Icon name={kitIcon(kit.id)} size={24} /></span>
+          <div>
+            <h3>{kit.title}</h3>
+            <p class="muted">{kit.description}</p>
+          </div>
+        </header>
+
+        {collections.length > 0 && (
+          <ol class="explorer-parts" aria-label="Install in this order">
+            {collections.map((collection, position) => (
+              <li>
+                <span class="part-no" aria-hidden="true">{position + 1}</span>
+                <a href={collectionHref(collection.id)}><span class="visually-hidden">Part {position + 1}: </span>{collection.id}</a>
+                <span class="muted">{plural(collection.skillCount, "skill")} · {formatCount(collection.stars)} stars</span>
+              </li>
+            ))}
+          </ol>
+        )}
+        {skills.length > 0 && <p class="muted explorer-more">{collections.length > 0 ? "Plus " : ""}{plural(skills.length, "single skill")} picked for this job.</p>}
+
+        <div class="explorer-foot">
+          {collections.length > 0 && <CopyCommand command={kitInstallCommand(collections.map((entry) => entry.id))} label={`Copy the install command for the ${kit.title} kit`} />}
+          <a class="button primary" href={`/kits/${kit.id}/`}>Open this kit <Icon name="arrow-right" size={16} /></a>
+        </div>
+      </section>
+    ))}
+  </div>
+</div>
+<noscript>
+  <ul class="explorer-fallback">{views.map(({ kit }) => <li><a href={`/kits/${kit.id}/`}>{kit.title}</a></li>)}</ul>
+</noscript>
+
+<script>
+  // Arrow keys move through the kits (Up/Down or Left/Right, Home and End); the selected kit is the one that is shown.
+  for (const root of document.querySelectorAll<HTMLElement>("[data-explorer]")) {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const list = root.querySelector<HTMLElement>('[role="tablist"]');
+    const wide = window.matchMedia("(min-width: 900px)");
+    const orient = () => list?.setAttribute("aria-orientation", wide.matches ? "vertical" : "horizontal");
+    orient();
+    wide.addEventListener("change", orient);
+
+    const select = (index: number, focus = false) => {
+      tabs.forEach((tab, position) => {
+        const on = position === index;
+        tab.setAttribute("aria-selected", String(on));
+        tab.tabIndex = on ? 0 : -1;
+        panels[position].dataset.active = String(on);
+      });
+      if (focus) tabs[index].focus();
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => select(index));
+      tab.addEventListener("keydown", (event) => {
+        const last = tabs.length - 1;
+        const next =
+          event.key === "ArrowDown" || event.key === "ArrowRight" ? (index === last ? 0 : index + 1)
+          : event.key === "ArrowUp" || event.key === "ArrowLeft" ? (index === 0 ? last : index - 1)
+          : event.key === "Home" ? 0
+          : event.key === "End" ? last
+          : -1;
+        if (next < 0) return;
+        event.preventDefault();
+        select(next, true);
+      });
+    });
+  }
+</script>

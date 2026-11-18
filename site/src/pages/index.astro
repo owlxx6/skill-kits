@@ -1,71 +1,162 @@
 ---
+import Aurora from "../components/Aurora.astro";
 import Base from "../layouts/Base.astro";
+import DemoFrame from "../components/DemoFrame.astro";
+import Icon from "../components/Icon.astro";
+import KitExplorer from "../components/KitExplorer.astro";
 import PreviewTile from "../components/PreviewTile.astro";
-import Rail from "../components/Rail.astro";
+import ReviewStatus from "../components/ReviewStatus.astro";
 import SecurityLevel from "../components/SecurityLevel.astro";
-import { collectionHref, collectionsByStars, formatCount, loadCatalog, plural, securityLevel, skillHref, topSkillPerRepo } from "../lib/catalog";
+import Segment from "../components/Segment.astro";
+import { collectionHref, collectionsByStars, formatCount, loadCatalog, securityLevel, skillHref, topSkillPerRepo } from "../lib/catalog";
 
 const catalog = loadCatalog();
 const top = collectionsByStars(catalog, 3);
 const best = topSkillPerRepo(catalog, 6);
+// Real skill names, typed one after another in the hero search field.
+const phrases = best.map((skill) => skill.name);
 ---
-<Base title="Skill Kits" description="Reviewed agent skills grouped into kits by job: what to install, in which order, with one command each.">
-  <div class="wrap page">
-    <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title" class="display">Pick a job.<br /><span class="accent">Install the whole kit.</span></h1>
+<Base landing title="Skill Kits" description="Reviewed agent skills grouped into kits by job: what to install, in which order, with one command each.">
+  <section class="landing-hero" aria-labelledby="hero-title">
+    <Aurora />
+    <div class="wrap">
+      <h1 id="hero-title">Pick a job.<br /><span class="accent">Install the whole kit.</span></h1>
       <p class="lead">Reviewed skills for AI coding agents, grouped by the work you want done.</p>
+      <a class="hero-search" href="/search/" data-palette-open aria-label="Search skills and collections" aria-keyshortcuts="/ Control+K Meta+K">
+        <Icon name="search" size={20} />
+        <span class="hero-search-text" data-phrases={JSON.stringify(phrases)} aria-hidden="true">{phrases[0]}</span>
+        <kbd aria-hidden="true">/</kbd>
+      </a>
       <div class="hero-actions">
         <a class="button primary" href="#kits">Browse kits</a>
         <a class="button" href="/search/">Search skills</a>
       </div>
-      <ol class="how" aria-label="How it works">
-        <li><span class="step-no">1</span>Pick a kit</li>
-        <li><span class="step-no">2</span>Copy the command</li>
-        <li><span class="step-no">3</span>Check license and scan</li>
-      </ol>
+    </div>
+  </section>
+
+  <div class="wrap page land">
+    <DemoFrame src="/demo/skill-kits-demo.mp4" caption="Demo: a prompt in Claude Code finds the right skills for a job" />
+
+    <section class="land-section" id="kits" aria-labelledby="kits-title">
+      <div class="land-head reveal"><h2 id="kits-title">Pick your kit</h2></div>
+      <Segment>
+        <KitExplorer />
+      </Segment>
     </section>
 
-    <Rail id="kits" title="Kits">
-      {catalog.kits.map((kit, index) => (
-        <li>
-          <a class="tile-link" href={`/kits/${kit.id}/`}>
-            <span class="visually-hidden">{kit.title}: {plural(kit.collections.length, "collection")}{kit.skills.length > 0 ? `, ${plural(kit.skills.length, "single skill")}` : ""}</span>
-            <PreviewTile kind="kit" tone={index} kit={kit} />
-          </a>
-        </li>
-      ))}
-    </Rail>
+    <section class="land-section" aria-labelledby="collections-title">
+      <div class="land-head reveal"><h2 id="collections-title">Install whole repositories</h2></div>
+      <Segment>
+        <ul class="tile-grid three">
+          {top.map((collection, index) => (
+            <li>
+              <a class="tile-link" href={collectionHref(collection.id)} tabindex="-1" aria-hidden="true">
+                <PreviewTile kind="collection" tone={index} catalog={catalog} collection={collection} />
+              </a>
+              <div class="tile-caption">
+                <a href={collectionHref(collection.id)}>{collection.id}</a>
+                <span>{formatCount(collection.stars)} stars</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Segment>
+      <div class="land-more reveal"><a class="button" href="/search/?type=collection">All collections</a></div>
+    </section>
 
-    <Rail id="top-collections" title="Most starred collections" viewAll={{ href: "/search/?type=collection", label: "All collections" }}>
-      {top.map((collection, index) => (
-        <li class="ranked">
-          <span class="rank-num" aria-hidden="true">{index + 1}</span>
-          <div>
-            <a class="tile-link" href={collectionHref(collection.id)} tabindex="-1" aria-hidden="true">
-              <PreviewTile kind="collection" tone={index} catalog={catalog} collection={collection} />
-            </a>
-            <div class="tile-caption">
-              <a href={collectionHref(collection.id)}><span class="visually-hidden">Number {index + 1}: </span>{collection.id}</a>
-              <span>{formatCount(collection.stars)} stars</span>
-            </div>
-          </div>
-        </li>
-      ))}
-    </Rail>
+    <section class="land-section" aria-labelledby="skills-title">
+      <div class="land-head reveal"><h2 id="skills-title">Highest-rated skills</h2></div>
+      <Segment>
+        <ul class="tile-grid three">
+          {best.map((skill, index) => (
+            <li>
+              <a class="tile-link" href={skillHref(skill.id)} tabindex="-1" aria-hidden="true">
+                <PreviewTile kind="skill" tone={index + 1} skill={skill} />
+              </a>
+              <div class="tile-caption">
+                <a href={skillHref(skill.id)}>{skill.name}</a>
+                <span>{skill.reviewScore.toFixed(1)}/10</span>
+              </div>
+              <div class="tile-caption"><span class="repo-line">{skill.repo}</span><SecurityLevel level={securityLevel(skill)} short /></div>
+            </li>
+          ))}
+        </ul>
+      </Segment>
+      <div class="land-more reveal"><a class="button" href="/search/?type=skill&sort=rating">All skills</a></div>
+    </section>
 
-    <Rail id="top-skills" title="Highest-rated skills" viewAll={{ href: "/search/?type=skill&sort=rating", label: "All skills" }}>
-      {best.map((skill, index) => (
-        <li>
-          <a class="tile-link" href={skillHref(skill.id)} tabindex="-1" aria-hidden="true">
-            <PreviewTile kind="skill" tone={index + 1} skill={skill} />
-          </a>
-          <div class="tile-caption">
-            <a href={skillHref(skill.id)}>{skill.name}</a>
-            <span>{skill.reviewScore.toFixed(1)}/10</span>
-          </div>
-          <div class="tile-caption"><span style="flex-shrink: 1; overflow-wrap: anywhere">{skill.repo}</span><SecurityLevel level={securityLevel(skill)} short /></div>
-        </li>
-      ))}
-    </Rail>
+    <section class="land-section" aria-labelledby="trust-title">
+      <div class="land-head reveal"><h2 id="trust-title">Every skill is checked</h2></div>
+      <Segment>
+        <ul class="trust-grid">
+          <li class="trust-card">
+            <span class="trust-icon"><Icon name="file-text" size={22} /></span>
+            <h3>License</h3>
+            <p>Shown on every entry, with its source.</p>
+            <div class="trust-specimen"><span class="mono">{best[0].license}</span><span class="muted">example</span></div>
+          </li>
+          <li class="trust-card">
+            <span class="trust-icon"><Icon name="badge-check" size={22} /></span>
+            <h3>Review</h3>
+            <p>Each listed skill is read and scored.</p>
+            <div class="trust-specimen"><ReviewStatus /><span class="mono">{best[0].reviewScore.toFixed(1)}/10</span></div>
+          </li>
+          <li class="trust-card">
+            <span class="trust-icon"><Icon name="shield-alert" size={22} /></span>
+            <h3>Security scan</h3>
+            <p>A static scan gives one level.</p>
+            <div class="trust-specimen"><SecurityLevel level="none" /><SecurityLevel level="notice" /><SecurityLevel level="severe" /></div>
+          </li>
+        </ul>
+      </Segment>
+      <div class="land-more reveal"><a class="button" href="/methodology/">How we pick</a></div>
+    </section>
+
+    <section class="land-cta" aria-labelledby="cta-title">
+      <Aurora />
+      <h2 id="cta-title">Find the kit for your job.</h2>
+      <div class="hero-actions">
+        <a class="button primary" href="#kits">Browse kits</a>
+        <a class="button" href="/search/">Search skills</a>
+      </div>
+    </section>
   </div>
 </Base>
+
+<script>
+  // A soft light follows the mouse across a tile (the position is read by the CSS in global.css).
+  for (const link of document.querySelectorAll<HTMLElement>(".tile-link")) {
+    const tile = link.querySelector<HTMLElement>(".tile");
+    if (!tile) continue;
+    link.addEventListener("pointermove", (event) => {
+      if (event.pointerType !== "mouse") return;
+      const box = tile.getBoundingClientRect();
+      tile.style.setProperty("--mx", `${event.clientX - box.left}px`);
+      tile.style.setProperty("--my", `${event.clientY - box.top}px`);
+    });
+  }
+</script>
+
+<script>
+  // Types real skill names into the hero search field, one after another. It stays still for visitors who prefer
+  // reduced motion, and waits while the tab is hidden or the field is off screen.
+  const target = document.querySelector<HTMLElement>(".hero-search-text");
+  const phrases: string[] = JSON.parse(target?.dataset.phrases ?? "[]");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (target && phrases.length > 1 && !reduced.matches) {
+    let onScreen = true;
+    new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; }).observe(target);
+    const wait = (ms: number) => new Promise<void>((resolve) => window.setTimeout(resolve, ms));
+    const idle = async () => { while (document.hidden || !onScreen || reduced.matches) await wait(400); };
+    const run = async () => {
+      for (let position = 0; ; position += 1) {
+        const phrase = phrases[position % phrases.length];
+        for (let length = 0; length <= phrase.length; length += 1) { await idle(); target.textContent = phrase.slice(0, length); await wait(70); }
+        await wait(1600);
+        for (let length = phrase.length; length >= 0; length -= 1) { await idle(); target.textContent = phrase.slice(0, length); await wait(32); }
+        await wait(300);
+      }
+    };
+    void run();
+  }
+</script>

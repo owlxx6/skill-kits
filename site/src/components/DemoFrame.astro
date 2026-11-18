@@ -1,0 +1,30 @@
+---
+// A framed demo video under the hero. The video is a static file in site/public and the frame renders only
+// when that file exists, so a visitor never sees a broken player. While developing, an empty frame marks the spot.
+import { existsSync } from "node:fs";
+import path from "node:path";
+
+interface Props {
+  src: string;
+  caption: string;
+  poster?: string;
+}
+const { src, caption, poster } = Astro.props;
+const present = [path.join(process.cwd(), "site", "public", src), path.join(process.cwd(), "public", src)].some((file) => existsSync(file));
+const placeholder = !present && import.meta.env.DEV;
+---
+{(present || placeholder) && (
+  <section class="demo" aria-label={caption}>
+    <div class="demo-frame">
+      {present ? (
+        <video controls preload="metadata" playsinline poster={poster}>
+          <source src={src} type="video/mp4" />
+        </video>
+      ) : (
+        <div class="demo-placeholder">
+          <p>Demo video goes here<br /><span class="mono">site/public{src}</span></p>
+        </div>
+      )}
+    </div>
+  </section>
+)}
