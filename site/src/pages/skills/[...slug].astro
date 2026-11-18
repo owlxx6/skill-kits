@@ -5,8 +5,8 @@ import CopyCommand from "../../components/CopyCommand.astro";
 import Icon from "../../components/Icon.astro";
 import LicenseDetails from "../../components/LicenseDetails.astro";
 import ReviewStatus from "../../components/ReviewStatus.astro";
-import { collectionHref, formatCount, kitsOfSkill, loadCatalog, skillInstallCommand, skillSlug } from "../../lib/catalog";
-import { kitIcon } from "../../lib/icons";
+import SecurityLevel from "../../components/SecurityLevel.astro";
+import { collectionHref, displayDate, kitsOfSkill, loadCatalog, sameNameSkills, securityLevel, skillHref, skillInstallCommand, skillSlug } from "../../lib/catalog";
 
 export function getStaticPaths() {
   return loadCatalog().skills.map((skill) => ({ params: { slug: skillSlug(skill.id) }, props: { skillId: skill.id } }));
@@ -16,11 +16,12 @@ const catalog = loadCatalog();
 const skill = catalog.skills.find((entry) => entry.id === Astro.props.skillId);
 if (!skill) throw new Error(`Unknown skill ${Astro.props.skillId}`);
 const kits = kitsOfSkill(catalog, skill.id);
+const twins = sameNameSkills(catalog, skill);
+const isCollection = catalog.collections.some((entry) => entry.id === skill.repo);
 const { review } = skill;
-const firstKit = kits[0];
 const crumbs = [
   { label: "Home", href: "/" },
-  ...(firstKit ? [{ label: firstKit.title, href: `/kits/${firstKit.id}/` }] : []),
+  ...(kits[0] ? [{ label: kits[0].title, href: `/kits/${kits[0].id}/` }] : [{ label: "Skills", href: "/search/?type=skill" }]),
   { label: skill.name },
 ];
 const scores = [
@@ -28,137 +29,71 @@ const scores = [
   { label: "Completeness", value: review.scores.completeness },
   { label: "Usefulness", value: review.scores.usefulness },
 ];
-const percent = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
+const width = (value: number) => `${Math.max(0, Math.min(10, value)) * 10}%`;
 ---
 <Base title={skill.name} description={review.why}>
-  <div class="narrow">
-    <Breadcrumbs items={crumbs} />
+  <div class="wrap page" style="gap: var(--s7)">
     <header class="page-head">
-      <span class="icon-tile large"><Icon name="puzzle" size={28} /></span>
-      <div class="page-head-text">
-        <h1>{skill.name}</h1>
-        <p class="meta">
-          <span><Icon name="layers" size={14} /><a href={collectionHref(skill.repo)}>{skill.repo}</a></span>
-          <span><Icon name="star" size={14} />{formatCount(skill.stars)} stars</span>
-          <span><Icon name="git-fork" size={14} />{formatCount(skill.forks)} forks</span>
-        </p>
-        <div class="badges">
-          <LicenseDetails skill={skill} />
-          <ReviewStatus />
-        </div>
-      </div>
+      <Breadcrumbs items={crumbs} />
+      <p class="eyebrow">Skill · from <a href={collectionHref(skill.repo)}>{skill.repo}</a></p>
+      <h1 class="display" style="font-size: clamp(2rem, 1.2rem + 3vw, 3.25rem)">{skill.name}</h1>
+      <p class="lead">{review.summary}</p>
     </header>
 
-    <p class="lead summary">{review.summary}</p>
+    <div class="split aside-400">
+      <div class="primary" style="gap: var(--s7)">
+        <section aria-labelledby="install-title" style="display: flex; flex-direction: column; gap: var(--s3)">
+          <h2 id="install-title" style="font-size: var(--t-xl)">Install</h2>
+          <CopyCommand command={skillInstallCommand(skill)} label={`Copy install command for ${skill.name}`} />
+          <p class="small muted">Installs this skill only. Reviewed, not tested: read the skill before you run it.{isCollection && <> To get every skill from this repository, use <a href={collectionHref(skill.repo)}>the collection</a>.</>}</p>
+        </section>
 
-    <section class="card install" aria-labelledby="install-title">
-      <h2 id="install-title"><Icon name="terminal" size={18} />Install</h2>
-      <CopyCommand command={skillInstallCommand(skill)} />
-      <p class="muted small">Reviewed, not tested: read the skill before you run it.</p>
-    </section>
-
-    <section class="card scores" aria-labelledby="scores-title">
-      <div class="overall">
-        <h2 id="scores-title">Review score</h2>
-        <p class="overall-value"><strong>{skill.reviewScore.toFixed(1)}</strong> <span class="muted">/ 10</span></p>
-        <div class="bar large" aria-hidden="true" data-fill><span style={`width: ${percent(skill.reviewScore)}`}></span></div>
-      </div>
-      <dl class="score-list">
-        {scores.map((score) => (
-          <div class="score-row">
-            <dt>{score.label}</dt>
-            <dd>
-              <div class="bar" aria-hidden="true" data-fill><span style={`width: ${percent(score.value)}`}></span></div>
-              <span class="score-value">{score.value}<span class="muted"> / 10</span></span>
-            </dd>
+        {(review.strengths.length > 0 || review.cautions.length > 0) && (
+          <div class="columns-2">
+            {review.strengths.length > 0 && (
+              <section class="ruled" aria-labelledby="strengths-title">
+                <h2 id="strengths-title">What it does well</h2>
+                <ul>{review.strengths.map((item) => <li>{item}</li>)}</ul>
+              </section>
+            )}
+            {review.cautions.length > 0 && (
+              <section class="ruled warn" aria-labelledby="cautions-title">
+                <h2 id="cautions-title">Before you install</h2>
+                <ul>{review.cautions.map((item) => <li>{item}</li>)}</ul>
+              </section>
+            )}
           </div>
-        ))}
-      </dl>
-    </section>
+        )}
 
-    {(review.strengths.length > 0 || review.cautions.length > 0) && (
-      <div class="pros-cons">
-        {review.strengths.length > 0 && (
-          <section class="card" aria-labelledby="strengths-title">
-            <h2 id="strengths-title">Strengths</h2>
-            <ul class="icon-list">
-              {review.strengths.map((item) => <li><Icon name="circle-check" size={18} class="good" />{item}</li>)}
-            </ul>
-          </section>
-        )}
-        {review.cautions.length > 0 && (
-          <section class="card" aria-labelledby="cautions-title">
-            <h2 id="cautions-title">Before you install</h2>
-            <ul class="icon-list">
-              {review.cautions.map((item) => <li><Icon name="triangle-alert" size={18} class="warn" />{item}</li>)}
-            </ul>
-          </section>
-        )}
+        <section class="scores" aria-labelledby="scores-title">
+          <div class="scores-head"><h2 id="scores-title">Review score</h2><p class="mono"><strong>{skill.reviewScore.toFixed(1)}</strong>/10</p></div>
+          <dl style="display: flex; flex-direction: column; gap: var(--s3)">
+            {scores.map((score) => (
+              <div class="score-row">
+                <dt>{score.label}</dt>
+                <dd><div class="score-bar" aria-hidden="true"><span style={`width: ${width(score.value)}`}></span></div></dd>
+                <dd class="score-value">{score.value}<span class="visually-hidden"> out of </span><span aria-hidden="true">/</span>10</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
       </div>
-    )}
 
-    {kits.length > 0 && (
-      <section class="block" aria-labelledby="kits-title">
-        <h2 id="kits-title" class="block-title">In these kits</h2>
-        <ul class="kit-links">
-          {kits.map((kit) => (
-            <li class="card is-clickable">
-              <span class="icon-tile"><Icon name={kitIcon(kit.id)} size={20} /></span>
-              <a class="card-link" href={`/kits/${kit.id}/`}>{kit.title}</a>
-              <Icon name="arrow-right" size={18} class="arrow" />
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
-
-    <div class="block button-row">
-      <a class="button" href={skill.url}>View source on GitHub <Icon name="external-link" size={16} /></a>
+      <aside class="side" aria-labelledby="trust-title">
+        <h2 id="trust-title" style="font-size: var(--t-md); margin-bottom: var(--s2)">Trust</h2>
+        <dl class="facts">
+          <dt>License</dt><dd><LicenseDetails skill={skill} /></dd>
+          <dt>Security</dt><dd><SecurityLevel level={securityLevel(skill)} /></dd>
+          <dt>Review</dt><dd><ReviewStatus /></dd>
+          <dt>Last update</dt><dd><time datetime={skill.pushedAt}>{displayDate(skill.pushedAt)}</time></dd>
+          <dt>Source</dt><dd><a href={skill.url}>SKILL.md on GitHub <Icon name="external-link" size={14} /></a></dd>
+          <dt>Repository</dt><dd><a href={collectionHref(skill.repo)}>{skill.repo}</a></dd>
+          {kits.length > 0 && <><dt>In kits</dt><dd>{kits.map((kit, i) => <>{i > 0 && ", "}<a href={`/kits/${kit.id}/`}>{kit.title}</a></>)}</dd></>}
+        </dl>
+        {twins.length > 0 && (
+          <p class="small muted" style="margin-top: var(--s4)">Same name, different source: {twins.map((twin, i) => <>{i > 0 && ", "}<a href={skillHref(twin.id)}>{twin.repo}</a></>)}</p>
+        )}
+      </aside>
     </div>
   </div>
 </Base>
-
-<style>
-  .summary { margin-top: var(--space-5); color: var(--text); }
-  .block, .install, .scores, .pros-cons { margin-top: var(--space-5); }
-  .block-title { margin-bottom: var(--space-3); }
-  .install { display: grid; gap: var(--space-3); }
-  .install h2, .pros-cons h2 { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-base); }
-  .install h2 { color: var(--heading); }
-
-  .scores { display: grid; gap: var(--space-5); }
-  @media (min-width: 768px) { .scores { grid-template-columns: 14rem 1fr; align-items: center; } }
-  .overall { display: grid; gap: var(--space-2); }
-  .overall h2 { font-size: var(--text-sm); font-weight: 500; color: var(--text-muted); }
-  .overall-value { font-variant-numeric: tabular-nums; }
-  .overall-value strong { font-size: 2.5rem; line-height: 1; color: var(--accent); letter-spacing: -0.02em; }
-  .score-list { display: grid; gap: var(--space-3); margin: 0; }
-  .score-row { display: grid; gap: 6px; }
-  .score-row dt { font-size: var(--text-sm); color: var(--text-muted); }
-  .score-row dd { display: flex; align-items: center; gap: var(--space-3); margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
-  .score-row .bar { flex: 1; }
-  .score-value { flex: none; white-space: nowrap; }
-  .bar { height: 8px; border-radius: 999px; background: var(--border); overflow: hidden; }
-  .bar.large { height: 10px; }
-  .bar span {
-    display: block; height: 100%; border-radius: inherit; background: var(--accent);
-    transform-origin: left center; transition: transform 900ms var(--ease-out) var(--reveal-delay, 0ms);
-  }
-  /* The bars fill from zero the first time they are on screen. */
-  :global(.motion) .bar:not(.is-visible) span { transform: scaleX(0); }
-
-  .pros-cons { display: grid; gap: var(--space-4); }
-  @media (min-width: 768px) { .pros-cons { grid-template-columns: 1fr 1fr; } }
-  .pros-cons h2 { margin-bottom: var(--space-3); }
-  .icon-list { list-style: none; display: grid; gap: var(--space-3); }
-  .icon-list li { display: flex; gap: var(--space-3); align-items: flex-start; }
-  .icon-list :global(.icon) { margin-top: 3px; }
-  .icon-list :global(.good) { color: var(--accent); }
-  .icon-list :global(.warn) { color: var(--notice-text); }
-
-  .kit-links { list-style: none; display: grid; gap: var(--space-3); }
-  @media (min-width: 768px) { .kit-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  .kit-links li { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); }
-  .kit-links .card-link { flex: 1; font-weight: 600; }
-  .kit-links :global(.arrow) { color: var(--text-muted); }
-</style>
