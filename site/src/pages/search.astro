@@ -1,240 +1,285 @@
 ---
 import Base from "../layouts/Base.astro";
-import EmptyState from "../components/EmptyState.astro";
 import Icon from "../components/Icon.astro";
 import SearchBox from "../components/SearchBox.astro";
+import { collectionLicenseLabel, loadCatalog, securityLabel } from "../lib/catalog";
 
-const suggestions = ["resume", "pdf", "interview", "scraping", "slides", "testing"];
-const filters = [
-  { value: "all", label: "All" },
-  { value: "skill", label: "Skills" },
-  { value: "collection", label: "Collections" },
-];
+const catalog = loadCatalog();
+const licenses = [...new Set([...catalog.skills.map((skill) => skill.license), ...catalog.collections.map(collectionLicenseLabel)])]
+  .sort((a, b) => a.localeCompare(b, "en"));
+const levels = ["none", "notice", "severe"] as const;
 ---
-<Base title="Search" description="Search the reviewed skills and collections.">
-  <div class="narrow">
-    <header class="search-head">
-      <h1>Search</h1>
-      <p class="muted">Skills and collections, by task, tool or file type.</p>
+<Base title="Browse" description="Browse and filter every reviewed skill and collection by kit, license and security level.">
+  <div class="wrap page" style="gap: var(--s6)">
+    <header class="page-head" style="max-width: 760px">
+      <h1 class="display" style="font-size: clamp(2rem, 1.2rem + 3vw, 3.25rem)">Browse</h1>
+      <p class="lead">Every reviewed skill and collection. Search by task, file type or publisher, then narrow the list.</p>
+      <SearchBox inputId="search-input" formId="search-form" submitButton={false} />
     </header>
 
-    <SearchBox inputId="search-input" formId="search-form" large submitButton={false} placeholder="resume, pdf, scraping..." />
-
-    <div class="toolbar" hidden>
-      <div class="chips" role="group" aria-label="Result type" id="type-filters">
-        {filters.map((filter) => (
-          <button type="button" class="chip" data-type={filter.value} aria-pressed={filter.value === "all" ? "true" : "false"}>
-            {filter.label} <span class="count" data-count={filter.value}></span>
-          </button>
-        ))}
+    <div class="browse">
+      <div>
+        <button type="button" class="button filters-toggle" aria-expanded="false" aria-controls="filters" data-filters-toggle>
+          <Icon name="sliders" size={18} />Filters <span data-filter-count></span>
+        </button>
+        <form class="filters" id="filters" aria-label="Filters" data-filters>
+          <fieldset>
+            <legend>Type</legend>
+            <ul>
+              {[["all", "Everything"], ["collection", "Collections"], ["skill", "Skills"]].map(([value, label]) => (
+                <li><label class="check"><input type="radio" name="type" value={value} checked={value === "all"} /><span>{label}</span><span class="count" data-count={`type:${value}`}></span></label></li>
+              ))}
+            </ul>
+          </fieldset>
+          <fieldset>
+            <legend>Kit</legend>
+            <ul>
+              {catalog.kits.map((kit) => (
+                <li><label class="check"><input type="checkbox" name="kit" value={kit.id} /><span>{kit.title}</span><span class="count" data-count={`kits:${kit.id}`}></span></label></li>
+              ))}
+            </ul>
+          </fieldset>
+          <fieldset>
+            <legend>Security level</legend>
+            <ul>
+              {levels.map((level) => (
+                <li><label class="check"><input type="checkbox" name="security" value={level} /><span>{securityLabel(level, true)}</span><span class="count" data-count={`security:${level}`}></span></label></li>
+              ))}
+            </ul>
+          </fieldset>
+          <fieldset>
+            <legend>License</legend>
+            <ul>
+              {licenses.map((license) => (
+                <li><label class="check"><input type="checkbox" name="license" value={license} /><span>{license}</span><span class="count" data-count={`licenses:${license}`}></span></label></li>
+              ))}
+            </ul>
+          </fieldset>
+          <button type="button" class="button" data-clear-filters>Clear filters</button>
+        </form>
       </div>
-      <p class="muted small" id="search-status" role="status" aria-live="polite"></p>
-    </div>
 
-    <ul class="card-list" id="search-results"></ul>
+      <section aria-labelledby="results-title" style="min-width: 0">
+        <div class="results-head">
+          <h2 id="results-title" role="status" aria-live="polite" data-status>Loading the catalog…</h2>
+          <label class="field" for="sort">Sort
+            <select id="sort" class="select" data-sort>
+              <option value="best">Best match</option>
+              <option value="rating">Review score</option>
+              <option value="updated">Recently updated</option>
+              <option value="name">Name</option>
+            </select>
+          </label>
+        </div>
+        <ul class="rows" id="results" data-results></ul>
+        <button type="button" class="button strong block" style="margin-top: var(--s4)" data-more hidden>Show more</button>
 
-    <div id="state-start">
-      <EmptyState icon="search" title="Find a skill for your agent">
-        <p>Type a task, a tool or a file type. Results update as you type.</p>
-        <div class="chips">
-          {suggestions.map((word) => <a class="chip" href={`/search/?q=${encodeURIComponent(word)}`}>{word}</a>)}
+        <div class="state" data-state="empty" hidden>
+          <h2>Nothing matches <span data-empty-query></span></h2>
+          <p>Search looks at skill names, descriptions and review keywords. Try the task in other words, remove a filter, or start from a kit.</p>
+          <div class="button-row"><button type="button" class="button" data-clear-all>Clear search and filters</button><a class="button" href="/#kits">See all kits</a><a class="button" href="/methodology/">How we pick</a></div>
         </div>
-      </EmptyState>
-    </div>
-    <div id="state-empty" hidden>
-      <EmptyState icon="search-x" title="No results">
-        <p id="state-empty-text">Nothing matches that search. Try a broader word, or one of these:</p>
-        <div class="chips">
-          {suggestions.map((word) => <a class="chip" href={`/search/?q=${encodeURIComponent(word)}`}>{word}</a>)}
+        <div class="state" data-state="error" hidden>
+          <h2>Search is unavailable right now</h2>
+          <p>The search index did not load. Reload the page, or start from a kit.</p>
+          <div class="button-row"><a class="button primary" href="/#kits">See all kits</a></div>
         </div>
-      </EmptyState>
-    </div>
-    <div id="state-error" hidden>
-      <EmptyState icon="triangle-alert" title="Search is unavailable right now">
-        <p>The search index did not load. Reload the page, or browse the kits instead.</p>
-        <div class="button-row"><a class="button primary" href="/#kits">Browse kits</a></div>
-      </EmptyState>
+        <noscript><div class="state"><h2>Search needs JavaScript</h2><p>Start from a kit instead: every kit page works without it.</p><div class="button-row"><a class="button primary" href="/#kits">See all kits</a></div></div></noscript>
+      </section>
     </div>
   </div>
-
-  <template id="icon-skill"><Icon name="puzzle" size={14} /></template>
-  <template id="icon-collection"><Icon name="layers" size={14} /></template>
-  <template id="icon-license"><Icon name="scale" size={14} /></template>
-  <template id="icon-arrow"><Icon name="arrow-right" size={18} class="result-arrow" /></template>
+  <template id="icon-none"><Icon name="circle-check" size={15} /></template>
+  <template id="icon-notice"><Icon name="triangle-alert" size={15} /></template>
+  <template id="icon-severe"><Icon name="octagon-alert" size={15} /></template>
+  <template id="icon-partial"><Icon name="triangle-alert" size={16} /></template>
 </Base>
 
 <script>
   import MiniSearch from "minisearch";
-  import { SEARCH_OPTIONS, type SearchDocument } from "../lib/search";
+  import { SEARCH_OPTIONS, type SearchDocument } from "../lib/search-options";
+  import { activeFilterCount, applyBrowse, browseStateToParams, facetCounts, parseBrowseState, type BrowseState } from "../lib/browse";
+  import { securityLabel, type SecurityLevel } from "../lib/labels";
 
-  type Kind = SearchDocument["kind"];
-  type TypeFilter = Kind | "all";
+  type Hit = Omit<SearchDocument, "text" | "keywords">;
+  const PAGE = 24;
 
   const input = document.getElementById("search-input") as HTMLInputElement;
   const form = document.getElementById("search-form") as HTMLFormElement;
-  const status = document.getElementById("search-status") as HTMLParagraphElement;
-  const results = document.getElementById("search-results") as HTMLUListElement;
-  const filterButtons = [...document.querySelectorAll<HTMLButtonElement>("#type-filters button[data-type]")];
-  const states = {
-    start: document.getElementById("state-start") as HTMLElement,
-    empty: document.getElementById("state-empty") as HTMLElement,
-    error: document.getElementById("state-error") as HTMLElement,
-  };
-  const emptyText = document.getElementById("state-empty-text") as HTMLParagraphElement;
-  const toolbar = document.querySelector<HTMLElement>(".toolbar");
+  const filters = document.querySelector<HTMLFormElement>("[data-filters]")!;
+  const toggle = document.querySelector<HTMLButtonElement>("[data-filters-toggle]")!;
+  const filterCount = document.querySelector<HTMLElement>("[data-filter-count]")!;
+  const sortSelect = document.querySelector<HTMLSelectElement>("[data-sort]")!;
+  const status = document.querySelector<HTMLElement>("[data-status]")!;
+  const results = document.querySelector<HTMLUListElement>("[data-results]")!;
+  const more = document.querySelector<HTMLButtonElement>("[data-more]")!;
+  const emptyState = document.querySelector<HTMLElement>('[data-state="empty"]')!;
+  const errorState = document.querySelector<HTMLElement>('[data-state="error"]')!;
 
-  const isTypeFilter = (value: string | null | undefined): value is TypeFilter =>
-    value === "all" || value === "skill" || value === "collection";
+  let state: BrowseState = parseBrowseState(new URL(window.location.href).searchParams);
+  let shown = PAGE;
+  let all: Hit[] = [];
+  let index: MiniSearch<SearchDocument> | null = null;
 
-  // Icons are rendered once by the server into <template> elements and cloned here.
-  const icon = (id: string): Node => {
-    const template = document.getElementById(id) as HTMLTemplateElement | null;
-    return template?.content.firstElementChild?.cloneNode(true) ?? document.createTextNode("");
-  };
-
-  const element = <K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text?: string) => {
+  const icon = (id: string): Node =>
+    (document.getElementById(id) as HTMLTemplateElement | null)?.content.firstElementChild?.cloneNode(true) ?? document.createTextNode("");
+  const el = <K extends keyof HTMLElementTagNameMap>(tag: K, className = "", text?: string) => {
     const node = document.createElement(tag);
-    node.className = className;
+    if (className) node.className = className;
     if (text !== undefined) node.textContent = text;
     return node;
   };
 
-  const indexPromise = fetch("/search-index.json")
+  // ------------------------------------------------------------ state ⇄ controls ⇄ URL
+  const writeControls = () => {
+    input.value = state.q;
+    sortSelect.value = state.sort;
+    for (const box of filters.querySelectorAll<HTMLInputElement>("input")) {
+      if (box.name === "type") box.checked = box.value === state.type;
+      if (box.name === "kit") box.checked = state.kits.includes(box.value);
+      if (box.name === "security") box.checked = state.security.includes(box.value as SecurityLevel);
+      if (box.name === "license") box.checked = state.licenses.includes(box.value);
+    }
+  };
+  const readControls = (): BrowseState => {
+    const checked = (name: string) => [...filters.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)].map((box) => box.value);
+    return {
+      q: input.value.trim(),
+      type: (checked("type")[0] ?? "all") as BrowseState["type"],
+      kits: checked("kit"),
+      security: checked("security") as SecurityLevel[],
+      licenses: checked("license"),
+      sort: sortSelect.value as BrowseState["sort"],
+    };
+  };
+  const writeUrl = () => {
+    const params = browseStateToParams(state).toString();
+    window.history.replaceState(null, "", params ? `?${params}` : window.location.pathname);
+  };
+
+  // ------------------------------------------------------------ rendering
+  const renderHit = (hit: Hit): HTMLLIElement => {
+    const item = el("li", "row");
+    item.style.gridTemplateColumns = "minmax(0, 1fr)";
+    const main = el("div", "row-main");
+    const kind = el("span", "result-kind", hit.kind === "collection" ? "Collection" : "Skill");
+    kind.dataset.kind = hit.kind;
+    const titleLine = el("div", "row-title");
+    const heading = el("h3");
+    const link = el("a", "", hit.title);
+    link.href = hit.href;
+    heading.append(link);
+    titleLine.append(heading);
+    if (hit.kind === "skill") titleLine.append(el("span", "row-repo", hit.repo));
+    main.append(kind, titleLine);
+    if (hit.why) main.append(el("p", "row-why", hit.why));
+    if (hit.kind === "collection" && hit.coverage) {
+      if (hit.partial) {
+        const scope = el("div", "scope partial");
+        const text = el("p");
+        text.append(el("strong", "", `Partial: ${hit.coverage}.`), ` ${hit.installScope ?? ""}`);
+        scope.append(icon("icon-partial"), text);
+        main.append(scope);
+      } else {
+        const scope = el("p", "scope");
+        scope.append(el("strong", "", `${hit.coverage}.`), ` ${hit.installScope ?? ""}`);
+        main.append(scope);
+      }
+    }
+    const trust = el("ul", "trust");
+    trust.setAttribute("aria-label", "License and checks");
+    const license = el("li");
+    license.append(el("span", "visually-hidden", "License: "), hit.license);
+    const level = el("li");
+    const sec = el("span", "sec");
+    sec.dataset.level = hit.security;
+    sec.append(icon(`icon-${hit.security}`), securityLabel(hit.security, true));
+    level.append(sec);
+    const updated = el("li", "", `Updated ${hit.updated}`);
+    trust.append(license, level, updated);
+    main.append(trust);
+    item.append(main);
+    return item;
+  };
+
+  const render = () => {
+    const list = applyBrowse(all, state);
+    const counts = facetCounts(all, state);
+    for (const node of document.querySelectorAll<HTMLElement>("[data-count]")) {
+      const [facet, value] = (node.dataset.count ?? "").split(/:(.*)/s);
+      const table = counts[facet as keyof typeof counts] as Record<string, number>;
+      const n = table?.[value] ?? 0;
+      node.textContent = String(n);
+      const box = node.parentElement?.querySelector("input");
+      if (box && box.type === "checkbox") box.disabled = n === 0 && !box.checked;
+    }
+    const active = activeFilterCount(state);
+    filterCount.textContent = active ? `(${active})` : "";
+    results.replaceChildren(...list.slice(0, shown).map(renderHit));
+    more.hidden = list.length <= shown;
+    more.textContent = `Show ${Math.min(PAGE, list.length - shown)} more of ${list.length - shown}`;
+    emptyState.hidden = list.length > 0;
+    const query = emptyState.querySelector("[data-empty-query]");
+    if (query) query.textContent = state.q ? `“${state.q}”` : "these filters";
+    const noun = list.length === 1 ? "result" : "results";
+    status.textContent = state.q ? `${list.length} ${noun} for “${state.q}”` : `${list.length} ${noun}`;
+  };
+
+  const refresh = (resetPage = true) => {
+    state = readControls();
+    if (resetPage) shown = PAGE;
+    if (index) {
+      const hits = state.q ? index.search(state.q) : index.search(MiniSearch.wildcard);
+      all = hits as unknown as Hit[];
+    }
+    writeUrl();
+    render();
+  };
+
+  // ------------------------------------------------------------ events
+  writeControls();
+  let timer = 0;
+  input.addEventListener("input", () => { window.clearTimeout(timer); timer = window.setTimeout(() => refresh(), 120); });
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && input.value) { event.preventDefault(); input.value = ""; refresh(); }
+  });
+  form.addEventListener("submit", (event) => { event.preventDefault(); refresh(); });
+  filters.addEventListener("change", () => refresh());
+  sortSelect.addEventListener("change", () => refresh());
+  more.addEventListener("click", () => {
+    const first = shown;
+    shown += PAGE;
+    render();
+    results.children[first]?.querySelector("a")?.focus();
+  });
+  document.querySelector("[data-clear-filters]")?.addEventListener("click", () => {
+    state = { ...state, type: "all", kits: [], security: [], licenses: [] };
+    writeControls();
+    refresh();
+  });
+  document.querySelector("[data-clear-all]")?.addEventListener("click", () => {
+    state = { q: "", type: "all", kits: [], security: [], licenses: [], sort: "best" };
+    writeControls();
+    refresh();
+    input.focus();
+  });
+  toggle.addEventListener("click", () => {
+    const open = toggle.getAttribute("aria-expanded") !== "true";
+    toggle.setAttribute("aria-expanded", String(open));
+    if (open) filters.dataset.open = "";
+    else delete filters.dataset.open;
+  });
+
+  fetch("/search-index.json")
     .then((response) => {
       if (!response.ok) throw new Error(`search index returned ${response.status}`);
       return response.text();
     })
-    .then((json) => MiniSearch.loadJSON<SearchDocument>(json, SEARCH_OPTIONS));
-
-  const params = new URL(window.location.href).searchParams;
-  const initialType = params.get("type");
-  let typeFilter: TypeFilter = isTypeFilter(initialType) ? initialType : "all";
-  input.value = params.get("q") ?? "";
-
-  const showState = (name: keyof typeof states | null) => {
-    for (const [key, node] of Object.entries(states)) node.hidden = key !== name;
-  };
-
-  const renderHit = (hit: { kind: Kind; title: string; href: string; license: string; why: string; coverage: string; installScope: string; reviewStatus: string }) => {
-    const item = element("li", "card is-clickable result");
-    const head = element("div", "result-head");
-    const type = element("span", hit.kind === "skill" ? "badge accent" : "badge");
-    type.append(icon(hit.kind === "skill" ? "icon-skill" : "icon-collection"), hit.kind === "skill" ? "Skill" : "Collection");
-    const license = element("span", "badge");
-    license.append(icon("icon-license"), hit.license);
-    head.append(type, license);
-    if (hit.reviewStatus) head.append(element("span", "badge", hit.reviewStatus));
-    const title = element("h2", "result-title");
-    const link = element("a", "card-link", hit.title);
-    link.href = hit.href;
-    title.append(link);
-    const body = element("div", "result-body");
-    body.append(title);
-    if (hit.why) body.append(element("p", "result-why", hit.why));
-    if (hit.coverage) body.append(element("p", "result-coverage", hit.coverage));
-    if (hit.installScope) body.append(element("p", "result-why", hit.installScope));
-    item.append(head, body, icon("icon-arrow"));
-    return item;
-  };
-
-  const render = async () => {
-    const query = input.value.trim();
-    const url = new URL(window.location.href);
-    if (query) url.searchParams.set("q", query);
-    else url.searchParams.delete("q");
-    if (typeFilter === "all") url.searchParams.delete("type");
-    else url.searchParams.set("type", typeFilter);
-    window.history.replaceState(null, "", url);
-
-    for (const button of filterButtons) button.setAttribute("aria-pressed", String(button.dataset.type === typeFilter));
-    results.replaceChildren();
-
-    if (!query) {
-      status.textContent = "";
-      if (toolbar) toolbar.hidden = true;
-      for (const count of document.querySelectorAll<HTMLElement>("[data-count]")) count.textContent = "";
-      showState("start");
-      return;
-    }
-
-    let index: MiniSearch<SearchDocument>;
-    try {
-      index = await indexPromise;
-    } catch {
-      status.textContent = "";
-      if (toolbar) toolbar.hidden = true;
-      showState("error");
-      return;
-    }
-    // A newer keystroke has already rendered; drop this stale pass.
-    if (input.value.trim() !== query) return;
-
-    const hits = index.search(query).slice(0, 50).map((hit) => ({
-      kind: hit.kind as Kind,
-      title: String(hit.title),
-      href: String(hit.href),
-      license: String(hit.license),
-      why: String(hit.why ?? ""),
-      coverage: String(hit.coverage ?? ""),
-      installScope: String(hit.installScope ?? ""),
-      reviewStatus: String(hit.reviewStatus ?? ""),
-    }));
-    const counts = { all: hits.length, skill: 0, collection: 0 };
-    for (const hit of hits) counts[hit.kind] += 1;
-    for (const count of document.querySelectorAll<HTMLElement>("[data-count]")) {
-      const key = count.dataset.count;
-      count.textContent = isTypeFilter(key) ? String(counts[key]) : "";
-    }
-
-    const shown = typeFilter === "all" ? hits : hits.filter((hit) => hit.kind === typeFilter);
-    if (toolbar) toolbar.hidden = hits.length === 0;
-    if (shown.length === 0) {
-      status.textContent = "";
-      emptyText.textContent =
-        hits.length === 0
-          ? `Nothing matches "${query}". Try a broader word, or one of these:`
-          : `No ${typeFilter === "skill" ? "skill" : "collection"} matches "${query}". Show all results, or try one of these:`;
-      showState("empty");
-      return;
-    }
-    showState(null);
-    status.textContent = `${shown.length} result${shown.length === 1 ? "" : "s"} for "${query}"`;
-    results.append(...shown.map(renderHit));
-  };
-
-  for (const button of filterButtons) {
-    button.addEventListener("click", () => {
-      const value = button.dataset.type;
-      if (!isTypeFilter(value)) return;
-      typeFilter = value;
-      render();
+    .then((json) => {
+      index = MiniSearch.loadJSON<SearchDocument>(json, SEARCH_OPTIONS);
+      refresh(false);
+    })
+    .catch(() => {
+      status.textContent = "Search is unavailable";
+      errorState.hidden = false;
     });
-  }
-  input.addEventListener("input", render);
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    render();
-  });
-  render();
 </script>
-
-<style>
-  .search-head { display: grid; gap: var(--space-2); margin-bottom: var(--space-5); }
-  .toolbar {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: var(--space-3) var(--space-4); margin: var(--space-4) 0;
-  }
-  #search-results:not(:empty) { margin-bottom: var(--space-4); }
-  #state-start, #state-empty, #state-error { margin-top: var(--space-5); }
-
-  #search-results :global(.result) {
-    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2) var(--space-4); align-items: center;
-  }
-  #search-results :global(.result-head) { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  #search-results :global(.result-body) { display: grid; gap: var(--space-1); min-width: 0; }
-  #search-results :global(.result-title) { font-size: var(--text-lg); overflow-wrap: anywhere; }
-  #search-results :global(.result-why) { color: var(--text-muted); font-size: var(--text-sm); }
-  #search-results :global(.result-coverage) { font-size: var(--text-sm); font-weight: 600; }
-  #search-results :global(.result-arrow) { color: var(--text-muted); transition: color var(--base) var(--ease), transform var(--base) var(--ease); }
-  #search-results :global(.result:hover .result-arrow) { color: var(--accent); transform: translateX(4px); }
-</style>
