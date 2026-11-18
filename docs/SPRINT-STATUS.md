@@ -78,3 +78,29 @@ The 18 selected reviews are committed by fingerprint under data/cache/reviews wi
 The integrated scanner and real rank/summary steps replayed against the pinned intake retain all 18 selections, five skills per kit. A committed regression checks durable cache coverage, sanitized fields and source nominations. Main, the accepted baseline and other working folders remain untouched. The feature PR is for sprint review only and must not be merged without that review.
 
 Post-merge verification: typecheck and 951 tests pass; site build produces 64 pages and site:verify passes for eight kits / 37 skills. The scanner and contract have no diff against origin/main 8d48c35. No paid model calls or production merge were performed.
+
+## Approved individual security-audit — 2026-11-18
+
+The owner approved `cloudflare/security-audit-skill:skills/security-audit` for Web App in chat, with a Linux/WSL prerequisite. This approves one individual skill, not the remaining nominated repositories or a whole-repository collection. Inclusion approval does not claim the owner personally read the source.
+
+Implementation: `236b464a2f556c9c0b817f202931fb617e5bb92e` on `data/approved-security-audit`, based on production commit `7c3c8e9`. The separate working folder preserves the pending homepage work elsewhere. No site implementation or dependency files change in this increment.
+
+The existing reviewed-kit importer rechecked the pinned source commit `c1c8a8c1471069fb0e188eeaff69b8e8db6564a8`, all 20 skill files and their Git blob hashes, then applied its normal scan, license, review-score and curation gates. The durable review fingerprint is `ccbc33ed119b28c3ef7b44a7e2081ab191ad63af`. Its source nomination, individual approval and provenance are versioned, so a later extraction can find the review. Detailed scan reports, source copies and execution logs remain private. Public records use the importer's existing redaction placeholder; the durable review keeps its level and empty notes.
+
+Catalog verification: 245 skills, 17 collections and 8 kits. Every one of the previous 244 skill records and all collections is preserved. Only Web App gains the individual selection; the seven unrelated kits are unchanged. The Linux prerequisite, targeted install command, pinned license evidence, kit link and search entry are present in the built output. The new record keeps `humanReviewed: false`.
+
+Checks: typecheck and all 984 project tests pass; the site build produces 276 pages and site verification passes for 8 kits / 245 skill pages. The unmodified upstream validator suite passes all 65 tests in isolated Ubuntu with Node 24.22.3. Native Windows with Node 26.13.0 has 46 passing, 7 failing and 12 skipped tests: the validator CLIs require input protections unavailable in that runtime. Full audit orchestration and the installation command were not executed; validator tests do not establish vulnerability-detection effectiveness.
+
+Environment limitation inherited from the shared base: a standard `npm ci` fails because the lockfile lacks several optional `@emnapi/core` and `@emnapi/runtime` peer entries. Validation dependencies were prepared with `npm install --package-lock=false --no-save --ignore-scripts --no-audit --no-fund`; package.json and package-lock.json remain unchanged. A clean-install repair is separate work. The scheduled pipeline's missing model credential also remains unchanged; no paid calls or credentials were added.
+
+Synchronization target: publish this accepted increment on its feature branch and advance `integration/validated-sprints` without rewriting history. Production main remains a separate release decision. The other workstation's actual fetch/merge has not been observed. To update its own feature branch after preserving local changes:
+
+    git status
+    git fetch origin
+    git merge origin/integration/validated-sprints
+    npm run typecheck
+    npm test
+    npm run site:build
+    npm run site:verify
+
+Resolve conflicts without discarding either workstation's work. Do not reset an active branch or replace its history to synchronize it.
