@@ -20,6 +20,7 @@ export const ICONS = {
   "bar-chart": [path("M3 3v16a2 2 0 0 0 2 2h16"), path("M18 17V9"), path("M13 17V5"), path("M8 17v-3")],
   check: [path("M20 6 9 17l-5-5")],
   "chevron-right": [path("m9 18 6-6-6-6")],
+  "chevron-down": [path("m6 9 6 6 6-6")],
   "circle-check": [circle(12, 12, 10), path("m9 12 2 2 4-4")],
   clock: [circle(12, 12, 10), path("M12 6v6l4 2")],
   compass: [path("m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"), circle(12, 12, 10)],

@@ -19,7 +19,7 @@ const totalInstalled = collections.reduce((sum, entry) => sum + entry.skillCount
 const totalListed = collections.reduce((sum, entry) => sum + entry.catalogSkillIds.length, 0);
 const afterStep = skills.length > 0 ? "03" : "02";
 ---
-<Base title={kit.title} description={kit.description}>
+<Base title={kit.title} description={kit.description} image={`/og/${kit.id}.png`}>
   <div class="wrap page">
     <header class="page-head">
       <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Kits", href: "/#kits" }, { label: kit.title }]} />
