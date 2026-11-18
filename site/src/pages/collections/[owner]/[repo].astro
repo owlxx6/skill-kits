@@ -2,11 +2,24 @@
 import Base from "../../../layouts/Base.astro";
 import Breadcrumbs from "../../../components/Breadcrumbs.astro";
 import CopyCommand from "../../../components/CopyCommand.astro";
+import EmptyState from "../../../components/EmptyState.astro";
 import Icon from "../../../components/Icon.astro";
-import SkillRow from "../../../components/SkillRow.astro";
 import ReviewStatus from "../../../components/ReviewStatus.astro";
-import { collectionInstallCommand, collectionCoverageLabel, collectionInstallScope, collectionLicenseLabel, collectionSlug, formatCount, kitsOfCollection, kitsOfSkill, loadCatalog } from "../../../lib/catalog";
-import { kitIcon } from "../../../lib/icons";
+import ScopeNote from "../../../components/ScopeNote.astro";
+import SecurityLevel from "../../../components/SecurityLevel.astro";
+import SkillRow from "../../../components/SkillRow.astro";
+import {
+  collectionInstallCommand,
+  collectionLicenseLabel,
+  collectionSlug,
+  displayDate,
+  kitsOfCollection,
+  kitsOfSkill,
+  licenseOptions,
+  listedSecurityLevel,
+  loadCatalog,
+  plural,
+} from "../../../lib/catalog";
 
 export function getStaticPaths() {
   const catalog = loadCatalog();
@@ -20,77 +33,106 @@ const repoId = Astro.props.repoId as string;
 const collection = catalog.collections.find((entry) => entry.id === repoId) ?? null;
 const skills = catalog.skills.filter((skill) => skill.repo === repoId);
 const kits = kitsOfCollection(catalog, repoId);
-const sample = skills[0];
-const listedLicenses = [...new Set(skills.map((skill) => skill.license))].sort();
-// The breadcrumb goes through a kit when the collection, or else one of its skills, belongs to one.
-const crumbKit = kits[0] ?? skills.flatMap((skill) => kitsOfSkill(catalog, skill.id))[0];
-const crumbs = [
-  { label: "Home", href: "/" },
-  ...(crumbKit ? [{ label: crumbKit.title, href: `/kits/${crumbKit.id}/` }] : []),
-  { label: repoId },
-];
+const skillKits = [...new Map(skills.flatMap((skill) => kitsOfSkill(catalog, skill.id)).map((kit) => [kit.id, kit])).values()];
+const crumbKit = kits[0] ?? skillKits[0];
+const listedLicenses = licenseOptions(skills);
+const updated = collection?.pushedAt ?? skills.map((skill) => skill.pushedAt).sort().at(-1) ?? "";
+const listed = collection ? collection.catalogSkillIds.length : skills.length;
+const filterable = skills.length > 8;
 ---
 <Base title={repoId} description={collection?.description ?? `Skills from ${repoId}`}>
-  <div class="narrow">
-    <Breadcrumbs items={crumbs} />
+  <div class="wrap page" style="gap: var(--s7)">
     <header class="page-head">
-      <span class="icon-tile large"><Icon name="layers" size={28} /></span>
-      <div class="page-head-text">
-        <h1>{repoId}</h1>
-        {sample && (
-          <p class="meta">
-
-            <span><Icon name="star" size={14} />{formatCount(sample.stars)} stars</span>
-            <span><Icon name="git-fork" size={14} />{formatCount(sample.forks)} forks</span>
-            <a href={`https://github.com/${repoId}`}><Icon name="external-link" size={14} />Repository on GitHub</a>
-          </p>
-        )}
-        {collection && (
-          <div class="badges"><ReviewStatus /></div>
-        )}
-      </div>
+      <Breadcrumbs items={[{ label: "Home", href: "/" }, ...(crumbKit ? [{ label: crumbKit.title, href: `/kits/${crumbKit.id}/` }] : []), { label: repoId }]} />
+      <p class="eyebrow">{collection ? "Collection · whole repository" : "Repository"}</p>
+      <h1 class="display" style="font-size: clamp(2rem, 1.2rem + 3vw, 3.25rem)">{repoId}</h1>
     </header>
 
-    <p class="muted small">
-      <Icon name="scale" size={14} />
-      {collection ? collectionLicenseLabel(collection) : "Licenses of listed skills: " + listedLicenses.join(", ")}
-    </p>
-    {collection?.description && <p class="lead summary">{collection.description}</p>}
-
-    <section class="card install" aria-labelledby="install-title">
-      <h2 id="install-title"><Icon name="terminal" size={18} />Install {collection ? "the collection" : "the repository"}</h2>
-      <CopyCommand command={collectionInstallCommand(repoId)} />
-      <p class="muted small" data-collection-coverage>
-        {collection
-          ? collectionCoverageLabel(collection)
-          : `${skills.length} skill${skills.length === 1 ? "" : "s"} from this repository listed here after review.`}
-      </p>
-      <p class="muted small" data-install-scope>{collection ? collectionInstallScope(collection) : "Installs every skill in this repository, not only the skills listed here."}</p>
-    </section>
-
-    {kits.length > 0 && (
-      <section class="block" aria-labelledby="kits-title">
-        <h2 id="kits-title" class="block-title">In these kits</h2>
-        <div class="chips">
-          {kits.map((kit) => <a class="chip" href={`/kits/${kit.id}/`}><Icon name={kitIcon(kit.id)} size={16} />{kit.title}</a>)}
-        </div>
+    <div class="split even">
+      <section class="primary install-box" style="gap: var(--s4)" aria-labelledby="install-title">
+        <h2 id="install-title" class="visually-hidden">Install {collection ? "the collection" : "the repository"}</h2>
+        {collection ? (
+          <>
+            <p style="font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3rem); line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: var(--text)">
+              {listed.toLocaleString("en-US")} <span class="muted" style="font-weight: 600">of</span> {collection.skillCount.toLocaleString("en-US")}
+            </p>
+            <p style="font-size: var(--t-md); font-weight: 600; color: var(--text)">skills in this repository are listed here.</p>
+            <ScopeNote collection={collection} />
+          </>
+        ) : (
+          <>
+            <p style="font-size: var(--t-md); font-weight: 600; color: var(--text)" data-collection-coverage>{plural(skills.length, "skill")} from this repository listed here after review.</p>
+            <div class="scope partial"><Icon name="triangle-alert" size={16} /><p data-install-scope>Installs every skill in this repository, not only the skills listed here.</p></div>
+          </>
+        )}
+        <CopyCommand command={collectionInstallCommand(repoId)} label={`Copy install command for ${repoId}`} />
       </section>
-    )}
 
-    <section class="section" aria-labelledby="skills-title">
+      <section class="side" aria-labelledby="trust-title">
+        <h2 id="trust-title" style="font-size: var(--t-md); margin-bottom: var(--s2)">Trust</h2>
+        <dl class="facts">
+          <dt>License</dt><dd>{collection ? collectionLicenseLabel(collection) : `Listed skills: ${listedLicenses.join(", ")}`}</dd>
+          <dt>Security</dt><dd><SecurityLevel level={listedSecurityLevel(catalog, repoId)} /><span class="hint">Highest level among the {plural(listed, "listed skill")}. Unlisted skills are not shown here.</span></dd>
+          <dt>Review</dt><dd><ReviewStatus /></dd>
+          {updated && <><dt>Last update</dt><dd><time datetime={updated}>{displayDate(updated)}</time></dd></>}
+          <dt>Source</dt><dd><a href={`https://github.com/${repoId}`}>github.com/{repoId} <Icon name="external-link" size={14} /></a></dd>
+          {kits.length > 0 && <><dt>In kits</dt><dd>{kits.map((kit, i) => <>{i > 0 && ", "}<a href={`/kits/${kit.id}/`}>{kit.title}</a></>)}</dd></>}
+        </dl>
+        {collection?.description && <blockquote class="quote" style="margin-top: var(--s4)"><cite>From the repository, not reviewed text</cite>{collection.description}</blockquote>}
+      </section>
+    </div>
+
+    <section aria-labelledby="skills-title">
       <div class="section-head">
-        <h2 id="skills-title">Reviewed skills</h2>
-        <p>{skills.length} skill{skills.length === 1 ? "" : "s"}</p>
+        <h2 id="skills-title">Listed skills</h2>
+        <p id="skill-count" aria-live="polite">{plural(skills.length, "skill")} · each can also be installed alone</p>
       </div>
-      <ul class="card-list">{skills.map((skill) => <SkillRow skill={skill} showRepo={false} />)}</ul>
+      {filterable && (
+        <div class="button-row" role="group" aria-label="Filter listed skills" style="padding: var(--s4) 0; border-bottom: 1px solid var(--rule)">
+          <label class="field" for="license-filter">License
+            <select id="license-filter"><option value="">All</option>{listedLicenses.map((license) => <option value={license}>{license}</option>)}</select>
+          </label>
+          <label class="field" for="security-filter">Security
+            <select id="security-filter"><option value="">All</option><option value="none">No flags</option><option value="notice">Notice</option><option value="severe">Severe</option></select>
+          </label>
+          <label class="field" for="skill-sort">Order
+            <select id="skill-sort"><option value="name">Name</option><option value="review">Review score</option><option value="updated">Recently updated</option></select>
+          </label>
+        </div>
+      )}
+      <ul class="rows" id="skill-list">{[...skills].sort((a, b) => a.name.localeCompare(b.name, "en")).map((skill) => <SkillRow skill={skill} showRepo={false} />)}</ul>
+      <div id="no-match" hidden>
+        <EmptyState title="No listed skill matches these filters" headingLevel={3}><p>Choose another license or security level.</p></EmptyState>
+      </div>
     </section>
   </div>
 </Base>
 
-<style>
-  .summary { margin-top: var(--space-5); color: var(--text); }
-  .install, .block { margin-top: var(--space-5); }
-  .install { display: grid; gap: var(--space-3); }
-  .install h2 { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-base); }
-  .block-title { margin-bottom: var(--space-3); }
-</style>
+<script>
+  const list = document.getElementById("skill-list");
+  const license = document.getElementById("license-filter") as HTMLSelectElement | null;
+  const security = document.getElementById("security-filter") as HTMLSelectElement | null;
+  const sort = document.getElementById("skill-sort") as HTMLSelectElement | null;
+  const count = document.getElementById("skill-count");
+  const noMatch = document.getElementById("no-match");
+  if (list && license && security && sort && count && noMatch) {
+    const rows = [...list.querySelectorAll<HTMLLIElement>(":scope > li")];
+    const total = rows.length;
+    const apply = () => {
+      const ordered = [...rows].sort((a, b) =>
+        sort.value === "review" ? Number(b.dataset.review) - Number(a.dataset.review)
+        : sort.value === "updated" ? String(b.dataset.updated).localeCompare(String(a.dataset.updated))
+        : String(a.dataset.name).localeCompare(String(b.dataset.name), "en"));
+      let visible = 0;
+      for (const row of ordered) {
+        const show = (!license.value || row.dataset.license === license.value) && (!security.value || row.dataset.security === security.value);
+        row.hidden = !show;
+        if (show) visible += 1;
+        list.append(row);
+      }
+      noMatch.hidden = visible > 0;
+      count.textContent = visible === total ? `${total} skills · each can also be installed alone` : `${visible} of ${total} skills`;
+    };
+    for (const select of [license, security, sort]) select.addEventListener("change", apply);
+  }
+</script>
