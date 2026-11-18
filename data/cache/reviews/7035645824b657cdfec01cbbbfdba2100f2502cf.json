@@ -1,0 +1,41 @@
+{
+  "fingerprint": "7035645824b657cdfec01cbbbfdba2100f2502cf",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:49:49.278Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Add data-quality checks with Great Expectations 1.x: expectation suites, checkpoints and Data Docs for DataFrames and SQL tables.",
+    "summary": "Shows the GX 1.x in-code flow (data source, asset, batch definition, expectation suite, validation definition, checkpoint) for pandas DataFrames and Postgres tables, with two worked examples and guidance on severity, sampling and alerting.",
+    "strengths": [
+      "States up front that GX 1.x differs from widely copied 0.18 tutorials, so outdated code can be spotted.",
+      "Runnable examples that validate a CSV before loading and gate a pipeline on a checkpoint result.",
+      "Practical guidance: passwords from environment variables, severity levels, sampled batches for large tables."
+    ],
+    "cautions": [
+      "Covers GX Core 1.x only; code copied from older tutorials will not run.",
+      "Examples were not run here, and the Airflow example is a sketch.",
+      "Validation finds bad data but does not fix it; alerting has to be added separately."
+    ],
+    "keywords": [
+      "data quality",
+      "Great Expectations",
+      "validation",
+      "expectations",
+      "checkpoint",
+      "pandas",
+      "SQL",
+      "data docs"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

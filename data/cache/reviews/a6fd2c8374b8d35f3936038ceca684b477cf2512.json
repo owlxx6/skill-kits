@@ -1,0 +1,41 @@
+{
+  "fingerprint": "a6fd2c8374b8d35f3936038ceca684b477cf2512",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:49:49.278Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Write, schedule and debug Airflow 3 DAGs: TaskFlow and dynamic mapping, provider operators, local and Docker setup, Airflow 2 upgrades.",
+    "summary": "Version-aware guide for Airflow 3.x: local install with the constraints file, Docker Compose, a classic DAG, TaskFlow with dynamic mapping, provider operators and sensors, connections and variables, a migration example from Airflow 2, and guidelines on idempotency and secrets.",
+    "strengths": [
+      "Names the Airflow 3 changes that older tutorials get wrong (airflow.sdk imports, removed operators, api-server and dag-processor).",
+      "Runnable DAG examples and CLI commands, with airflow dags test for debugging.",
+      "Guidelines on cheap DAG imports, small XComs, idempotent tasks and no secrets in DAG code."
+    ],
+    "cautions": [
+      "Examples are pinned to Airflow 3.3.2; check versions and URLs against the installed release.",
+      "Setup fetches a constraints file and a Docker Compose file over the network without checksum checks; the example compose file ships default passwords and is not for production.",
+      "Instructions assume Linux, macOS or WSL2, and the examples were not run here."
+    ],
+    "keywords": [
+      "Airflow",
+      "DAG",
+      "ETL",
+      "data pipeline",
+      "TaskFlow",
+      "scheduling",
+      "orchestration",
+      "Docker Compose"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

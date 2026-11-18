@@ -28,7 +28,8 @@ describe("collection coverage and installation scope", () => {
     const catalog = structuredClone(loadCatalog());
     catalog.skills.find(skill=>skill.review)!.review!.security.notes = ["PRIVATE_REVIEW_SENTINEL"];
     catalog.kits[0].pendingReasons = { "example/skills:pending": "PRIVATE_PENDING_SENTINEL" };
-    const collection = catalog.collections.find(entry => entry.id === "TerminalSkills/skills")!;
+    // Any collection that lists only part of its repository: the test must not depend on one repository staying in the catalog.
+    const collection = catalog.collections.find(entry => entry.catalogSkillIds.length < entry.skillCount)!;
     expect(collection).toBeDefined();
     const serialized = JSON.stringify(buildSearchIndex(catalog));
     const index = MiniSearch.loadJSON(serialized, SEARCH_OPTIONS);
