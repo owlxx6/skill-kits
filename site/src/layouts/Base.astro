@@ -7,11 +7,17 @@ import { loadCatalog } from "../lib/catalog";
 interface Props {
   title: string;
   description: string;
+  // The home page lets its hero sit under a transparent top bar; every other page gets a solid one.
+  landing?: boolean;
 }
-const { title, description } = Astro.props;
+const { title, description, landing = false } = Astro.props;
 const pageTitle = title === "Skill Kits" ? title : `${title} - Skill Kits`;
-const updated = loadCatalog().generatedAt.slice(0, 10);
+const catalog = loadCatalog();
+const updated = catalog.generatedAt.slice(0, 10);
 const path = Astro.url.pathname;
+// The search page already has a large search box, so the top bar does not repeat it there.
+const showTopSearch = !path.startsWith("/search/");
+const current = (match: boolean) => (match ? "page" : undefined);
 ---
 <!doctype html>
 <html lang="en" data-theme="day">
@@ -35,18 +41,7 @@ const path = Astro.url.pathname;
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="shell">
-      <aside class="sidebar" aria-label="Site">
-        <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Skill Kits</a>
-        <form class="side-search" action="/search/" method="get" role="search">
-          <label for="side-search-input" class="visually-hidden">Search skills and collections</label>
-          <Icon name="search" size={18} />
-          <input id="side-search-input" type="search" name="q" placeholder="Search skills" autocomplete="off" enterkeyhint="search" aria-keyshortcuts="/" data-search-shortcut />
-          <kbd aria-hidden="true">/</kbd>
-        </form>
-        <SideNav path={path} label="Main" />
-      </aside>
-
+    <div class="shell" data-landing={landing ? "" : undefined}>
       <div class="main-col">
         <header class="topbar">
           <div class="topbar-inner">
@@ -60,9 +55,41 @@ const path = Astro.url.pathname;
               </div>
             </details>
             <a class="brand" href="/"><span class="brand-mark" aria-hidden="true"></span>Skill Kits</a>
+            <nav class="topnav" aria-label="Primary">
+              <details class="nav-menu" data-nav-menu data-active={path.startsWith("/kits/") ? "" : undefined}>
+                <summary>Kits <Icon name="chevron-down" size={14} /></summary>
+                <div class="nav-panel nav-panel-kits">
+                  <ul>
+                    {catalog.kits.map((kit) => (
+                      <li><a href={`/kits/${kit.id}/`} aria-current={current(path === `/kits/${kit.id}/`)}>{kit.title}</a></li>
+                    ))}
+                  </ul>
+                  <a class="nav-all" href="/#kits">All kits <Icon name="chevron-right" size={14} /></a>
+                </div>
+              </details>
+              <details class="nav-menu" data-nav-menu data-active={path.startsWith("/collections/") || path.startsWith("/skills/") ? "" : undefined}>
+                <summary>Browse <Icon name="chevron-down" size={14} /></summary>
+                <div class="nav-panel">
+                  <ul>
+                    <li><a href="/search/?type=collection">Collections</a></li>
+                    <li><a href="/search/?type=skill">Skills</a></li>
+                    <li><a href="/search/">Search everything</a></li>
+                  </ul>
+                </div>
+              </details>
+              <a href="/methodology/" aria-current={current(path.startsWith("/methodology/"))}>How we pick</a>
+            </nav>
             <div class="topbar-actions">
+              {showTopSearch && (
+                <form class="top-search" action="/search/" method="get" role="search">
+                  <label for="top-search-input" class="visually-hidden">Search skills and collections</label>
+                  <Icon name="search" size={18} />
+                  <input id="top-search-input" type="search" name="q" placeholder="Search skills" autocomplete="off" enterkeyhint="search" aria-keyshortcuts="/" data-search-shortcut />
+                  <kbd aria-hidden="true">/</kbd>
+                </form>
+              )}
               <a class="icon-button search-link" href="/search/" aria-label="Search"><Icon name="search" size={20} /></a>
-              <a class="button github-link" href="https://github.com/owlxx6/skill-kits">Source on GitHub <Icon name="external-link" size={15} /></a>
+              <a class="button github-link" href="https://github.com/owlxx6/skill-kits">GitHub <Icon name="external-link" size={15} /></a>
               <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Night mode" title="Night mode" aria-pressed="false">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
                   <circle cx="12" cy="12" r="8.5" /><path d="M12 3.5a8.5 8.5 0 0 1 0 17Z" fill="currentColor" stroke="none" />
@@ -132,7 +159,31 @@ const path = Astro.url.pathname;
     }
   });
 
-  // "/" focuses the page's main search box (or the sidebar one); ignored while typing.
+  // Desktop dropdowns: one open at a time; a click elsewhere, Escape, or tabbing out closes them.
+  const navMenus = [...document.querySelectorAll<HTMLDetailsElement>("[data-nav-menu]")];
+  for (const item of navMenus) {
+    item.addEventListener("toggle", () => {
+      if (!item.open) return;
+      for (const other of navMenus) if (other !== item) other.open = false;
+    });
+    item.addEventListener("focusout", (event) => {
+      const next = event.relatedTarget;
+      if (item.open && next instanceof Node && !item.contains(next)) item.open = false;
+    });
+  }
+  document.addEventListener("click", (event) => {
+    for (const item of navMenus) if (item.open && event.target instanceof Node && !item.contains(event.target)) item.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    for (const item of navMenus) {
+      if (!item.open) continue;
+      item.open = false;
+      item.querySelector("summary")?.focus();
+    }
+  });
+
+  // "/" focuses the page's main search box (or the top bar one); ignored while typing.
   document.addEventListener("keydown", (event) => {
     if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
     const target = event.target;
