@@ -13,6 +13,7 @@ repos:
   - n8n-io/skills
   - TerminalSkills/skills
   - cloudflare/security-audit-skill
+  - expo/skills
 topics:
   - agent-skills
   - claude-skills

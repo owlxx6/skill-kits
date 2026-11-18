@@ -1,0 +1,40 @@
+{
+  "fingerprint": "35fc11a00bd8cd233e9914e57399d03da6ef5772",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T11:40:28.788Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 7,
+      "completeness": 7,
+      "usefulness": 8
+    },
+    "why": "Plan an Expo SDK upgrade with dependency checks and focused references for breaking API changes.",
+    "summary": "Covers SDK upgrades, dependency alignment, diagnostics, native-project cleanup and migrations for audio, video, navigation and React APIs.",
+    "strengths": [
+      "Includes seven focused migration references.",
+      "Checks package peers and distinguishes generated from manually maintained native projects.",
+      "The documented SDK 57 memory-fix prerequisite was checked against the official changelog."
+    ],
+    "cautions": [
+      "Choose an explicit source and target SDK and reconcile the steps with current release notes.",
+      "Cleanup and clean prebuild can remove generated directories; preserve manually maintained native work.",
+      "No actual SDK migration, native compilation or release was executed."
+    ],
+    "keywords": [
+      "expo",
+      "sdk upgrade",
+      "migration",
+      "dependencies",
+      "react native",
+      "diagnostics",
+      "breaking changes"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

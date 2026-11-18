@@ -1,0 +1,42 @@
+{
+  "fingerprint": "33f536c3ae0658ae808fa38f35ea511c2c750548",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T11:40:28.788Z",
+  "review": {
+    "kits": [
+      "ui-design",
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "Build consistent Expo screens from an existing theme, reusable component contracts and incremental audits.",
+    "summary": "Organizes design tokens and shared components, preserves existing styling systems and gives a repeatable audit for visual drift and interaction issues.",
+    "strengths": [
+      "Adopts the existing styling system rather than creating a competing one.",
+      "Includes token, accessibility, state and component documentation checklists.",
+      "Combines source checks with explicit rendered-screen and interaction checks."
+    ],
+    "cautions": [
+      "Targets Expo and React Native rather than Astro or general CSS sites.",
+      "Audit shell commands need adaptation for Windows and the actual project directories.",
+      "Visual rendering, keyboard behavior and assistive technology were not tested here."
+    ],
+    "keywords": [
+      "expo",
+      "design system",
+      "tokens",
+      "theme",
+      "components",
+      "accessibility",
+      "ui",
+      "consistency"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

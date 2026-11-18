@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T11:01:58.007Z",
+  "generatedAt": "2026-11-18T12:51:19.128Z",
   "kits": [
     {
       "id": "resume-career",
@@ -77,7 +77,11 @@
         "supabase/agent-skills:skills/supabase-postgres-best-practices",
         "cloudflare/skills:skills/workers-best-practices",
         "cloudflare/skills:skills/web-perf",
-        "cloudflare/security-audit-skill:skills/security-audit"
+        "cloudflare/security-audit-skill:skills/security-audit",
+        "expo/skills:plugins/expo/skills/expo-project-structure",
+        "expo/skills:plugins/expo/skills/expo-router",
+        "expo/skills:plugins/expo/skills/expo-design-system",
+        "expo/skills:plugins/expo/skills/expo-upgrade"
       ],
       "pending": [],
       "removed": [],
@@ -175,7 +179,8 @@
         "nextlevelbuilder/ui-ux-pro-max-skill:.claude/skills/ui-ux-pro-max",
         "vercel-labs/agent-skills:skills/web-design-guidelines",
         "vercel-labs/agent-skills:skills/react-view-transitions",
-        "cloudflare/skills:skills/web-perf"
+        "cloudflare/skills:skills/web-perf",
+        "expo/skills:plugins/expo/skills/expo-design-system"
       ],
       "pending": [],
       "removed": [],
@@ -14459,6 +14464,241 @@
       "reviewScore": 8.7,
       "repoSignal": 9.5,
       "score": 8.9,
+      "humanReviewed": false
+    },
+    {
+      "id": "expo/skills:plugins/expo/skills/expo-design-system",
+      "repo": "expo/skills",
+      "path": "plugins/expo/skills/expo-design-system",
+      "name": "expo-design-system",
+      "description": "Build and maintain a design system inside an Expo app - a reusable theme of design tokens (color, spacing, typography, radius, shadow, motion), reusable component structure with variant/size/state prop conventions, and rules for when to extract a repeated view into a shared component. Use when creating or organizing theme files and design tokens (theme.ts / theme/), extending an existing theme or styling library (NativeWind, Tamagui, Restyle, Unistyles) in its own idiom, standardizing styles so screens (including AI-generated ones) look consistent and polished, fixing an app that looks AI-generated or generic instead of native (the named native-slop tells), building an in-app component library, or auditing an app for design-system drift (hardcoded colors, spacing, fonts). For platform styling specifics (semantic colors, HIG rules, native controls) use expo-native-ui; for folder layout of a new app use expo-project-structure.",
+      "url": "https://github.com/expo/skills/tree/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-design-system",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "plugins/expo/skills/expo-design-system/SKILL.md",
+        "url": "https://github.com/expo/skills/blob/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-design-system/SKILL.md"
+      },
+      "stars": 4185,
+      "forks": 274,
+      "pushedAt": "2026-11-18T09:04:23Z",
+      "review": {
+        "kits": [
+          "ui-design",
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "Build consistent Expo screens from an existing theme, reusable component contracts and incremental audits.",
+        "summary": "Organizes design tokens and shared components, preserves existing styling systems and gives a repeatable audit for visual drift and interaction issues.",
+        "strengths": [
+          "Adopts the existing styling system rather than creating a competing one.",
+          "Includes token, accessibility, state and component documentation checklists.",
+          "Combines source checks with explicit rendered-screen and interaction checks."
+        ],
+        "cautions": [
+          "Targets Expo and React Native rather than Astro or general CSS sites.",
+          "Audit shell commands need adaptation for Windows and the actual project directories.",
+          "Visual rendering, keyboard behavior and assistive technology were not tested here."
+        ],
+        "keywords": [
+          "expo",
+          "design system",
+          "tokens",
+          "theme",
+          "components",
+          "accessibility",
+          "ui",
+          "consistency"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 6.9,
+      "score": 8.2,
+      "humanReviewed": false
+    },
+    {
+      "id": "expo/skills:plugins/expo/skills/expo-project-structure",
+      "repo": "expo/skills",
+      "path": "plugins/expo/skills/expo-project-structure",
+      "name": "expo-project-structure",
+      "description": "Folder structure for a new Expo app. Use when scaffolding or laying out a new Expo project with Expo Router, or deciding where a file should live in one. For new projects only — never restructure an existing app to match.",
+      "url": "https://github.com/expo/skills/tree/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-project-structure",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "plugins/expo/skills/expo-project-structure/SKILL.md",
+        "url": "https://github.com/expo/skills/blob/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-project-structure/SKILL.md"
+      },
+      "stars": 4185,
+      "forks": 274,
+      "pushedAt": "2026-11-18T09:04:23Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Keep a new Expo project organized so routes, screen code and server helpers have clear boundaries.",
+        "summary": "Defines a starting layout for new Expo Router apps, with route-only directories, reusable components, screen modules and platform-specific files.",
+        "strengths": [
+          "Explicitly preserves existing app conventions.",
+          "Separates routes, shared code and server-only helpers.",
+          "Provides a concrete folder tree and extraction rules."
+        ],
+        "cautions": [
+          "A starting convention for new Expo projects, not a required migration.",
+          "Backend placement and platform variants still need project-specific review.",
+          "No generated app or native build was run in this review."
+        ],
+        "keywords": [
+          "expo",
+          "project structure",
+          "react native",
+          "routing",
+          "architecture",
+          "folders",
+          "scaffolding"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 6.9,
+      "score": 7.9,
+      "humanReviewed": false
+    },
+    {
+      "id": "expo/skills:plugins/expo/skills/expo-router",
+      "repo": "expo/skills",
+      "path": "plugins/expo/skills/expo-router",
+      "name": "expo-router",
+      "description": "Navigation and routing for Expo Router. Covers file-based routes, groups and dynamic routes, folder organization, Link with previews and context menus, native Stack, page titles, modals and form sheets, NativeTabs, headers and toolbars, and header search bars.",
+      "url": "https://github.com/expo/skills/tree/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-router",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "plugins/expo/skills/expo-router/SKILL.md",
+        "url": "https://github.com/expo/skills/blob/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-router/SKILL.md"
+      },
+      "stars": 4185,
+      "forks": 274,
+      "pushedAt": "2026-11-18T09:04:23Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 7,
+          "usefulness": 9
+        },
+        "why": "Build Expo navigation with explicit route conventions, native stacks, tabs and platform limits.",
+        "summary": "Explains file-based routes, nested stacks, native tabs, links, previews, sheets, header search and iOS transitions.",
+        "strengths": [
+          "Six detailed navigation references accompany the main instructions.",
+          "Explains route naming, nested histories and platform-specific behavior.",
+          "Covers common failures and practical navigation structures."
+        ],
+        "cautions": [
+          "References mix SDK-specific syntax; match the installed SDK before copying examples.",
+          "Several menus, toolbars and transitions require specific iOS versions or platform fallbacks.",
+          "Device navigation was not executed; example handlers still need real application behavior."
+        ],
+        "keywords": [
+          "expo router",
+          "navigation",
+          "routes",
+          "tabs",
+          "stacks",
+          "deep links",
+          "modals",
+          "react native"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8,
+      "repoSignal": 6.9,
+      "score": 7.7,
+      "humanReviewed": false
+    },
+    {
+      "id": "expo/skills:plugins/expo/skills/expo-upgrade",
+      "repo": "expo/skills",
+      "path": "plugins/expo/skills/expo-upgrade",
+      "name": "expo-upgrade",
+      "description": "Guidelines for upgrading Expo SDK versions and fixing dependency issues",
+      "url": "https://github.com/expo/skills/tree/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-upgrade",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "plugins/expo/skills/expo-upgrade/SKILL.md",
+        "url": "https://github.com/expo/skills/blob/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-upgrade/SKILL.md"
+      },
+      "stars": 4185,
+      "forks": 274,
+      "pushedAt": "2026-11-18T09:04:23Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 7,
+          "completeness": 7,
+          "usefulness": 8
+        },
+        "why": "Plan an Expo SDK upgrade with dependency checks and focused references for breaking API changes.",
+        "summary": "Covers SDK upgrades, dependency alignment, diagnostics, native-project cleanup and migrations for audio, video, navigation and React APIs.",
+        "strengths": [
+          "Includes seven focused migration references.",
+          "Checks package peers and distinguishes generated from manually maintained native projects.",
+          "The documented SDK 57 memory-fix prerequisite was checked against the official changelog."
+        ],
+        "cautions": [
+          "Choose an explicit source and target SDK and reconcile the steps with current release notes.",
+          "Cleanup and clean prebuild can remove generated directories; preserve manually maintained native work.",
+          "No actual SDK migration, native compilation or release was executed."
+        ],
+        "keywords": [
+          "expo",
+          "sdk upgrade",
+          "migration",
+          "dependencies",
+          "react native",
+          "diagnostics",
+          "breaking changes"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 7.3,
+      "repoSignal": 6.9,
+      "score": 7.2,
       "humanReviewed": false
     }
   ],

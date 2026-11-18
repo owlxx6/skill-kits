@@ -1,0 +1,67 @@
+[
+  {
+    "id": "expo/skills:plugins/expo/skills/expo-project-structure",
+    "commit": "dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d",
+    "fingerprint": "6d66527fff2dbc83bc4a0507efa3d7624348e7b0",
+    "sourceUrl": "https://github.com/expo/skills/tree/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-project-structure",
+    "reviewedAt": "2026-11-18T11:40:28.788Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T12:50:21.348Z",
+    "ownerReadSource": false,
+    "kind": "individual-skill",
+    "kits": [
+      "web-app"
+    ],
+    "approval": "Owner explicitly approved this individual inclusion in chat on 2026-11-18; whole-repository installation is not approved.",
+    "validationScope": "Complete instructions and associated text files read; pinned source hashes and static admission gates verified. No application generation, native execution, SDK migration or EAS service operation was performed."
+  },
+  {
+    "id": "expo/skills:plugins/expo/skills/expo-router",
+    "commit": "dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d",
+    "fingerprint": "8cd9ea211801328aa92de55991050297da1b4706",
+    "sourceUrl": "https://github.com/expo/skills/tree/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-router",
+    "reviewedAt": "2026-11-18T11:40:28.788Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T12:50:21.348Z",
+    "ownerReadSource": false,
+    "kind": "individual-skill",
+    "kits": [
+      "web-app"
+    ],
+    "approval": "Owner explicitly approved this individual inclusion in chat on 2026-11-18; whole-repository installation is not approved.",
+    "validationScope": "Complete instructions and associated text files read; pinned source hashes and static admission gates verified. No application generation, native execution, SDK migration or EAS service operation was performed."
+  },
+  {
+    "id": "expo/skills:plugins/expo/skills/expo-design-system",
+    "commit": "dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d",
+    "fingerprint": "33f536c3ae0658ae808fa38f35ea511c2c750548",
+    "sourceUrl": "https://github.com/expo/skills/tree/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-design-system",
+    "reviewedAt": "2026-11-18T11:40:28.788Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T12:50:21.348Z",
+    "ownerReadSource": false,
+    "kind": "individual-skill",
+    "kits": [
+      "web-app",
+      "ui-design"
+    ],
+    "approval": "Owner explicitly approved this individual inclusion in chat on 2026-11-18; whole-repository installation is not approved.",
+    "validationScope": "Complete instructions and associated text files read; pinned source hashes and static admission gates verified. No application generation, native execution, SDK migration or EAS service operation was performed."
+  },
+  {
+    "id": "expo/skills:plugins/expo/skills/expo-upgrade",
+    "commit": "dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d",
+    "fingerprint": "35fc11a00bd8cd233e9914e57399d03da6ef5772",
+    "sourceUrl": "https://github.com/expo/skills/tree/dfdebcc6c4c1bf7a9471cefd6b6f39c7ba6c884d/plugins/expo/skills/expo-upgrade",
+    "reviewedAt": "2026-11-18T11:40:28.788Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-18T12:50:21.348Z",
+    "ownerReadSource": false,
+    "kind": "individual-skill",
+    "kits": [
+      "web-app"
+    ],
+    "approval": "Owner explicitly approved this individual inclusion in chat on 2026-11-18; whole-repository installation is not approved.",
+    "validationScope": "Complete instructions and associated text files read; pinned source hashes and static admission gates verified. No application generation, native execution, SDK migration or EAS service operation was performed."
+  }
+]

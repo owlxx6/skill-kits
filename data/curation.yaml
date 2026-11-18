@@ -20,6 +20,10 @@ web-app:
     - cloudflare/skills:skills/workers-best-practices
     - cloudflare/skills:skills/web-perf
     - cloudflare/security-audit-skill:skills/security-audit
+    - expo/skills:plugins/expo/skills/expo-project-structure
+    - expo/skills:plugins/expo/skills/expo-router
+    - expo/skills:plugins/expo/skills/expo-design-system
+    - expo/skills:plugins/expo/skills/expo-upgrade
   rejected: []
 data-analysis:
   approved:
@@ -52,6 +56,7 @@ ui-design:
     - vercel-labs/agent-skills:skills/web-design-guidelines
     - vercel-labs/agent-skills:skills/react-view-transitions
     - cloudflare/skills:skills/web-perf
+    - expo/skills:plugins/expo/skills/expo-design-system
   rejected: []
 workflow-automation:
   approved:
