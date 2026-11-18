@@ -12,6 +12,7 @@ repos:
   - dbt-labs/dbt-agent-skills
   - n8n-io/skills
   - TerminalSkills/skills
+  - cloudflare/security-audit-skill
 topics:
   - agent-skills
   - claude-skills

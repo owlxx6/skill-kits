@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T15:07:58.469Z",
+  "generatedAt": "2026-11-18T11:01:58.007Z",
   "kits": [
     {
       "id": "resume-career",
@@ -76,7 +76,8 @@
         "vercel-labs/agent-skills:skills/react-best-practices",
         "supabase/agent-skills:skills/supabase-postgres-best-practices",
         "cloudflare/skills:skills/workers-best-practices",
-        "cloudflare/skills:skills/web-perf"
+        "cloudflare/skills:skills/web-perf",
+        "cloudflare/security-audit-skill:skills/security-audit"
       ],
       "pending": [],
       "removed": [],
@@ -14399,6 +14400,65 @@
       "reviewScore": 6,
       "repoSignal": 9.6,
       "score": 7.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "cloudflare/security-audit-skill:skills/security-audit",
+      "repo": "cloudflare/security-audit-skill",
+      "path": "skills/security-audit",
+      "name": "security-audit",
+      "description": "Security guidance and vulnerability review for codebases, APIs, services, CLI tools, libraries, and daemons. Use for security questions, focused reviews, vulnerability research, security audits, or pen tests. Run the complete workflow only for explicit codebase audit or pen-test requests, full/comprehensive/end-to-end reviews, or requested report artifacts.",
+      "url": "https://github.com/cloudflare/security-audit-skill/tree/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8/skills/security-audit",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/cloudflare/security-audit-skill/blob/c1c8a8c1471069fb0e188eeaff69b8e8db6564a8/LICENSE"
+      },
+      "stars": 75031,
+      "forks": 5038,
+      "pushedAt": "2026-09-14T19:29:02Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 9,
+          "usefulness": 9
+        },
+        "why": "Audit application trust boundaries with evidence-backed findings, independent verification and structured reports.",
+        "summary": "Defines a six-phase source audit with coverage tracking, domain references and two tested validators for findings and audit coverage.",
+        "strengths": [
+          "Complete workflow with explicit evidence and incomplete-run rules.",
+          "All bundled text, validator code and tests read; 65 validator tests pass in isolated Linux.",
+          "Separates confirmed findings, unresolved hypotheses and rejected candidates."
+        ],
+        "cautions": [
+          "The validator CLIs reject inputs on the tested native Windows runtime; Linux is required for the tested path.",
+          "Full audits need tool-capable models, parallel agents and an OS-enforced sandbox, with an explicit work budget.",
+          "Validator tests check report correctness, not the effectiveness of a full audit at discovering vulnerabilities."
+        ],
+        "keywords": [
+          "security audit",
+          "code review",
+          "vulnerabilities",
+          "trust boundaries",
+          "web security",
+          "coverage",
+          "validation",
+          "reports"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 9.5,
+      "score": 8.9,
       "humanReviewed": false
     }
   ],

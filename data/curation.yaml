@@ -19,6 +19,7 @@ web-app:
     - supabase/agent-skills:skills/supabase-postgres-best-practices
     - cloudflare/skills:skills/workers-best-practices
     - cloudflare/skills:skills/web-perf
+    - cloudflare/security-audit-skill:skills/security-audit
   rejected: []
 data-analysis:
   approved:

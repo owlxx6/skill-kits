@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ccbc33ed119b28c3ef7b44a7e2081ab191ad63af",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T10:41:10.581Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Audit application trust boundaries with evidence-backed findings, independent verification and structured reports.",
+    "summary": "Defines a six-phase source audit with coverage tracking, domain references and two tested validators for findings and audit coverage.",
+    "strengths": [
+      "Complete workflow with explicit evidence and incomplete-run rules.",
+      "All bundled text, validator code and tests read; 65 validator tests pass in isolated Linux.",
+      "Separates confirmed findings, unresolved hypotheses and rejected candidates."
+    ],
+    "cautions": [
+      "The validator CLIs reject inputs on the tested native Windows runtime; Linux is required for the tested path.",
+      "Full audits need tool-capable models, parallel agents and an OS-enforced sandbox, with an explicit work budget.",
+      "Validator tests check report correctness, not the effectiveness of a full audit at discovering vulnerabilities."
+    ],
+    "keywords": [
+      "security audit",
+      "code review",
+      "vulnerabilities",
+      "trust boundaries",
+      "web security",
+      "coverage",
+      "validation",
+      "reports"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}
