@@ -31,13 +31,16 @@ web-app:
 data-analysis:
   approved:
     - dbt-labs/dbt-agent-skills
-    - TerminalSkills/skills
     - TerminalSkills/skills:skills/data-analysis
     - TerminalSkills/skills:skills/pandas
     - supabase/agent-skills:skills/supabase-postgres-best-practices
     - dbt-labs/dbt-agent-skills:skills/dbt/skills/running-dbt-commands
     - dbt-labs/dbt-agent-skills:skills/dbt/skills/answering-natural-language-questions-with-dbt
     - databricks-solutions/ai-dev-kit
+    - TerminalSkills/skills:skills/airflow
+    - TerminalSkills/skills:skills/great-expectations
+    - TerminalSkills/skills:skills/duckdb
+    - TerminalSkills/skills:skills/sql-optimizer
   rejected: []
 docs-reports:
   approved:
@@ -57,7 +60,8 @@ research-monitoring:
   approved:
     - K-Dense-AI/scientific-agent-skills
     - Orchestra-Research/AI-Research-SKILLs
-    - KalarisLabs/research-agent-skills
+    - KalarisLabs/research-agent-skills:skills/citation-verification
+    - KalarisLabs/research-agent-skills:skills/systematic-review-prisma
   rejected: []
 ui-design:
   approved:

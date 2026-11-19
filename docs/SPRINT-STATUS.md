@@ -190,3 +190,23 @@ Held back: `minimax-docx` and `minimax-xlsx` have a `review` scan verdict (packa
 Limits: nothing was executed. `minimax-pdf` needs Python, Node, Playwright and Chromium, and several of its scripts install packages themselves. `convert-documents-to-markdown` runs an unpinned npm package at run time. Its reviews say so.
 
 Checks: typecheck, 1,013 tests, site build (3,407 pages) and site verification (8 kits, 3,361 skill pages). Main is unchanged until a separate release decision.
+
+## Data analysis and Research & monitoring: useful skills instead of two registries — 2026-11-18
+
+The owner asked that the remaining weak-looking parts be judged by reading their skills. Approved in chat: six individual skills added and two repositories removed as kit parts.
+
+- Data analysis: `airflow`, `great-expectations`, `duckdb` and `sql-optimizer` from `TerminalSkills/skills` are added; `data-analysis` and `pandas` stay. The repository leaves the kit as a collection. It is a registry of 1,146 skills written to one template; the ones read are accurate and up to date, but only about forty concern data and the rest (Wi-Fi auditing, 3ds Max scripting) does not belong in the kit.
+- Research & monitoring: `citation-verification` and `systematic-review-prisma` from `KalarisLabs/research-agent-skills` are added. The repository leaves the kit as a collection: 238 of its 265 skills share a name with a skill of `K-Dense-AI/scientific-agent-skills` or `Orchestra-Research/AI-Research-SKILLs`, already in the kit, with different and older text. Its 27 original skills are mostly journal-format and writing helpers; two were read and chosen, the others are not judged.
+- Workflow automation: unchanged. `triggerdotdev/skills` was read and stays: six official Trigger.dev skills grounded in its documentation. The repository has no license, and the page says so.
+
+Every file of the six skill folders was read in full. Reviews are in-session and fingerprint-matched under `data/cache/reviews/`; every new record keeps `humanReviewed: false`. Approval and source commits are in `data/curation-evidence/data-research-picks-2026-11-18.json`. Both repositories stay nominated in `data/sources.yaml`, because the individual skills come from them.
+
+The catalog goes from 240 to 246 reviewed skills, from 3,121 to 1,777 source listings (1,344 leave with the two repositories) and from 28 to 26 collections: 2,023 skill pages. Data analysis and Research & monitoring now list two collections each; no test requires three.
+
+Held back: `minimax-docx` and `minimax-xlsx` (scan verdict `review`) and `databricks-solutions/ai-dev-kit` (unclear license) are not decided here.
+
+Limits: nothing was executed. `citation-verification` sends reference titles, authors and DOIs to Crossref, DataCite, OpenAlex and arXiv, and its `--annotate` option rewrites the `.bib` file in place. The Airflow, DuckDB and Great Expectations skills are pinned to current versions and fetch files over the network without checksum checks. The reviews say so.
+
+One test of `site/tests/collection-coverage.test.ts` named `TerminalSkills/skills`; it now takes any partial collection.
+
+Checks: typecheck, 1,013 tests, site build (2,069 pages) and site verification (8 kits, 2,023 skill pages). Main is unchanged until a separate release decision.

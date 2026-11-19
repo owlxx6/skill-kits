@@ -1,0 +1,42 @@
+{
+  "fingerprint": "f3685fe95579c83741541d8c500982366e69e2f5",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:49:49.278Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Speed up slow SQL: read the query plan, fix common anti-patterns and design indexes for PostgreSQL, MySQL and SQLite.",
+    "summary": "A five-step process: collect query context, read the execution plan, apply rewrites for common anti-patterns (SELECT *, missing indexes, N+1, functions on indexed columns, correlated subqueries, deep OFFSET), recommend indexes, and report the original and optimized queries.",
+    "strengths": [
+      "Concrete before and after rewrites, including an ORM N+1 fix.",
+      "Warns that EXPLAIN ANALYZE executes the statement and shows how to roll it back.",
+      "Index design rules: equality before range, composite column order, write overhead."
+    ],
+    "cautions": [
+      "Covers PostgreSQL, MySQL and SQLite only; nothing for data warehouses.",
+      "Advice is general: the real improvement must be measured on the actual database.",
+      "Examples were not run against a database here."
+    ],
+    "keywords": [
+      "SQL",
+      "query optimization",
+      "index",
+      "EXPLAIN",
+      "PostgreSQL",
+      "MySQL",
+      "SQLite",
+      "N+1",
+      "performance"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "fingerprint": "f86a9e5a6c156780c205618383563dd542ff8632",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:49:49.278Z",
+  "review": {
+    "kits": [
+      "data-analysis"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Query CSV, Parquet and JSON files in place with DuckDB from the CLI, Python or Node, and convert them to Parquet.",
+    "summary": "Covers the DuckDB 2.0 CLI, the Python and Node clients, querying files directly, writing and partitioning Parquet and inspecting Parquet metadata, with two worked examples and guidelines on versions and concurrency.",
+    "strengths": [
+      "Queries files without an import step, and covers Parquet export and partitioning including the pitfalls that break (missing folder, partition key type).",
+      "Notes the current Node client and the changed 2.0 download URL, which older guides get wrong.",
+      "Honest scope: analytics on one machine with a single writer, not a transactional server."
+    ],
+    "cautions": [
+      "Examples target DuckDB 2.0; keep the CLI and client versions aligned.",
+      "The CLI install downloads a binary with curl and advises comparing its SHA-256 before extracting.",
+      "Behavior such as the AI_AGENT banner needs -no-agent for plain output; examples were not run here."
+    ],
+    "keywords": [
+      "DuckDB",
+      "Parquet",
+      "SQL",
+      "CSV",
+      "analytics",
+      "data pipeline",
+      "embedded database",
+      "data exploration"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

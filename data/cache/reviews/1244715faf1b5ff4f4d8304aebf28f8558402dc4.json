@@ -1,0 +1,42 @@
+{
+  "fingerprint": "1244715faf1b5ff4f4d8304aebf28f8558402dc4",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:49:49.278Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Check that every reference exists and matches its record, and catch invented, mismatched or retracted citations before submission.",
+    "summary": "Rules plus a standard-library script that checks a .bib file or DOIs against Crossref, DataCite, OpenAlex and arXiv, gives one status per entry, flags retractions and expressions of concern, and can annotate unverified entries.",
+    "strengths": [
+      "Clear rules: a resolving DOI alone proves nothing, unverifiable references are marked, and only mechanical fixes are applied without the user.",
+      "The script needs no dependencies, reports nine distinct statuses and separates a failed lookup from a bad reference.",
+      "Handles hard cases: conference papers without DOIs, preprints, datasets and software, retractions."
+    ],
+    "cautions": [
+      "Sends reference titles, authors and DOIs to Crossref, DataCite, OpenAlex and arXiv, and a CROSSREF_MAILTO address if set, so details of an unpublished manuscript leave the machine.",
+      "The opt-in --annotate flag rewrites the .bib file in place (entry bodies are not changed); keep a copy.",
+      "Absence from these indexes is common for old, non-English or grey literature. The script was read in full but not run here."
+    ],
+    "keywords": [
+      "citations",
+      "references",
+      "DOI",
+      "BibTeX",
+      "retraction",
+      "Crossref",
+      "OpenAlex",
+      "research integrity",
+      "manuscript"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

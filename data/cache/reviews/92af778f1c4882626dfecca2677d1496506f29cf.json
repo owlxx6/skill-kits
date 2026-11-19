@@ -1,0 +1,41 @@
+{
+  "fingerprint": "92af778f1c4882626dfecca2677d1496506f29cf",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-18T21:49:49.278Z",
+  "review": {
+    "kits": [
+      "research-monitoring"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Plan, run and report systematic reviews to PRISMA 2020: protocol, search, screening, risk of bias, synthesis and a checked flow diagram.",
+    "summary": "Six phases with practical rules, a deduplication script for RIS, CSV and BibTeX exports, and a flow-diagram generator that refuses counts that do not add up or database counts without a logged query. Includes a paraphrased 27-item PRISMA checklist.",
+    "strengths": [
+      "Reproducibility is built in: every database count needs an exact query, a run date and a hit count.",
+      "Covers protocol registration, two-reviewer screening, risk-of-bias tool choice, GRADE and SWiM.",
+      "Treats retrieved text as untrusted data and requires AI screening to be validated and never the sole reviewer."
+    ],
+    "cautions": [
+      "The PRISMA checklist is a paraphrase; use the official checklist before submission.",
+      "The scripts are local and use only the standard library; they were read in full but not run here.",
+      "Statistics for meta-analysis are left to other tools (R metafor, statsmodels); none are implemented."
+    ],
+    "keywords": [
+      "systematic review",
+      "PRISMA 2020",
+      "meta-analysis",
+      "screening",
+      "risk of bias",
+      "deduplication",
+      "flow diagram",
+      "PROSPERO"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}
