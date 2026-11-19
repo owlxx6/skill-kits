@@ -1,0 +1,41 @@
+{
+  "fingerprint": "25d75a622f5f8c034be5b25bf6585850d6f7fcd7",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T15:40:49.518Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "Review GitHub Actions workflows for script injection, privileged triggers, unpinned actions and over-broad tokens, with severity-ranked findings and fixes.",
+    "summary": "A seven-step security review of .github/workflows files. It maps trigger trust levels, hunts for untrusted ${{ }} in run steps, checks pull_request_target and workflow_run, audits permissions, SHA-pinning and secret handling, then reports a severity table with before and after YAML. It never edits files and avoids inflating severity for fork pull requests.",
+    "strengths": [
+      "Explains the real mechanism (expressions are pasted into the shell before it runs) and gives the env-variable fix for each sink.",
+      "Calibrated severity guide: critical only for privileged triggers, with explicit rules against false alarms.",
+      "Reference files for injection, supply chain, permissions and report format; a fixed output template."
+    ],
+    "cautions": [
+      "Reviews workflow files only; it does not run or test them.",
+      "Two reference files (triggers-and-privilege, permissions-and-tokens) were not read in this review.",
+      "Focused on GitHub-hosted Actions; other CI systems are out of scope."
+    ],
+    "keywords": [
+      "GitHub Actions",
+      "CI security",
+      "workflow hardening",
+      "script injection",
+      "pull_request_target",
+      "SHA pinning",
+      "GITHUB_TOKEN",
+      "supply chain"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

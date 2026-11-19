@@ -37,6 +37,12 @@ repos:
   - AgriciDaniel/claude-seo
   - phuryn/pm-skills
   - jakubkrehel/skills
+  - vercel-labs/agent-browser
+  - github/awesome-copilot
+  - anthropics/claude-plugins-official
+  - czlonkowski/n8n-skills
+  - inngest/inngest-skills
+  - resend/resend-skills
 topics:
   - agent-skills
   - claude-skills

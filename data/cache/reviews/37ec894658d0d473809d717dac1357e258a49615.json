@@ -1,0 +1,41 @@
+{
+  "fingerprint": "37ec894658d0d473809d717dac1357e258a49615",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T15:40:49.518Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Read a codebase and recommend the Claude Code hooks, subagents, skills, plugins and MCP servers that fit it, one or two per type.",
+    "summary": "A read-only analysis workflow: detect the stack, config and CI from project files, then map signals to recommendations across five automation types, with templates and a fixed report format. Reference files hold hook patterns (format, lint, protect secrets and lock files), MCP servers, skill and subagent templates and official plugins. It also covers headless claude -p use in CI.",
+    "strengths": [
+      "Read-only: it only recommends, and caps output at the one or two most valuable items per category.",
+      "Concrete signal-to-recommendation tables and ready templates for hooks and subagents.",
+      "Tells the agent to search beyond its lists for tools specific to the codebase."
+    ],
+    "cautions": [
+      "The tables name specific plugins and MCP servers that will age as the ecosystem changes.",
+      "Recommendations are generic starting points; the user still builds and tests each automation.",
+      "SKILL.md read in full, the hooks reference in part, the other four reference files by headings; not run here."
+    ],
+    "keywords": [
+      "Claude Code",
+      "hooks",
+      "subagents",
+      "MCP servers",
+      "automation",
+      "skills",
+      "plugins",
+      "headless mode"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

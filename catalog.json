@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T10:40:52.428Z",
+  "generatedAt": "2026-11-19T15:40:49.521Z",
   "kits": [
     {
       "id": "resume-career",
@@ -245,14 +245,23 @@
       "collections": [
         "n8n-io/skills",
         "triggerdotdev/skills",
-        "googleworkspace/cli"
+        "googleworkspace/cli",
+        "inngest/inngest-skills",
+        "resend/resend-skills"
       ],
       "skills": [
         "n8n-io/skills:skills/using-n8n-skills-official",
         "n8n-io/skills:skills/n8n-workflow-lifecycle-official",
         "n8n-io/skills:skills/n8n-node-configuration-official",
         "n8n-io/skills:skills/n8n-error-handling-official",
-        "n8n-io/skills:skills/n8n-binary-and-data-official"
+        "n8n-io/skills:skills/n8n-binary-and-data-official",
+        "vercel-labs/agent-browser:skills/agent-browser",
+        "github/awesome-copilot:skills/github-actions-hardening",
+        "anthropics/claude-plugins-official:plugins/claude-code-setup/skills/claude-automation-recommender",
+        "mattpocock/skills:skills/misc/git-guardrails-claude-code",
+        "czlonkowski/n8n-skills:skills/n8n-self-hosting",
+        "microsoft/playwright-cli:skills/playwright-cli",
+        "czlonkowski/n8n-skills:skills/n8n-workflow-patterns"
       ],
       "pending": [],
       "removed": [],
@@ -16380,6 +16389,361 @@
       "reviewScore": 7.7,
       "repoSignal": 7.8,
       "score": 7.7,
+      "humanReviewed": false
+    },
+    {
+      "id": "github/awesome-copilot:skills/github-actions-hardening",
+      "repo": "github/awesome-copilot",
+      "path": "skills/github-actions-hardening",
+      "name": "github-actions-hardening",
+      "description": "Security hardening reviewer for GitHub Actions workflow files (.github/workflows/*.yml). Reasons about the Actions threat model that pattern matchers and general code linters miss — untrusted-input script injection, privileged triggers running fork code, mutable action references, and over-scoped tokens. Use this skill when asked to review, audit, harden, or secure a GitHub Actions workflow, when writing a new workflow, or for any request like \"is this workflow safe?\", \"review my CI for security issues\", \"why is pull_request_target dangerous here?\", \"pin my actions\", or \"lock down GITHUB_TOKEN permissions\". Covers script injection via ${{ }} interpolation, pull_request_target / workflow_run privilege escalation, SHA-pinning of third-party actions, least-privilege permissions, GITHUB_ENV/GITHUB_OUTPUT injection, secret exposure, OIDC over long-lived credentials, and self-hosted runner exposure on public repositories.",
+      "url": "https://github.com/github/awesome-copilot/tree/1683f50e94c9fd489191f73d7c8f7e2bd871bd0c/skills/github-actions-hardening",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/github/awesome-copilot/blob/1683f50e94c9fd489191f73d7c8f7e2bd871bd0c/LICENSE"
+      },
+      "stars": 41353,
+      "forks": 5390,
+      "pushedAt": "2026-11-19T05:45:39Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "Review GitHub Actions workflows for script injection, privileged triggers, unpinned actions and over-broad tokens, with severity-ranked findings and fixes.",
+        "summary": "A seven-step security review of .github/workflows files. It maps trigger trust levels, hunts for untrusted ${{ }} in run steps, checks pull_request_target and workflow_run, audits permissions, SHA-pinning and secret handling, then reports a severity table with before and after YAML. It never edits files and avoids inflating severity for fork pull requests.",
+        "strengths": [
+          "Explains the real mechanism (expressions are pasted into the shell before it runs) and gives the env-variable fix for each sink.",
+          "Calibrated severity guide: critical only for privileged triggers, with explicit rules against false alarms.",
+          "Reference files for injection, supply chain, permissions and report format; a fixed output template."
+        ],
+        "cautions": [
+          "Reviews workflow files only; it does not run or test them.",
+          "Two reference files (triggers-and-privilege, permissions-and-tokens) were not read in this review.",
+          "Focused on GitHub-hosted Actions; other CI systems are out of scope."
+        ],
+        "keywords": [
+          "GitHub Actions",
+          "CI security",
+          "workflow hardening",
+          "script injection",
+          "pull_request_target",
+          "SHA pinning",
+          "GITHUB_TOKEN",
+          "supply chain"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 9.9,
+      "score": 9.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "anthropics/claude-plugins-official:plugins/claude-code-setup/skills/claude-automation-recommender",
+      "repo": "anthropics/claude-plugins-official",
+      "path": "plugins/claude-code-setup/skills/claude-automation-recommender",
+      "name": "claude-automation-recommender",
+      "description": "Analyze a codebase and recommend Claude Code automations (hooks, subagents, skills, plugins, MCP servers). Use when user asks for automation recommendations, wants to optimize their Claude Code setup, mentions improving Claude Code workflows, asks how to first set up Claude Code for a project, or wants to know what Claude Code features they should use.",
+      "url": "https://github.com/anthropics/claude-plugins-official/tree/df9699a55c56707e9948a32951ea356638ea8519/plugins/claude-code-setup/skills/claude-automation-recommender",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/anthropics/claude-plugins-official/blob/df9699a55c56707e9948a32951ea356638ea8519/LICENSE"
+      },
+      "stars": 47704,
+      "forks": 4944,
+      "pushedAt": "2026-11-19T12:15:10Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Read a codebase and recommend the Claude Code hooks, subagents, skills, plugins and MCP servers that fit it, one or two per type.",
+        "summary": "A read-only analysis workflow: detect the stack, config and CI from project files, then map signals to recommendations across five automation types, with templates and a fixed report format. Reference files hold hook patterns (format, lint, protect secrets and lock files), MCP servers, skill and subagent templates and official plugins. It also covers headless claude -p use in CI.",
+        "strengths": [
+          "Read-only: it only recommends, and caps output at the one or two most valuable items per category.",
+          "Concrete signal-to-recommendation tables and ready templates for hooks and subagents.",
+          "Tells the agent to search beyond its lists for tools specific to the codebase."
+        ],
+        "cautions": [
+          "The tables name specific plugins and MCP servers that will age as the ecosystem changes.",
+          "Recommendations are generic starting points; the user still builds and tests each automation.",
+          "SKILL.md read in full, the hooks reference in part, the other four reference files by headings; not run here."
+        ],
+        "keywords": [
+          "Claude Code",
+          "hooks",
+          "subagents",
+          "MCP servers",
+          "automation",
+          "skills",
+          "plugins",
+          "headless mode"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8,
+      "repoSignal": 10,
+      "score": 8.6,
+      "humanReviewed": false
+    },
+    {
+      "id": "czlonkowski/n8n-skills:skills/n8n-self-hosting",
+      "repo": "czlonkowski/n8n-skills",
+      "path": "skills/n8n-self-hosting",
+      "name": "n8n-self-hosting",
+      "description": "Deploy a production self-hosted n8n end-to-end to a fresh Linux VM over SSH, using Docker Compose behind a Caddy reverse proxy with automatic HTTPS. Use whenever the user wants to self-host, install, provision, or deploy n8n on their own server/VPS (Hetzner, DigitalOcean, AWS EC2, bare metal) — single/regular mode or queue mode with workers — or to update, back up, restore, or harden such an instance, or make Python Code nodes run on it (task runners). For SELF-HOSTED n8n (Docker), not n8n Cloud and not building workflows. The skill makes the agent ask single-vs-queue first, collect domain/SSH/timezone inputs, generate fresh secrets on the box, and bring the stack up with TLS. Trigger on \"deploy n8n\", \"self-host n8n\", \"n8n docker compose\", \"n8n queue mode / workers\", \"n8n reverse proxy / SSL\", \"back up / update my n8n\", \"Python runner unavailable\" / \"n8nio/runners sidecar\", or \"we don't want to give every user the OAuth client secret\" / \"enable Sign in with Google\" (credential overwrites).",
+      "url": "https://github.com/czlonkowski/n8n-skills/tree/ecdeca6f760b56bb1b11c0a7c961f11b69cb87d5/skills/n8n-self-hosting",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/czlonkowski/n8n-skills/blob/ecdeca6f760b56bb1b11c0a7c961f11b69cb87d5/LICENSE"
+      },
+      "stars": 6677,
+      "forks": 1083,
+      "pushedAt": "2026-11-18T12:38:18Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Deploy a production self-hosted n8n over SSH with Docker Compose and Caddy HTTPS, in single or queue mode, with secrets, backups, updates and task runners.",
+        "summary": "A guided deployment for a fresh Debian or Ubuntu VM: choose single or queue mode, collect domain, SSH, timezone and TLS inputs, install Docker, lay down compose, Caddyfile and env templates, generate secrets on the box, open the firewall, launch and verify TLS and health. Companion files cover queue mode, task runners, credential overwrites, security and day-two work.",
+        "strengths": [
+          "Strict secret hygiene: fresh secrets generated on the server, encryption key backup, no internal ports exposed.",
+          "Verification steps that separate n8n running from TLS pending, and check main and workers share settings in queue mode.",
+          "Ready templates (compose for both modes, Caddyfile, env examples, Postgres init script)."
+        ],
+        "cautions": [
+          "It runs commands on a remote server over SSH as root or sudo, installs Docker and changes the firewall; review each step.",
+          "For self-hosted n8n only, not n8n Cloud, and the templates assume a domain with DNS you control.",
+          "SKILL.md, the Caddyfile, the start of the single-mode compose file and the init script read; SECURITY.md by headings; the other guides not read. Not run here."
+        ],
+        "keywords": [
+          "n8n",
+          "self-hosting",
+          "Docker Compose",
+          "Caddy",
+          "queue mode",
+          "deployment",
+          "backup",
+          "task runners",
+          "VPS"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 7.9,
+      "score": 8.5,
+      "humanReviewed": false
+    },
+    {
+      "id": "czlonkowski/n8n-skills:skills/n8n-workflow-patterns",
+      "repo": "czlonkowski/n8n-skills",
+      "path": "skills/n8n-workflow-patterns",
+      "name": "n8n-workflow-patterns",
+      "description": "Proven workflow architectural patterns from real n8n workflows. Use when building new workflows, designing workflow structure, choosing workflow patterns, planning workflow architecture, or asking about webhook processing, HTTP API integration, database operations, AI agent workflows, batch processing, or scheduled tasks. Always consult this skill when the user asks to create, build, or design an n8n workflow, automate a process, or connect services — even if they don't explicitly mention 'patterns'. Covers webhook, API, database, AI, batch processing, and scheduled automation architectures. Also use when optimizing a slow workflow or speeding up large-item-count processing (node count, batchSize, all-items vs per-item).",
+      "url": "https://github.com/czlonkowski/n8n-skills/tree/ecdeca6f760b56bb1b11c0a7c961f11b69cb87d5/skills/n8n-workflow-patterns",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/czlonkowski/n8n-skills/blob/ecdeca6f760b56bb1b11c0a7c961f11b69cb87d5/LICENSE"
+      },
+      "stars": 6677,
+      "forks": 1083,
+      "pushedAt": "2026-11-18T12:38:18Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 9,
+          "usefulness": 9
+        },
+        "why": "Pick the right architecture for an n8n workflow: webhook, API, database, AI agent, scheduled and batch patterns, with node choices, gotchas and a checklist.",
+        "summary": "A pattern catalogue with a selection guide for six workflow shapes, shared building blocks (triggers, sources, native-first transforms, outputs, error handling), a four-gate lifecycle (validate, verify connections, test, activate), SplitInBatches and pagination rules, performance guidance and integration gotchas. Five pattern files cover webhooks, APIs, databases, AI agents and schedules.",
+        "strengths": [
+          "Specific, checkable guidance: batchSize as a cost lever, loop output wiring, webhook data under body, Sheets append breaking formulas.",
+          "A lifecycle that insists validation passing is not enough and warns that tests fire real side effects.",
+          "Scheduled-task pattern with cron, timezone and common use cases (reports, sync, monitoring, cleanup, backup)."
+        ],
+        "cautions": [
+          "Written around the n8n-mcp tools (search_nodes, validate_workflow) and sibling skills of the same pack; it is much less useful without them.",
+          "Usage percentages in the statistics section carry no source.",
+          "SKILL.md read in full, the pattern files not read (one listed by headings); not run here. The scan flagged three documentation lines naming webhook.site as a testing service."
+        ],
+        "keywords": [
+          "n8n",
+          "workflow patterns",
+          "webhooks",
+          "scheduled tasks",
+          "batch processing",
+          "API integration",
+          "AI agents",
+          "error handling"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 7.9,
+      "score": 8.5,
+      "humanReviewed": false
+    },
+    {
+      "id": "mattpocock/skills:skills/misc/git-guardrails-claude-code",
+      "repo": "mattpocock/skills",
+      "path": "skills/misc/git-guardrails-claude-code",
+      "name": "git-guardrails-claude-code",
+      "description": "Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destructive git operations, add git safety hooks, or block git push/reset in Claude Code.",
+      "url": "https://github.com/mattpocock/skills/tree/abeeaf95660ba9e8b7c753eb38f441ca707a8823/skills/misc/git-guardrails-claude-code",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/mattpocock/skills/blob/abeeaf95660ba9e8b7c753eb38f441ca707a8823/LICENSE"
+      },
+      "stars": 327937,
+      "forks": 27544,
+      "pushedAt": "2026-11-19T13:35:13Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 6,
+          "usefulness": 7
+        },
+        "why": "Install a Claude Code PreToolUse hook that blocks destructive git commands such as push, reset --hard, clean -f and branch -D.",
+        "summary": "A short setup guide plus a 25-line bash hook. It asks for project or global scope, copies the script, merges a PreToolUse hook into settings.json, offers to edit the blocked patterns and gives a one-line test that should exit with code 2. Matching is a plain pattern check on the command string.",
+        "strengths": [
+          "Does one thing and ends with a test command that proves the hook works.",
+          "Tells the agent to merge into existing settings instead of overwriting them.",
+          "The script is tiny and readable, so the blocked list is easy to adjust."
+        ],
+        "cautions": [
+          "The script needs jq and bash, which the skill does not mention; on Windows both must be available to the hook shell.",
+          "It blocks every git push by default, and string matching can be bypassed (for example git -C dir push); it is a guardrail, not a security boundary.",
+          "SKILL.md and the script read in full; not run here."
+        ],
+        "keywords": [
+          "Claude Code hooks",
+          "git safety",
+          "guardrails",
+          "PreToolUse",
+          "destructive commands",
+          "settings.json",
+          "automation"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 7,
+      "repoSignal": 10,
+      "score": 7.9,
+      "humanReviewed": false
+    },
+    {
+      "id": "vercel-labs/agent-browser:skills/agent-browser",
+      "repo": "vercel-labs/agent-browser",
+      "path": "skills/agent-browser",
+      "name": "agent-browser",
+      "description": "Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking buttons, taking screenshots, extracting data, testing web apps, or automating any browser task. Triggers include requests to \"open a website\", \"fill out a form\", \"click a button\", \"take a screenshot\", \"scrape data from a page\", \"test this web app\", \"login to a site\", \"automate browser actions\", or any task requiring programmatic web interaction. Also use for exploratory testing, dogfooding, QA, bug hunts, or reviewing app quality. Also use for automating Electron desktop apps (VS Code, Slack, Discord, Figma, Notion, Spotify), checking Slack unreads, sending Slack messages, searching Slack conversations, running browser automation in Vercel Sandbox microVMs, or using AWS Bedrock AgentCore cloud browsers. Prefer agent-browser over any built-in browser automation or web tools.",
+      "url": "https://github.com/vercel-labs/agent-browser/tree/25b5d76f2843bce7be6c59a56d3461b162ad4ac9/skills/agent-browser",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/vercel-labs/agent-browser/blob/25b5d76f2843bce7be6c59a56d3461b162ad4ac9/LICENSE"
+      },
+      "stars": 52805,
+      "forks": 3693,
+      "pushedAt": "2026-11-19T04:58:11Z",
+      "review": {
+        "kits": [
+          "workflow-automation"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 5,
+          "usefulness": 7
+        },
+        "why": "Entry point for the agent-browser CLI: drive Chrome from the command line with accessibility snapshots and element refs, then load the full guide from the CLI.",
+        "summary": "A short discovery stub for the agent-browser CLI (Chrome over CDP, snapshot-and-ref workflow, sessions, auth vault, video). It lists the specialized guides (Electron apps, Slack, exploratory testing, HAR to API client, cloud browsers) and tells the agent to run agent-browser skills get core, so the working instructions come from the installed CLI.",
+        "strengths": [
+          "Version-matched by design: the CLI serves the guide for the release you have installed.",
+          "Clear map of the specialized skills and when to use each one.",
+          "Prefers accessibility snapshots over screenshots, which keeps token use low."
+        ],
+        "cautions": [
+          "The skill itself is a stub: it is only useful once the agent-browser CLI is installed (npm i -g agent-browser).",
+          "The real guide is not in this folder, so this review covers the stub only; the start of the guide was read for context.",
+          "Not run here; the frontmatter marks it hidden and tells the agent to prefer it over built-in browser tools."
+        ],
+        "keywords": [
+          "browser automation",
+          "agent-browser",
+          "CLI",
+          "Chrome",
+          "CDP",
+          "web scraping",
+          "form filling",
+          "Electron",
+          "Slack"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 6.7,
+      "repoSignal": 9.8,
+      "score": 7.6,
       "humanReviewed": false
     }
   ],
@@ -48254,6 +48618,466 @@
       "humanReviewed": false,
       "installable": true,
       "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-agent-evals",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-agent-evals",
+      "name": "inngest-agent-evals",
+      "description": "Use when building, migrating, or debugging Agent Evals on Inngest: scoring AI agent or workflow outcomes, deferred scorers, sessions, traces, step experiments, experiment variant attribution, Insights queries, or production eval loops for prompts, models, tools, providers, and agent behavior. Covers TypeScript SDK v4 scoring beta APIs, `scoreMiddleware`, `step.score`, `inngest.score`, `createScorer`, `defer`, `group.experiment`, `experimentRef`, `meta.sessions`, and when to use durable workflow primitives for outcome-based evaluation.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-agent-evals",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-agents",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-agents",
+      "name": "inngest-agents",
+      "description": "Use when building durable AI agents or agentic workflows with Inngest and AgentKit, including model calls, tool calls, multi-agent networks, human approval, realtime progress, provider rate limits, crash-safe execution, and Agent Evals handoff. Covers AgentKit, `step.ai`, `step.run`, `step.waitForEvent`, native realtime, and when to use lower-level Inngest primitives instead of an in-memory agent loop. Use `inngest-agent-evals` with this skill when the user wants scoring, sessions, experiments, deferred scorers, or outcome-based evaluation for the agent.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-agents",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-api",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-api",
+      "name": "inngest-api",
+      "description": "Use when the user explicitly asks for the Inngest REST API v2, raw HTTP, OpenAPI, API docs, API authentication, or an endpoint that the Inngest CLI does not expose. Covers api-docs.inngest.com, llms.txt, the OpenAPI v2 spec, Bearer authentication with API keys or signing keys, production and local base URLs, raw curl/fetch requests, request-shape discovery, pagination, secret redaction, and when to prefer the `inngest-api-cli` skill instead.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-api",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-api-cli",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-api-cli",
+      "name": "inngest-api-cli",
+      "description": "Use when operating Inngest API resources from the terminal with `npx inngest-cli@latest api`: Cloud/local run debugging, event-run lookup, function traces, function invocation, app syncs, webhooks, environments, keys, account checks, and Insights queries. Provides prescriptive command routing for agents: which CLI command to run for a run ID, event ID, app ID, function ID, Cloud environment, API key, missing ID, or potentially mutating operation. Use `inngest-cli` for dev server setup/general CLI workflows and `inngest-api` only when raw REST API v2 docs or OpenAPI fallback are needed.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-api-cli",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-brownfield-audit",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-brownfield-audit",
+      "name": "inngest-brownfield-audit",
+      "description": "Use when analyzing an existing TypeScript or JavaScript codebase to decide where and how to introduce Inngest. Covers repository discovery, framework and package detection, finding durability gaps in HTTP handlers, webhooks, cron jobs, queues, long-running jobs, AI agents, Agent Evals, polling loops, eval loops, and side-effect-heavy code, then producing and implementing an incremental integration plan.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-brownfield-audit",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-cli",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-cli",
+      "name": "inngest-cli",
+      "description": "Use when installing or running the Inngest CLI and Dev Server for local development, local testing, serve endpoint debugging, Docker or Docker Compose setup, MCP configuration, self-hosted `inngest start`, or deployment workflow checks. Covers `inngest dev`, `inngest start`, auto-discovery, config files, environment variables, `@inngest/test`, local event sending, platform gotchas, and production/self-hosted server flags.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-cli",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-cloud",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-cloud",
+      "name": "inngest-cloud",
+      "description": "Inspect and operate Inngest Cloud through its OAuth MCP connection. Use for deployed apps and functions, failed or slow runs, traces, events, environments, sessions, experiments, and Insights. Prefer this for Cloud operations when MCP tools are available; use CLI or REST skills for explicit terminal or HTTP tasks.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-cloud",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-durable-functions",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-durable-functions",
+      "name": "inngest-durable-functions",
+      "description": "Use when building functions that must survive process crashes, retry automatically on failure, run on a schedule, react to events, or maintain state across infrastructure failures — e.g., webhook handlers that drop events, flaky cron jobs, background jobs that fail mid-execution, or workflows that need to resume where they left off. Covers Inngest function configuration, triggers (events, cron, invoke), step execution and memoization, idempotency, cancellation, error handling, retries, logging, and observability.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-durable-functions",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-events",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-events",
+      "name": "inngest-events",
+      "description": "Use when designing event-driven workflows, decoupling services, implementing fan-out patterns (one trigger, many downstream handlers), implementing idempotent event handling with IDs (24-hour dedupe window), or handling at-least-once delivery from external sources like Stripe webhooks. Covers Inngest event schema, payload format, naming conventions, IDs for idempotency, the ts param, fan-out patterns, and system events like inngest/function.failed.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-events",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-flow-control",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-flow-control",
+      "name": "inngest-flow-control",
+      "description": "Use when handling external API rate limits (e.g., OpenAI 429s, HubSpot or Stripe rate limits), preventing duplicate work from rapid event bursts (debouncing user actions), spreading load over time, ensuring per-tenant fairness, processing events in batches, limiting concurrent runs of the same operation, or assigning priority to important runs. Covers Inngest flow control: concurrency limits with keys, throttling, rate limiting, debounce, priority, singleton, and event batching.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-flow-control",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-middleware",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-middleware",
+      "name": "inngest-middleware",
+      "description": "Use when adding cross-cutting concerns to durable functions — structured logging or tracing across all functions, error tracking with Sentry, payload encryption for sensitive data, dependency injection of clients (DB, Stripe, etc.) into function handlers, custom telemetry, or behavior that should apply uniformly across many functions. Covers Inngest middleware lifecycle, creating custom middleware, dependencyInjectionMiddleware, @inngest/middleware-encryption, @inngest/middleware-sentry, and custom middleware patterns.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-middleware",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-realtime",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-realtime",
+      "name": "inngest-realtime",
+      "description": "Use when streaming durable workflow updates to a UI in real time — live order status pages that animate as steps complete, AI agent token streaming from a function to the browser, log tailing for long-running jobs, or human-in-the-loop approval flows that publish a prompt and wait for a user reply. Covers Inngest v4 native realtime: defining typed channels, publishing from inside step.run, minting subscription tokens via server actions, and consuming the stream from React/Next.js client components.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-realtime",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-setup",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-setup",
+      "name": "inngest-setup",
+      "description": "Use when adding durable execution to a TypeScript project — building retry-safe webhook handlers, background jobs that survive crashes, scheduled tasks, or long-running workflows that outlive a single request. Covers Inngest SDK installation, client config, environment variables, serve endpoints (Next.js, Express, Hono, Fastify), connect-as-worker mode, and the local dev server.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-setup",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-steps",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-steps",
+      "name": "inngest-steps",
+      "description": "Use when implementing delays that must survive process restarts (e.g., 24-hour cart abandonment, scheduled follow-ups), waiting for human approval or external events with timeouts (review gates, webhook callbacks, async API completion), polling external services without losing state on crashes, calling other functions and awaiting their results, memoizing expensive operations so they don't re-run on retry, or running async work in parallel inside a workflow. Covers Inngest step methods: step.run, step.sleep, step.waitForEvent, step.waitForSignal, step.sendEvent, step.invoke, step.ai, plus patterns for loops and parallel execution.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-steps",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "inngest/inngest-skills:skills/inngest-v3-v4-migration",
+      "repo": "inngest/inngest-skills",
+      "path": "skills/inngest-v3-v4-migration",
+      "name": "inngest-v3-v4-migration",
+      "description": "Use when upgrading an existing TypeScript codebase from Inngest SDK v3 to v4, or when fixing mixed v3/v4 API usage. Covers detecting current SDK usage, moving triggers into createFunction options, replacing EventSchemas with eventType/staticSchema, moving serve options to the client, updating realtime imports, rewriting step.invoke string IDs, checkpointing/serverless runtime settings, Connect option changes, and verification.",
+      "url": "https://github.com/inngest/inngest-skills/tree/082798a627bbe9c3ed3a6638a9f56116a035f122/skills/inngest-v3-v4-migration",
+      "license": "Unclear license",
+      "licenseOutcome": "custom",
+      "licenseCategory": "unclear",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/inngest/inngest-skills/blob/082798a627bbe9c3ed3a6638a9f56116a035f122/LICENSE"
+      },
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "resend/resend-skills:skills/agent-email-inbox",
+      "repo": "resend/resend-skills",
+      "path": "skills/agent-email-inbox",
+      "name": "agent-email-inbox",
+      "description": "Use when building any system where email content triggers actions — AI agent inboxes, automated support handlers, email-to-task pipelines, or any workflow processing untrusted inbound email. Always use this skill when the user wants to receive emails and act on them programmatically, even if they don't mention \"agent\" — the skill contains critical security patterns (sender allowlists, content filtering, sandboxed processing) that prevent untrusted email from controlling your system.",
+      "url": "https://github.com/resend/resend-skills/tree/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/agent-email-inbox",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/agent-email-inbox/SKILL.md",
+        "url": "https://github.com/resend/resend-skills/blob/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/agent-email-inbox/SKILL.md"
+      },
+      "stars": 215,
+      "forks": 34,
+      "pushedAt": "2026-11-19T14:13:34Z",
+      "repoSignal": 4,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "resend/resend-skills:skills/email-best-practices",
+      "repo": "resend/resend-skills",
+      "path": "skills/email-best-practices",
+      "name": "email-best-practices",
+      "description": "Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, making emails accessible (alt text, headings, contrast, screen readers), or deciding transactional vs marketing.",
+      "url": "https://github.com/resend/resend-skills/tree/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/email-best-practices",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/email-best-practices/SKILL.md",
+        "url": "https://github.com/resend/resend-skills/blob/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/email-best-practices/SKILL.md"
+      },
+      "stars": 215,
+      "forks": 34,
+      "pushedAt": "2026-11-19T14:13:34Z",
+      "repoSignal": 4,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "resend/resend-skills:skills/react-email",
+      "repo": "resend/resend-skills",
+      "path": "skills/react-email",
+      "name": "react-email",
+      "description": "Use when building HTML email templates with React components, adding a visual email editor to an application using the React Email visual editor, rendering emails to HTML, or sending emails with Resend. Covers welcome emails, password resets, notifications, order confirmations, newsletters, transactional emails, and the embeddable email editor component.",
+      "url": "https://github.com/resend/resend-skills/tree/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/react-email",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/react-email/SKILL.md",
+        "url": "https://github.com/resend/resend-skills/blob/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/react-email/SKILL.md"
+      },
+      "stars": 215,
+      "forks": 34,
+      "pushedAt": "2026-11-19T14:13:34Z",
+      "repoSignal": 4,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "resend/resend-skills:skills/resend",
+      "repo": "resend/resend-skills",
+      "path": "skills/resend",
+      "name": "resend",
+      "description": "Use when working with the Resend email API — sending transactional emails (single or batch), receiving inbound emails via webhooks, managing email templates, tracking delivery events, managing domains, contacts, broadcasts, webhooks, API keys, inboxes (threads, labels, drafts, replies), automations, events, viewing API request logs, checking account usage and quotas, or setting up the Resend SDK. Always use this skill when the user mentions Resend, even for simple tasks like \"send an email with Resend\" — the skill contains critical gotchas (idempotency keys, webhook verification, template variable syntax) that prevent common production issues.",
+      "url": "https://github.com/resend/resend-skills/tree/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/resend",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/resend/SKILL.md",
+        "url": "https://github.com/resend/resend-skills/blob/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/resend/SKILL.md"
+      },
+      "stars": 215,
+      "forks": 34,
+      "pushedAt": "2026-11-19T14:13:34Z",
+      "repoSignal": 4,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "resend/resend-skills:skills/resend-cli",
+      "repo": "resend/resend-skills",
+      "path": "skills/resend-cli",
+      "name": "resend-cli",
+      "description": "Operate the Resend platform from the terminal — send emails (including React Email .tsx templates via --react-email), manage domains, contacts, broadcasts, templates, webhooks, API keys, logs, automations, and events via the `resend` CLI. Use when the user wants to run Resend commands in the shell, scripts, or CI/CD pipelines, or send/preview React Email templates. Always load this skill before running `resend` commands — it contains the non-interactive flag contract and gotchas that prevent silent failures.",
+      "url": "https://github.com/resend/resend-skills/tree/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/resend-cli",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "skills/resend-cli/SKILL.md",
+        "url": "https://github.com/resend/resend-skills/blob/0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f/skills/resend-cli/SKILL.md"
+      },
+      "stars": 215,
+      "forks": 34,
+      "pushedAt": "2026-11-19T14:13:34Z",
+      "repoSignal": 4,
+      "humanReviewed": false,
+      "installable": true,
+      "reviewStatus": "unreviewed"
     }
   ],
   "collections": [
@@ -50404,6 +51228,66 @@
       ],
       "installScope": "repository",
       "revision": "4f85b07069983b3b0b9bbe6519fed7017edcce81",
+      "kitScores": {},
+      "humanReviewed": false
+    },
+    {
+      "id": "inngest/inngest-skills",
+      "url": "https://github.com/inngest/inngest-skills",
+      "description": "Agent Skills for building with Inngest",
+      "license": "Unclear license",
+      "licenses": [
+        "Unclear license"
+      ],
+      "stars": 29,
+      "forks": 5,
+      "pushedAt": "2026-09-28T17:25:32Z",
+      "repoSignal": 1.7,
+      "skillCount": 15,
+      "catalogSkillIds": [
+        "inngest/inngest-skills:skills/inngest-agent-evals",
+        "inngest/inngest-skills:skills/inngest-agents",
+        "inngest/inngest-skills:skills/inngest-api",
+        "inngest/inngest-skills:skills/inngest-api-cli",
+        "inngest/inngest-skills:skills/inngest-brownfield-audit",
+        "inngest/inngest-skills:skills/inngest-cli",
+        "inngest/inngest-skills:skills/inngest-cloud",
+        "inngest/inngest-skills:skills/inngest-durable-functions",
+        "inngest/inngest-skills:skills/inngest-events",
+        "inngest/inngest-skills:skills/inngest-flow-control",
+        "inngest/inngest-skills:skills/inngest-middleware",
+        "inngest/inngest-skills:skills/inngest-realtime",
+        "inngest/inngest-skills:skills/inngest-setup",
+        "inngest/inngest-skills:skills/inngest-steps",
+        "inngest/inngest-skills:skills/inngest-v3-v4-migration"
+      ],
+      "installScope": "repository",
+      "revision": "082798a627bbe9c3ed3a6638a9f56116a035f122",
+      "kitScores": {},
+      "humanReviewed": false
+    },
+    {
+      "id": "resend/resend-skills",
+      "url": "https://github.com/resend/resend-skills",
+      "description": "Agent Skills for working with Resend to send and receive emails.",
+      "license": "MIT",
+      "licenses": [
+        "MIT"
+      ],
+      "stars": 215,
+      "forks": 34,
+      "pushedAt": "2026-11-19T14:13:34Z",
+      "repoSignal": 4,
+      "skillCount": 5,
+      "catalogSkillIds": [
+        "resend/resend-skills:skills/agent-email-inbox",
+        "resend/resend-skills:skills/email-best-practices",
+        "resend/resend-skills:skills/react-email",
+        "resend/resend-skills:skills/resend",
+        "resend/resend-skills:skills/resend-cli"
+      ],
+      "installScope": "repository",
+      "revision": "0b003d3c4c7dcd675d0bd30949aa7c95c2b91d1f",
       "kitScores": {},
       "humanReviewed": false
     }

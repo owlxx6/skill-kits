@@ -1,0 +1,42 @@
+{
+  "fingerprint": "d75a393c9a371295c6d6be46c34938e76ef21184",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T15:40:49.518Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 5,
+      "usefulness": 7
+    },
+    "why": "Entry point for the agent-browser CLI: drive Chrome from the command line with accessibility snapshots and element refs, then load the full guide from the CLI.",
+    "summary": "A short discovery stub for the agent-browser CLI (Chrome over CDP, snapshot-and-ref workflow, sessions, auth vault, video). It lists the specialized guides (Electron apps, Slack, exploratory testing, HAR to API client, cloud browsers) and tells the agent to run agent-browser skills get core, so the working instructions come from the installed CLI.",
+    "strengths": [
+      "Version-matched by design: the CLI serves the guide for the release you have installed.",
+      "Clear map of the specialized skills and when to use each one.",
+      "Prefers accessibility snapshots over screenshots, which keeps token use low."
+    ],
+    "cautions": [
+      "The skill itself is a stub: it is only useful once the agent-browser CLI is installed (npm i -g agent-browser).",
+      "The real guide is not in this folder, so this review covers the stub only; the start of the guide was read for context.",
+      "Not run here; the frontmatter marks it hidden and tells the agent to prefer it over built-in browser tools."
+    ],
+    "keywords": [
+      "browser automation",
+      "agent-browser",
+      "CLI",
+      "Chrome",
+      "CDP",
+      "web scraping",
+      "form filling",
+      "Electron",
+      "Slack"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}
