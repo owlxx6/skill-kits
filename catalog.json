@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T09:53:03.712Z",
+  "generatedAt": "2026-11-19T10:40:52.428Z",
   "kits": [
     {
       "id": "resume-career",
@@ -217,7 +217,19 @@
         "vercel-labs/agent-skills:skills/web-design-guidelines",
         "vercel-labs/agent-skills:skills/react-view-transitions",
         "cloudflare/skills:skills/web-perf",
-        "expo/skills:plugins/expo/skills/expo-design-system"
+        "expo/skills:plugins/expo/skills/expo-design-system",
+        "jakubkrehel/skills:skills/better-accessibility",
+        "jakubkrehel/skills:skills/better-colors",
+        "jakubkrehel/skills:skills/better-layout",
+        "jakubkrehel/skills:skills/better-motion",
+        "jakubkrehel/skills:skills/better-typography",
+        "jakubkrehel/skills:skills/better-ui",
+        "jakubkrehel/skills:skills/better-writing",
+        "jakubkrehel/skills:skills/better-interface",
+        "jakubkrehel/skills:skills/interface-review",
+        "shadcn-ui/ui:skills/shadcn",
+        "addyosmani/agent-skills:skills/frontend-ui-engineering",
+        "addyosmani/agent-skills:skills/accessibility-engineering"
       ],
       "pending": [],
       "removed": [],
@@ -15775,32 +15787,603 @@
       "repoSignal": 9.7,
       "score": 8,
       "humanReviewed": false
-    }
-  ],
-  "sourceSkills": [
+    },
     {
       "id": "nextlevelbuilder/ui-ux-pro-max-skill:.claude/skills/ui-ux-pro-max",
       "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
       "path": ".claude/skills/ui-ux-pro-max",
       "name": "ui-ux-pro-max",
-      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 80 searchable styles (51 active), 192 product palettes and reasoning profiles, 74 font pairings, 130 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
-      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/f984fcd3dec8c71cf88f2b47ff8acd0ff4ca99c2/.claude/skills/ui-ux-pro-max",
+      "description": "UI/UX design intelligence for web, mobile, and desktop. This skill should be used when designing, building, reviewing, or fixing interfaces, including pages, components, design systems, accessibility, interaction, responsive layout, typography, color, charts, and stack-specific UI implementation. Searchable local data: 80 searchable styles (51 active), 194 product palettes and reasoning profiles, 74 font pairings, 130 UX guidelines, 105 icons, 17 GSAP presets, 25 chart types, and 22 stacks.",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/2de1134dc4d1cfe112934611ae5803ae17a1bd7e/.claude/skills/ui-ux-pro-max",
       "license": "MIT",
       "licenseOutcome": "identified",
       "licenseCategory": "permissive",
       "licenseEvidence": {
         "level": "repository",
         "path": "LICENSE",
-        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/f984fcd3dec8c71cf88f2b47ff8acd0ff4ca99c2/LICENSE"
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/2de1134dc4d1cfe112934611ae5803ae17a1bd7e/LICENSE"
       },
-      "stars": 151214,
-      "forks": 15976,
-      "pushedAt": "2026-11-18T13:15:23Z",
+      "stars": 151547,
+      "forks": 16005,
+      "pushedAt": "2026-11-19T01:04:54Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Searchable local UI/UX knowledge base: styles, palettes, font pairings, UX rules, charts and 22 stacks, plus a design-system generator you can persist.",
+        "summary": "A priority-ordered rule set (accessibility first) backed by a Python search tool over CSV data: 80 styles, about 190 product palettes, 74 font pairings, 130 UX guidelines, 105 icons, GSAP presets, 25 chart types and 22 stack guides. Can generate a design system, write MASTER.md with page overrides, export design tokens and tune variance, motion and density dials.",
+        "strengths": [
+          "Large local dataset with provenance and a test suite; no network access in the scripts, and files are only written with --persist or --preview.",
+          "Disciplined query contract: one intent per query, verify the match, retry once, and say so when nothing matches.",
+          "Design-system output (pattern, style, colors, fonts, anti-patterns) that persists across sessions with a master and page overrides."
+        ],
+        "cautions": [
+          "Commands use a CLAUDE_PLUGIN_ROOT path, so they work as a plugin; installed as a plain skill the script path must be adjusted.",
+          "Product palettes and style recommendations are general defaults, and the pro-rules checklist targets native and mobile apps.",
+          "SKILL.md read in full; scripts checked for network and file writes; the CSV data was sampled, not read in full. Not run here."
+        ],
+        "keywords": [
+          "UI UX design",
+          "design system",
+          "color palettes",
+          "font pairing",
+          "UX guidelines",
+          "design tokens",
+          "Tailwind",
+          "React",
+          "accessibility",
+          "charts"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
       "repoSignal": 10,
-      "humanReviewed": false,
-      "installable": true,
-      "reviewStatus": "unreviewed"
+      "score": 8.8,
+      "humanReviewed": false
     },
+    {
+      "id": "jakubkrehel/skills:skills/better-accessibility",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/better-accessibility",
+      "name": "better-accessibility",
+      "description": "Reviews and fixes keyboard and focus behavior, ARIA, accessible names, forms, screen-reader announcements, motion and zoom against WCAG 2.2.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-accessibility",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 9
+        },
+        "why": "Review and fix keyboard, focus, ARIA, names, forms, announcements, reduced motion and zoom against WCAG 2.2, naming the criterion each failure breaks.",
+        "summary": "A two-pass review (keyboard only, then screen reader) where every finding cites a WCAG 2.2 A/AA criterion; APG conventions stay recommendations. Covers native elements first, focus rings and trapping, roving tabindex, hit areas, labels and autocomplete tokens, error announcements, live regions, alt text, reduced motion and zoom, with a check table.",
+        "strengths": [
+          "Findings must cite a criterion or a listed escalation trigger, so AAA and taste items are never rated HIGH.",
+          "Concrete recipes: dialog with inert and focus return, roving tabindex, skip link, error markup with aria-describedby, autocomplete token table.",
+          "Hands contrast, type sizing and spacing to sibling skills instead of repeating them."
+        ],
+        "cautions": [
+          "Part of a seven-skill set: contrast, text sizing and spacing live in better-colors, better-typography and better-layout.",
+          "Examples are React, Tailwind and CSS; assistive-technology behavior needs a browser and a screen reader, otherwise it is marked Not verified.",
+          "SKILL.md and three reference files read in full, the others by headings; not run here."
+        ],
+        "keywords": [
+          "accessibility",
+          "WCAG 2.2",
+          "ARIA",
+          "keyboard navigation",
+          "focus management",
+          "screen reader",
+          "forms",
+          "reduced motion",
+          "accessible names"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 9,
+      "repoSignal": 7.8,
+      "score": 8.6,
+      "humanReviewed": false
+    },
+    {
+      "id": "jakubkrehel/skills:skills/better-colors",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/better-colors",
+      "name": "better-colors",
+      "description": "Builds and checks color systems by generating palettes, naming semantic tokens, converting between formats and measuring contrast.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-colors",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Build and audit color systems: perceptual ramps, primitive and semantic tokens, notation conversion and contrast measured on the real rendered pair.",
+        "summary": "Builds palettes as ramps with a job per step, in OKLCH with a color library, then names primitives by hue and semantic tokens by role. Reports only measured contrast, on the background actually rendered, and fixes lightness before hue. Covers gamut, gradient interpolation, dark mode, one color one meaning and one filled action per view.",
+        "strengths": [
+          "Precise, checkable rules: step spacing in OKLCH L, hue held constant, chroma set per hue, light and dark both measured.",
+          "Token guidance with a role inventory, naming grammar, anti-patterns and a Tailwind section.",
+          "Never reports a contrast value it did not measure, and leaves a failing pair alone unless asked to fix it."
+        ],
+        "cautions": [
+          "Contrast values need a tool or browser; the skill points to color libraries rather than shipping a calculator.",
+          "Whether a pair must pass is decided by better-accessibility, so the two work best together.",
+          "SKILL.md and the contrast and palette-generation references read in full, other references by headings; not run here."
+        ],
+        "keywords": [
+          "color system",
+          "OKLCH",
+          "palette",
+          "design tokens",
+          "contrast",
+          "dark mode",
+          "APCA",
+          "gradients",
+          "Tailwind colors"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 7.8,
+      "score": 8.4,
+      "humanReviewed": false
+    },
+    {
+      "id": "jakubkrehel/skills:skills/better-motion",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/better-motion",
+      "name": "better-motion",
+      "description": "Decides what should animate and builds it, with exact values for duration, easing, scale and distance and recipes for enters, exits, icon swaps, shared layout animation and drag.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-motion",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Decide what should animate and build it with exact durations, easing, scale and distance, plus recipes for enters, exits, icon swaps, layout and drag.",
+        "summary": "Starts from whether to animate at all, based on how often the interaction is seen. Gives exact values (press 0.96, spring bounce 0, 100ms stagger, enter and exit offsets), transitions over keyframes for interruptible state, AnimatePresence modes, measured-height animation, drag snapping and a reduced-motion gate. Ends with a slow-motion replay check.",
+        "strengths": [
+          "Opinionated but explicit: removing an animation is a valid fix, and project conventions are respected unless inconsistent.",
+          "Copyable recipes for CSS, Tailwind and Motion: press scale, theme-switch suppression, reduced-motion fallback, layoutId, will-change.",
+          "A detection table plus a review step that replays each animation at a tenth of its speed."
+        ],
+        "cautions": [
+          "Many recipes assume the Motion (Framer Motion) library; CSS equivalents are given for the simpler cases.",
+          "Values are desktop-web starting points; mobile full-screen transitions need longer, farther motion.",
+          "SKILL.md and the transitions reference read in full, other references by headings; not run here."
+        ],
+        "keywords": [
+          "animation",
+          "motion design",
+          "transitions",
+          "springs",
+          "Motion library",
+          "micro-interactions",
+          "reduced motion",
+          "layout animation",
+          "drag"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 7.8,
+      "score": 8.4,
+      "humanReviewed": false
+    },
+    {
+      "id": "jakubkrehel/skills:skills/better-typography",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/better-typography",
+      "name": "better-typography",
+      "description": "Sets and reviews how text renders, from the type scale and spacing to font features, wrapping, truncation and punctuation.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-typography",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Set and review type: scale, line-height, measure, wrapping, tabular numbers, truncation, font loading and punctuation, with Tailwind forms for each rule.",
+        "summary": "Separates measured rules (unitless line-height, weight 400 or more below 18px, 60-75 character measure, 16px inputs on iOS, tabular-nums) from heuristics such as tracking and pairing. Covers role-based scale, heading hierarchy, text-wrap, font features, truncation, bidi, text-box trim and selection, plus a fix table and a CSS cheat sheet.",
+        "strengths": [
+          "Clear split between findings and preferences, and it never proposes a new typeface unless asked.",
+          "Specific modern CSS: text-wrap balance and pretty, font-variant-numeric, text-box trim, underline-from-font.",
+          "Fix table maps each bad pattern to its replacement, with two options for the iOS input zoom."
+        ],
+        "cautions": [
+          "Browser support for newer features such as text-box trim is noted as progressive enhancement; check targets.",
+          "Rendering checks (wrapping, last-line words, truncation) need real content in a browser.",
+          "SKILL.md read in full, the reference files by headings; not run here."
+        ],
+        "keywords": [
+          "typography",
+          "type scale",
+          "line height",
+          "text wrapping",
+          "web fonts",
+          "variable fonts",
+          "tabular numbers",
+          "CSS",
+          "Tailwind"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 7.8,
+      "score": 8.4,
+      "humanReviewed": false
+    },
+    {
+      "id": "jakubkrehel/skills:skills/better-layout",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/better-layout",
+      "name": "better-layout",
+      "description": "Sets grouping, alignment, reading order, responsive structure and room for translated text, so a layout holds up when it is resized, translated or mirrored.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-layout",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Set grouping, alignment, reading order and responsive structure, then stress-test the layout by resizing, translating and mirroring it for RTL.",
+        "summary": "Groups with space before shapes before lines, aligns to shared edges, uses logical properties so layouts mirror, and keeps visual order equal to DOM order. Tests structure by growing translated strings, container queries, safe areas, sticky chrome and 320px width. A detection table lists the CSS patterns that break.",
+        "strengths": [
+          "Every finding needs a failure you can show (a clip, an overlap, a broken mirror), so taste differences are not reported.",
+          "Practical detection table: minmax(0, 1fr), 100vw, 100dvh, safe-area insets, logical properties, container queries.",
+          "Treats translation growth and RTL as part of layout, not an afterthought."
+        ],
+        "cautions": [
+          "Numbers such as 12px and 24px clearances apply only where the project has no spacing scale of its own.",
+          "Visual claims need a browser at several widths; without one they are marked Not verified.",
+          "SKILL.md read in full, the two references by headings; not run here."
+        ],
+        "keywords": [
+          "layout",
+          "spacing",
+          "responsive design",
+          "RTL",
+          "logical properties",
+          "container queries",
+          "internationalization",
+          "safe areas"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 7.8,
+      "score": 8.2,
+      "humanReviewed": false
+    },
+    {
+      "id": "jakubkrehel/skills:skills/better-writing",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/better-writing",
+      "name": "better-writing",
+      "description": "Writes and reviews interface copy, from labels and errors to empty states and confirmations, so it matches the product's voice and tells people what to do next.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-writing",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Write and review interface copy: labels, errors, empty states and confirmations, matched to the product's voice and always pointing to the next step.",
+        "summary": "Starts by inventorying the strings and vocabulary already in the product, then enforces one voice, verb-first buttons, descriptive links, ON-state toggle labels, errors that say how to fix, undo over confirmation, and empty states that point forward. Builds strings whole with plural rules and Intl formatting. Patterns file gives templates.",
+        "strengths": [
+          "Tied to the real codebase: finds translation calls and locale files before writing new copy.",
+          "Ready templates for destructive flows, status copy, plurals (ICU) and locale formatting.",
+          "Respects a deliberate brand voice and only flags inconsistency, ambiguity or translation risk."
+        ],
+        "cautions": [
+          "English-centered examples; other languages need their own style judgment.",
+          "Copy supplied by a CMS or the server cannot be reviewed from source and is marked Not verified.",
+          "SKILL.md and the patterns reference read in full; not run here."
+        ],
+        "keywords": [
+          "UX writing",
+          "microcopy",
+          "error messages",
+          "empty states",
+          "button labels",
+          "i18n",
+          "plurals",
+          "voice and tone"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 7.8,
+      "score": 8.2,
+      "humanReviewed": false
+    },
+    {
+      "id": "jakubkrehel/skills:skills/better-interface",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/better-interface",
+      "name": "better-interface",
+      "description": "Reviews a screen, flow or whole interface across accessibility, layout, writing, typography, color, UI polish and motion, and returns one ranked report.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-interface",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Review a screen, flow or whole interface across all seven better-* domains and return one ranked report with evidence, a cap and a Block or Approve verdict.",
+        "summary": "The orchestrator of the set. It resolves scope, reads the project's own conventions, runs accessibility, layout, writing, typography, color, UI and motion reviews in that order, then consolidates one table ranked by user impact with a fixed list of HIGH-on-sight triggers, a 15-finding cap and a cheaper-fix ladder: delete, use the platform, reuse, correct, add.",
+        "strengths": [
+          "Evidence rule: every finding cites file and line, and unchecked domains are marked Not reviewed, never Clear.",
+          "Ranks by user impact and reach, with escalation triggers that cannot be averaged down.",
+          "Read-only by default; sends branch and pull request reviews to interface-review."
+        ],
+        "cautions": [
+          "Needs the seven domain skills installed; without them each domain is reported Not reviewed.",
+          "Orchestration only: it holds no domain rules itself, so alone it adds little.",
+          "SKILL.md and the review-format file read in full; not run here."
+        ],
+        "keywords": [
+          "interface review",
+          "UI audit",
+          "design review",
+          "accessibility",
+          "code review",
+          "UX quality",
+          "orchestration"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8,
+      "repoSignal": 7.8,
+      "score": 7.9,
+      "humanReviewed": false
+    },
+    {
+      "id": "jakubkrehel/skills:skills/interface-review",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/interface-review",
+      "name": "interface-review",
+      "description": "Reviews a branch, pull request or uncommitted change for the interface problems it introduced or regressed, across accessibility, layout, writing, typography, color, UI and motion.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/interface-review",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 7
+        },
+        "why": "Review a branch, pull request or uncommitted change for the interface problems it introduced or regressed, with a status on every finding.",
+        "summary": "Reviews a change instead of a screen: resolves the diff scope (branch range plus uncommitted work, a PR, a range), expands to the surfaces and consumers affected, reads removed lines for lost accessibility or motion safeguards, and marks each finding Introduced, Regression or Pre-existing. Hands the report format to better-interface.",
+        "strengths": [
+          "Never guesses a scope: with a clean tree it states the facts and offers routes.",
+          "Reads the minus side of the diff and checks whether the change replaces what it removed.",
+          "Read-only: fetches refs, never checks out or stashes the author's working tree."
+        ],
+        "cautions": [
+          "Marked user-invoked only (disable-model-invocation), so it runs when you call it, not automatically.",
+          "Needs git, and better-interface plus the domain skills; otherwise it reports the scope and stops.",
+          "SKILL.md read in full; the scope-resolution and removed-signals files were not read; not run here."
+        ],
+        "keywords": [
+          "pull request review",
+          "UI regression",
+          "diff review",
+          "interface review",
+          "accessibility",
+          "git",
+          "code review"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8,
+      "repoSignal": 7.8,
+      "score": 7.9,
+      "humanReviewed": false
+    },
+    {
+      "id": "jakubkrehel/skills:skills/better-ui",
+      "repo": "jakubkrehel/skills",
+      "path": "skills/better-ui",
+      "name": "better-ui",
+      "description": "Polishes surfaces and icons with exact values for border radius, optical alignment, shadows and icon states.",
+      "url": "https://github.com/jakubkrehel/skills/tree/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/skills/better-ui",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/jakubkrehel/skills/blob/672ae44ace6aaed65b86cbb1e2fd6fbea0e79578/LICENSE"
+      },
+      "stars": 12387,
+      "forks": 484,
+      "pushedAt": "2026-11-19T04:11:32Z",
+      "review": {
+        "kits": [
+          "ui-design"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 7,
+          "usefulness": 7
+        },
+        "why": "Polish surfaces and icons with exact values for concentric radius, optical alignment, layered shadows, image outlines and icon states.",
+        "summary": "A small, precise polish skill: outer radius equals inner radius plus padding, optical nudges for icons and play triangles, layered shadow rings with a transparent border for forced-colors, pure black or white image outlines, hover only on hover-capable pointers, overscroll containment and stroke weight matched to text.",
+        "strengths": [
+          "Exact, copyable values: shadow layers for light and dark, image outline colors, the radius formula.",
+          "Catches details others miss: stuck hover on touch, tinted image outlines, forced-colors dropping box-shadow.",
+          "Clear boundaries: leaves hit areas, color tokens and animation to sibling skills."
+        ],
+        "cautions": [
+          "Narrow scope (surfaces and icons); it assumes the interaction is already sound.",
+          "Some values are taste choices (shadow opacities, image outline 0.1) even though they are stated as exact.",
+          "SKILL.md and surfaces reference read in full, icons by headings; not run here."
+        ],
+        "keywords": [
+          "UI polish",
+          "border radius",
+          "box shadow",
+          "icons",
+          "SVG",
+          "dark mode",
+          "design details",
+          "Tailwind"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 7.7,
+      "repoSignal": 7.8,
+      "score": 7.7,
+      "humanReviewed": false
+    }
+  ],
+  "sourceSkills": [
     {
       "id": "cloudflare/skills:skills/basin",
       "repo": "cloudflare/skills",

@@ -1,0 +1,42 @@
+{
+  "fingerprint": "fbcd0de994deb95d50db3b952dcfad7bce875b09",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Decide what should animate and build it with exact durations, easing, scale and distance, plus recipes for enters, exits, icon swaps, layout and drag.",
+    "summary": "Starts from whether to animate at all, based on how often the interaction is seen. Gives exact values (press 0.96, spring bounce 0, 100ms stagger, enter and exit offsets), transitions over keyframes for interruptible state, AnimatePresence modes, measured-height animation, drag snapping and a reduced-motion gate. Ends with a slow-motion replay check.",
+    "strengths": [
+      "Opinionated but explicit: removing an animation is a valid fix, and project conventions are respected unless inconsistent.",
+      "Copyable recipes for CSS, Tailwind and Motion: press scale, theme-switch suppression, reduced-motion fallback, layoutId, will-change.",
+      "A detection table plus a review step that replays each animation at a tenth of its speed."
+    ],
+    "cautions": [
+      "Many recipes assume the Motion (Framer Motion) library; CSS equivalents are given for the simpler cases.",
+      "Values are desktop-web starting points; mobile full-screen transitions need longer, farther motion.",
+      "SKILL.md and the transitions reference read in full, other references by headings; not run here."
+    ],
+    "keywords": [
+      "animation",
+      "motion design",
+      "transitions",
+      "springs",
+      "Motion library",
+      "micro-interactions",
+      "reduced motion",
+      "layout animation",
+      "drag"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

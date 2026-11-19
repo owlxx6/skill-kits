@@ -246,3 +246,24 @@ Read and left out: `aeo` (covered three times by `ai-seo`, `seo-geo` and `seo-ag
 Limits: nothing was executed. The Anthropic skills are written as commands with optional connectors marked `~~` and point to a `CONNECTORS.md` outside the skill. The vocabulary of `content-humanizer` is English-centered and ages fast. Ten of the 14 social media skills were not read.
 
 Checks: typecheck, 1,013 tests, site build (1,704 pages) and site verification (8 kits, 1,650 skill pages). Main is unchanged until a separate release decision.
+
+## UI design: thirteen additions chosen by reading their content — 2026-11-19
+
+The owner asked for better skills in the UI design kit, judged by usefulness and not by stars. `npx skills find` was run on UI topics; the three kit parts and about a dozen candidates were read; the owner approved the changes below.
+
+- Kept: the three parts (`nextlevelbuilder/ui-ux-pro-max-skill`, `emilkowalski/skills`, `addyosmani/web-quality-skills`) and every individual pick already in the kit. No part is removed.
+- Added as individual skills from `jakubkrehel/skills` (MIT, one coherent set): `better-accessibility`, `better-colors`, `better-layout`, `better-motion`, `better-typography`, `better-ui`, `better-writing`, `better-interface` (runs the seven domain reviews and returns one ranked report) and `interface-review` (reviews a branch, pull request or uncommitted change; user-invoked only). The last two need the seven domain skills installed.
+- Reviewed again: `ui-ux-pro-max`. It had lost its review because the upstream folder changed (new fingerprint); it is now a reviewed skill at commit `2de1134`.
+- Added to the kit only, with no new review: `shadcn` (`shadcn-ui/ui`), `frontend-ui-engineering` and `accessibility-engineering` (`addyosmani/agent-skills`), already reviewed and published for the Web apps kit.
+
+Reviews are in-session and fingerprint-matched under `data/cache/reviews/`; every new record keeps `humanReviewed: false`. Approval, source commits and what was read in full are in `data/curation-evidence/ui-design-picks-2026-11-19.json`. `jakubkrehel/skills` is nominated in `data/sources.yaml`. The catalog goes from 262 to 272 reviewed skills and from 1,388 to 1,387 source listings (`ui-ux-pro-max` moves from listings to reviewed); collections are unchanged: 1,659 skill pages.
+
+Scan: the complete-folder scan is clear for the ten skills admitted here (0 findings). It blocked `pbakaus/impeccable` and the `design` skill of `nextlevelbuilder/ui-ux-pro-max-skill`, and returned `review` with many findings for `Leonxlnx/taste-skill`; none of the three is admitted.
+
+Read and left out: `afk` and `upskill` from `jakubkrehel/skills` (`upskill` reads past agent sessions, a privacy cost), `break`, `state-machine`, `variant`, `build-design` and `explain-interface` (optional later), the `owl-listener` designer skills (the one read, `spacing-system`, is a short generic outline), the Anthropic design plugin, and the Figma, Stitch and Lottie skills.
+
+Limits: nothing was executed. `SKILL.md` was read in full for all ten skills, but most reference files were only listed by headings, and the two reference files of `interface-review` were not read; the exact scope per skill is in the evidence file. `ui-ux-pro-max` runs bundled Python scripts and gives commands with a `${CLAUDE_PLUGIN_ROOT}` path, so installed as a plain skill the path must be adjusted; its CSV data was sampled, not read in full.
+
+Test change: `tests/curation-cache.test.ts` pinned the 2026-11-17 review of `ui-ux-pro-max`. It now also accepts a later review of a changed folder, as long as that review comes from the committed cache.
+
+Checks: typecheck, 1,013 tests, site build (1,714 pages) and site verification (8 kits, 1,659 skill pages). Main is unchanged until a separate release decision.

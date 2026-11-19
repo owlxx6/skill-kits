@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { isDeepStrictEqual } from "node:util";
 import { describe, expect, it } from "vitest";
 import { parse } from "yaml";
 import { CatalogSchema, ReviewRecordSchema, SourcesSchema } from "../pipeline/lib/schemas";
@@ -24,7 +25,12 @@ describe("four-kit curation survives a later rank",()=>{
       expect(record.model).toBe("in-session-review");
       expect(record.review.security).toEqual({level:"none",notes:[]});
       expect(loaded.get(entry.fingerprint)).toEqual(record.review);
-      if(published)expect(loaded.get(entry.fingerprint)).toEqual(published.review);
+      if(published){
+        // A later re-review of a changed folder supersedes the pinned one; it must still come from the committed cache.
+        const pinned=loaded.get(entry.fingerprint);
+        const supersededByCache=[...loaded.values()].some(review=>isDeepStrictEqual(review,published.review));
+        expect(isDeepStrictEqual(pinned,published.review)||supersededByCache,entry.id).toBe(true);
+      }
       if(source){expect(source.review).toBeUndefined();expect(source.reviewScore).toBeUndefined();expect(source.reviewStatus).toBe("unreviewed");}
     }
   });

@@ -1,0 +1,43 @@
+{
+  "fingerprint": "2c985726a95617e914ec694aebf9e1e07eb9bca1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Searchable local UI/UX knowledge base: styles, palettes, font pairings, UX rules, charts and 22 stacks, plus a design-system generator you can persist.",
+    "summary": "A priority-ordered rule set (accessibility first) backed by a Python search tool over CSV data: 80 styles, about 190 product palettes, 74 font pairings, 130 UX guidelines, 105 icons, GSAP presets, 25 chart types and 22 stack guides. Can generate a design system, write MASTER.md with page overrides, export design tokens and tune variance, motion and density dials.",
+    "strengths": [
+      "Large local dataset with provenance and a test suite; no network access in the scripts, and files are only written with --persist or --preview.",
+      "Disciplined query contract: one intent per query, verify the match, retry once, and say so when nothing matches.",
+      "Design-system output (pattern, style, colors, fonts, anti-patterns) that persists across sessions with a master and page overrides."
+    ],
+    "cautions": [
+      "Commands use a CLAUDE_PLUGIN_ROOT path, so they work as a plugin; installed as a plain skill the script path must be adjusted.",
+      "Product palettes and style recommendations are general defaults, and the pro-rules checklist targets native and mobile apps.",
+      "SKILL.md read in full; scripts checked for network and file writes; the CSV data was sampled, not read in full. Not run here."
+    ],
+    "keywords": [
+      "UI UX design",
+      "design system",
+      "color palettes",
+      "font pairing",
+      "UX guidelines",
+      "design tokens",
+      "Tailwind",
+      "React",
+      "accessibility",
+      "charts"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

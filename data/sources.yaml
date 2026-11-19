@@ -36,6 +36,7 @@ repos:
   - databricks-solutions/ai-dev-kit
   - AgriciDaniel/claude-seo
   - phuryn/pm-skills
+  - jakubkrehel/skills
 topics:
   - agent-skills
   - claude-skills

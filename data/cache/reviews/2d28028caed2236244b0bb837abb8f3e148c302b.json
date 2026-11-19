@@ -1,0 +1,42 @@
+{
+  "fingerprint": "2d28028caed2236244b0bb837abb8f3e148c302b",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Review and fix keyboard, focus, ARIA, names, forms, announcements, reduced motion and zoom against WCAG 2.2, naming the criterion each failure breaks.",
+    "summary": "A two-pass review (keyboard only, then screen reader) where every finding cites a WCAG 2.2 A/AA criterion; APG conventions stay recommendations. Covers native elements first, focus rings and trapping, roving tabindex, hit areas, labels and autocomplete tokens, error announcements, live regions, alt text, reduced motion and zoom, with a check table.",
+    "strengths": [
+      "Findings must cite a criterion or a listed escalation trigger, so AAA and taste items are never rated HIGH.",
+      "Concrete recipes: dialog with inert and focus return, roving tabindex, skip link, error markup with aria-describedby, autocomplete token table.",
+      "Hands contrast, type sizing and spacing to sibling skills instead of repeating them."
+    ],
+    "cautions": [
+      "Part of a seven-skill set: contrast, text sizing and spacing live in better-colors, better-typography and better-layout.",
+      "Examples are React, Tailwind and CSS; assistive-technology behavior needs a browser and a screen reader, otherwise it is marked Not verified.",
+      "SKILL.md and three reference files read in full, the others by headings; not run here."
+    ],
+    "keywords": [
+      "accessibility",
+      "WCAG 2.2",
+      "ARIA",
+      "keyboard navigation",
+      "focus management",
+      "screen reader",
+      "forms",
+      "reduced motion",
+      "accessible names"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}
