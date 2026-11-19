@@ -1,0 +1,43 @@
+{
+  "fingerprint": "165116cd1e9e99c64e4015f7257bdd130545e244",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Harden web apps against the OWASP Top Ten: threat model first, then injection, auth, headers, SSRF, secrets, dependencies, privacy and LLM output.",
+    "summary": "A security workflow that starts with trust boundaries and STRIDE, then a three-tier rule set (always, ask first, never) and hardening controls for injection, XSS, access control, sessions, headers and CORS, uploads, SSRF, destructive paths, rate limiting, secrets, supply chain, personal data and AI features. A references file gives one concrete code pattern per control.",
+    "strengths": [
+      "Threat model before controls, and abuse cases written next to use cases.",
+      "Practical details that usually get missed: authorization versus authentication, shared-store rate limiting, SSRF with DNS rebinding, blocking dependency install scripts, never forcing npm audit fixes.",
+      "Includes privacy (retention, deletion, consent) and LLM output handling, which most security guides skip."
+    ],
+    "cautions": [
+      "A process and pattern guide, not a scanner: it does not find vulnerabilities by itself.",
+      "Points to shared checklists outside the skill folder (references/security-checklist.md) that a single-skill install does not include.",
+      "SKILL.md was read in full and the pattern reference about half; not run here."
+    ],
+    "keywords": [
+      "security",
+      "OWASP",
+      "threat modeling",
+      "authentication",
+      "XSS",
+      "SSRF",
+      "supply chain",
+      "privacy",
+      "rate limiting",
+      "secrets"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

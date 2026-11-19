@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T21:49:49.282Z",
+  "generatedAt": "2026-11-19T08:49:50.494Z",
   "kits": [
     {
       "id": "resume-career",
@@ -84,7 +84,18 @@
         "expo/skills:plugins/expo/skills/expo-project-structure",
         "expo/skills:plugins/expo/skills/expo-router",
         "expo/skills:plugins/expo/skills/expo-design-system",
-        "expo/skills:plugins/expo/skills/expo-upgrade"
+        "expo/skills:plugins/expo/skills/expo-upgrade",
+        "better-auth/skills:better-auth/best-practices",
+        "better-auth/skills:better-auth/create-auth",
+        "better-auth/skills:security",
+        "shadcn-ui/ui:skills/shadcn",
+        "stripe/ai:skills/stripe-best-practices",
+        "prisma/skills:prisma-orm-setup",
+        "addyosmani/agent-skills:skills/api-and-interface-design",
+        "addyosmani/agent-skills:skills/security-and-hardening",
+        "addyosmani/agent-skills:skills/accessibility-engineering",
+        "addyosmani/agent-skills:skills/frontend-ui-engineering",
+        "microsoft/playwright-cli:skills/playwright-cli"
       ],
       "pending": [],
       "removed": [],
@@ -14809,6 +14820,656 @@
       "reviewScore": 8,
       "repoSignal": 3.9,
       "score": 6.8,
+      "humanReviewed": false
+    },
+    {
+      "id": "addyosmani/agent-skills:skills/security-and-hardening",
+      "repo": "addyosmani/agent-skills",
+      "path": "skills/security-and-hardening",
+      "name": "security-and-hardening",
+      "description": "Hardens code against vulnerabilities. Use when auditing an input handler for vulnerabilities, when handling user input, authentication, data storage, or external integrations, or when checking a login flow is safe against the OWASP Top Ten. Use when building any feature that accepts untrusted data, manages user sessions or session cookies, or interacts with third-party services. Use when auditing dependencies for known vulnerabilities, triaging package-manager audit findings, or assessing supply-chain risk in a new package. Use when personal data or privacy compliance (GDPR, CCPA) is involved.",
+      "url": "https://github.com/addyosmani/agent-skills/tree/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/skills/security-and-hardening",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/addyosmani/agent-skills/blob/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/LICENSE"
+      },
+      "stars": 119037,
+      "forks": 12398,
+      "pushedAt": "2026-11-18T20:06:38Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 9
+        },
+        "why": "Harden web apps against the OWASP Top Ten: threat model first, then injection, auth, headers, SSRF, secrets, dependencies, privacy and LLM output.",
+        "summary": "A security workflow that starts with trust boundaries and STRIDE, then a three-tier rule set (always, ask first, never) and hardening controls for injection, XSS, access control, sessions, headers and CORS, uploads, SSRF, destructive paths, rate limiting, secrets, supply chain, personal data and AI features. A references file gives one concrete code pattern per control.",
+        "strengths": [
+          "Threat model before controls, and abuse cases written next to use cases.",
+          "Practical details that usually get missed: authorization versus authentication, shared-store rate limiting, SSRF with DNS rebinding, blocking dependency install scripts, never forcing npm audit fixes.",
+          "Includes privacy (retention, deletion, consent) and LLM output handling, which most security guides skip."
+        ],
+        "cautions": [
+          "A process and pattern guide, not a scanner: it does not find vulnerabilities by itself.",
+          "Points to shared checklists outside the skill folder (references/security-checklist.md) that a single-skill install does not include.",
+          "SKILL.md was read in full and the pattern reference about half; not run here."
+        ],
+        "keywords": [
+          "security",
+          "OWASP",
+          "threat modeling",
+          "authentication",
+          "XSS",
+          "SSRF",
+          "supply chain",
+          "privacy",
+          "rate limiting",
+          "secrets"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 9,
+      "repoSignal": 10,
+      "score": 9.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "shadcn-ui/ui:skills/shadcn",
+      "repo": "shadcn-ui/ui",
+      "path": "skills/shadcn",
+      "name": "shadcn",
+      "description": "Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI, including chat interfaces. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for \"shadcn init\", \"create an app with --preset\", \"switch to --preset\", and for building a design system or applying a DESIGN.md or brand spec to shadcn/ui.",
+      "url": "https://github.com/shadcn-ui/ui/tree/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/skills/shadcn",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE.md",
+        "url": "https://github.com/shadcn-ui/ui/blob/968d8cb9dc42ae5d52e8fd356cf84596ec832a26/LICENSE.md"
+      },
+      "stars": 128539,
+      "forks": 11424,
+      "pushedAt": "2026-11-18T08:10:18Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 9
+        },
+        "why": "Build and fix interfaces with shadcn/ui: use the project's real config, add and compose components, and follow the rules that keep code correct.",
+        "summary": "The official shadcn/ui skill. It reads the project's configuration, enforces rules with incorrect and correct code pairs (styling, forms, composition, icons, chat components), explains the CLI workflow (search, docs, add with dry-run and diff, presets), and covers turning a DESIGN.md into a themed design system. Rule files and a coverage script are included.",
+        "strengths": [
+          "Grounded in the actual project: aliases, Tailwind version, base library, icon library and framework are read before advising.",
+          "Clear, checkable rules (FieldGroup with Field for forms, semantic colors, gap instead of space-y) with incorrect and correct examples.",
+          "Safe update workflow: dry-run and diff first, never overwrite without approval, and an explicit registry rather than a guessed one."
+        ],
+        "cautions": [
+          "At load time it runs npx shadcn@latest info --json to inject the project context, and later commands fetch the latest CLI each time.",
+          "SKILL.md, the forms and composition rules and the coverage script were read in full; the other reference files (CLI, registry, design system, chat, about 100 KB) and the showcase assets were only searched for risky calls, not read line by line.",
+          "Tied to the shadcn CLI and its current component set; it is marked as not user-invocable, so it loads automatically."
+        ],
+        "keywords": [
+          "shadcn/ui",
+          "components",
+          "Tailwind",
+          "React",
+          "forms",
+          "design system",
+          "CLI",
+          "presets",
+          "UI"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 9,
+      "repoSignal": 10,
+      "score": 9.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "addyosmani/agent-skills:skills/api-and-interface-design",
+      "repo": "addyosmani/agent-skills",
+      "path": "skills/api-and-interface-design",
+      "name": "api-and-interface-design",
+      "description": "Guides stable API and interface design. Use when designing APIs, module boundaries, or any public interface. Use when creating REST or GraphQL endpoints, defining type contracts between modules, or establishing boundaries between frontend and backend.",
+      "url": "https://github.com/addyosmani/agent-skills/tree/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/skills/api-and-interface-design",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/addyosmani/agent-skills/blob/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/LICENSE"
+      },
+      "stars": 119037,
+      "forks": 12398,
+      "pushedAt": "2026-11-18T20:06:38Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Design stable APIs and interfaces: contract first, consistent errors, validation at boundaries, additive changes and idempotency keys done right.",
+        "summary": "Principles and patterns for REST APIs, module boundaries and TypeScript interfaces: Hyrum's Law, the one-version rule, contract-first design, one error shape, validation only at system edges, additive changes, predictable naming, and a detailed section on honouring idempotency keys. Ends with common rationalizations, red flags and a verification checklist.",
+        "strengths": [
+          "Concrete and opinionated, with good and bad code side by side (status code mapping, validation at the boundary, discriminated unions, branded IDs).",
+          "The idempotency section covers the parts that lose money: atomic claim, payload hash, in-flight duplicates, unknown outcomes and retention.",
+          "Red flags and a verification checklist make it usable as a review tool."
+        ],
+        "cautions": [
+          "Principles, not a framework recipe: no GraphQL schema design or OpenAPI tooling, and examples are TypeScript and Express style.",
+          "References other skills of the same repository (such as deprecation-and-migration) that a single-skill install does not include.",
+          "Read in full but not run here."
+        ],
+        "keywords": [
+          "API design",
+          "REST",
+          "TypeScript",
+          "error handling",
+          "validation",
+          "idempotency",
+          "pagination",
+          "interfaces",
+          "backward compatibility"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 10,
+      "score": 9.1,
+      "humanReviewed": false
+    },
+    {
+      "id": "addyosmani/agent-skills:skills/accessibility-engineering",
+      "repo": "addyosmani/agent-skills",
+      "path": "skills/accessibility-engineering",
+      "name": "accessibility-engineering",
+      "description": "Audits existing interfaces for WCAG 2.2 AA conformance and remediates the violations found. Use when auditing a page or component for accessibility, running axe-core or pa11y, triaging a11y violations, or checking screen reader and contrast issues before shipping.",
+      "url": "https://github.com/addyosmani/agent-skills/tree/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/skills/accessibility-engineering",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/addyosmani/agent-skills/blob/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/LICENSE"
+      },
+      "stars": 119037,
+      "forks": 12398,
+      "pushedAt": "2026-11-18T20:06:38Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Audit a page for WCAG 2.2 AA with axe-core and pa11y, test by keyboard and screen reader, then fix the violations found.",
+        "summary": "A four-phase workflow: route new UI work elsewhere, run pinned automated audits, complete manual keyboard, screen reader and visual checks, then fix root causes before adding ARIA. A bundled script runs both tools and refuses to report a clean result if either fails. Includes rationalizations, red flags and a verification checklist.",
+        "strengths": [
+          "Treats automated tools as a smoke test and requires manual keyboard and screen reader checks, with a named browser and assistive technology pair.",
+          "The audit script pins tool versions, validates each report and never turns a partial run into a clean result.",
+          "Fix order is sensible: native HTML first, ARIA as a bridge, then re-test."
+        ],
+        "cautions": [
+          "The script downloads pinned @axe-core/cli and pa11y from npm with npx and drives a headless browser against the URL you give it.",
+          "Links to a checklist and an auditor persona outside the skill folder (the repository's references and agents folders), which a single-skill install does not include.",
+          "SKILL.md and the script were read in full; the script was not run here."
+        ],
+        "keywords": [
+          "accessibility",
+          "WCAG 2.2",
+          "axe-core",
+          "pa11y",
+          "screen reader",
+          "keyboard",
+          "ARIA",
+          "audit",
+          "contrast"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 10,
+      "score": 8.8,
+      "humanReviewed": false
+    },
+    {
+      "id": "addyosmani/agent-skills:skills/frontend-ui-engineering",
+      "repo": "addyosmani/agent-skills",
+      "path": "skills/frontend-ui-engineering",
+      "name": "frontend-ui-engineering",
+      "description": "Builds production-quality, accessible, responsive user-facing UIs. Use when building or modifying interfaces and pages, creating components, implementing layouts, meeting WCAG accessibility requirements, managing state, or when the output needs to look and feel production-quality rather than AI-generated.",
+      "url": "https://github.com/addyosmani/agent-skills/tree/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/skills/frontend-ui-engineering",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/addyosmani/agent-skills/blob/8c99fa36d90068c82d547f7c12a9d67a3e95f4ee/LICENSE"
+      },
+      "stars": 119037,
+      "forks": 12398,
+      "pushedAt": "2026-11-18T20:06:38Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Build production-quality, accessible, responsive UI: component structure, state choices, design system adherence and avoiding the generic AI look.",
+        "summary": "Guidance for building interfaces: colocated component files, composition over configuration, a ladder for choosing state management, a table of AI-default looks to avoid, spacing and type scales, keyboard, ARIA and focus patterns, empty and error states, mobile-first layout, skeleton loading and optimistic updates, and a verification list.",
+        "strengths": [
+          "Concrete code for the patterns that make UI feel finished: empty, loading and error states, focus management, optimistic updates.",
+          "The AI-aesthetic table names specific defaults (purple everything, oversized cards, stock grids) and what to do instead.",
+          "Tells the agent to verify with the project's own tooling and not to install toolchains just to check its work."
+        ],
+        "cautions": [
+          "Generic across frameworks: examples are React and Tailwind flavored, with no framework-specific rules.",
+          "Links to an accessibility checklist outside the skill folder that a single-skill install does not include.",
+          "Read in full but not run here."
+        ],
+        "keywords": [
+          "frontend",
+          "UI",
+          "React",
+          "components",
+          "state management",
+          "accessibility",
+          "responsive",
+          "design system",
+          "Tailwind"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 10,
+      "score": 8.8,
+      "humanReviewed": false
+    },
+    {
+      "id": "microsoft/playwright-cli:skills/playwright-cli",
+      "repo": "microsoft/playwright-cli",
+      "path": "skills/playwright-cli",
+      "name": "playwright-cli",
+      "description": "Automate browser interactions, test web pages and work with Playwright tests.",
+      "url": "https://github.com/microsoft/playwright-cli/tree/c872a33cec77fa03c28fa7c6d1ad99d15d04ce42/skills/playwright-cli",
+      "license": "Apache-2.0",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/microsoft/playwright-cli/blob/c872a33cec77fa03c28fa7c6d1ad99d15d04ce42/LICENSE"
+      },
+      "stars": 15298,
+      "forks": 936,
+      "pushedAt": "2026-11-18T18:50:52Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Drive a real browser from the command line to test pages: snapshots, clicks, forms, network mocking, tracing, video and Playwright test generation.",
+        "summary": "A command reference for playwright-cli: open and navigate, interact through snapshot references, storage and cookies, emulation, network routing, DevTools, tracing, video, locator generation, sessions, attaching to an existing browser, and output formats. Reference files cover test generation, request mocking, storage state and tracing.",
+        "strengths": [
+          "Complete and organized command set, with snapshot references that keep the agent's page view small and a find command for large pages.",
+          "Page-provided tools are labeled untrusted, so the agent treats them as data and not as instructions.",
+          "Reference files for generating Playwright tests, mocking requests and recording traces make it useful beyond one-off browsing."
+        ],
+        "cautions": [
+          "Powerful by design: it can read and set cookies and local storage, save authentication state to a file, run arbitrary JavaScript in the page and attach to a user's existing browser profile; keep sessions isolated and avoid real accounts.",
+          "SKILL.md was read in full; the reference files (about 55 KB) were skimmed, not read line by line.",
+          "Installing it means either a local Playwright 1.59 or newer or a global, unpinned npm install (npm install -g @playwright/cli@latest); nothing was run here."
+        ],
+        "keywords": [
+          "Playwright",
+          "browser automation",
+          "testing",
+          "end-to-end",
+          "web testing",
+          "CLI",
+          "screenshots",
+          "network mocking",
+          "tracing"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.3,
+      "repoSignal": 8.3,
+      "score": 8.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "stripe/ai:skills/stripe-best-practices",
+      "repo": "stripe/ai",
+      "path": "skills/stripe-best-practices",
+      "name": "stripe-best-practices",
+      "description": "Guides Stripe integration decisions across development and test environment planning (separate sandboxes vs the shared test mode sandbox), API selection (Checkout Sessions vs PaymentIntents), Connect platform setup (Accounts v2, controller properties), billing/subscriptions, tax and registrations (Stripe Tax, automatic_tax, product tax codes), Treasury financial accounts, integration options (Checkout, Payment Element), migrating from deprecated Stripe APIs, and security best practices (API key management, API key permissions, webhooks, OAuth). Use when planning, building, modifying, testing, or reviewing any Stripe integration, including choosing a development environment, accepting payments, building marketplaces, integrating Stripe, processing payments, setting up subscriptions, collecting sales tax, VAT, or GST, creating connected accounts, or implementing secure key handling.",
+      "url": "https://github.com/stripe/ai/tree/801ec2174acd581f71f99cf8df5383063824a1bc/skills/stripe-best-practices",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "repository",
+        "path": "LICENSE",
+        "url": "https://github.com/stripe/ai/blob/801ec2174acd581f71f99cf8df5383063824a1bc/LICENSE"
+      },
+      "stars": 2073,
+      "forks": 385,
+      "pushedAt": "2026-11-19T00:30:41Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 9
+        },
+        "why": "Choose and build Stripe integrations correctly: Checkout, webhooks, billing, tax, Connect and API key security, with the traps to avoid.",
+        "summary": "Stripe's own routing skill: a table that maps what you are building to the right API, critical rules (always use webhooks, never pass payment_method_types, use a StripeClient, prefer restricted keys, check tax registrations), and reference files for payments, billing, Connect, tax, Treasury and security.",
+        "strengths": [
+          "Decision table from goal to API, and critical rules that prevent the most common integration mistakes.",
+          "The payments reference explains why fulfillment belongs in webhook handlers and lists deprecated APIs with their replacements.",
+          "The security reference covers secret storage per platform, restricted keys, key rotation, webhook signatures, CSP and Connect liability."
+        ],
+        "cautions": [
+          "The repository holds six identical copies of this skill (one per agent provider), so the name alone is not unique and a name-based install command is not offered.",
+          "SKILL.md and the payments and security references were read in full; the billing, Connect, tax and Treasury references (about 50 KB) were not read line by line.",
+          "Version numbers and API dates in the text are those of the pinned commit and will age; it also assumes access to Stripe's documentation and optionally its MCP server."
+        ],
+        "keywords": [
+          "Stripe",
+          "payments",
+          "Checkout",
+          "webhooks",
+          "subscriptions",
+          "billing",
+          "tax",
+          "Connect",
+          "API keys",
+          "security"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 9,
+      "repoSignal": 6.7,
+      "score": 8.3,
+      "humanReviewed": false,
+      "installable": false
+    },
+    {
+      "id": "better-auth/skills:better-auth/create-auth",
+      "repo": "better-auth/skills",
+      "path": "better-auth/create-auth",
+      "name": "create-auth",
+      "description": "Scaffold and implement authentication in TypeScript/JavaScript apps using Better Auth. Detect frameworks, configure database adapters, set up route handlers, add OAuth providers, and create auth UI pages. Use when users want to add login, sign-up, or authentication to a new or existing project with Better Auth.",
+      "url": "https://github.com/better-auth/skills/tree/20c9e88a5c007461a703f1c213572b073196113e/better-auth/create-auth",
+      "license": "No license",
+      "licenseOutcome": "missing",
+      "licenseCategory": "none",
+      "stars": 229,
+      "forks": 38,
+      "pushedAt": "2026-10-19T08:39:22Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 9
+        },
+        "why": "Add login and sign-up to a project with Better Auth: scan the project, agree a plan with the user, then implement routes, database and pages.",
+        "summary": "A two-phase workflow: scan the project for framework, database and existing auth, ask ten structured planning questions, present a checklist plan for confirmation, then implement with a decision tree for new, existing or migrating projects. Includes route handler table per framework, migration commands, adapters and a security checklist.",
+        "strengths": [
+          "Plan first, with explicit confirmation before any code is written, and questions skipped when the scan already knows the answer.",
+          "Covers real choices: framework, ORM, sign-in methods, 2FA, organizations, email provider, and the per-adapter migration commands.",
+          "Warns that drizzle-kit push is for development only, and ends with a security checklist and troubleshooting table."
+        ],
+        "cautions": [
+          "Uses an AskQuestion tool for the planning questions; agents without it must ask in plain text.",
+          "Syntax details point to the Better Auth documentation rather than being included.",
+          "Read in full but not run here; no license file in the repository."
+        ],
+        "keywords": [
+          "Better Auth",
+          "login",
+          "sign-up",
+          "OAuth",
+          "Next.js",
+          "Prisma",
+          "Drizzle",
+          "migration",
+          "2FA",
+          "organizations"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 9,
+      "repoSignal": 4,
+      "score": 7.5,
+      "humanReviewed": false
+    },
+    {
+      "id": "better-auth/skills:better-auth/best-practices",
+      "repo": "better-auth/skills",
+      "path": "better-auth/best-practices",
+      "name": "better-auth-best-practices",
+      "description": "Configure Better Auth server and client, set up database adapters, manage sessions, add plugins, and handle environment variables. Use when users mention Better Auth, betterauth, auth.ts, or need to set up TypeScript authentication with email/password, OAuth, or plugin configuration.",
+      "url": "https://github.com/better-auth/skills/tree/20c9e88a5c007461a703f1c213572b073196113e/better-auth/best-practices",
+      "license": "No license",
+      "licenseOutcome": "missing",
+      "licenseCategory": "none",
+      "stars": 229,
+      "forks": 38,
+      "pushedAt": "2026-10-19T08:39:22Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 8,
+          "usefulness": 9
+        },
+        "why": "Set up Better Auth in TypeScript apps: server and client config, database adapters, sessions, plugins and the gotchas that break setups.",
+        "summary": "A configuration guide for Better Auth: a setup workflow, environment variables, core options, adapters (built-in, Drizzle, Prisma, MongoDB), session storage and cookie caching, email flows, hooks, plugins, client imports and a list of common gotchas. It tells the agent to match the documentation to the installed version.",
+        "strengths": [
+          "Starts by pinning documentation to the installed Better Auth version, and separates current from target version when upgrading.",
+          "Compact reference with the details that usually bite: model names versus table names, re-running the CLI after plugins, secondary storage and stateless sessions.",
+          "Security options are flagged as risks (disabling CSRF or origin checks) instead of being offered as tweaks."
+        ],
+        "cautions": [
+          "Reference style: examples are short and most syntax is sent to the online documentation, so the agent needs network access or the Better Auth MCP.",
+          "Covers Better Auth only; the repository has no license file, so the license shows as missing.",
+          "Read in full but not run here; option names and defaults may change with new Better Auth releases."
+        ],
+        "keywords": [
+          "Better Auth",
+          "authentication",
+          "TypeScript",
+          "sessions",
+          "OAuth",
+          "Drizzle",
+          "Prisma",
+          "plugins",
+          "email and password"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 4,
+      "score": 7.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "better-auth/skills:security",
+      "repo": "better-auth/skills",
+      "path": "security",
+      "name": "better-auth-security-best-practices",
+      "description": "Configure rate limiting, manage auth secrets, set up CSRF protection, define trusted origins, secure sessions and cookies, encrypt OAuth tokens, track IP addresses, and implement audit logging for Better Auth. Use when users need to secure their auth setup, prevent brute force attacks, or harden a Better Auth deployment.",
+      "url": "https://github.com/better-auth/skills/tree/20c9e88a5c007461a703f1c213572b073196113e/security",
+      "license": "No license",
+      "licenseOutcome": "missing",
+      "licenseCategory": "none",
+      "stars": 229,
+      "forks": 38,
+      "pushedAt": "2026-10-19T08:39:22Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 9,
+          "completeness": 9,
+          "usefulness": 8
+        },
+        "why": "Harden a Better Auth deployment: secrets, rate limits, CSRF, trusted origins, cookies, OAuth tokens, IP handling and audit logging.",
+        "summary": "A security reference for Better Auth with code for secrets, rate limiting, CSRF and trusted origins, session and cookie settings, OAuth state and token encryption, IP and proxy handling, audit logging through database hooks, serverless background tasks and account enumeration prevention, with a full example and a pre-deploy checklist.",
+        "strengths": [
+          "Concrete settings with defaults stated, for example the 3 requests per 10 seconds on sensitive endpoints and the session cache strategies.",
+          "Explains trade-offs: in-memory rate limits on serverless, cross-subdomain cookies only when all subdomains are trusted.",
+          "A complete configuration example and a checklist to run before going to production."
+        ],
+        "cautions": [
+          "Specific to Better Auth; it does not replace a general application security review.",
+          "Defaults and option names are those of the pinned release and can change.",
+          "Read in full but not run here; no license file in the repository."
+        ],
+        "keywords": [
+          "Better Auth",
+          "security",
+          "rate limiting",
+          "CSRF",
+          "cookies",
+          "trusted origins",
+          "OAuth",
+          "audit logging",
+          "session"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8.7,
+      "repoSignal": 4,
+      "score": 7.3,
+      "humanReviewed": false
+    },
+    {
+      "id": "prisma/skills:prisma-orm-setup",
+      "repo": "prisma/skills",
+      "path": "prisma-orm-setup",
+      "name": "prisma-orm-setup",
+      "description": "Set up Prisma ORM in an application, connect its database, or troubleshoot the connection of an existing Prisma 6, 7, or 8 app. Defaults new applications to Prisma ORM 8 and loads the package-owned prisma-8 skill; keeps existing Prisma 6/7 apps on their version with provider references for PostgreSQL, MySQL, SQLite, SQL Server, CockroachDB, MongoDB, and Prisma Postgres.",
+      "url": "https://github.com/prisma/skills/tree/a6f192959cf43b08aa330fe1ffca090267215812/prisma-orm-setup",
+      "license": "MIT",
+      "licenseOutcome": "identified",
+      "licenseCategory": "permissive",
+      "licenseEvidence": {
+        "level": "skill",
+        "path": "prisma-orm-setup/SKILL.md",
+        "url": "https://github.com/prisma/skills/blob/a6f192959cf43b08aa330fe1ffca090267215812/prisma-orm-setup/SKILL.md"
+      },
+      "stars": 80,
+      "forks": 8,
+      "pushedAt": "2026-11-10T16:06:30Z",
+      "review": {
+        "kits": [
+          "web-app"
+        ],
+        "scores": {
+          "clarity": 8,
+          "completeness": 8,
+          "usefulness": 8
+        },
+        "why": "Set up or repair Prisma ORM safely: detect the installed version, connect the database, and keep Prisma 6 and 7 apps on their version.",
+        "summary": "Detects the Prisma version, provider and runtime before acting. New apps default to Prisma ORM 8 and load the version-specific guidance shipped with the package; existing Prisma 6 and 7 apps keep their version, with provider references for PostgreSQL, MySQL, SQLite, SQL Server, CockroachDB, MongoDB and Prisma Postgres. It requires verifying with a read-only query.",
+        "strengths": [
+          "Version-aware: it separates connection repair from major upgrades and warns against copying Prisma 7 examples into a Prisma 6 app.",
+          "Careful with secrets and data: loads environment files without printing them and diagnoses before running schema-changing commands.",
+          "Completion means a successful read-only query against the intended database, not just an install."
+        ],
+        "cautions": [
+          "For Prisma 8 it relies on the package-owned guidance fetched with prisma skills sync, which this skill does not contain.",
+          "Reference files for providers target Prisma 7; the SKILL.md and the PostgreSQL and client setup references were read in full, the other provider references only skimmed.",
+          "Setup commands install packages and write configuration; examples were not run here."
+        ],
+        "keywords": [
+          "Prisma",
+          "ORM",
+          "database",
+          "PostgreSQL",
+          "MySQL",
+          "SQLite",
+          "MongoDB",
+          "setup",
+          "migration",
+          "TypeScript"
+        ],
+        "security": {
+          "level": "none",
+          "notes": []
+        }
+      },
+      "reviewScore": 8,
+      "repoSignal": 2.5,
+      "score": 6.4,
       "humanReviewed": false
     }
   ],

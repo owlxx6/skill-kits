@@ -1,0 +1,43 @@
+{
+  "fingerprint": "b3c0da10711a5e66f7ec6b909525ff7f5873d7c1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Set up or repair Prisma ORM safely: detect the installed version, connect the database, and keep Prisma 6 and 7 apps on their version.",
+    "summary": "Detects the Prisma version, provider and runtime before acting. New apps default to Prisma ORM 8 and load the version-specific guidance shipped with the package; existing Prisma 6 and 7 apps keep their version, with provider references for PostgreSQL, MySQL, SQLite, SQL Server, CockroachDB, MongoDB and Prisma Postgres. It requires verifying with a read-only query.",
+    "strengths": [
+      "Version-aware: it separates connection repair from major upgrades and warns against copying Prisma 7 examples into a Prisma 6 app.",
+      "Careful with secrets and data: loads environment files without printing them and diagnoses before running schema-changing commands.",
+      "Completion means a successful read-only query against the intended database, not just an install."
+    ],
+    "cautions": [
+      "For Prisma 8 it relies on the package-owned guidance fetched with prisma skills sync, which this skill does not contain.",
+      "Reference files for providers target Prisma 7; the SKILL.md and the PostgreSQL and client setup references were read in full, the other provider references only skimmed.",
+      "Setup commands install packages and write configuration; examples were not run here."
+    ],
+    "keywords": [
+      "Prisma",
+      "ORM",
+      "database",
+      "PostgreSQL",
+      "MySQL",
+      "SQLite",
+      "MongoDB",
+      "setup",
+      "migration",
+      "TypeScript"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

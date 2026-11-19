@@ -1,0 +1,42 @@
+{
+  "fingerprint": "0cc4729ee620ed1deff6630aa439ace9c0980849",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Drive a real browser from the command line to test pages: snapshots, clicks, forms, network mocking, tracing, video and Playwright test generation.",
+    "summary": "A command reference for playwright-cli: open and navigate, interact through snapshot references, storage and cookies, emulation, network routing, DevTools, tracing, video, locator generation, sessions, attaching to an existing browser, and output formats. Reference files cover test generation, request mocking, storage state and tracing.",
+    "strengths": [
+      "Complete and organized command set, with snapshot references that keep the agent's page view small and a find command for large pages.",
+      "Page-provided tools are labeled untrusted, so the agent treats them as data and not as instructions.",
+      "Reference files for generating Playwright tests, mocking requests and recording traces make it useful beyond one-off browsing."
+    ],
+    "cautions": [
+      "Powerful by design: it can read and set cookies and local storage, save authentication state to a file, run arbitrary JavaScript in the page and attach to a user's existing browser profile; keep sessions isolated and avoid real accounts.",
+      "SKILL.md was read in full; the reference files (about 55 KB) were skimmed, not read line by line.",
+      "Installing it means either a local Playwright 1.59 or newer or a global, unpinned npm install (npm install -g @playwright/cli@latest); nothing was run here."
+    ],
+    "keywords": [
+      "Playwright",
+      "browser automation",
+      "testing",
+      "end-to-end",
+      "web testing",
+      "CLI",
+      "screenshots",
+      "network mocking",
+      "tracing"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

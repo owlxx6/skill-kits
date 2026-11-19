@@ -1,0 +1,42 @@
+{
+  "fingerprint": "7cd035c1dd03aafc236ea43492d31ca3306b7ab6",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Harden a Better Auth deployment: secrets, rate limits, CSRF, trusted origins, cookies, OAuth tokens, IP handling and audit logging.",
+    "summary": "A security reference for Better Auth with code for secrets, rate limiting, CSRF and trusted origins, session and cookie settings, OAuth state and token encryption, IP and proxy handling, audit logging through database hooks, serverless background tasks and account enumeration prevention, with a full example and a pre-deploy checklist.",
+    "strengths": [
+      "Concrete settings with defaults stated, for example the 3 requests per 10 seconds on sensitive endpoints and the session cache strategies.",
+      "Explains trade-offs: in-memory rate limits on serverless, cross-subdomain cookies only when all subdomains are trusted.",
+      "A complete configuration example and a checklist to run before going to production."
+    ],
+    "cautions": [
+      "Specific to Better Auth; it does not replace a general application security review.",
+      "Defaults and option names are those of the pinned release and can change.",
+      "Read in full but not run here; no license file in the repository."
+    ],
+    "keywords": [
+      "Better Auth",
+      "security",
+      "rate limiting",
+      "CSRF",
+      "cookies",
+      "trusted origins",
+      "OAuth",
+      "audit logging",
+      "session"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

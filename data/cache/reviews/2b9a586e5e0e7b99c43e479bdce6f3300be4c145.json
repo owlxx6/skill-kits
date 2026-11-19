@@ -1,0 +1,42 @@
+{
+  "fingerprint": "2b9a586e5e0e7b99c43e479bdce6f3300be4c145",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Build production-quality, accessible, responsive UI: component structure, state choices, design system adherence and avoiding the generic AI look.",
+    "summary": "Guidance for building interfaces: colocated component files, composition over configuration, a ladder for choosing state management, a table of AI-default looks to avoid, spacing and type scales, keyboard, ARIA and focus patterns, empty and error states, mobile-first layout, skeleton loading and optimistic updates, and a verification list.",
+    "strengths": [
+      "Concrete code for the patterns that make UI feel finished: empty, loading and error states, focus management, optimistic updates.",
+      "The AI-aesthetic table names specific defaults (purple everything, oversized cards, stock grids) and what to do instead.",
+      "Tells the agent to verify with the project's own tooling and not to install toolchains just to check its work."
+    ],
+    "cautions": [
+      "Generic across frameworks: examples are React and Tailwind flavored, with no framework-specific rules.",
+      "Links to an accessibility checklist outside the skill folder that a single-skill install does not include.",
+      "Read in full but not run here."
+    ],
+    "keywords": [
+      "frontend",
+      "UI",
+      "React",
+      "components",
+      "state management",
+      "accessibility",
+      "responsive",
+      "design system",
+      "Tailwind"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

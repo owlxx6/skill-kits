@@ -1,0 +1,42 @@
+{
+  "fingerprint": "51875fe630f551e6edc8213c47d7fd7cc9a81c1f",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Audit a page for WCAG 2.2 AA with axe-core and pa11y, test by keyboard and screen reader, then fix the violations found.",
+    "summary": "A four-phase workflow: route new UI work elsewhere, run pinned automated audits, complete manual keyboard, screen reader and visual checks, then fix root causes before adding ARIA. A bundled script runs both tools and refuses to report a clean result if either fails. Includes rationalizations, red flags and a verification checklist.",
+    "strengths": [
+      "Treats automated tools as a smoke test and requires manual keyboard and screen reader checks, with a named browser and assistive technology pair.",
+      "The audit script pins tool versions, validates each report and never turns a partial run into a clean result.",
+      "Fix order is sensible: native HTML first, ARIA as a bridge, then re-test."
+    ],
+    "cautions": [
+      "The script downloads pinned @axe-core/cli and pa11y from npm with npx and drives a headless browser against the URL you give it.",
+      "Links to a checklist and an auditor persona outside the skill folder (the repository's references and agents folders), which a single-skill install does not include.",
+      "SKILL.md and the script were read in full; the script was not run here."
+    ],
+    "keywords": [
+      "accessibility",
+      "WCAG 2.2",
+      "axe-core",
+      "pa11y",
+      "screen reader",
+      "keyboard",
+      "ARIA",
+      "audit",
+      "contrast"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}
