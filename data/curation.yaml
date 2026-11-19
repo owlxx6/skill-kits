@@ -114,4 +114,13 @@ workflow-automation:
     - n8n-io/skills:skills/n8n-binary-and-data-official
     - triggerdotdev/skills
     - googleworkspace/cli
+    - inngest/inngest-skills
+    - resend/resend-skills
+    - vercel-labs/agent-browser:skills/agent-browser
+    - github/awesome-copilot:skills/github-actions-hardening
+    - anthropics/claude-plugins-official:plugins/claude-code-setup/skills/claude-automation-recommender
+    - mattpocock/skills:skills/misc/git-guardrails-claude-code
+    - czlonkowski/n8n-skills:skills/n8n-self-hosting
+    - microsoft/playwright-cli:skills/playwright-cli
+    - czlonkowski/n8n-skills:skills/n8n-workflow-patterns
   rejected: []

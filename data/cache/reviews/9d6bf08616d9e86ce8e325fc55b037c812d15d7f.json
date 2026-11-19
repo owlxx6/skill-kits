@@ -1,0 +1,41 @@
+{
+  "fingerprint": "9d6bf08616d9e86ce8e325fc55b037c812d15d7f",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T15:40:49.518Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Pick the right architecture for an n8n workflow: webhook, API, database, AI agent, scheduled and batch patterns, with node choices, gotchas and a checklist.",
+    "summary": "A pattern catalogue with a selection guide for six workflow shapes, shared building blocks (triggers, sources, native-first transforms, outputs, error handling), a four-gate lifecycle (validate, verify connections, test, activate), SplitInBatches and pagination rules, performance guidance and integration gotchas. Five pattern files cover webhooks, APIs, databases, AI agents and schedules.",
+    "strengths": [
+      "Specific, checkable guidance: batchSize as a cost lever, loop output wiring, webhook data under body, Sheets append breaking formulas.",
+      "A lifecycle that insists validation passing is not enough and warns that tests fire real side effects.",
+      "Scheduled-task pattern with cron, timezone and common use cases (reports, sync, monitoring, cleanup, backup)."
+    ],
+    "cautions": [
+      "Written around the n8n-mcp tools (search_nodes, validate_workflow) and sibling skills of the same pack; it is much less useful without them.",
+      "Usage percentages in the statistics section carry no source.",
+      "SKILL.md read in full, the pattern files not read (one listed by headings); not run here. The scan flagged three documentation lines naming webhook.site as a testing service."
+    ],
+    "keywords": [
+      "n8n",
+      "workflow patterns",
+      "webhooks",
+      "scheduled tasks",
+      "batch processing",
+      "API integration",
+      "AI agents",
+      "error handling"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

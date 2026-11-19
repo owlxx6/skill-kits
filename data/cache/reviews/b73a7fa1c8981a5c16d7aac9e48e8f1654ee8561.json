@@ -1,0 +1,42 @@
+{
+  "fingerprint": "b73a7fa1c8981a5c16d7aac9e48e8f1654ee8561",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T15:40:49.518Z",
+  "review": {
+    "kits": [
+      "workflow-automation"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Deploy a production self-hosted n8n over SSH with Docker Compose and Caddy HTTPS, in single or queue mode, with secrets, backups, updates and task runners.",
+    "summary": "A guided deployment for a fresh Debian or Ubuntu VM: choose single or queue mode, collect domain, SSH, timezone and TLS inputs, install Docker, lay down compose, Caddyfile and env templates, generate secrets on the box, open the firewall, launch and verify TLS and health. Companion files cover queue mode, task runners, credential overwrites, security and day-two work.",
+    "strengths": [
+      "Strict secret hygiene: fresh secrets generated on the server, encryption key backup, no internal ports exposed.",
+      "Verification steps that separate n8n running from TLS pending, and check main and workers share settings in queue mode.",
+      "Ready templates (compose for both modes, Caddyfile, env examples, Postgres init script)."
+    ],
+    "cautions": [
+      "It runs commands on a remote server over SSH as root or sudo, installs Docker and changes the firewall; review each step.",
+      "For self-hosted n8n only, not n8n Cloud, and the templates assume a domain with DNS you control.",
+      "SKILL.md, the Caddyfile, the start of the single-mode compose file and the init script read; SECURITY.md by headings; the other guides not read. Not run here."
+    ],
+    "keywords": [
+      "n8n",
+      "self-hosting",
+      "Docker Compose",
+      "Caddy",
+      "queue mode",
+      "deployment",
+      "backup",
+      "task runners",
+      "VPS"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

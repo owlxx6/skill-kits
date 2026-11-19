@@ -267,3 +267,24 @@ Limits: nothing was executed. `SKILL.md` was read in full for all ten skills, bu
 Test change: `tests/curation-cache.test.ts` pinned the 2026-11-17 review of `ui-ux-pro-max`. It now also accepts a later review of a changed folder, as long as that review comes from the committed cache.
 
 Checks: typecheck, 1,013 tests, site build (1,714 pages) and site verification (8 kits, 1,659 skill pages). Main is unchanged until a separate release decision.
+
+## Workflow automation: two collections and seven skills for the gaps in the kit — 2026-11-19
+
+The owner asked for better skills in the Workflow automation kit, judged by usefulness and not by stars. `npx skills find` was run on 45 automation topics; the three kit parts and about twenty candidates were read; the owner approved the changes below, then authorized four scan exceptions.
+
+- Kept: `n8n-io/skills`, `triggerdotdev/skills` and `googleworkspace/cli`, and the five n8n picks already in the kit. No part is removed.
+- Added as collections (whole-repository install): `inngest/inngest-skills` (15 skills on durable functions, steps, events, flow control; TypeScript; the license file is the Apache 2.0 text, which GitHub does not recognize, so it shows as unclear) and `resend/resend-skills` (5 MIT skills: the email API, email best practices, an agent inbox that treats inbound email as untrusted input, React Email and the CLI). Admitted as source listings without editorial review.
+- Added as individual skills, each with a new review: `agent-browser` (vercel-labs; a stub that loads the real guide from the installed CLI), `github-actions-hardening` (github/awesome-copilot), `claude-automation-recommender` (anthropics/claude-plugins-official), `git-guardrails-claude-code` (mattpocock/skills), `n8n-self-hosting` and `n8n-workflow-patterns` (czlonkowski/n8n-skills, which cover gaps in the official n8n set).
+- Added to the kit only: `playwright-cli` (already reviewed, 8.3).
+
+Reviews are in-session and fingerprint-matched under `data/cache/reviews/`; every new record keeps `humanReviewed: false`. Approval, source commits and what was read are in `data/curation-evidence/workflow-automation-picks-2026-11-19.json`. Six repositories are nominated in `data/sources.yaml`. The catalog goes from 272 to 278 reviewed skills, from 1,387 to 1,407 source listings and from 26 to 28 collections: 1,685 skill pages.
+
+Scan: the complete-folder scan is clear for every skill admitted here except four, which returned `review`: `n8n-workflow-patterns` (three documentation lines naming webhook.site as a testing service) and three Resend skills (`resend`, `resend-cli` and `agent-email-inbox`: documentation lines with tunnel service addresses, a Tailscale installer one-liner and a description of inputs to filter). The owner authorized an exception for each; the four entries in `data/scan-overrides.yaml` bind to the exact fingerprint and scanned content that were read.
+
+Read and left out: `zapier/agent-skills` and `zapier/zapier-mcp` (early-access SDK, and the skills refresh themselves), `web-infra-dev/midscene-skills` (needs a separate vision-model key and takes over the mouse in desktop mode), the Browserbase, Bright Data, Oxylabs, Apify, Airtable and UiPath skills (each tied to a vendor account), `crontap/skills` (a scheduling product), `jshchnz/claude-code-scheduler` (needs the commands of its plugin), the bash and Temporal skills of `wshobson/agents` (short pages that defer to files not read), its `github-actions-templates` (generic templates), the other n8n skills of `czlonkowski/n8n-skills` (they overlap the official set) and the Airflow skills of `astronomer/agents` (data engineering, for the Data kit).
+
+Limits: nothing was executed. `SKILL.md` was read in full for the six new reviews, but most reference files were only listed by headings or not read, and the guide behind `agent-browser` is not in the reviewed folder. The 20 skills of the two collections have no review: only the starts of five of them were read. Several skills need an outside account or tool (the agent-browser CLI, jq and bash for the git hook, the n8n-mcp tools for the n8n patterns, SSH access for the n8n deployment).
+
+Noted, not caused by this change: the n8n part shows 12 of 15 skills (`n8n-agents-official`, `n8n-debugging-official` and `n8n-extending-mcp-official` are not in the catalog); the cause was not investigated.
+
+Checks: typecheck, 1,013 tests, site build and site verification (8 kits, 1,685 skill pages). Main is unchanged until a separate release decision.

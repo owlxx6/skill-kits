@@ -16,3 +16,23 @@ overrides:
     contentId: 3374a74c08d63e22d7155a4402619f6ab9980c14192adbed7949420c531b4c07
     reviewedAt: 2026-11-17
     basis: data file that cannot be scanned
+  - id: czlonkowski/n8n-skills:skills/n8n-workflow-patterns
+    fingerprint: 9d6bf08616d9e86ce8e325fc55b037c812d15d7f
+    contentId: 65a3d2067bd6b2bd01ca84d04a2cfe8165eb2476da7fbb69ec6774cf35fbad47
+    reviewedAt: 2026-11-19
+    basis: documentation names a testing service
+  - id: resend/resend-skills:skills/agent-email-inbox
+    fingerprint: 37a4124c6af5a35d8fcd0d9d2d27d860e6fdd41c
+    contentId: 6e3c41c5bfce587bad9a76e2d26aa0737a192d1c189a35d5574f8b666bde317e
+    reviewedAt: 2026-11-19
+    basis: documentation shows tunnel and installer examples and describes inputs to filter
+  - id: resend/resend-skills:skills/resend
+    fingerprint: e63fddca97ea2aa8207250f5a2d51c478a903847
+    contentId: 09766d6c0615fff9d91ba5865ddbf8bef12ead31e3b277c8076271375fddd6ba
+    reviewedAt: 2026-11-19
+    basis: documentation names a tunnel service
+  - id: resend/resend-skills:skills/resend-cli
+    fingerprint: 3a25b239aeecdbb8bae5638622e7b2e3924a9426
+    contentId: a6973ad2868da3460fb2b210d44c6e1a21b4389f2436489cc63f65f6a3efb292
+    reviewedAt: 2026-11-19
+    basis: documentation names a tunnel service
