@@ -1,0 +1,41 @@
+{
+  "fingerprint": "97bbdc122d2ba81755eb5be41870588d274430f1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Write and review interface copy: labels, errors, empty states and confirmations, matched to the product's voice and always pointing to the next step.",
+    "summary": "Starts by inventorying the strings and vocabulary already in the product, then enforces one voice, verb-first buttons, descriptive links, ON-state toggle labels, errors that say how to fix, undo over confirmation, and empty states that point forward. Builds strings whole with plural rules and Intl formatting. Patterns file gives templates.",
+    "strengths": [
+      "Tied to the real codebase: finds translation calls and locale files before writing new copy.",
+      "Ready templates for destructive flows, status copy, plurals (ICU) and locale formatting.",
+      "Respects a deliberate brand voice and only flags inconsistency, ambiguity or translation risk."
+    ],
+    "cautions": [
+      "English-centered examples; other languages need their own style judgment.",
+      "Copy supplied by a CMS or the server cannot be reviewed from source and is marked Not verified.",
+      "SKILL.md and the patterns reference read in full; not run here."
+    ],
+    "keywords": [
+      "UX writing",
+      "microcopy",
+      "error messages",
+      "empty states",
+      "button labels",
+      "i18n",
+      "plurals",
+      "voice and tone"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

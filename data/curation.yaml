@@ -91,6 +91,18 @@ ui-design:
     - expo/skills:plugins/expo/skills/expo-design-system
     - emilkowalski/skills
     - addyosmani/web-quality-skills
+    - jakubkrehel/skills:skills/better-accessibility
+    - jakubkrehel/skills:skills/better-colors
+    - jakubkrehel/skills:skills/better-layout
+    - jakubkrehel/skills:skills/better-motion
+    - jakubkrehel/skills:skills/better-typography
+    - jakubkrehel/skills:skills/better-ui
+    - jakubkrehel/skills:skills/better-writing
+    - jakubkrehel/skills:skills/better-interface
+    - jakubkrehel/skills:skills/interface-review
+    - shadcn-ui/ui:skills/shadcn
+    - addyosmani/agent-skills:skills/frontend-ui-engineering
+    - addyosmani/agent-skills:skills/accessibility-engineering
   rejected: []
 workflow-automation:
   approved:

@@ -1,0 +1,40 @@
+{
+  "fingerprint": "03cb6427643188ad5ef76400bb46db5df8a27180",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Review a screen, flow or whole interface across all seven better-* domains and return one ranked report with evidence, a cap and a Block or Approve verdict.",
+    "summary": "The orchestrator of the set. It resolves scope, reads the project's own conventions, runs accessibility, layout, writing, typography, color, UI and motion reviews in that order, then consolidates one table ranked by user impact with a fixed list of HIGH-on-sight triggers, a 15-finding cap and a cheaper-fix ladder: delete, use the platform, reuse, correct, add.",
+    "strengths": [
+      "Evidence rule: every finding cites file and line, and unchecked domains are marked Not reviewed, never Clear.",
+      "Ranks by user impact and reach, with escalation triggers that cannot be averaged down.",
+      "Read-only by default; sends branch and pull request reviews to interface-review."
+    ],
+    "cautions": [
+      "Needs the seven domain skills installed; without them each domain is reported Not reviewed.",
+      "Orchestration only: it holds no domain rules itself, so alone it adds little.",
+      "SKILL.md and the review-format file read in full; not run here."
+    ],
+    "keywords": [
+      "interface review",
+      "UI audit",
+      "design review",
+      "accessibility",
+      "code review",
+      "UX quality",
+      "orchestration"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

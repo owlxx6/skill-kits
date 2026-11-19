@@ -1,0 +1,41 @@
+{
+  "fingerprint": "ae1d93e57d1c83da9232bb00c3a5ea723e687c4c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Polish surfaces and icons with exact values for concentric radius, optical alignment, layered shadows, image outlines and icon states.",
+    "summary": "A small, precise polish skill: outer radius equals inner radius plus padding, optical nudges for icons and play triangles, layered shadow rings with a transparent border for forced-colors, pure black or white image outlines, hover only on hover-capable pointers, overscroll containment and stroke weight matched to text.",
+    "strengths": [
+      "Exact, copyable values: shadow layers for light and dark, image outline colors, the radius formula.",
+      "Catches details others miss: stuck hover on touch, tinted image outlines, forced-colors dropping box-shadow.",
+      "Clear boundaries: leaves hit areas, color tokens and animation to sibling skills."
+    ],
+    "cautions": [
+      "Narrow scope (surfaces and icons); it assumes the interaction is already sound.",
+      "Some values are taste choices (shadow opacities, image outline 0.1) even though they are stated as exact.",
+      "SKILL.md and surfaces reference read in full, icons by headings; not run here."
+    ],
+    "keywords": [
+      "UI polish",
+      "border radius",
+      "box shadow",
+      "icons",
+      "SVG",
+      "dark mode",
+      "design details",
+      "Tailwind"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "fingerprint": "fb445a4ba1cd5b5dfee2f76daa9020811ff075f8",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 7
+    },
+    "why": "Review a branch, pull request or uncommitted change for the interface problems it introduced or regressed, with a status on every finding.",
+    "summary": "Reviews a change instead of a screen: resolves the diff scope (branch range plus uncommitted work, a PR, a range), expands to the surfaces and consumers affected, reads removed lines for lost accessibility or motion safeguards, and marks each finding Introduced, Regression or Pre-existing. Hands the report format to better-interface.",
+    "strengths": [
+      "Never guesses a scope: with a clean tree it states the facts and offers routes.",
+      "Reads the minus side of the diff and checks whether the change replaces what it removed.",
+      "Read-only: fetches refs, never checks out or stashes the author's working tree."
+    ],
+    "cautions": [
+      "Marked user-invoked only (disable-model-invocation), so it runs when you call it, not automatically.",
+      "Needs git, and better-interface plus the domain skills; otherwise it reports the scope and stops.",
+      "SKILL.md read in full; the scope-resolution and removed-signals files were not read; not run here."
+    ],
+    "keywords": [
+      "pull request review",
+      "UI regression",
+      "diff review",
+      "interface review",
+      "accessibility",
+      "git",
+      "code review"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "fingerprint": "cb24788c1816fa115ec38ac113a1f2f6faa5fa65",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Set and review type: scale, line-height, measure, wrapping, tabular numbers, truncation, font loading and punctuation, with Tailwind forms for each rule.",
+    "summary": "Separates measured rules (unitless line-height, weight 400 or more below 18px, 60-75 character measure, 16px inputs on iOS, tabular-nums) from heuristics such as tracking and pairing. Covers role-based scale, heading hierarchy, text-wrap, font features, truncation, bidi, text-box trim and selection, plus a fix table and a CSS cheat sheet.",
+    "strengths": [
+      "Clear split between findings and preferences, and it never proposes a new typeface unless asked.",
+      "Specific modern CSS: text-wrap balance and pretty, font-variant-numeric, text-box trim, underline-from-font.",
+      "Fix table maps each bad pattern to its replacement, with two options for the iOS input zoom."
+    ],
+    "cautions": [
+      "Browser support for newer features such as text-box trim is noted as progressive enhancement; check targets.",
+      "Rendering checks (wrapping, last-line words, truncation) need real content in a browser.",
+      "SKILL.md read in full, the reference files by headings; not run here."
+    ],
+    "keywords": [
+      "typography",
+      "type scale",
+      "line height",
+      "text wrapping",
+      "web fonts",
+      "variable fonts",
+      "tabular numbers",
+      "CSS",
+      "Tailwind"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

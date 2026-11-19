@@ -1,0 +1,41 @@
+{
+  "fingerprint": "64e4a3435623fc682c9c80e005dba3d1ffd87654",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Set grouping, alignment, reading order and responsive structure, then stress-test the layout by resizing, translating and mirroring it for RTL.",
+    "summary": "Groups with space before shapes before lines, aligns to shared edges, uses logical properties so layouts mirror, and keeps visual order equal to DOM order. Tests structure by growing translated strings, container queries, safe areas, sticky chrome and 320px width. A detection table lists the CSS patterns that break.",
+    "strengths": [
+      "Every finding needs a failure you can show (a clip, an overlap, a broken mirror), so taste differences are not reported.",
+      "Practical detection table: minmax(0, 1fr), 100vw, 100dvh, safe-area insets, logical properties, container queries.",
+      "Treats translation growth and RTL as part of layout, not an afterthought."
+    ],
+    "cautions": [
+      "Numbers such as 12px and 24px clearances apply only where the project has no spacing scale of its own.",
+      "Visual claims need a browser at several widths; without one they are marked Not verified.",
+      "SKILL.md read in full, the two references by headings; not run here."
+    ],
+    "keywords": [
+      "layout",
+      "spacing",
+      "responsive design",
+      "RTL",
+      "logical properties",
+      "container queries",
+      "internationalization",
+      "safe areas"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

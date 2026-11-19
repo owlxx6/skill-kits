@@ -1,0 +1,42 @@
+{
+  "fingerprint": "3c3e731f1102df49cdd1f55d7ed8d34188d5c364",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T10:40:52.425Z",
+  "review": {
+    "kits": [
+      "ui-design"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Build and audit color systems: perceptual ramps, primitive and semantic tokens, notation conversion and contrast measured on the real rendered pair.",
+    "summary": "Builds palettes as ramps with a job per step, in OKLCH with a color library, then names primitives by hue and semantic tokens by role. Reports only measured contrast, on the background actually rendered, and fixes lightness before hue. Covers gamut, gradient interpolation, dark mode, one color one meaning and one filled action per view.",
+    "strengths": [
+      "Precise, checkable rules: step spacing in OKLCH L, hue held constant, chroma set per hue, light and dark both measured.",
+      "Token guidance with a role inventory, naming grammar, anti-patterns and a Tailwind section.",
+      "Never reports a contrast value it did not measure, and leaves a failing pair alone unless asked to fix it."
+    ],
+    "cautions": [
+      "Contrast values need a tool or browser; the skill points to color libraries rather than shipping a calculator.",
+      "Whether a pair must pass is decided by better-accessibility, so the two work best together.",
+      "SKILL.md and the contrast and palette-generation references read in full, other references by headings; not run here."
+    ],
+    "keywords": [
+      "color system",
+      "OKLCH",
+      "palette",
+      "design tokens",
+      "contrast",
+      "dark mode",
+      "APCA",
+      "gradients",
+      "Tailwind colors"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}
