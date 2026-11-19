@@ -1,0 +1,43 @@
+{
+  "fingerprint": "f067ac9bee972c6320d990fd044a6da37f04fdee",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Add login and sign-up to a project with Better Auth: scan the project, agree a plan with the user, then implement routes, database and pages.",
+    "summary": "A two-phase workflow: scan the project for framework, database and existing auth, ask ten structured planning questions, present a checklist plan for confirmation, then implement with a decision tree for new, existing or migrating projects. Includes route handler table per framework, migration commands, adapters and a security checklist.",
+    "strengths": [
+      "Plan first, with explicit confirmation before any code is written, and questions skipped when the scan already knows the answer.",
+      "Covers real choices: framework, ORM, sign-in methods, 2FA, organizations, email provider, and the per-adapter migration commands.",
+      "Warns that drizzle-kit push is for development only, and ends with a security checklist and troubleshooting table."
+    ],
+    "cautions": [
+      "Uses an AskQuestion tool for the planning questions; agents without it must ask in plain text.",
+      "Syntax details point to the Better Auth documentation rather than being included.",
+      "Read in full but not run here; no license file in the repository."
+    ],
+    "keywords": [
+      "Better Auth",
+      "login",
+      "sign-up",
+      "OAuth",
+      "Next.js",
+      "Prisma",
+      "Drizzle",
+      "migration",
+      "2FA",
+      "organizations"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

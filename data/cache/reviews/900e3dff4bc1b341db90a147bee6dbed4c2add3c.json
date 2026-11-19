@@ -1,0 +1,42 @@
+{
+  "fingerprint": "900e3dff4bc1b341db90a147bee6dbed4c2add3c",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Build and fix interfaces with shadcn/ui: use the project's real config, add and compose components, and follow the rules that keep code correct.",
+    "summary": "The official shadcn/ui skill. It reads the project's configuration, enforces rules with incorrect and correct code pairs (styling, forms, composition, icons, chat components), explains the CLI workflow (search, docs, add with dry-run and diff, presets), and covers turning a DESIGN.md into a themed design system. Rule files and a coverage script are included.",
+    "strengths": [
+      "Grounded in the actual project: aliases, Tailwind version, base library, icon library and framework are read before advising.",
+      "Clear, checkable rules (FieldGroup with Field for forms, semantic colors, gap instead of space-y) with incorrect and correct examples.",
+      "Safe update workflow: dry-run and diff first, never overwrite without approval, and an explicit registry rather than a guessed one."
+    ],
+    "cautions": [
+      "At load time it runs npx shadcn@latest info --json to inject the project context, and later commands fetch the latest CLI each time.",
+      "SKILL.md, the forms and composition rules and the coverage script were read in full; the other reference files (CLI, registry, design system, chat, about 100 KB) and the showcase assets were only searched for risky calls, not read line by line.",
+      "Tied to the shadcn CLI and its current component set; it is marked as not user-invocable, so it loads automatically."
+    ],
+    "keywords": [
+      "shadcn/ui",
+      "components",
+      "Tailwind",
+      "React",
+      "forms",
+      "design system",
+      "CLI",
+      "presets",
+      "UI"
+    ],
+    "security": {
+      "level": "notice",
+      "notes": []
+    }
+  }
+}

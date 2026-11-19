@@ -1,0 +1,42 @@
+{
+  "fingerprint": "2ed2719690a27752d6a01014ff217d9e3d120e43",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 9
+    },
+    "why": "Set up Better Auth in TypeScript apps: server and client config, database adapters, sessions, plugins and the gotchas that break setups.",
+    "summary": "A configuration guide for Better Auth: a setup workflow, environment variables, core options, adapters (built-in, Drizzle, Prisma, MongoDB), session storage and cookie caching, email flows, hooks, plugins, client imports and a list of common gotchas. It tells the agent to match the documentation to the installed version.",
+    "strengths": [
+      "Starts by pinning documentation to the installed Better Auth version, and separates current from target version when upgrading.",
+      "Compact reference with the details that usually bite: model names versus table names, re-running the CLI after plugins, secondary storage and stateless sessions.",
+      "Security options are flagged as risks (disabling CSRF or origin checks) instead of being offered as tweaks."
+    ],
+    "cautions": [
+      "Reference style: examples are short and most syntax is sent to the online documentation, so the agent needs network access or the Better Auth MCP.",
+      "Covers Better Auth only; the repository has no license file, so the license shows as missing.",
+      "Read in full but not run here; option names and defaults may change with new Better Auth releases."
+    ],
+    "keywords": [
+      "Better Auth",
+      "authentication",
+      "TypeScript",
+      "sessions",
+      "OAuth",
+      "Drizzle",
+      "Prisma",
+      "plugins",
+      "email and password"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

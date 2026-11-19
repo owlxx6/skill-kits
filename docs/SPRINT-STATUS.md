@@ -210,3 +210,20 @@ Limits: nothing was executed. `citation-verification` sends reference titles, au
 One test of `site/tests/collection-coverage.test.ts` named `TerminalSkills/skills`; it now takes any partial collection.
 
 Checks: typecheck, 1,013 tests, site build (2,069 pages) and site verification (8 kits, 2,023 skill pages). Main is unchanged until a separate release decision.
+
+## Web apps: eleven skills that fill gaps in the kit — 2026-11-19
+
+The owner asked for better skills in the Web apps kit, judged by usefulness and not by stars. `npx skills find` was run on 26 web topics; about twenty candidates were read; the owner approved eleven individual additions. The kit already covered React and Next.js, Cloudflare, Postgres, debugging and method, a security audit and Expo; the additions fill authentication, UI components, payments, data access, API design, security hardening, accessibility, interface building and browser testing.
+
+- Authentication: `better-auth-best-practices`, `create-auth` and `better-auth-security` from `better-auth/skills`. The repository has no license file, so the license shows as missing; the scan is clear.
+- Interface: `shadcn` from `shadcn-ui/ui`, plus `frontend-ui-engineering` and `accessibility-engineering` from `addyosmani/agent-skills`.
+- Backend and data: `stripe-best-practices` from `stripe/ai`, `prisma-orm-setup` from `prisma/skills`, `api-and-interface-design` and `security-and-hardening` from `addyosmani/agent-skills`.
+- Testing: `playwright-cli` from `microsoft/playwright-cli`.
+
+Every file of these folders went through the complete-folder static scan, all clear. Reviews are in-session and fingerprint-matched under `data/cache/reviews/`; every new record keeps `humanReviewed: false`. Approval, source commits and what was read in full are in `data/curation-evidence/web-app-picks-2026-11-19.json`. The six repositories are nominated in `data/sources.yaml`. The catalog goes from 246 to 257 reviewed skills and 2,034 skill pages; collections are unchanged.
+
+Not added as collections: `addyosmani/agent-skills` has 26 skills, about half of which overlap `obra/superpowers`, and only four were read. Candidates read and left out: `clerk` (`clerk-setup`, `clerk-nextjs-patterns`), the other Addy skills (`ci-cd-and-automation`, `shipping-and-launch`, `observability-and-instrumentation`, `browser-testing-with-devtools`), `next-dev-loop` (needs Next.js 16.3 or newer), `fastify`, and thin ones (`nodejs-backend-patterns`, `clerk-testing`, the two short Prisma pointers).
+
+Limits: nothing was executed. The reference files of `shadcn` (about 100 KB), `stripe-best-practices` (billing, Connect, tax; about 50 KB), `playwright-cli` (about 55 KB) and part of the Addy security patterns were skimmed, not read line by line; the evidence file says which. `stripe/ai` holds six identical copies of its skill (one per agent provider), so its name is not unique and the site links to the source instead of a name-based command. The Addy skills link to repository-level files (checklists, auditor personas) that a single-skill install does not carry. `shadcn` runs `npx shadcn@latest info --json` when it loads. `playwright-cli` can read cookies, save authentication state and attach to a user's browser. `accessibility-engineering` downloads pinned `@axe-core/cli` and `pa11y` with `npx`.
+
+Checks: typecheck, 1,013 tests, site build (2,086 pages) and site verification (8 kits, 2,034 skill pages). Main is unchanged until a separate release decision.

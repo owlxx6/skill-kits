@@ -1,0 +1,43 @@
+{
+  "fingerprint": "fd74e50ae5e7e530ccc3c596a727e5114b8fef69",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 9
+    },
+    "why": "Choose and build Stripe integrations correctly: Checkout, webhooks, billing, tax, Connect and API key security, with the traps to avoid.",
+    "summary": "Stripe's own routing skill: a table that maps what you are building to the right API, critical rules (always use webhooks, never pass payment_method_types, use a StripeClient, prefer restricted keys, check tax registrations), and reference files for payments, billing, Connect, tax, Treasury and security.",
+    "strengths": [
+      "Decision table from goal to API, and critical rules that prevent the most common integration mistakes.",
+      "The payments reference explains why fulfillment belongs in webhook handlers and lists deprecated APIs with their replacements.",
+      "The security reference covers secret storage per platform, restricted keys, key rotation, webhook signatures, CSP and Connect liability."
+    ],
+    "cautions": [
+      "The repository holds six identical copies of this skill (one per agent provider), so the name alone is not unique and a name-based install command is not offered.",
+      "SKILL.md and the payments and security references were read in full; the billing, Connect, tax and Treasury references (about 50 KB) were not read line by line.",
+      "Version numbers and API dates in the text are those of the pinned commit and will age; it also assumes access to Stripe's documentation and optionally its MCP server."
+    ],
+    "keywords": [
+      "Stripe",
+      "payments",
+      "Checkout",
+      "webhooks",
+      "subscriptions",
+      "billing",
+      "tax",
+      "Connect",
+      "API keys",
+      "security"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

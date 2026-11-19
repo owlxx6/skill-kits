@@ -1,0 +1,42 @@
+{
+  "fingerprint": "f5d5abdf47ee8817f71a481eaaff9484bccdeda7",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T08:49:50.492Z",
+  "review": {
+    "kits": [
+      "web-app"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Design stable APIs and interfaces: contract first, consistent errors, validation at boundaries, additive changes and idempotency keys done right.",
+    "summary": "Principles and patterns for REST APIs, module boundaries and TypeScript interfaces: Hyrum's Law, the one-version rule, contract-first design, one error shape, validation only at system edges, additive changes, predictable naming, and a detailed section on honouring idempotency keys. Ends with common rationalizations, red flags and a verification checklist.",
+    "strengths": [
+      "Concrete and opinionated, with good and bad code side by side (status code mapping, validation at the boundary, discriminated unions, branded IDs).",
+      "The idempotency section covers the parts that lose money: atomic claim, payload hash, in-flight duplicates, unknown outcomes and retention.",
+      "Red flags and a verification checklist make it usable as a review tool."
+    ],
+    "cautions": [
+      "Principles, not a framework recipe: no GraphQL schema design or OpenAPI tooling, and examples are TypeScript and Express style.",
+      "References other skills of the same repository (such as deprecation-and-migration) that a single-skill install does not include.",
+      "Read in full but not run here."
+    ],
+    "keywords": [
+      "API design",
+      "REST",
+      "TypeScript",
+      "error handling",
+      "validation",
+      "idempotency",
+      "pagination",
+      "interfaces",
+      "backward compatibility"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

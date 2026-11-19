@@ -27,6 +27,17 @@ web-app:
     - expo/skills:plugins/expo/skills/expo-router
     - expo/skills:plugins/expo/skills/expo-design-system
     - expo/skills:plugins/expo/skills/expo-upgrade
+    - better-auth/skills:better-auth/best-practices
+    - better-auth/skills:better-auth/create-auth
+    - better-auth/skills:security
+    - shadcn-ui/ui:skills/shadcn
+    - stripe/ai:skills/stripe-best-practices
+    - prisma/skills:prisma-orm-setup
+    - addyosmani/agent-skills:skills/api-and-interface-design
+    - addyosmani/agent-skills:skills/security-and-hardening
+    - addyosmani/agent-skills:skills/accessibility-engineering
+    - addyosmani/agent-skills:skills/frontend-ui-engineering
+    - microsoft/playwright-cli:skills/playwright-cli
   rejected: []
 data-analysis:
   approved:
