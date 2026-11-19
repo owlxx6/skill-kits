@@ -1,0 +1,42 @@
+{
+  "fingerprint": "4aeaa9dda077806c8afd22ae0a7499ad3510bb68",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T09:52:39.373Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 8,
+      "completeness": 7,
+      "usefulness": 7
+    },
+    "why": "Draft marketing content from channel templates: blog, social, newsletter, landing page, press release and case study, with SEO basics, hooks and CTAs.",
+    "summary": "Structures and rules for six content types, writing practices by channel, an on-page SEO checklist, headline and hook formulas and call-to-action guidance. It is marked not user-invocable, so it loads as background guidance for other content requests.",
+    "strengths": [
+      "Concrete structures with length guides for each content type, including press release and case study.",
+      "Compact rules for CTA wording and placement and for on-page SEO.",
+      "Headline and hook formulas, each with an example."
+    ],
+    "cautions": [
+      "Generic by design: it gives structure, not your brand voice or research, so pair it with a voice guide.",
+      "Figures such as character counts and reading level are rules of thumb that change by platform.",
+      "The repository's LICENSE file is the Apache-2.0 text followed by unrelated stray text, so the license shows as unclear although GitHub detects Apache-2.0. Read in full but not run here."
+    ],
+    "keywords": [
+      "content creation",
+      "blog post",
+      "social media",
+      "newsletter",
+      "landing page",
+      "press release",
+      "case study",
+      "SEO",
+      "CTA"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

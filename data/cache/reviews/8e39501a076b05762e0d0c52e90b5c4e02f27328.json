@@ -1,0 +1,41 @@
+{
+  "fingerprint": "8e39501a076b05762e0d0c52e90b5c4e02f27328",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T09:52:39.373Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 8,
+      "usefulness": 8
+    },
+    "why": "Review copy against your brand voice, style guide and messaging pillars, with severity-ranked fixes and a legal and compliance check.",
+    "summary": "Takes the content and, when available, the brand guidelines; checks voice, terminology, messaging pillars and style; always flags unsubstantiated claims, missing disclaimers, comparative claims and testimonial issues; returns a summary, a findings table with severity, revised sections and legal flags. It also carries frameworks for documenting a brand voice.",
+    "strengths": [
+      "Works with or without a style guide: without one it falls back to a clarity, consistency and professionalism review.",
+      "Compliance flags are checked every time and kept separate from style findings.",
+      "The voice framework (we are, we are not, sounds like) and the tone-by-channel and tone-by-situation tables are directly reusable."
+    ],
+    "cautions": [
+      "Written as a command with optional connectors marked by ~~ placeholders, and it points to a CONNECTORS.md outside the skill folder.",
+      "Legal and compliance flags are prompts for a person to check, not legal advice.",
+      "The repository's LICENSE file is the Apache-2.0 text followed by unrelated stray text, so the license shows as unclear although GitHub detects Apache-2.0. Read in full but not run here."
+    ],
+    "keywords": [
+      "brand voice",
+      "style guide",
+      "copy review",
+      "messaging",
+      "compliance",
+      "tone",
+      "terminology",
+      "content review"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}
