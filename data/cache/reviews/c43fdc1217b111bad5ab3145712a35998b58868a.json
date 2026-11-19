@@ -1,0 +1,41 @@
+{
+  "fingerprint": "c43fdc1217b111bad5ab3145712a35998b58868a",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T09:52:39.373Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Turn a marketing goal into a full campaign brief: objectives, audience, messages, channels, week-by-week calendar, metrics, budget and risks.",
+    "summary": "Asks for the goal, audience, timeline and budget, then produces a ten-part campaign brief. A planning reference adds an objective, audience, message, channel and measure framework, a channel selection guide, calendar and production benchmarks, budget allocation methods and success metrics by campaign type.",
+    "strengths": [
+      "Clear brief structure, with a content calendar that tracks dependencies between assets.",
+      "Practical reference tables: channels with typical metrics and effort, production lead times, budget split frameworks.",
+      "Asks for missing inputs before planning and ends by offering concrete next steps."
+    ],
+    "cautions": [
+      "Written as a command with optional connectors marked by ~~ placeholders, and it points to a CONNECTORS.md outside the skill folder.",
+      "Benchmarks and budget percentages are general rules of thumb, not data for a specific market.",
+      "The repository's LICENSE file is the Apache-2.0 text followed by unrelated stray text, so the license shows as unclear although GitHub detects Apache-2.0. Read in full but not run here."
+    ],
+    "keywords": [
+      "campaign plan",
+      "marketing brief",
+      "content calendar",
+      "channel strategy",
+      "KPIs",
+      "budget allocation",
+      "product launch",
+      "lead generation"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

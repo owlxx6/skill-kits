@@ -1,0 +1,42 @@
+{
+  "fingerprint": "e744a71bff6b29a68c09aad7f43b875fa0cd5a9b",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T09:52:39.373Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Build a marketing performance report: key metrics, trends, wins and misses, and prioritized recommendations for a campaign, channel or period.",
+    "summary": "Picks the report type, gathers metrics from connected analytics or pasted data, and builds an eight-part report. References give metric definitions and benchmark ranges per channel, weekly, monthly and quarterly templates, dashboard principles, trend and forecasting basics, attribution models and an optimization process.",
+    "strengths": [
+      "Metric definitions with formulas and what each one tells you, across email, social, paid, SEO and content.",
+      "Honest about limits: forecasts as ranges, low confidence under twelve data points, no attribution model is perfect.",
+      "Recommendations are ranked by impact and effort, with next-period priorities."
+    ],
+    "cautions": [
+      "Written as a command with optional connectors marked by ~~ placeholders, and it points to a CONNECTORS.md outside the skill folder.",
+      "Benchmark ranges such as open and delivery rates are general and vary by industry.",
+      "The repository's LICENSE file is the Apache-2.0 text followed by unrelated stray text, so the license shows as unclear although GitHub detects Apache-2.0. Read in full but not run here."
+    ],
+    "keywords": [
+      "marketing report",
+      "performance",
+      "metrics",
+      "KPIs",
+      "attribution",
+      "dashboard",
+      "forecasting",
+      "optimization",
+      "analytics"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

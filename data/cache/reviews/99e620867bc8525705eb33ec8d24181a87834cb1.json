@@ -1,0 +1,41 @@
+{
+  "fingerprint": "99e620867bc8525705eb33ec8d24181a87834cb1",
+  "model": "in-session-review",
+  "reviewedAt": "2026-11-19T09:52:39.373Z",
+  "review": {
+    "kits": [
+      "marketing-content"
+    ],
+    "scores": {
+      "clarity": 9,
+      "completeness": 9,
+      "usefulness": 8
+    },
+    "why": "Fix text that sounds machine-written: detect the tells, vary rhythm, add specifics and inject a brand voice, with a local scoring script.",
+    "summary": "Three modes: detect AI patterns by severity, remove them (filler words, hedging, uniform paragraphs, vague claims), then inject the brand's voice from one example. A local script scores human-ness from 0 to 100, and two references hold an AI-tells checklist and voice techniques.",
+    "strengths": [
+      "Replaces instead of deleting: each flagged phrase comes with better alternatives and a before and after example.",
+      "Knows its limits: a piece with too many tells needs a rewrite, and it will not invent specific data.",
+      "Asks for one example of the right voice instead of guessing a voice."
+    ],
+    "cautions": [
+      "The vocabulary is English-centered and ages fast: the checklist says it was validated in 2026-06 and that newer models show different tells.",
+      "The score is a heuristic and does not show who wrote a text.",
+      "SKILL.md read in full; the scorer's first 90 lines were read and the rest searched for network and shell calls (none found); the two references were skimmed; not run here."
+    ],
+    "keywords": [
+      "humanizer",
+      "AI writing",
+      "editing",
+      "brand voice",
+      "rewriting",
+      "content quality",
+      "copy editing",
+      "tone"
+    ],
+    "security": {
+      "level": "none",
+      "notes": []
+    }
+  }
+}

@@ -25,6 +25,8 @@ repos:
   - prisma/skills
   - addyosmani/agent-skills
   - microsoft/playwright-cli
+  - anthropics/knowledge-work-plugins
+  - blacktwist/social-media-skills
   - Orchestra-Research/AI-Research-SKILLs
   - KalarisLabs/research-agent-skills
   - emilkowalski/skills

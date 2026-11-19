@@ -227,3 +227,22 @@ Not added as collections: `addyosmani/agent-skills` has 26 skills, about half of
 Limits: nothing was executed. The reference files of `shadcn` (about 100 KB), `stripe-best-practices` (billing, Connect, tax; about 50 KB), `playwright-cli` (about 55 KB) and part of the Addy security patterns were skimmed, not read line by line; the evidence file says which. `stripe/ai` holds six identical copies of its skill (one per agent provider), so its name is not unique and the site links to the source instead of a name-based command. The Addy skills link to repository-level files (checklists, auditor personas) that a single-skill install does not carry. `shadcn` runs `npx shadcn@latest info --json` when it loads. `playwright-cli` can read cookies, save authentication state and attach to a user's browser. `accessibility-engineering` downloads pinned `@axe-core/cli` and `pa11y` with `npx`.
 
 Checks: typecheck, 1,013 tests, site build (2,086 pages) and site verification (8 kits, 2,034 skill pages). Main is unchanged until a separate release decision.
+
+## Marketing & content: one collection swapped, six skills added — 2026-11-19
+
+The owner asked for better skills in the Marketing kit, judged by usefulness and not by stars. `npx skills find` was run on 25 marketing topics; the three kit parts and about fifteen candidates were read; the owner approved the changes below.
+
+- Kept: `coreyhaines31/marketingskills` (45 reviewed skills covering the main marketing topics) and `AgriciDaniel/claude-seo` (29 distinct SEO skills, current and careful about what is proven).
+- Removed as a kit part: `alirezarezvani/claude-skills`. Of its 495 skills, 50 concern marketing; those cover the same topics as `coreyhaines31/marketingskills` with different text (similarity 0.24 to 0.40 on ten compared pairs, 0.88 on one), and the rest (engineering, executive advisory, compliance) does not belong in the kit. Its 403 source listings leave the catalog; its seven reviewed skills stay.
+- Added as a collection: `blacktwist/social-media-skills`, 14 skills (post, hook, thread, carousel and caption writing, content calendar, repurposing, analysis) that share a context file. MIT, whole-repository install at a pinned revision, scan clear, admitted as source listings without editorial review. The starts of four of the 14 were read.
+- Added as individual skills: `campaign-plan`, `brand-review`, `performance-report` and `content-creation` from `anthropics/knowledge-work-plugins`, and `content-humanizer` from `alirezarezvani/claude-skills`; `content-production` (already reviewed, 8.0) is added to the kit.
+
+Reviews are in-session and fingerprint-matched under `data/cache/reviews/`; every new record keeps `humanReviewed: false`. Approval, source commits and what was read in full are in `data/curation-evidence/marketing-picks-2026-11-19.json`. The two new repositories are nominated in `data/sources.yaml`. The catalog goes from 257 to 262 reviewed skills, from 1,777 to 1,388 source listings and from 26 to 25 collections: 1,650 skill pages.
+
+License note: the four Anthropic skills show an unclear license. The `LICENSE` file of `anthropics/knowledge-work-plugins` is the Apache-2.0 text followed by unrelated stray text, so it cannot be classified, although GitHub detects Apache-2.0. The scan is clear, and the reviews say so.
+
+Read and left out: `aeo` (covered three times by `ai-seo`, `seo-geo` and `seo-agentic`), the Sentry blog guide (specific to Sentry's style), `slavingia/marketing-plan` (short, no license), the 120 to 177 skill sets of `aaron-he-zhu` and `kostja94` (same overlap as the removed repository), `every-app/open-seo` (tied to its product) and `wondelai` (frameworks from books).
+
+Limits: nothing was executed. The Anthropic skills are written as commands with optional connectors marked `~~` and point to a `CONNECTORS.md` outside the skill. The vocabulary of `content-humanizer` is English-centered and ages fast. Ten of the 14 social media skills were not read.
+
+Checks: typecheck, 1,013 tests, site build (1,704 pages) and site verification (8 kits, 1,650 skill pages). Main is unchanged until a separate release decision.

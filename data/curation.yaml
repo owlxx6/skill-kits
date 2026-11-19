@@ -64,8 +64,14 @@ docs-reports:
 marketing-content:
   approved:
     - coreyhaines31/marketingskills
-    - alirezarezvani/claude-skills
     - AgriciDaniel/claude-seo
+    - anthropics/knowledge-work-plugins:marketing/skills/campaign-plan
+    - anthropics/knowledge-work-plugins:marketing/skills/brand-review
+    - anthropics/knowledge-work-plugins:marketing/skills/performance-report
+    - anthropics/knowledge-work-plugins:marketing/skills/content-creation
+    - alirezarezvani/claude-skills:marketing-skill/skills/content-humanizer
+    - alirezarezvani/claude-skills:marketing-skill/skills/content-production
+    - blacktwist/social-media-skills
   rejected: []
 research-monitoring:
   approved:

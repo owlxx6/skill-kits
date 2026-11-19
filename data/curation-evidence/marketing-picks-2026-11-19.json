@@ -1,0 +1,103 @@
+[
+  {
+    "id": "anthropics/knowledge-work-plugins:marketing/skills/campaign-plan",
+    "commit": "b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e",
+    "fingerprint": "c43fdc1217b111bad5ab3145712a35998b58868a",
+    "sourceUrl": "https://github.com/anthropics/knowledge-work-plugins/tree/b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e/marketing/skills/campaign-plan",
+    "reviewedAt": "2026-11-19T09:52:39.373Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-19T10:00:25.368Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "marketing-content",
+    "validationScope": "SKILL.md (the only file of the folder) read in full. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "id": "anthropics/knowledge-work-plugins:marketing/skills/brand-review",
+    "commit": "b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e",
+    "fingerprint": "8e39501a076b05762e0d0c52e90b5c4e02f27328",
+    "sourceUrl": "https://github.com/anthropics/knowledge-work-plugins/tree/b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e/marketing/skills/brand-review",
+    "reviewedAt": "2026-11-19T09:52:39.373Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-19T10:00:25.368Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "marketing-content",
+    "validationScope": "SKILL.md (the only file of the folder) read in full. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "id": "anthropics/knowledge-work-plugins:marketing/skills/performance-report",
+    "commit": "b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e",
+    "fingerprint": "e744a71bff6b29a68c09aad7f43b875fa0cd5a9b",
+    "sourceUrl": "https://github.com/anthropics/knowledge-work-plugins/tree/b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e/marketing/skills/performance-report",
+    "reviewedAt": "2026-11-19T09:52:39.373Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-19T10:00:25.368Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "marketing-content",
+    "validationScope": "SKILL.md (the only file of the folder) read in full. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "id": "anthropics/knowledge-work-plugins:marketing/skills/content-creation",
+    "commit": "b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e",
+    "fingerprint": "4aeaa9dda077806c8afd22ae0a7499ad3510bb68",
+    "sourceUrl": "https://github.com/anthropics/knowledge-work-plugins/tree/b4c9a4e1de4b42868b74a6fe30ac766f64e43a3e/marketing/skills/content-creation",
+    "reviewedAt": "2026-11-19T09:52:39.373Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-19T10:00:25.368Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "marketing-content",
+    "validationScope": "SKILL.md (the only file of the folder) read in full. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "id": "alirezarezvani/claude-skills:marketing-skill/skills/content-humanizer",
+    "commit": "f8593c4941210a621a6629ce1da9e07897976d5f",
+    "fingerprint": "99e620867bc8525705eb33ec8d24181a87834cb1",
+    "sourceUrl": "https://github.com/alirezarezvani/claude-skills/tree/f8593c4941210a621a6629ce1da9e07897976d5f/marketing-skill/skills/content-humanizer",
+    "reviewedAt": "2026-11-19T09:52:39.373Z",
+    "reviewMethod": "in-session-review",
+    "ownerApprovedAt": "2026-11-19T10:00:25.368Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "marketing-content",
+    "validationScope": "SKILL.md read in full; scripts/humanizer_scorer.py first 90 lines read and the rest searched for network and shell calls (none found); the two reference files skimmed. Complete-folder static scan clear. Nothing was executed."
+  },
+  {
+    "id": "alirezarezvani/claude-skills:marketing-skill/skills/content-production",
+    "sourceUrl": "https://github.com/alirezarezvani/claude-skills/tree/f8593c4941210a621a6629ce1da9e07897976d5f/marketing-skill/skills/content-production",
+    "ownerApprovedAt": "2026-11-19T10:00:25.368Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source.",
+    "kind": "individual-skill",
+    "kit": "marketing-content",
+    "validationScope": "Already reviewed and published before this change (score 8); added to the kit only. Not read again in this increment."
+  },
+  {
+    "repository": "blacktwist/social-media-skills",
+    "kit": "marketing-content",
+    "revision": "4f85b07069983b3b0b9bbe6519fed7017edcce81",
+    "kind": "collection-inventory",
+    "status": "owner-approved",
+    "scope": "Complete metadata extraction and license resolution, with whole-folder static admission checks (14 of 14 skills admitted, none pending). Source listings carry no fabricated editorial review or score. The starts of post-writer, social-media-context, hook-writer and content-repurposer were read; the other ten skills were not.",
+    "nativeOrServiceExecution": false,
+    "ownerApprovedAt": "2026-11-19T10:00:25.368Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved this addition in chat after a content-based comparison with the existing parts of the kit, and asked for the working tree to be committed. Inclusion approval does not claim the owner personally read the source."
+  },
+  {
+    "repository": "alirezarezvani/claude-skills",
+    "kit": "marketing-content",
+    "kind": "collection-removal",
+    "status": "owner-approved",
+    "ownerApprovedAt": "2026-11-19T10:00:25.368Z",
+    "ownerReadSource": false,
+    "approval": "Owner approved removing this repository as a part of Marketing & content and keeping two individual skills. Reason: a repository of 495 skills of which 50 concern marketing; those 50 cover the same topics as coreyhaines31/marketingskills with different text, and the rest (engineering, executive advisory, compliance) does not belong in the kit. Its source listings leave the catalog; its seven reviewed skills stay."
+  }
+]
